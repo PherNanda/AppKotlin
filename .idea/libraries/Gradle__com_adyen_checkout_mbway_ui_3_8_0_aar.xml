@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.adyen.checkout:mbway-ui:3.8.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/101821ca4fdb1fbfd6ad4a02adc498c0/jetified-mbway-ui-3.8.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/101821ca4fdb1fbfd6ad4a02adc498c0/jetified-mbway-ui-3.8.0/res" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/101821ca4fdb1fbfd6ad4a02adc498c0/jetified-mbway-ui-3.8.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/mbway-ui/3.8.0/1cbfc74f8af2324a2852e5c96b926fb406a95c73/mbway-ui-3.8.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/mbway-ui/3.8.0/26e37f5fecd1f06ad28b5dc564ab0980aa584f51/mbway-ui-3.8.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

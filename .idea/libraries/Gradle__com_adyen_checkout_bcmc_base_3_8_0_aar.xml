@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.adyen.checkout:bcmc-base:3.8.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/19818b889a8980bac4ef043056e4aefb/jetified-bcmc-base-3.8.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/19818b889a8980bac4ef043056e4aefb/jetified-bcmc-base-3.8.0/res" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/19818b889a8980bac4ef043056e4aefb/jetified-bcmc-base-3.8.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/bcmc-base/3.8.0/86065a59b940970758f975ae038c005d6c63a741/bcmc-base-3.8.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/bcmc-base/3.8.0/35e8c2e4fc66b2b5141f967e94d5f5b7f645ec24/bcmc-base-3.8.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

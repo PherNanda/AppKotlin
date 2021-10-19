@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.adyen.checkout:afterpay-ui:3.8.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/6a137629ddec4cb9113b6fc649ebaaf3/jetified-afterpay-ui-3.8.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/6a137629ddec4cb9113b6fc649ebaaf3/jetified-afterpay-ui-3.8.0/res" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/6a137629ddec4cb9113b6fc649ebaaf3/jetified-afterpay-ui-3.8.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/afterpay-ui/3.8.0/c076691e37da75218b938793cae082d6cab2d3d9/afterpay-ui-3.8.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/afterpay-ui/3.8.0/aff754de751624e4534fa49bb0998c5253a6d280/afterpay-ui-3.8.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
