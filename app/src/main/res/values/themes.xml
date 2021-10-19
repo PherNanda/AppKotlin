@@ -1,0 +1,328 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="FullScreen" parent="Theme.Maskokotas">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="SplashScreen" parent="FullScreen">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
+    <style name="AuthScreen" parent="Theme.Maskokotas">
+        <item name="android:windowBackground">@drawable/auth_screen</item>
+    </style>
+
+    <style name="AuthScreenNew" parent="Theme.Maskokotas">
+        <item name="android:windowBackground">@drawable/background_auth_screen_new</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="Theme.Maskokotas" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/app_blue</item>
+        <item name="colorPrimaryVariant">@color/app_blue</item>
+        <item name="colorOnPrimary">@color/white_900</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/app_pink</item>
+        <item name="colorSecondaryVariant">@color/app_pink</item>
+        <item name="colorOnSecondary">@color/white_900</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>-->
+        <!-- Customize your theme here. -->
+        <item name="colorControlNormal">@color/app_blue_25p</item>
+        <item name="colorSurface">@color/blue_300</item>
+        <item name="colorOnSurface">@color/black_900</item>
+
+        <item name="fontFamily">@font/bree</item>
+    </style>
+
+    <style name="Widget.AppComponents.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxCornerRadiusTopStart">4dp</item>
+        <item name="boxCornerRadiusTopEnd">4dp</item>
+        <item name="boxCornerRadiusBottomStart">4dp</item>
+        <item name="boxCornerRadiusBottomEnd">4dp</item>
+        <item name="hintEnabled">false</item>
+        <item name="boxStrokeWidth">2.5dp</item>
+        <item name="boxBackgroundColor">@color/white_900</item>
+    </style>
+
+    <style name="Widget.AppComponents.TextInputLayout.OutlinedBox.SignIn" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxCornerRadiusTopStart">63dp</item>
+        <item name="boxCornerRadiusTopEnd">63dp</item>
+        <item name="boxCornerRadiusBottomStart">63dp</item>
+        <item name="boxCornerRadiusBottomEnd">63dp</item>
+        <item name="hintEnabled">false</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeColor">@color/login_input_colors</item>
+        <item name="boxBackgroundColor">@color/light_grey_background</item>
+        <item name="boxStrokeErrorColor">@color/red</item>
+    </style>
+
+
+    <style name="Widget.AppComponents.TextInputLayout.RoundedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxCornerRadiusTopStart">24dp</item>
+        <item name="boxCornerRadiusTopEnd">24dp</item>
+        <item name="boxCornerRadiusBottomStart">24dp</item>
+        <item name="boxCornerRadiusBottomEnd">24dp</item>
+        <item name="hintEnabled">false</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxBackgroundColor">@color/grey_300</item>
+    </style>
+
+    <style name="Widget.AppComponents.TextInputLayout.RoundedBox.Address" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxCornerRadiusTopStart">24dp</item>
+        <item name="boxCornerRadiusTopEnd">24dp</item>
+        <item name="boxCornerRadiusBottomStart">24dp</item>
+        <item name="boxCornerRadiusBottomEnd">24dp</item>
+        <item name="hintEnabled">false</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeColor">@color/light_blue</item>
+        <item name="boxBackgroundColor">@color/grey_300</item>
+        <item name="iconTint">@null</item>
+        <item name="startIconTint">@null</item>
+    </style>
+
+    <style name="Widget.AppComponents.TextInputLayout.RoundedBox.New" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxCornerRadiusTopStart">30dp</item>
+        <item name="boxCornerRadiusTopEnd">30dp</item>
+        <item name="boxCornerRadiusBottomStart">30dp</item>
+        <item name="boxCornerRadiusBottomEnd">30dp</item>
+        <item name="android:elevation">20dp</item>
+        <item name="hintEnabled">false</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeColor">@color/light_blue</item>
+        <item name="endIconTint">@color/new_app_grey</item>
+        <item name="startIconTint">@null</item>
+        <item name="boxBackgroundColor">@color/white_900</item>
+    </style>
+
+    <style name="Widget.AppComponents.TextInputLayout.RoundedBox.Card" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxCornerRadiusTopStart">30dp</item>
+        <item name="boxCornerRadiusTopEnd">30dp</item>
+        <item name="boxCornerRadiusBottomStart">30dp</item>
+        <item name="boxCornerRadiusBottomEnd">30dp</item>
+        <item name="android:elevation">20dp</item>
+        <item name="hintEnabled">false</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeColor">@color/light_blue</item>
+        <item name="endIconTint">@color/grey_light_new</item>
+        <item name="startIconTint">@color/card_camera_color</item>
+        <item name="boxBackgroundColor">@color/light_grey_background</item>
+    </style>
+
+    <style name="Theme.AppComponents.Button.Address" parent="Theme.Maskokotas">
+        <item name="colorPrimary">@color/black_38</item>
+    </style>
+
+    <style name="Theme.AppComponents.Button.Address.Lupa" parent="Theme.Maskokotas">
+        <item name="colorPrimary">@color/transparent</item>
+    </style>
+
+    <style name="Theme.AppComponents.Button.FacebookButton" parent="Theme.Maskokotas">
+        <item name="colorPrimary">@color/fb_blue</item>
+    </style>
+
+    <style name="Theme.AppComponents.Button.GoogleButton" parent="Theme.Maskokotas">
+        <item name="colorPrimary">@color/google_red</item>
+    </style>
+
+   <style name="Theme.AppComponents.Button.GoogleButton.FB" parent="Theme.Maskokotas">
+        <item name="colorPrimary">@color/white_900</item>
+    </style>
+
+    <style name="Theme.AppComponents.Button.Secondary" parent="Theme.Maskokotas">
+        <item name="colorPrimary">@color/app_pink</item>
+    </style>
+
+    <style name="Theme.AppComponents.Button.Secondary.New" parent="Theme.Maskokotas">
+        <item name="colorPrimary">@color/app_blue_second</item>
+        <item name="itemTextColor">@color/new_app_grey</item>
+    </style>
+
+    <style name="Theme.AppComponents.Button.Secondary.New.Sign" parent="Theme.Maskokotas">
+        <item name="colorPrimary">@color/white_900</item>
+        <item name="itemTextColor">@color/new_app_grey</item>
+    </style>
+
+    <style name="Theme.AppComponents.CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="colorAccent">@color/app_blue</item>
+        <item name="android:textColorSecondary">@color/app_black</item>
+    </style>
+
+    <style name="Theme.AppComponents.Card" parent="Theme.Maskokotas">
+        <item name="cardBackgroundColor">@color/white_900</item>
+        <item name="cardCornerRadius">24dp</item>
+        <item name="cardElevation">8dp</item>
+    </style>
+
+    <style name="Theme.AppComponents.Card.Shipping.Order" parent="Theme.Maskokotas">
+        <item name="cardBackgroundColor">@color/white_900</item>
+        <item name="cardCornerRadius">10dp</item>
+        <item name="cardElevation">24dp</item>
+    </style>
+
+    <style name="Theme.AppComponents.Card.Buy.Now.In" parent="Theme.Maskokotas">
+        <item name="cardBackgroundColor">@color/white_900</item>
+        <item name="cardCornerRadius">30dp</item>
+        <item name="cardElevation">2dp</item>
+    </style>
+
+    <style name="Theme.AppComponents.Card.Buy.Now" parent="Theme.Maskokotas">
+        <item name="cardBackgroundColor">@color/app_pink</item>
+        <item name="icon">@drawable/background_button_login</item>
+        <item name="iconTint">@null</item>
+        <item name="cardCornerRadius">30dp</item>
+        <item name="cardElevation">8dp</item>
+    </style>
+
+    <style name="Theme.AppComponents.Card.Buy.Now.Two" parent="Theme.Maskokotas">
+        <item name="cardBackgroundColor">@color/transparent</item>
+        <item name="cardCornerRadius">0dp</item>
+        <item name="cardElevation">0dp</item>
+    </style>
+
+    <style name="Theme.AppComponents.Card.Buy.Order.Type" parent="Theme.Maskokotas">
+        <item name="cardBackgroundColor">@color/grey_dark_text</item>
+        <item name="cardCornerRadius">30dp</item>
+        <item name="cardElevation">15dp</item>
+    </style>
+
+    <style name="Theme.AppComponents.Card.Search" parent="Theme.Maskokotas">
+        <item name="cardBackgroundColor">@color/white_900</item>
+        <item name="cardCornerRadius">10dp</item>
+        <item name="cardElevation">3dp</item>
+    </style>
+
+    <style name="Theme.AppComponents.Card.Product.List" parent="Theme.Maskokotas">
+        <item name="cardBackgroundColor">@color/white_900</item>
+        <item name="cardCornerRadius">10dp</item>
+        <item name="cardElevation">3dp</item>
+    </style>
+
+    <style name="Theme.AppComponents.Card.New.Ui" parent="Theme.Maskokotas">
+        <item name="cardBackgroundColor">@color/white_900</item>
+        <item name="cardCornerRadius">24dp</item>
+        <item name="cardElevation">28dp</item>
+    </style>
+
+    <style name="Theme.AppComponents.Card.New.Ui.Home" parent="Theme.Maskokotas">
+        <item name="cardBackgroundColor">@color/transparent</item>
+        <item name="cardElevation">28dp</item>
+    </style>
+
+    <style name="Theme.AppComponents.Card.New.Ui.SameDay.Flag" parent="Theme.Maskokotas">
+        <item name="cardBackgroundColor">@color/transparent</item>
+        <item name="cardCornerRadius">60dp</item>
+        <item name="cardElevation">2dp</item>
+    </style>
+
+    <style name="Theme.AppComponents.Card.New.Ui.SameDay.Flag.White" parent="Theme.Maskokotas">
+        <item name="cardBackgroundColor">@color/white_900</item>
+        <item name="cardCornerRadius">60dp</item>
+        <item name="cardElevation">2dp</item>
+    </style>
+
+    <style name="Theme.AppComponents.Card.Two" parent="Theme.Maskokotas">
+        <item name="cardBackgroundColor">@color/transparent</item>
+        <item name="cardCornerRadius">0dp</item>
+        <item name="cardElevation">0dp</item>
+    </style>
+
+    <style name="Theme.AppComponents.Card.Large" parent="Theme.Maskokotas">
+        <item name="cardBackgroundColor">@color/blue_300</item>
+        <item name="cardCornerRadius">150dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeColor">@color/app_pink</item>
+    </style>
+
+    <style name="Theme.AppComponents.Card.Same.Day.Info" parent="Theme.Maskokotas">
+        <item name="cardBackgroundColor">@color/bottom_navigation_tint_color_same_day_info</item>
+        <item name="backgroundTint">@color/bottom_navigation_tint_color_same_day_info</item>
+        <item name="cardCornerRadius">0dp</item>
+        <item name="cardElevation">0dp</item>
+    </style>
+
+    <style name="Theme.AppComponents.Card.Same.Day.Info.Default" parent="Theme.Maskokotas">
+        <item name="cardBackgroundColor">@color/transparent</item>
+        <item name="backgroundTint">@color/bottom_navigation_tint_color_same_day_info</item>
+        <item name="cardCornerRadius">0dp</item>
+        <item name="cardElevation">0dp</item>
+    </style>
+
+    <style name="MyWidget.MaterialComponents.BottomNavigationView.PrimarySurface" parent="Widget.MaterialComponents.BottomNavigationView.PrimarySurface">
+        <item name="colorSurface">@drawable/ic_background</item>
+        <item name="itemIconTint">@color/bottom_navigation_tint_color</item>
+        <item name="itemTextColor">@color/bottom_navigation_tint_color</item>
+    </style>
+
+    <style name="MyWidget.MaterialComponents.BottomNavigationView.PrimarySurfaceTwo" parent="Widget.MaterialComponents.BottomNavigationView.PrimarySurface">
+        <item name="colorSurface">@drawable/ic_background</item>
+        <item name="android:background">@drawable/ic_background</item>
+        <item name="itemIconTint">@color/bottom_navigation_tint_color_new</item>
+        <item name="itemTextColor">@color/bottom_navigation_tint_color_new</item>
+        <item name="itemPadding">0dp</item>
+        <item name="itemIconPadding">0dp</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:layout_marginStart">0dp</item>
+        <item name="android:layout_marginEnd">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
+
+    <style name="MyWidget.MaterialComponents.BottomAccept" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="colorSurface">@drawable/background_button_add_cart</item>
+        <item name="android:background">@drawable/background_button_add_cart</item>
+    </style>
+
+    <style name="MyWidget.MaterialComponents.BottomAccept.Card" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">@drawable/background_button_add_cart</item>
+        <item name="android:title">@string/add_card_number</item>
+        <item name="itemIconTint">@color/white_900</item>
+        <item name="itemTextColor">@color/white_900</item>
+    </style>
+
+    <style name="MyWidget.MaterialComponents.BottomAccept.Payment" parent="Widget.MaterialComponents.Button">
+        <item name="colorSurface">@drawable/background_button_add_cart</item>
+        <item name="android:background">@drawable/background_button_add_cart</item>
+        <item name="android:title">@string/add_card_number</item>
+        <item name="itemIconTint">@color/white_900</item>
+        <item name="itemTextColor">@color/white_900</item>
+    </style>
+
+
+    <style name="Theme.Maskokotas.Night" parent="Theme.MaterialComponents.Light">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/app_blue</item>
+        <item name="colorPrimaryVariant">@color/grey_400</item>
+        <item name="colorOnPrimary">@color/white_900</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/app_pink</item>
+        <item name="colorSecondaryVariant">@color/app_pink</item>
+        <item name="colorOnSecondary">@color/white_900</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="colorControlNormal">@color/app_blue_25p</item>
+        <item name="colorSurface">@color/black_900</item>
+        <item name="colorOnSurface">@color/white_900</item>
+
+        <item name="fontFamily">@font/bree</item>
+    </style>
+
+    <style name="Theme.Maskokotas.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Maskokotas.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Maskokotas.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+</resources>

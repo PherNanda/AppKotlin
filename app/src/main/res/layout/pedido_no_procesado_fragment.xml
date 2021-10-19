@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:transitionGroup="true"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:background="@color/white_900"
+    tools:context=".ui.pedido.PedidoNoProcesado"
+    android:forceDarkAllowed="false">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/pedidoNoRealizado"
+        android:layout_width="188dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="95dp"
+        android:layout_marginTop="190dp"
+        android:text="@string/pedido_no_registrado"
+        android:textAlignment="center"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/compruebe"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="55dp"
+        android:layout_marginTop="240dp"
+        android:text="@string/text_dont_processed"
+        android:textAlignment="center"
+        android:textSize="14dp"
+        android:textColor="@color/app_pink"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/pedidoNoRealizado"
+        app:layout_constraintStart_toEndOf="@+id/pedidoNoRealizado" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/volverAmiscota"
+        android:layout_width="188dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100dp"
+        android:layout_marginTop="350dp"
+        android:text="vuelva a"
+        android:textColor="@color/grey_400"
+        android:textAlignment="center"
+        android:drawableBottom="@drawable/ic_miscota_blue_xxs"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/compruebe"
+        app:layout_constraintStart_toEndOf="@+id/compruebe" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/terminar"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="70dp"
+        android:layout_marginTop="405dp"
+        android:text="para finalizar tu compra"
+        android:textAlignment="center"
+        android:textColor="@color/grey_400"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/volverAmiscota"
+        app:layout_constraintStart_toEndOf="@+id/volverAmiscota" />
+
+
+
+   <!--<ImageView
+        android:id="@+id/volverAtienda"
+        android:layout_width="188dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="300dp"
+        android:layout_marginHorizontal="100dp"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintBottom_toBottomOf="@+id/volverAmiscota"
+        app:layout_constraintStart_toEndOf="@+id/volverAmiscota" />-->
+
+
+</FrameLayout>

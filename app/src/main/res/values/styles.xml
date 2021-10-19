@@ -1,0 +1,189 @@
+<resources>
+
+    <style name="Widget.AppComponents.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="textAllCaps">false</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="fontFamily">@font/bree_regular</item>
+    </style>
+
+    <style name="Widget.AppComponents.Button" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="cornerRadius">4dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="fontFamily">@font/bree_regular</item>
+    </style>
+
+    <style name="Widget.AppComponents.Button.Address" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="colorOnSurface">@color/blue_new_app</item>
+        <item name="colorSecondary">@color/yellow_shape_two</item>
+    </style>
+
+    <style name="Widget.AppComponents.Button.Checkout" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="cornerRadius">30dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="fontFamily">@font/bree</item>
+        <item name="backgroundTint">@color/blue_new_ux</item>
+    </style>
+
+    <style name="Widget.AppComponents.Button.SignUp" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="cornerRadius">57dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="fontFamily">@font/bree</item>
+        <item name="android:textSize">15sp</item>
+        <item name="backgroundTint">@color/white_900</item>
+    </style>
+
+    <style name="Widget.AppComponents.Button.Login" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="cornerRadius">57dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="fontFamily">@font/bree</item>
+        <item name="textColor">@color/white_900</item>
+        <item name="backgroundTint">@color/rose</item>
+    </style>
+
+    <style name="Widget.AppComponents.Button.New" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="cornerRadius">30dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="fontFamily">@font/bree_regular</item>
+        <item name="android:textSize">16sp</item>
+        <item name="background">@drawable/background_button_add_cart</item>
+        <item name="height">46dp</item>
+    </style>
+
+    <style name="myStyle">
+        <item name="android:textSize">9px</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <style name="Widget.AppComponents.Button.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">4dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="backgroundTint">@color/app_pink</item>
+        <item name="fontFamily">@font/bree_regular</item>
+        <item name="strokeColor">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Widget.AppComponents.Button.OutlinedButton.GOSign" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">57dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="icon">@drawable/ic_google_logo_image</item>
+        <item name="iconTint">@null</item>
+        <item name="iconGravity">start</item>
+        <item name="iconStartPadding">0dp</item>
+        <item name="iconEndPadding">0dp</item>
+        <item name="backgroundTint">@color/white_900</item>
+        <item name="fontFamily">@font/bree_regular</item>
+        <item name="strokeColor">?attr/colorPrimary</item>
+        <item name="android:textColor">@color/new_app_grey</item>
+    </style>
+
+    <style name="Widget.AppComponents.Button.OutlinedButton.FBSign" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">57dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="backgroundTint">@color/fb_blue</item>
+        <item name="fontFamily">@font/bree_regular</item>
+        <item name="strokeColor">@color/fb_blue_stroke</item>
+        <item name="android:textColor">@color/white_900</item>
+        <item name="icon">@drawable/ic_facebook_logo_image</item>
+        <item name="iconGravity">start</item>
+        <item name="iconStartPadding">0dp</item>
+        <item name="iconEndPadding">0dp</item>
+        <item name="iconTint">@color/white_900</item>
+    </style>
+
+    <style name="Widget.AppComponents.Button.OutlinedButton.SignIn" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">67dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="backgroundTint">@color/blue_new_app</item>
+        <item name="fontFamily">@font/bree_regular</item>
+        <item name="strokeColor">@color/light_grey_label</item>
+        <item name="android:gradientRadius">@color/white_900</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Widget.AppComponents.Button.OutlinedButton.Search" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">24dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="backgroundTint">@color/grey_300</item>
+        <item name="fontFamily">@font/bree_regular</item>
+        <item name="strokeColor">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Widget.AppComponents.Button.OutlinedButton.Search.New" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">24dp</item>
+        <item name="android:elevation">28dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="backgroundTint">@color/white_900</item>
+        <item name="fontFamily">@font/bree_regular</item>
+        <item name="iconTint">@null</item>
+        <item name="android:textColor">@color/new_app_grey</item>
+    </style>
+
+    <style name="Widget.AppComponents.Button.OutlinedButton.Search.New.SameDay" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">30dp</item>
+        <item name="android:elevation">20dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="backgroundTint">@color/white_900</item>
+        <item name="fontFamily">@font/bree_regular</item>
+        <item name="android:textColor">@color/new_app_grey</item>
+    </style>
+
+    <style name="Widget.AppComponents.Button.OutlinedButton.Search.New.SameDay.Flag" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">30dp</item>
+        <item name="android:elevation">28dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="backgroundTint">@color/white_900</item>
+        <item name="fontFamily">@font/bree_regular</item>
+        <item name="android:textColor">@color/new_app_grey</item>
+        <item name="startIconTint">@null</item>
+        <item name="iconTint">@null</item>
+    </style>
+
+    <style name="Widget.AppComponents.Button.OutlinedButton.Search.Flag.SameDay" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">24dp</item>
+        <item name="android:elevation">28dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="backgroundTint">@color/yellow_shape_one</item>
+        <item name="fontFamily">@font/bree_regular</item>
+        <item name="android:textColor">@color/dark_grey</item>
+    </style>
+
+    <style name="Widget.AppComponents.Button.OutlinedButton.Search.New.SubCategory" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textSize">21sp</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="fontFamily">@font/bree_regular</item>
+        <item name="android:textColor">@color/new_app_grey</item>
+    </style>
+
+    <style name="Widget.AppComponents.Button.OutlinedButton.Search.SubCategory" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textSize">16sp</item>
+        <item name="cornerRadius">0dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="fontFamily">@font/bree_regular</item>
+        <item name="android:textColor">@color/new_app_grey</item>
+    </style>
+
+
+    <style name="ProductDetailCard" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#615D59</item>
+        <item name="android:textSize">9sp</item>
+        <item name="android:textAlignment">textEnd</item>
+    </style>
+
+
+</resources>

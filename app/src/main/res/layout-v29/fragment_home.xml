@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="0dp"
+    android:forceDarkAllowed="false">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/locationLinearLayout"
+        style="@style/Theme.AppComponents.Card"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="6dp"
+        android:paddingBottom="30dp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:forceDarkAllowed="false">
+
+        <ImageView
+            android:id="@+id/locationImageMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="20dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_location_iconspace" />
+
+        <TextView
+            android:id="@+id/locationText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/without_location"
+            android:textColor="@color/blue_new_app"
+            android:textSize="17sp"
+            android:textAlignment="center"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="12dp"
+            app:fontFamily="@font/bree_regular" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:visibility="gone"
+        android:id="@+id/imageViewPager"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/app_blue_25p"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/locationLinearLayout"
+        android:forceDarkAllowed="false"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_margin="10dp"
+        android:background="@android:color/transparent"
+        android:maxWidth="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageViewPager"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="start"
+        app:tabIndicatorHeight="0dp"
+        android:forceDarkAllowed="false"/>
+
+
+ <LinearLayout
+        android:id="@+id/informationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="16dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/tabLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+     app:layout_constraintRight_toRightOf="parent"
+        android:forceDarkAllowed="false">
+
+        <TextView
+            android:id="@+id/informationText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/without_location"
+            android:textColor="@color/new_app_grey"
+            android:textSize="12sp"
+            android:textAlignment="center"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:fontFamily="@font/bree_regular" />
+
+    </LinearLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/productsCard"
+        style="@style/Theme.AppComponents.Card.New.Ui"
+        android:layout_width="153dp"
+        android:layout_height="181dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="18dp"
+        android:layout_marginHorizontal="18dp"
+        android:background="@drawable/ic_rectangle_20"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="38dp">
+
+            <ImageView
+                android:id="@+id/productImage"
+                android:layout_width="85dp"
+                android:layout_height="70dp"
+                android:src="@drawable/home_all_products"
+                app:layout_constraintEnd_toEndOf="@+id/productLabel"
+                app:layout_constraintStart_toStartOf="@+id/productLabel"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/productLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="@string/products"
+                android:textAlignment="center"
+                android:layout_marginStart="5dp"
+                android:textColor="@color/new_app_grey"
+                android:textSize="16sp"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:fontFamily="@font/bree_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/productImage" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/productsCardSameday"
+        style="@style/Theme.AppComponents.Card.New.Ui"
+        android:layout_width="153dp"
+        android:layout_height="181dp"
+        android:layout_marginBottom="18dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginHorizontal="18dp"
+        android:background="@drawable/ic_rectangle_20"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="34dp">
+
+            <ImageView
+                android:id="@+id/productImageSameday"
+                android:layout_width="95dp"
+                android:layout_height="75dp"
+                android:src="@drawable/sameday_icon_web_4x"
+                app:layout_constraintEnd_toEndOf="@+id/productLabelSameday"
+                app:layout_constraintStart_toStartOf="@+id/productLabelSameday"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/productLabelSameday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:textColor="@color/new_app_grey"
+                android:text="@string/sameday_products"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:fontFamily="@font/bree_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/productImageSameday" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/consultingCard"
+        style="@style/Theme.AppComponents.Card.New.Ui"
+        android:layout_width="96dp"
+        android:layout_height="105dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="18dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productsCardSameday">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="10dp">
+
+            <ImageView
+                android:id="@+id/consultingImage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_consulting_icon_svg"
+                app:layout_constraintEnd_toEndOf="@+id/consultingLabel"
+                app:layout_constraintStart_toStartOf="@+id/consultingLabel"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/consultingLabel"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/consulting"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceSubtitle2"
+                android:textColor="@color/new_app_grey"
+                app:fontFamily="@font/bree_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/consultingImage" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/storeCard"
+        style="@style/Theme.AppComponents.Card.New.Ui"
+        android:layout_width="96dp"
+        android:layout_height="105dp"
+        android:paddingEnd="18dp"
+        android:paddingStart="18dp"
+        android:layout_marginTop="200dp"
+        android:backgroundTint="@color/grey_light_new"
+        app:layout_constraintRight_toLeftOf="@+id/consultingCard"
+        app:layout_constraintLeft_toRightOf="@+id/scheduleOrderCard"
+        app:layout_constraintTop_toBottomOf="@+id/informationLayout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="9dp">
+
+            <ImageView
+                android:id="@+id/storeImageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_ecommerce_4x"
+                app:layout_constraintEnd_toEndOf="@+id/storeLabel"
+                app:layout_constraintStart_toStartOf="@+id/storeLabel"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/storeLabel"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/our_stores"
+                android:textColor="@color/new_app_grey"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceSubtitle2"
+                app:fontFamily="@font/bree_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/storeImageView" />
+
+            <FrameLayout
+                android:id="@+id/consulting"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/scheduleOrderCard"
+        style="@style/Theme.AppComponents.Card.New.Ui"
+        android:layout_width="96dp"
+        android:layout_height="105dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="18dp"
+        android:backgroundTint="@color/grey_light_new"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productsCard">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="9dp">
+
+            <ImageView
+                android:id="@+id/scheduleOrderImage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/autoship_icon_4x"
+                app:layout_constraintEnd_toEndOf="@+id/scheduleOrderLabel"
+                app:layout_constraintStart_toStartOf="@+id/scheduleOrderLabel"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/scheduleOrderLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/schedule_your_order"
+                android:textColor="@color/new_app_grey"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceSubtitle2"
+                app:fontFamily="@font/bree_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/scheduleOrderImage" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <ImageView
+        android:id="@+id/bottomBackground"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/home_bottom_background"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/autoShipImage"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_autoship_icon"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bottomBackground" />
+
+    <TextView
+        android:id="@+id/noAutoShipLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/there_is_no_scheduled_order"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:visibility="gone"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/autoShipImage"
+        app:layout_constraintStart_toEndOf="@+id/autoShipImage"
+        app:layout_constraintTop_toTopOf="@+id/autoShipImage" />
+
+    <TextView
+        android:id="@+id/nextOrderLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/next_schedule_order"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:visibility="gone"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintStart_toEndOf="@+id/autoShipImage"
+        app:layout_constraintTop_toTopOf="@+id/autoShipImage" />
+
+    <TextView
+        android:id="@+id/nextOrderText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/next_order_arrives_on"
+        android:textAppearance="?attr/textAppearanceCaption"
+        android:textColor="@color/app_pink"
+        android:visibility="gone"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintStart_toEndOf="@+id/autoShipImage"
+        app:layout_constraintTop_toBottomOf="@+id/nextOrderLabel" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

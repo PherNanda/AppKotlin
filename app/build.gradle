@@ -1,0 +1,229 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+    id 'com.google.firebase.firebase-perf'
+
+}
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+
+    defaultConfig {
+        applicationId 'com.miscota.android'
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode 79
+        versionName "2.0"
+        //multiDexEnabled true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // Set the properties within `local.properties` into a `Properties` class so that values
+        // within `local.properties` (e.g. Maps API key) are accessible in this file.
+        Properties properties = new Properties()
+        if (rootProject.file("local.properties").exists()) {
+            properties.load(rootProject.file("local.properties").newDataInputStream())
+        }
+    }
+
+    buildTypes {
+
+        //inhabilitar performance monitoring en modo debug
+        debug {
+            FirebasePerformance {
+                instrumentationEnabled false
+            }
+        }
+
+            release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "API_BASE_URL", "\"https://devpapi.maskokotas.com/\""
+
+            buildConfigField "String", "PACKAGE_NAME", "\"com.miscota.android\""
+            buildConfigField "String", "MISCOTA_USER_AGENT", "\"MiscotaApp\""
+            //tests checkout configuration
+            buildConfigField "String", "MERCHANT_ACCOUNT_TEST_MIS", "\"MiscotaCOM\""
+            buildConfigField "String", "MERCHANT_SERVER_URL_TEST_MIS", "\"https://devpapi.maskokotas.com/app/cart/checkout/{guess}/\""
+            buildConfigField "String", "API_KEY_HEADER_NAME_TEST_MIS", "\"x-API-key\""
+            buildConfigField "String", "CHECKOUT_API_KEY_TEST_MIS", "\"AQEphmfxJ4zGYhFDw0m/n3Q5qf3VZYJeDpxeWbzCXjdgOlxyMxFwcV/enowQwV1bDb7kfNy1WIxIIkxgBw==-HT01U4obw8WSDvUNN4q/WQd319Je3pyCWMnGjkO7DUI=-f{p4k_fK(yka&:K,\""
+            buildConfigField "String", "CLIENT_KEY_TEST_MIS", "\"test_G35HSB5CIZEM7NGOX7ILOEHP3QTBQZPE\""
+            buildConfigField "String", "PAYMENT_METHOD_URL_TEST_MIS", "\"https://checkout-test.adyen.com/v66/paymentMethods\""
+            buildConfigField "String", "PAYMENT_URL_TEST_MIS", "\"https://checkout-test.adyen.com/v66/payments\""
+            //buildConfigField "String", "SHOPPER_REFERENCE_TEST_MIS", "\"MIS-ES-1234567890\""
+
+
+            //pro checkout adyen / miscota configuration
+            buildConfigField "String", "MERCHANT_ACCOUNT_MIS", "\"MiscotaCOM\""
+            buildConfigField "String", "MERCHANT_SERVER_URL_MIS", "\"https://papi.maskokotas.com/app/cart/checkout/{guess}/\""
+            buildConfigField "String", "API_KEY_HEADER_NAME_MIS", "\"x-API-key\""
+            buildConfigField "String", "CHECKOUT_API_KEY_MIS", "\"AQEihmfuXNWTK0Qc+iSdm3c7qPCa2mdGDx2L8i2jQCxRNzfr6BDBXVsNvuR83LVYjEgiTGAH-8xMslu4xcTS/x5Qw3Xr5b57Myu8POJLetSlv91iu8Ec=-#UAH\$m,;]hYt@7n;\""
+            buildConfigField "String", "CLIENT_KEY_MIS", "\"live_DEE3RYWCEJGTFPHGNMS5RNY7DEPBTV2A\""
+            buildConfigField "String", "PAYMENT_METHOD_URL_MIS", "\"https://4b3d6e25656fcd70-Miscota-checkout-live.adyenpayments.com/checkout/v67/paymentMethods\""
+            buildConfigField "String", "PAYMENT_URL_MIS", "\"https://4b3d6e25656fcd70-Miscota-checkout-live.adyenpayments.com/checkout/v67/payments\""
+            buildConfigField "String", "PUBLIC_KEY_MIS", "\"10001|99E9FD67934A8E6FFE7843F5418335A91555ADA61FB5F9D8E70A3EFA9EF675AA2B70AC7CEE4C8AFFB9D22AE39B25142BB709813124CA4BCA90E53CC8C3DD6293C8747D2A458FFB96769FBFB45DA207FA0B0931E676B7BD1DD311E444382400493E8733D60A6322C285EE6F1CBA7A46C73DE84BBFE1F53FC539E2143B1C1F23B6BA1BEC618CF552EE956A92E90B6B2C8DF0983A15CB055D43E1D7AD6A11CCC2DF416149592E46FE20ED737A8A2E3ACEA92588B94108B49BDF94DF902A147DD823DF4A68D4565813FBF238BD3A2AD448B3D5D73D1B47305133EA3DEC5EDCAB2C0D9E5F7F1433F5D754CF880C0B2D009B9E80B5AA1DDF95ECA0815D585BDFACF5C7\""
+
+        }
+        debug {
+            minifyEnabled false
+
+            buildConfigField "String", "API_BASE_URL", "\"https://devpapi.maskokotas.com/\""
+
+            buildConfigField "String", "PACKAGE_NAME", "\"com.miscota.android\""
+            buildConfigField "String", "MISCOTA_USER_AGENT", "\"MiscotaApp\""
+
+            //tests checkout adyen / miscota configuration
+            buildConfigField "String", "MERCHANT_ACCOUNT_TEST_MIS", "\"MiscotaCOM\""
+            buildConfigField "String", "MERCHANT_SERVER_URL_TEST_MIS", "\"https://devpapi.maskokotas.com/app/cart/checkout/{guess}/\""
+            buildConfigField "String", "API_KEY_HEADER_NAME_TEST_MIS", "\"x-API-key\""
+            buildConfigField "String", "CHECKOUT_API_KEY_TEST_MIS", "\"AQEphmfxJ4zGYhFDw0m/n3Q5qf3VZYJeDpxeWbzCXjdgOlxyMxFwcV/enowQwV1bDb7kfNy1WIxIIkxgBw==-HT01U4obw8WSDvUNN4q/WQd319Je3pyCWMnGjkO7DUI=-f{p4k_fK(yka&:K,\""
+            buildConfigField "String", "CLIENT_KEY_TEST_MIS", "\"test_G35HSB5CIZEM7NGOX7ILOEHP3QTBQZPE\""
+            buildConfigField "String", "PAYMENT_METHOD_URL_TEST_MIS", "\"https://checkout-test.adyen.com/v66/paymentMethods\""
+            buildConfigField "String", "PAYMENT_URL_TEST_MIS", "\"https://checkout-test.adyen.com/v66/payments\""
+            buildConfigField "String", "SHOPPER_REFERENCE_TEST_MIS", "\"MIS-ES-1234567890\"" //not used, only is necessary if you dont have a endpoint carriers
+
+            //pro checkout adyen / miscota configuration
+            buildConfigField "String", "MERCHANT_ACCOUNT_MIS", "\"MiscotaCOM\""
+            buildConfigField "String", "MERCHANT_SERVER_URL_MIS", "\"https://papi.maskokotas.com/app/cart/checkout/{guess}/\""
+            buildConfigField "String", "API_KEY_HEADER_NAME_MIS", "\"x-API-key\""
+            buildConfigField "String", "CHECKOUT_API_KEY_MIS", "\"AQEihmfuXNWTK0Qc+iSdm3c7qPCa2mdGDx2L8i2jQCxRNzfr6BDBXVsNvuR83LVYjEgiTGAH-8xMslu4xcTS/x5Qw3Xr5b57Myu8POJLetSlv91iu8Ec=-#UAH\$m,;]hYt@7n;\""
+            buildConfigField "String", "CLIENT_KEY_MIS", "\"live_DEE3RYWCEJGTFPHGNMS5RNY7DEPBTV2A\""
+            buildConfigField "String", "PAYMENT_METHOD_URL_MIS", "\"https://4b3d6e25656fcd70-Miscota-checkout-live.adyenpayments.com/checkout/v67/paymentMethods\""
+            buildConfigField "String", "PAYMENT_URL_MIS", "\"https://4b3d6e25656fcd70-Miscota-checkout-live.adyenpayments.com/checkout/v67/payments\""
+            buildConfigField "String", "PUBLIC_KEY_MIS", "\"10001|99E9FD67934A8E6FFE7843F5418335A91555ADA61FB5F9D8E70A3EFA9EF675AA2B70AC7CEE4C8AFFB9D22AE39B25142BB709813124CA4BCA90E53CC8C3DD6293C8747D2A458FFB96769FBFB45DA207FA0B0931E676B7BD1DD311E444382400493E8733D60A6322C285EE6F1CBA7A46C73DE84BBFE1F53FC539E2143B1C1F23B6BA1BEC618CF552EE956A92E90B6B2C8DF0983A15CB055D43E1D7AD6A11CCC2DF416149592E46FE20ED737A8A2E3ACEA92588B94108B49BDF94DF902A147DD823DF4A68D4565813FBF238BD3A2AD448B3D5D73D1B47305133EA3DEC5EDCAB2C0D9E5F7F1433F5D754CF880C0B2D009B9E80B5AA1DDF95ECA0815D585BDFACF5C7\""
+
+
+        }
+
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+repositories {
+    maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
+    maven {
+        url "https://jitpack.io"
+    }
+
+    jcenter()
+}
+
+dependencies {
+
+    api group: 'com.zendesk', name: 'chat', version: '3.2.0'
+    api group: 'com.zendesk', name: 'messaging', version: '5.1.0'
+
+    // Basic and UI
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation "androidx.core:core-ktx:$androidCore"
+    implementation "androidx.appcompat:appcompat:$androidAppCompat"
+    implementation "androidx.constraintlayout:constraintlayout:$androidConstraintLayout"
+    implementation "androidx.vectordrawable:vectordrawable:$androidVectorDrawable"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$androidLifeCycleLiveData"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidLifeCycleViewModel"
+    implementation "androidx.navigation:navigation-fragment-ktx:$androidNavigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$androidNavigation"
+    implementation "androidx.annotation:annotation:$androidAnnotation"
+    implementation "com.google.android.material:material:$androidMaterial"
+    implementation "androidx.activity:activity-ktx:$androidActivity"
+    implementation "androidx.fragment:fragment-ktx:$androidFragment"
+    implementation "androidx.viewpager2:viewpager2:$viewpager2"
+
+    // Network
+    implementation "com.github.ihsanbal:LoggingInterceptor:$okhttpInterceptor"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit"
+
+    // Moshi
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi"
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi"
+
+    //implementation'com.squareup.retrofit2:converter-scalars:2.6.2'
+
+    // Koin
+    implementation "org.koin:koin-android:$koin"
+    implementation "org.koin:koin-androidx-scope:$koin"
+    implementation "org.koin:koin-androidx-viewmodel:$koin"
+
+    //Timber
+    implementation "com.jakewharton.timber:timber:$timber"
+
+    // Coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutine"
+
+    //Coil Library
+    implementation "io.coil-kt:coil:$coil"
+
+    // Facebook SDK
+    implementation "com.facebook.android:facebook-login:$facebookSdk"
+
+    // Google Auth
+    implementation "com.google.android.gms:play-services-auth:$googleAuth"
+
+    // Google Map
+    implementation "com.google.android.gms:play-services-location:$googleMap"
+    implementation "com.google.android.gms:play-services-maps:$googleMap"
+    // Places
+    implementation "com.google.android.libraries.places:places:$googlePlaces"
+
+    // adyen
+    implementation "com.adyen.checkout:drop-in:$adyen"
+    implementation "com.adyen.checkout:card-ui:$adyen"
+    implementation "com.adyen.checkout:redirect:$adyen"
+
+    // Test
+    testImplementation "junit:junit:$junit"
+    androidTestImplementation "androidx.test.ext:junit:$androidExtJunit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidExpresso"
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.0'
+
+    final checkoutVersion = "2.4.0"
+
+    //emma SDK
+    //implementation 'io.emma:eMMaSDK:4.7.+'
+
+    //firebase
+    implementation platform('com.google.firebase:firebase-bom:28.0.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-core:19.0.0'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:perf-plugin:1.4.0'
+    implementation 'com.google.firebase:firebase-perf-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx'
+
+
+    //implementation("androidx.multidex:multidex:2.0.1")
+
+    implementation 'com.android.support:design:28.0.0'
+
+    //io card camera
+    implementation 'io.card:android-sdk:5.5.0'
+
+
+    //compile 'com.android.support:recyclerview-v7:28.0.0'
+
+}

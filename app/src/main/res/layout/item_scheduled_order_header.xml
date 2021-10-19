@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="?attr/colorSurface"
+        app:layout_constraintBottom_toTopOf="@+id/view2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/autoShipImage"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:src="@drawable/icon_autoship"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nextOrderLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/next_schedule_order"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintStart_toEndOf="@+id/autoShipImage"
+        app:layout_constraintTop_toTopOf="@+id/autoShipImage" />
+
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textAppearance="?attr/textAppearanceCaption"
+        android:textColor="@color/app_pink"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintStart_toEndOf="@+id/autoShipImage"
+        app:layout_constraintTop_toBottomOf="@+id/nextOrderLabel"
+        android:text="Active" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/autoShipImage" />
+
+    <TextView
+        android:id="@+id/nextDeliveryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/next_delivery"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintStart_toStartOf="@+id/autoShipImage"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+    <TextView
+        android:id="@+id/nextDeliveryText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/next_delivery"
+        android:maxLines="1"
+        android:textAppearance="?attr/textAppearanceBody2"
+        app:layout_constraintBottom_toBottomOf="@+id/nextDeliveryLabel"
+        app:layout_constraintEnd_toEndOf="@+id/view2"
+        app:layout_constraintStart_toEndOf="@+id/nextDeliveryLabel"
+        app:layout_constraintTop_toTopOf="@+id/nextDeliveryLabel"/>
+
+    <TextView
+        android:id="@+id/frequencyLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/frequencies"
+        android:layout_marginTop="8dp"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintStart_toStartOf="@+id/autoShipImage"
+        app:layout_constraintTop_toBottomOf="@+id/nextDeliveryLabel" />
+
+    <TextView
+        android:id="@+id/frequencyText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:maxLines="1"
+        android:text="every 6 week"
+        android:textAppearance="?attr/textAppearanceBody2"
+        app:layout_constraintBottom_toBottomOf="@+id/frequencyLabel"
+        app:layout_constraintEnd_toStartOf="@+id/editLabel"
+        app:layout_constraintStart_toEndOf="@+id/frequencyLabel"
+        app:layout_constraintTop_toTopOf="@+id/frequencyLabel" />
+
+    <TextView
+        android:id="@+id/editLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:drawableEnd="@drawable/ic_next_arrow"
+        android:drawablePadding="8dp"
+        android:text="@string/edit"
+        android:visibility="invisible"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textColor="?attr/colorPrimary"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/frequencyLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/frequencyLabel" />
+
+    <!--<TextView
+        android:id="@+id/shippingLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/shipping_address"
+        android:layout_marginTop="8dp"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintStart_toStartOf="@+id/autoShipImage"
+        app:layout_constraintTop_toBottomOf="@+id/frequencyLabel" />
+
+    <TextView
+        android:id="@+id/shippingText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:maxLines="2"
+        android:minLines="2"
+        android:text="ABC country"
+        android:textAppearance="?attr/textAppearanceBody2"
+        app:layout_constraintEnd_toEndOf="@id/view2"
+        app:layout_constraintStart_toStartOf="@+id/shippingLabel"
+        app:layout_constraintTop_toBottomOf="@+id/shippingLabel" />
+
+    <TextView
+        android:id="@+id/changeShippingLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:drawableEnd="@drawable/ic_next_arrow"
+        android:drawablePadding="8dp"
+        android:text="@string/change_direction"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textColor="?attr/colorPrimary"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/shippingLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/shippingLabel" /> -->
+
+    <TextView
+        android:id="@+id/estimatedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/total_estimated"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintStart_toStartOf="@+id/autoShipImage"
+        app:layout_constraintTop_toBottomOf="@+id/frequencyLabel" />
+        <!--app:layout_constraintTop_toBottomOf="@+id/shippingText" />-->
+
+
+    <TextView
+        android:id="@+id/estimatedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="34,95 €"
+        android:maxLines="1"
+        android:maxLength="8"
+        android:textAlignment="center"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textColor="?attr/colorPrimary"
+        android:textStyle="bold"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/estimatedLabel"
+        app:layout_constraintStart_toEndOf="@+id/estimatedLabel"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

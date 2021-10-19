@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheetOne"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:orientation="vertical"
+    android:paddingTop="1dp"
+    android:paddingBottom="30dp"
+    app:behavior_hideable="true">
+<LinearLayout
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="527dp"
+    android:background="@drawable/same_day_info_rectangle"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    app:behavior_hideable="true"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_gravity="center"
+        android:layout_height="3dp"
+        android:src="@drawable/ic_vector_grey_same_day_info"
+        android:layout_marginTop="9dp">
+
+    </ImageView>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="37dp"
+       android:layout_marginEnd="58dp"
+        android:layout_marginTop="49dp">
+        <ImageView
+            android:id="@+id/sameday_icon"
+            android:src="@drawable/sameday_icon_web"
+            android:layout_gravity="left"
+            android:layout_width="63dp"
+            android:layout_height="42dp">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="26dp"
+            android:layout_gravity="right"
+            android:gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            android:text="@string/title_sameday_info"
+            android:textColor="@color/app_pink"
+            android:textStyle="bold"
+            android:textSize="22sp"/>
+
+        <TextView
+            android:layout_width="194dp"
+            android:layout_height="16dp"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="2dp"
+            android:text="@string/first_text_sameday_off_info"
+            android:textColor="@color/new_app_grey"
+            android:visibility="invisible"
+            android:textStyle="normal"
+            android:textSize="12sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <TextView
+        android:id="@+id/first_subtitle_sameday_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="30dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/new_app_grey"
+        android:text="@string/first_subtitle_info_sameday"
+        android:layout_marginEnd="50dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/new_app_grey"
+        android:text="@string/first_text_info_sameday"
+        android:layout_marginEnd="50dp" />
+
+    <TextView
+        android:id="@+id/second_subtitle_sameday_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="25dp"
+        android:textColor="@color/new_app_grey"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="@string/second_subtitle_info_sameday"/>
+
+    <TextView
+        android:id="@+id/same_day_explain_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginEnd="50dp"
+        android:textColor="@color/new_app_grey"
+        android:text="@string/second_text_info_sameday_one" />
+    <TextView
+        android:id="@+id/same_day_explain_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginEnd="50dp"
+        android:textColor="@color/new_app_grey"
+        android:text="@string/second_text_info_sameday_two" />
+    <TextView
+        android:id="@+id/same_day_explain_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginEnd="50dp"
+        android:textColor="@color/new_app_grey"
+        android:text="@string/second_text_info_sameday_three" />
+    <TextView
+        android:id="@+id/same_day_explain_four"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginEnd="50dp"
+        android:textColor="@color/new_app_grey"
+        android:text="@string/second_text_info_sameday_four" />
+</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

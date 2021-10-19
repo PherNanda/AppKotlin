@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.miscota.android.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_homeProductsFragment"
+            app:destination="@id/homeProductsFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_MainCategoriesFragment"
+            app:destination="@id/mainCategoriesFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_scheduledOrderFragment"
+            app:destination="@id/scheduledOrderFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_storeLocationFragment"
+            app:destination="@id/storeLocationFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_consultingFragment"
+            app:destination="@id/consultingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.miscota.android.ui.dashboard.DashboardFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_dashboard" />
+
+
+    <fragment
+        android:id="@+id/homeProductsFragment"
+        android:name="com.miscota.android.ui.products.HomeProductsFragment"
+        android:label="HomeProductsFragment">
+
+        <action
+            android:id="@+id/action_homeProductsFragment_to_mainCategoriesFragment"
+            app:destination="@id/mainCategoriesFragment" />
+
+        <action
+            android:id="@+id/action_homeProductsFragment_to_allProductsCategoryFragment"
+            app:destination="@id/allProductsCategoryFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/mainCategoriesFragment"
+        android:name="com.miscota.android.ui.categories.MainCategoriesFragment"
+        android:label="MainCategoriesFragment">
+        <action
+            android:id="@+id/action_mainCategoriesFragment_to_subCategoriesFragment"
+            app:destination="@id/subCategoriesFragment" />
+
+        <action
+            android:id="@+id/action_mainCategoriesFragment_to_searchProductsFragment"
+            app:destination="@id/searchProductsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/subCategoriesFragment"
+        android:name="com.miscota.android.ui.categories.SubCategoriesFragment"
+        android:label="SubCategoriesFragment">
+        <action
+            android:id="@+id/action_subCategoriesFragment_to_categoryProductsFragment"
+            app:destination="@id/categoryProductsFragment" />
+        <action
+            android:id="@+id/action_subCategoriesFragment_to_searchProductsFragment"
+            app:destination="@id/searchProductsFragment" />
+        <action
+            android:id="@+id/action_subCategoriesFragment_to_subSubCategoriesFragment"
+            app:destination="@id/fragmentSubSubcategories" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryProductsFragment"
+        android:name="com.miscota.android.ui.category.CategoryProductsFragment"
+        android:label="CategoryProductsFragment">
+        <action
+            android:id="@+id/action_categoryProductsFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+        <action
+            android:id="@+id/action_categoryProductsFragment_to_searchProductsFragment"
+            app:destination="@id/searchProductsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="com.miscota.android.ui.productdetail.ProductDetailFragment"
+        android:label="ProductDetailFragment" />
+    <fragment
+        android:id="@+id/allProductsCategoryFragment"
+        android:name="com.miscota.android.ui.products.AllProductsCategoryFragment"
+        android:label="AllProductsCategoryFragment">
+        <action
+            android:id="@+id/action_allProductsCategoryFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.miscota.android.ui.webview.WebViewFragment"
+        android:label="WebViewFragment" />
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.miscota.android.ui.webview.MaskokotasWebFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_web_view" />
+    <fragment
+        android:id="@+id/navigation_orders"
+        android:name="com.miscota.android.ui.webview.MaskokotasWebFragment"
+        android:label="Orders"
+        tools:layout="@layout/fragment_web_view" />
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.miscota.android.ui.cart.CartFragment"
+        android:label="fragment_cart"
+        tools:layout="@layout/fragment_cart">
+        <action
+            android:id="@+id/action_cartFragment_to_pedidoFragment"
+            app:destination="@id/pedidoFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/scheduledOrderFragment"
+        android:name="com.miscota.android.ui.scheduledordered.ScheduledOrderFragment"
+        android:label="ScheduledOrderFragment" />
+    <fragment
+        android:id="@+id/consultingFragment"
+        android:name="com.miscota.android.ui.consulting.ConsultingFragment"
+        android:label="ConsultingFragment" />
+    <fragment
+        android:id="@+id/searchProductsFragment"
+        android:name="com.miscota.android.ui.search.SearchProductsFragment"
+        android:label="SearchProductsFragment">
+        <action
+            android:id="@+id/action_searchProductsFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/storeLocationFragment"
+        android:name="com.miscota.android.ui.store.StoreLocationFragment"
+        android:label="StoreLocationFragment" />
+
+    <fragment
+        android:id="@+id/pedidoFragment"
+        android:name="com.miscota.android.ui.pedido.Pedido"
+        android:label="@string/pedido_registrado"
+        tools:layout="@layout/pedido_fragment" />
+
+    <fragment
+        android:id="@+id/navigation_product"
+        android:name="com.miscota.android.ui.categories.MainCategoriesFragment"
+        android:label="MainCategoriesFragment"
+        tools:layout="@layout/fragment_main_categories">
+
+        <action
+            android:id="@+id/action_mainCategoriesFragment_to_subCategoriesFragment"
+            app:destination="@id/subCategoriesFragment" />
+
+        <action
+            android:id="@+id/action_mainCategoriesFragment_to_searchProductsFragment"
+            app:destination="@id/searchProductsFragment" />
+
+    </fragment>
+
+    <!-- <fragment
+        android:id="@+id/navigation_product"
+        android:name="com.miscota.android.ui.products.HomeProductsFragment"
+        android:label="Products"
+        tools:layout="@layout/fragment_home_products">
+
+    <action
+        android:id="@+id/action_homeProductsFragment_to_mainCategoriesFragment"
+        app:destination="@id/mainCategoriesFragment" />
+
+    </fragment>-->
+
+    <fragment
+        android:id="@+id/tipoEnvioFragment"
+        android:name="com.miscota.android.ui.tipodeenvio.TipoEnvioFragment"
+        tools:layout="@layout/tipo_envio_fragment"/>
+
+    <fragment
+        android:id="@+id/addressAdd"
+        android:name="com.miscota.android.ui.addaddress.AddAddressFragment"
+        tools:layout="@layout/add_address_fragment"/>
+
+    <fragment
+        android:id="@+id/tramitarPedidoFragment"
+        android:name="com.miscota.android.ui.tramitarpedido.TramitarPedidoFragment"
+        tools:layout="@layout/tramitar_pedido_fragment">
+
+    <action
+        android:id="@+id/action_tramitarPedidoFragment_to_tipoEnvioFragment"
+        app:destination="@id/tipoEnvioFragment" />
+
+        <action
+            android:id="@+id/action_tramitarPedidoFragment_to_direccionEnvioFragment"
+            app:destination="@id/addressAdd" />
+
+    </fragment>
+
+
+
+
+
+
+    <!--  <fragment
+          android:id="@+id/navigation_product"
+          android:name="com.miscota.android.ui.categories.MainCategoriesFragment"
+          android:label="MainCategoriesFragment"
+          tools:layout="@layout/fragment_main_categories">
+
+          <action
+              android:id="@+id/action_mainCategoriesFragment_to_subCategoriesFragment"
+              app:destination="@id/subCategoriesFragment" />
+
+      </fragment>-->
+
+
+
+</navigation>

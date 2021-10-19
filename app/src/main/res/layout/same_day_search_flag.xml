@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:paddingTop="0dp"
+    android:paddingBottom="1dp"
+    android:layout_height="wrap_content">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/productsCardSameday"
+        style="@style/Theme.AppComponents.Card.New.Ui.SameDay.Flag"
+        android:layout_width="95dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="parent"
+            android:paddingTop="5dp">
+
+
+            <TextView
+                android:id="@+id/productLabelSameday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="13dp"
+                android:text="@string/title_sameday_search"
+                android:letterSpacing="0"
+                android:textAlignment="textStart"
+                android:textColor="@color/dark_grey"
+                android:textSize="9sp"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                app:fontFamily="@font/bree_regular"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/productsCardImageSameday"
+                style="@style/Theme.AppComponents.Card.New.Ui.SameDay.Flag.White"
+                android:layout_width="35dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginEnd="7dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="parent">
+            <ImageView
+                android:id="@+id/productImageSameday"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="23dp"
+                android:src="@drawable/sameday_icon_web"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="@id/productLabelSameday"
+                app:layout_constraintTop_toTopOf="@id/productLabelSameday" />
+            </com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

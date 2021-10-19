@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:id="@+id/sub_subcategories"
+    android:layout_marginHorizontal="3dp"
+    android:layout_marginVertical="0dp"
+    app:cardBackgroundColor="@color/transparent"
+    android:forceDarkAllowed="false">
+
+    <FrameLayout
+        android:id="@+id/bottomSheetSubCategory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textViewSubSub"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginHorizontal="16dp"
+            android:textAppearance="@style/Widget.AppComponents.Button.OutlinedButton.Search.New.SubCategory"
+            android:textStyle="normal" />
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
