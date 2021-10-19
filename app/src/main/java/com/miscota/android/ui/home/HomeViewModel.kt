@@ -174,13 +174,17 @@ class HomeViewModel(private val authRepository: AuthRepository,
                 }
                 if (_requestID.value == null){
                     val retailIdDefault = "0"
-                    _requestID.value?.retail_shop_id == retailIdDefault
+                    _requestID.value = Store("Retail_ecommerce",retailIdDefault)
                     authStore.setRetailID(retailIdDefault)
+                    println("HomeViewModel _requestID.value?.retail_shop_id line 179  ${_requestID.value?.retail_shop_id} -- ")
+                    println("HomeViewModel retailIdDefault line 180  $retailIdDefault -- ")
                 }
                 if(response.isEmpty()){
                     val retailIdDefault = "0"
-                    _requestID.value?.retail_shop_id == retailIdDefault
+                    _requestID.value = Store("Retail_ecommerce",retailIdDefault)
                     authStore.setRetailID(retailIdDefault)
+                    println("HomeViewModel _requestID.value?.retail_shop_id line 186  ${_requestID.value?.retail_shop_id} -- ")
+                    println("HomeViewModel retailIdDefault line 187  $retailIdDefault -- ")
                 }
             }
         }

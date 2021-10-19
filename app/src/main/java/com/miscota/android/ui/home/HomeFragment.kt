@@ -123,10 +123,6 @@ class HomeFragment : Fragment() {
         }
 
 
-
-        //firebase
-        //firebaseAnalytics = Firebase.analytics
-
         //***TEST******//
       /**  val navController = findNavController()
         if (navController.currentDestination?.id == R.id.navigation_product) {
@@ -135,7 +131,7 @@ class HomeFragment : Fragment() {
         //*********//
 
 
-        binding.productLabelSameday.text = colorMyText(getString(R.string.sameday_products),14,26, ContextCompat.getColor(requireContext(), R.color.app_pink))
+        binding.productLabelSameday.text = colorMyText(getString(R.string.sameday_products),14,26, getColor(requireContext(), R.color.app_pink))
 
         viewModel.selectedLocation.observe(viewLifecycleOwner) {
             if (it != null ) {
@@ -215,6 +211,7 @@ class HomeFragment : Fragment() {
                     requestID = viewModel.requestID.value!!.retail_shop_id
                     binding.productsCardSameday.isEnabled = true
                     binding.productsCardSameday.setCardBackgroundColor(getColor(requireContext(),R.color.white_900))
+                    (requireActivity() as MainActivity).binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(requireActivity(),R.drawable.background_same_day_on))
                     binding.productsCardSameday.isClickable = true
 
                 }
@@ -222,6 +219,8 @@ class HomeFragment : Fragment() {
                     binding.productsCardSameday.isEnabled = false
                     binding.productsCardSameday.setCardBackgroundColor(getColor(requireContext(),R.color.grey_light_new))
                     binding.productsCardSameday.isClickable = false
+                    (requireActivity() as MainActivity).binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(requireActivity(),R.drawable.background_same_day_off))
+                    (requireActivity() as MainActivity).binding.locationTextMain.text = colorMyText((requireActivity() as MainActivity).binding.locationTextMain.text.toString(),0,(requireActivity() as MainActivity).binding.locationTextMain.text.length,  getColor(requireActivity(), R.color.new_app_grey))
                     requestID = viewModel.requestID.value!!.retail_shop_id
                 }
 

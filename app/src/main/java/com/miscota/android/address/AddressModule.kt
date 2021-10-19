@@ -8,6 +8,7 @@ val addressModule = module {
         AddressViewModel(
             authStore = get(),
             placesRepository = get(),
+            storeLocationRepository = get()
         )
     }
 }

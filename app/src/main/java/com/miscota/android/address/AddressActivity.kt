@@ -2,15 +2,7 @@ package com.miscota.android.address
 
 import android.Manifest
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.Shape
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -278,6 +270,13 @@ class AddressActivity : AppCompatActivity() {
             val additionalAddress = binding.additionalAddress.text.toString()
             viewModel.setCurrentAddress(additionalAddress)
         }
+
+        viewModel.requestID.observe(this){
+            println("AddressActivity requestID.value line 283  ${viewModel.requestID.value} -- ")
+            return@observe
+        }
+
+
 
         binding.placesLocationLayout.setOnClickListener {
             val additionalAddress = binding.additionalAddress.text.toString()
