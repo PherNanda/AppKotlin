@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.facebook.FacebookSdk
 import com.google.android.gms.maps.model.LatLng
+import com.miscota.android.repository.StoreLocationRepository
+import com.miscota.android.ui.store.Store
 import com.miscota.android.util.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -17,6 +19,7 @@ import java.util.*
 class AddressViewModel(
     val authStore: AuthStore,
     private val placesRepository: PlacesRepository,
+    private val storeLocationRepository: StoreLocationRepository
 ) : ViewModel() {
 
     private val _currentLocation: MutableLiveData<LatLng> = MutableLiveData()
@@ -39,6 +42,11 @@ class AddressViewModel(
 
     private val _navigateBackEvent: MutableLiveData<Event<Boolean>> = MutableLiveData()
     val navigateBackEvent: LiveData<Event<Boolean>> = _navigateBackEvent
+
+    private var _requestID: MutableLiveData<Store> = MutableLiveData()
+    val requestID: LiveData<Store> = _requestID
+
+    private val isSameDayEnabled = MutableLiveData<Boolean>()
 
     private var job: Job? = null
 
@@ -157,20 +165,11 @@ class AddressViewModel(
         authStore.addRecentAddress(newAddress)
         authStore.addAddressUser(authStore.getAddressInfo())
         authStore.addRecentAddressInfo(authStore.getAddressInfo())
+        newAddress?.postalCode?.let { checkPostalCode(it) }
 
         _navigateBackEvent.value = Event(true)
     }
 
-    fun setAddressOrder(additionalAddress: String, address: Address?) {
-        val newAddress = address?.copy(address = "$additionalAddress ${address.address}")
-
-        authStore.setAddress(newAddress)
-        //authStore.addRecentAddress(newAddress)
-        //authStore.addAddressUser(authStore.getAddressInfo())
-        //authStore.addRecentAddressInfo(authStore.getAddressInfo())
-
-        _navigateBackEvent.value = Event(true)
-    }
 
     fun setAddressTwo(additionalAddress: String, address: Address?) {
         val newAddress = address?.copy(address = "$additionalAddress ${address.address}")
@@ -260,6 +259,51 @@ class AddressViewModel(
                 }
             }
         }
+    }
+
+    fun checkPostalCode(postalCode: String) {
+
+        println(" postalCode AddressViewModel: $postalCode")
+        viewModelScope.launch {
+            val result = runCatching {
+                val response = storeLocationRepository.getSameDayShops(postalCode)
+                if (!response.isEmpty()) {
+                    isSameDayEnabled.value = true
+
+                    val llist: ArrayList<Store> = arrayListOf(
+                        Store(
+                            name= response.get(0).name,
+                            retail_shop_id = response.get(0).retail_shop_id
+                        )
+                    )
+
+                    llist.map {
+
+                        _requestID.value = it
+                        println(" List Retail AddressViewModel  ${it.name} -- ${it.retail_shop_id}")
+                    }
+                    //isSameDayEnabled.value = true
+                    authStore.setRetailID(_requestID.value?.retail_shop_id)
+                    return@launch
+                }
+                if (_requestID.value == null){
+                    val retailIdDefault = "0"
+                    _requestID.value = Store("Retail_ecommerce",retailIdDefault)
+                    authStore.setRetailID(retailIdDefault)
+                    println("AddressViewModel _requestID.value?.retail_shop_id line 306  ${_requestID.value?.retail_shop_id} -- ")
+                    println("AddressViewModel retailIdDefault line 307  $retailIdDefault -- ")
+                }
+                if(response.isEmpty()){
+                    val retailIdDefault = "0"
+                    _requestID.value = Store("Retail_ecommerce",retailIdDefault)
+                    authStore.setRetailID(retailIdDefault)
+                    println("AddressViewModel _requestID.value?.retail_shop_id line 313  ${_requestID.value?.retail_shop_id} -- ")
+                    println("AddressViewModel retailIdDefault line 314  $retailIdDefault -- ")
+                }
+            }
+        }
+
+        isSameDayEnabled.value = false
     }
 
 

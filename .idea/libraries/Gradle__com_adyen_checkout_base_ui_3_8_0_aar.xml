@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.adyen.checkout:base-ui:3.8.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/26f2fc38cbbc38135641da989e3ad61c/jetified-base-ui-3.8.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/26f2fc38cbbc38135641da989e3ad61c/jetified-base-ui-3.8.0/res" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/26f2fc38cbbc38135641da989e3ad61c/jetified-base-ui-3.8.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/base-ui/3.8.0/1ae93496a76d9bd99ed8bc44444f2899177803d8/base-ui-3.8.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/base-ui/3.8.0/4c14d4cb05adc305a7565eef07a6e953c2b0b663/base-ui-3.8.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

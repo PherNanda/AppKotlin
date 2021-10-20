@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.zendesk:chat-providers:3.2.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/f54026684b693b9a531328b785647814/jetified-chat-providers-3.2.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/f54026684b693b9a531328b785647814/jetified-chat-providers-3.2.0/res" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/f54026684b693b9a531328b785647814/jetified-chat-providers-3.2.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.zendesk/chat-providers/3.2.0/7109271c8a0f3ba8c0ba158a2e4fc48719b7691b/chat-providers-3.2.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.zendesk/chat-providers/3.2.0/478ae4502bb29dc584f3b6adef8c189d4ec7866f/chat-providers-3.2.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

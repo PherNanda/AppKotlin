@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.adyen.checkout:card-base:3.8.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/501b56a206bc2f314cb9f1abf5c0c302/jetified-card-base-3.8.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/501b56a206bc2f314cb9f1abf5c0c302/jetified-card-base-3.8.0/res" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/501b56a206bc2f314cb9f1abf5c0c302/jetified-card-base-3.8.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/card-base/3.8.0/75826656fcb84a5b8d57bf1ccf49ecededdc71f8/card-base-3.8.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/card-base/3.8.0/74d3eadef67af0c25645ceba7a77a0c27b4b8323/card-base-3.8.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

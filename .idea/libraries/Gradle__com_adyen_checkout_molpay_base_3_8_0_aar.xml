@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.adyen.checkout:molpay-base:3.8.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/6ce16e0544725deb8ad08b9edb7f572c/jetified-molpay-base-3.8.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/6ce16e0544725deb8ad08b9edb7f572c/jetified-molpay-base-3.8.0/res" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/6ce16e0544725deb8ad08b9edb7f572c/jetified-molpay-base-3.8.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/molpay-base/3.8.0/44d7d0bf5114d392e321fb7408c9fc9c0d47fa37/molpay-base-3.8.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/molpay-base/3.8.0/cbda70985e19d1ec207171e860044ca40d98110b/molpay-base-3.8.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

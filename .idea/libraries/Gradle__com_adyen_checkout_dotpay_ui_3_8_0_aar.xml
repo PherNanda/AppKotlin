@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.adyen.checkout:dotpay-ui:3.8.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/c3d9ca35de9a280e6e220e4b00c71132/jetified-dotpay-ui-3.8.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/c3d9ca35de9a280e6e220e4b00c71132/jetified-dotpay-ui-3.8.0/res" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/c3d9ca35de9a280e6e220e4b00c71132/jetified-dotpay-ui-3.8.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/dotpay-ui/3.8.0/c23a031b82451b5953472479d943ac599490221/dotpay-ui-3.8.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/dotpay-ui/3.8.0/71416283b7b7c4c158fdcd8042634f6c572a6d0d/dotpay-ui-3.8.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

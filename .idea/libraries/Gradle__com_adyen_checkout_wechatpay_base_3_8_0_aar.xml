@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.adyen.checkout:wechatpay-base:3.8.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/aa6abfc0b2a3e98d3ab2a68f7dbe4aae/jetified-wechatpay-base-3.8.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/aa6abfc0b2a3e98d3ab2a68f7dbe4aae/jetified-wechatpay-base-3.8.0/res" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/aa6abfc0b2a3e98d3ab2a68f7dbe4aae/jetified-wechatpay-base-3.8.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/wechatpay-base/3.8.0/f9bea116632772993f5c81c5ba8c228c6823eaf/wechatpay-base-3.8.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/wechatpay-base/3.8.0/b52c7f222663209cc28f02b9476edf55b25a1cc7/wechatpay-base-3.8.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

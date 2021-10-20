@@ -17,9 +17,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.MarginLayoutParamsCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -65,14 +63,20 @@ class MainActivity : AppCompatActivity() {
             }
             if (destination.id == R.id.navigation_home) {
 
+                //controller.navigate(R.id.navigation_home)
 
-              /**  val viewSameDayInfoMain = findViewById<View>(R.id.samedayInfoMain)
-                viewSameDayInfoMain.visibility = View.VISIBLE
-
+                /**val viewLocationInfoMain = findViewById<View>(R.id. locationLinearLayoutmain)
+                viewLocationInfoMain.visibility = View.VISIBLE
 
                 val params: ViewGroup.LayoutParams = binding.headerMain.layoutParams!!
                 params.height = 260
-                binding.headerMain.layoutParams = params**/
+                binding.headerMain.layoutParams = params
+
+
+                val viewSameDayInfoMain = findViewById<View>(R.id.samedayInfoMain)
+                viewSameDayInfoMain.visibility = View.VISIBLE**/
+
+
 
             }
             if (destination.id == R.id.navigation_product) {
@@ -88,7 +92,7 @@ class MainActivity : AppCompatActivity() {
                 binding.headerMain.layoutParams = params**/
 
             }
-            else{
+            //else{
 
                 //val viewLocationLinearLayoutmain = findViewById<View>(R.id.locationLinearLayoutmain)
                 //viewLocationLinearLayoutmain.visibility = View.VISIBLE
@@ -96,7 +100,7 @@ class MainActivity : AppCompatActivity() {
                 //val viewSameDayInfoMain = findViewById<View>(R.id.samedayInfoMain)
                 //viewSameDayInfoMain.visibility = View.VISIBLE
 
-            }
+            //}
 
         }
 
@@ -140,6 +144,7 @@ class MainActivity : AppCompatActivity() {
 
         navigationHome.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
+            //navController.navigate(R.id.navigation_home)
         }
        /** val navigationProduct = findViewById<BottomNavigationItemView>(R.id.navigation_product)
         navigationProduct.setPadding(0)
@@ -206,6 +211,49 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         viewModel.getTotalItens()
 
+        viewModel.requestID.observe(this) {
+            if (viewModel.requestID.value != null) {
+                println("viewModel.requestID.value line 212 onCreate \n ${viewModel.requestID.value}")
+
+                if (viewModel.requestID.value!!.retail_shop_id == "0") {
+
+                    binding.textSamedayMain.text = getString(R.string.same_day_off)
+                    binding.imageSamedayCheck.visibility = View.GONE
+                    binding.textSamedayMain.text = colorMyText(
+                        getString(R.string.same_day_off),
+                        11,
+                        37,
+                        ContextCompat.getColor(this, R.color.app_pink)
+                    )
+
+                    binding.textSamedayMainInfo.text =
+                        boldMyText(getString(R.string.text_sameday_off_info), 13, 30)
+                    //binding.locationTextMain.text =
+                    //it.postalCode + ", " + it.city
+
+                }
+                if (viewModel.requestID.value!!.retail_shop_id != "0") {
+
+                    binding.samedayInfoMain.setBackgroundDrawable(
+                        ContextCompat.getDrawable(
+                            this,
+                            R.drawable.background_same_day_on
+                        )
+                    )
+                    binding.textSamedayMain.text = getString(R.string.title_sameday)
+                    binding.textSamedayMain.text = colorMyText(
+                        getString(R.string.title_sameday),
+                        0,
+                        11,
+                        ContextCompat.getColor(this, R.color.app_pink)
+                    )
+                    binding.imageSamedayCheck.visibility = View.VISIBLE
+
+                    println("line238 MainActivity inn::: line 249 \n ${viewModel.authStore.getRetailID()} ")
+                }
+            }
+        }
+
 
         viewModel.selectedLocation.observe(this) {
             if (it != null ) {
@@ -213,40 +261,11 @@ class MainActivity : AppCompatActivity() {
                 binding.locationTextMain.text=
                     it.postalCode+ ", " + it.city
 
-
+                println("it.postalCode line 217 OnCreate \n ${it.postalCode}")
                 it.postalCode.let { postalCode ->
                     viewModel.checkPostalCode(postalCode)
 
-                    if ( viewModel.requestID.value != null ) {
-                        println(" viewModel.requestID.value line 203main ${viewModel.requestID.value}")
 
-                        if (viewModel.requestID.value!!.retail_shop_id == "0") {
-
-                            binding.textSamedayMain.text = getString(R.string.same_day_off)
-                            binding.imageSamedayCheck.visibility = View.GONE
-                            binding.textSamedayMain.text = colorMyText(
-                                getString(R.string.same_day_off),
-                                11,
-                                37,
-                                ContextCompat.getColor(this, R.color.app_pink)
-                            )
-
-                            binding.textSamedayMainInfo.text =
-                                boldMyText(getString(R.string.text_sameday_off_info), 13, 30)
-                            binding.locationTextMain.text =
-                                it.postalCode + ", " + it.city
-
-                        }
-                        if ( viewModel.requestID.value!!.retail_shop_id != "0" ){
-
-                                binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_same_day_on))
-                                binding.textSamedayMain.text = getString(R.string.title_sameday)
-                                binding.textSamedayMain.text = colorMyText(getString(R.string.title_sameday),0,11, ContextCompat.getColor(this, R.color.app_pink))
-                                binding.imageSamedayCheck.visibility = View.VISIBLE
-
-                                println("line238 MainActivity inn::: ${viewModel.authStore.getRetailID()} ")
-                        }
-                    }
                 }
 
             }
@@ -312,16 +331,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun expandCloseSheet() {
-        if (sheetBehavior!!.state != BottomSheetBehavior.STATE_EXPANDED) {
-            sheetBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
+        if (sheetBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
+            sheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             binding.samedayBottomInfo.visibility = View.VISIBLE
             binding.fragmentHome.visibility = View.INVISIBLE
-        } else if(sheetBehavior!!.state != BottomSheetBehavior.STATE_HIDDEN)  {
-            sheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+        } else if(sheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN)  {
+            sheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
             binding.fragmentHome.visibility = View.VISIBLE
         }
         else {
-            sheetBehavior!!.state = BottomSheetBehavior.STATE_COLLAPSED
+            sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             binding.samedayBottomInfo.visibility = View.GONE
             binding.fragmentHome.visibility = View.INVISIBLE
         }
@@ -348,7 +367,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        println("onStartMain")
+        println("onStartMain \n")
 
         viewModel.getTotalItens()
         viewModel.costEcommerce
@@ -359,6 +378,39 @@ class MainActivity : AppCompatActivity() {
         viewModel.comproveLoginExpireDate(currentDate, dateExpire)
 
         viewModel.loadSelectedLocation()
+
+        viewModel.requestID.observe(this) {
+            return@observe
+        }
+
+
+        if (viewModel.authStore.getRetailID() != null) {
+
+            println("onStartMain viewModel.authStore.getRetailID() MainActivity line 428 \n ${viewModel.authStore.getRetailID()} ")
+
+            if (viewModel.authStore.getRetailID() == "0" ){
+
+                binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_home_new_search))
+                binding.textSamedayMain.text = getString(R.string.same_day_off)
+                binding.imageSamedayCheck.visibility = View.GONE
+                binding.textSamedayMain.text = colorMyText(getString(R.string.same_day_off),11,37, ContextCompat.getColor(this, R.color.app_pink))
+
+                //binding.locationTextMain.text = colorMyText(it.postalCode+ ", " + it.city,0,binding.locationTextMain.text.length,  ContextCompat.getColor(this, R.color.new_app_grey))
+                println("onStartMain viewModel.authStore.getRetailID() MainActivity line 438 \n ${viewModel.authStore.getRetailID()} ")
+
+            }
+
+            if (viewModel.authStore.getRetailID()  != "0" ){
+
+                binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_same_day_on))
+                binding.textSamedayMain.text = getString(R.string.title_sameday)
+                binding.textSamedayMain.text = colorMyText(getString(R.string.title_sameday),0,11, ContextCompat.getColor(this, R.color.app_pink))
+                binding.imageSamedayCheck.visibility = View.VISIBLE
+
+                println("onStartMain viewModel.authStore.getRetailID() MainActivity inn::: line 449 \n ${viewModel.authStore.getRetailID()} ")
+
+            }
+        }
 
 
         viewModel.selectedLocation.observe(this) {
@@ -373,40 +425,19 @@ class MainActivity : AppCompatActivity() {
                 binding.locationTextMain.text=
                     it.postalCode+ ", " + it.city
 
+                println("it.postalCode line 467 OnStartMain \n ${it.postalCode}")
+
                 it.postalCode.let { postalCode ->
                     viewModel.checkPostalCode(postalCode)
 
-
-                    if (viewModel.authStore.getRetailID() != null) {
-
-                        println("onStartMain viewModel.authStore.getRetailID() MainActivity ${viewModel.authStore.getRetailID()} ")
-
-                        if (viewModel.authStore.getRetailID() == "0" ){
-
-                            binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_home_new_search))
-                            binding.textSamedayMain.text = getString(R.string.same_day_off)
-                            binding.imageSamedayCheck.visibility = View.GONE
-                            binding.textSamedayMain.text = colorMyText(getString(R.string.same_day_off),11,37, ContextCompat.getColor(this, R.color.app_pink))
-
-                            binding.locationTextMain.text = colorMyText(it.postalCode+ ", " + it.city,0,binding.locationTextMain.text.length,  ContextCompat.getColor(this, R.color.new_app_grey))
-
-                        }
-
-                        if (viewModel.authStore.getRetailID()  != "0" ){
-
-                            binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_same_day_on))
-                            binding.textSamedayMain.text = getString(R.string.title_sameday)
-                            binding.textSamedayMain.text = colorMyText(getString(R.string.title_sameday),0,11, ContextCompat.getColor(this, R.color.app_pink))
-                            binding.imageSamedayCheck.visibility = View.VISIBLE
-
-                            println("onStartMain viewModel.authStore.getRetailID() MainActivity inn::: ${viewModel.authStore.getRetailID()} ")
-
-                        }
-                      }
                     }
                 }
 
             }
+
+
+
+
 
         }
 
@@ -418,195 +449,62 @@ class MainActivity : AppCompatActivity() {
         viewModel.getTotalItens()
         binding.cartItemsText.text = viewModel.getTotalItens().toString()
 
-        /**viewModel.loadSelectedLocation()
-        viewModel.selectedLocation.observe(this) {
-            if (it != null ) {
-                changeSizeMyText(18F,binding.locationTextMain)
-                binding.locationTextMain.text=
-                    it.postalCode+ ", " + it.city?: it.region
-                println("it.postalCode+ it.city    ${it.postalCode} ${it.city}")
-
-                it.postalCode.let { postalCode ->
-                    viewModel.checkPostalCode(postalCode)
-
-                    println("onResumeMain viewModel.isSameDayEnabled.value ${viewModel.isSameDayEnabled.value}")
-
-                    if (viewModel.authStore.getRetailID() != null) {
-
-                        println("onResumeMain viewModel.authStore.getRetailID() MainActivity ${viewModel.authStore.getRetailID()} ")
-
-                        if (viewModel.authStore.getRetailID() == "0") {
-
-                            binding.samedayInfoMain.setBackgroundDrawable(
-                                ContextCompat.getDrawable(
-                                    this,
-                                    R.drawable.background_home_new_search
-                                )
-                            )
-                            binding.textSamedayMain.text = getString(R.string.same_day_off)
-                            binding.imageSamedayCheck.visibility = View.GONE
-                            binding.textSamedayMain.text = colorMyText(
-                                getString(R.string.same_day_off),
-                                11,
-                                37,
-                                ContextCompat.getColor(this, R.color.app_pink)
-                            )
-
-                            binding.locationTextMain.text = colorMyText(it.postalCode+ ", " + it.city,0,binding.locationTextMain.text.length,  ContextCompat.getColor(this, R.color.new_app_grey))
-
-                        }
-                        else{
-
-                            binding.samedayInfoMain.setBackgroundDrawable(
-                                ContextCompat.getDrawable(
-                                    this,
-                                    R.drawable.background_same_day_on
-                                )
-                            )
-                            binding.textSamedayMain.text = getString(R.string.title_sameday)
-                            binding.textSamedayMain.text = colorMyText(
-                                getString(R.string.title_sameday),
-                                0,
-                                11,
-                                ContextCompat.getColor(this, R.color.app_pink)
-                            )
-                            binding.imageSamedayCheck.visibility = View.VISIBLE
-
-                        }
-
-                    }
-                }
-
-            }
-            if (it == null){
-                println("onResumeMain == null")
-                binding.samedayInfoMain.setBackgroundColor(ContextCompat.getColor(this,R.color.transparent))
-                binding.textSamedayMain.text = getString(R.string.text_default_main)
-                binding.imageSamedayCheck.visibility = View.GONE
-                binding.samedayInfo.visibility = View.GONE
-                binding.imageSamedayMain.visibility = View.GONE
-
-                binding.samedayInfoBottom.gravity = Gravity.END
-
-                changeSizeMyText(14F,binding.textSamedayMain)
-                val gravity = Gravity.CENTER
-
-                val paramss: ViewGroup.LayoutParams =  binding.samedayInfoBottom.layoutParams
-                paramss.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                paramss.width = ViewGroup.LayoutParams.MATCH_PARENT
-
-                binding.samedayInfoBottom.gravity = gravity
-                binding.samedayInfoBottom.layoutParams = paramss
-
-            }
-        }**/
-
     }
 
     override fun onPause() {
         super.onPause()
         println("onPauseMain")
 
-        /**viewModel.loadSelectedLocation()
-        viewModel.selectedLocation.observe(this) {
-            if (it != null ) {
-                changeSizeMyText(16F,binding.locationTextMain)
-                binding.locationTextMain.text=
-                    it.postalCode+ ", " + it.city ?: "0 "
-
-                println("onPauseMain it.postalCode+ it.city    ${it.postalCode} ${it.city}")
-
-                if (viewModel.authStore.getRetailID() != null) {
-
-                    println("onPauseMain viewModel.authStore.getRetailID() MainActivity ${viewModel.authStore.getRetailID()} ")
-
-                    if (viewModel.authStore.getRetailID() == "0" ){
-
-                        binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_home_new_search))
-                        binding.textSamedayMain.text = getString(R.string.same_day_off)
-                        binding.imageSamedayCheck.visibility = View.GONE
-                        binding.textSamedayMain.text = colorMyText(getString(R.string.same_day_off),11,37, ContextCompat.getColor(this, R.color.app_pink))
-                        binding.locationTextMain.text = colorMyText(it.postalCode+ ", " + it.city,0,binding.locationTextMain.text.length,  ContextCompat.getColor(this, R.color.new_app_grey))
-
-                    }
-                    if (viewModel.authStore.getRetailID() != "0" ){
-
-                        binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_same_day_on))
-                        binding.textSamedayMain.text = getString(R.string.title_sameday)
-                        binding.textSamedayMain.text = colorMyText(getString(R.string.title_sameday),0,11, ContextCompat.getColor(this, R.color.app_pink))
-                        binding.imageSamedayCheck.visibility = View.VISIBLE
-
-                    }
-
-
-                }
-
-            }
-            if (it == null){
-                println("onPauseMain == null")
-                binding.samedayInfoMain.setBackgroundColor(ContextCompat.getColor(this,R.color.transparent))
-                binding.textSamedayMain.text = getString(R.string.text_default_main)
-                binding.imageSamedayCheck.visibility = View.GONE
-                binding.samedayInfo.visibility = View.GONE
-                binding.imageSamedayMain.visibility = View.GONE
-
-                binding.samedayInfoBottom.gravity = Gravity.END
-
-                changeSizeMyText(14F,binding.textSamedayMain)
-                val gravity = Gravity.CENTER
-
-                val paramss: ViewGroup.LayoutParams =  binding.samedayInfoBottom.layoutParams
-                paramss.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                paramss.width = ViewGroup.LayoutParams.MATCH_PARENT
-
-                binding.samedayInfoBottom.gravity = gravity
-                binding.samedayInfoBottom.layoutParams = paramss
-
-            }
-        }**/
     }
 
     override fun onRestart() {
         super.onRestart()
         println("onRestartMain")
 
+        viewModel.loadSelectedLocation()
+
 
         viewModel.selectedLocation.observe(this) {
             if (it != null ) {
                 changeSizeMyText(16F,binding.locationTextMain)
                 binding.locationTextMain.text=
-                    it.postalCode+ ", " + it.city ?: "0 "
+                    it.postalCode+ ", " + it.city
 
-                println("it.postalCode+ it.city    ${it.postalCode} ${it.city}")
+                println("it.postalCode+ it.city line 566 \n  ${it.postalCode} ${it.city}")
+
+                viewModel.checkPostalCode(it.postalCode)
 
                 if (viewModel.authStore.getRetailID() != null) {
 
-                    println("onRestartMain viewModel.authStore.getRetailID() MainActivity ${viewModel.authStore.getRetailID()} ")
+                println("onRestartMain viewModel.authStore.getRetailID() MainActivity line 444 ${viewModel.authStore.getRetailID()} ")
 
-                    if (viewModel.authStore.getRetailID() == "0" ){
+                if (viewModel.authStore.getRetailID() == "0" ){
 
-                        binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_home_new_search))
-                        binding.textSamedayMain.text = getString(R.string.same_day_off)
-                        binding.imageSamedayCheck.visibility = View.GONE
-                        binding.textSamedayMain.text = colorMyText(getString(R.string.same_day_off),11,37, ContextCompat.getColor(this, R.color.app_pink))
-                        binding.locationTextMain.text = colorMyText(it.postalCode+ ", " + it.city,0,binding.locationTextMain.text.length,  ContextCompat.getColor(this, R.color.new_app_grey))
+                binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_home_new_search))
+                binding.textSamedayMain.text = getString(R.string.same_day_off)
+                binding.imageSamedayCheck.visibility = View.GONE
+                binding.textSamedayMain.text = colorMyText(getString(R.string.same_day_off),11,37, ContextCompat.getColor(this, R.color.app_pink))
+                binding.locationTextMain.text = colorMyText(it.postalCode+ ", " + it.city,0,binding.locationTextMain.text.length,  ContextCompat.getColor(this, R.color.new_app_grey))
 
-                    }
-                    if (viewModel.authStore.getRetailID() != "0" ){
+                println("onRestartMain viewModel.authStore.getRetailID() MainActivity line 454 ${viewModel.authStore.getRetailID()} ")
+                }
+                if (viewModel.authStore.getRetailID() != "0" ){
 
-                        binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_same_day_on))
-                        binding.textSamedayMain.text = getString(R.string.title_sameday)
-                        binding.textSamedayMain.text = colorMyText(getString(R.string.title_sameday),0,11, ContextCompat.getColor(this, R.color.app_pink))
-                        binding.imageSamedayCheck.visibility = View.VISIBLE
+                binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_same_day_on))
+                binding.textSamedayMain.text = getString(R.string.title_sameday)
+                binding.textSamedayMain.text = colorMyText(getString(R.string.title_sameday),0,11, ContextCompat.getColor(this, R.color.app_pink))
+                binding.imageSamedayCheck.visibility = View.VISIBLE
 
-                    }
+                println("onRestartMain viewModel.authStore.getRetailID() MainActivity line 462 ${viewModel.authStore.getRetailID()} ")
+
+                }
 
 
                 }
 
             }
             if (it == null){
-                println("onRestartMain == null")
+                println("onRestartMain == null line 600")
                 binding.samedayInfoMain.setBackgroundColor(ContextCompat.getColor(this,R.color.transparent))
                 binding.textSamedayMain.text = getString(R.string.text_default_main)
                 binding.imageSamedayCheck.visibility = View.GONE
@@ -625,8 +523,43 @@ class MainActivity : AppCompatActivity() {
                 binding.samedayInfoBottom.gravity = gravity
                 binding.samedayInfoBottom.layoutParams = paramss
 
+                println("onRestartMain viewModel.authStore.getRetailID() MainActivity line 619 \n ${viewModel.authStore.getRetailID()} ")
+
             }
         }
+
+
+        if (viewModel.requestID.value?.retail_shop_id != null) {
+
+            println("onRestartMain viewModel.authStore.getRetailID() MainActivity line 534 \n ${viewModel.authStore.getRetailID()} ")
+            println("onRestartMain viewModel.requestID.value?.retail_shop_id MainActivity line 535 \n ${viewModel.requestID.value?.retail_shop_id} ")
+
+
+            if (viewModel.authStore.getRetailID() == "0" ){
+
+                binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_home_new_search))
+                binding.textSamedayMain.text = getString(R.string.same_day_off)
+                binding.imageSamedayCheck.visibility = View.GONE
+                binding.textSamedayMain.text = colorMyText(getString(R.string.same_day_off),11,37, ContextCompat.getColor(this, R.color.app_pink))
+                //binding.locationTextMain.text = colorMyText(it.postalCode+ ", " + it.city,0,binding.locationTextMain.text.length,  ContextCompat.getColor(this, R.color.new_app_grey))
+
+                println("onRestartMain viewModel.authStore.getRetailID() MainActivity line 544 \n ${viewModel.authStore.getRetailID()} ")
+            }
+            if (viewModel.authStore.getRetailID() != "0" ){
+
+                binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_same_day_on))
+                binding.textSamedayMain.text = getString(R.string.title_sameday)
+                binding.textSamedayMain.text = colorMyText(getString(R.string.title_sameday),0,11, ContextCompat.getColor(this, R.color.app_pink))
+                binding.imageSamedayCheck.visibility = View.VISIBLE
+
+                println("onRestartMain viewModel.authStore.getRetailID() MainActivity line 553 \n ${viewModel.authStore.getRetailID()} ")
+
+            }
+
+        }
+
+
+
 
         println("onRestartMain")
     }
@@ -687,69 +620,11 @@ class MainActivity : AppCompatActivity() {
 
         println("onStopMain")
 
-        /**viewModel.selectedLocation.observe(this) {
-            if (it != null ) {
-                changeSizeMyText(16F,binding.locationTextMain)
-                binding.locationTextMain.text=
-                    it.postalCode+ ", " + it.city ?: "0 "
-
-                println("it.postalCode+ it.city    ${it.postalCode} ${it.city}")
-
-                if (viewModel.authStore.getRetailID() != null) {
-
-                    println("onStopMain viewModel.authStore.getRetailID() MainActivity ${viewModel.authStore.getRetailID()} ")
-
-                    if (viewModel.authStore.getRetailID() == "0" ){
-
-                        binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_home_new_search))
-                        binding.textSamedayMain.text = getString(R.string.same_day_off)
-                        binding.imageSamedayCheck.visibility = View.GONE
-                        binding.textSamedayMain.text = colorMyText(getString(R.string.same_day_off),11,37, ContextCompat.getColor(this, R.color.app_pink))
-                        binding.locationTextMain.text = colorMyText(it.postalCode+ ", " + it.city,0,binding.locationTextMain.text.length,  ContextCompat.getColor(this, R.color.new_app_grey))
-
-                    }
-                    if (viewModel.authStore.getRetailID() != "0" ){
-
-                        binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_same_day_on))
-                        binding.textSamedayMain.text = getString(R.string.title_sameday)
-                        binding.textSamedayMain.text = colorMyText(getString(R.string.title_sameday),0,11, ContextCompat.getColor(this, R.color.app_pink))
-                        binding.imageSamedayCheck.visibility = View.VISIBLE
-
-                    }
-
-
-                }
-
-            }
-            if (it == null){
-                println("onStopMain == null")
-                binding.samedayInfoMain.setBackgroundColor(ContextCompat.getColor(this,R.color.transparent))
-                binding.textSamedayMain.text = getString(R.string.text_default_main)
-                binding.imageSamedayCheck.visibility = View.GONE
-                binding.samedayInfo.visibility = View.GONE
-                binding.imageSamedayMain.visibility = View.GONE
-
-                binding.samedayInfoBottom.gravity = Gravity.END
-
-                changeSizeMyText(14F,binding.textSamedayMain)
-                val gravity = Gravity.CENTER
-
-                val paramss: ViewGroup.LayoutParams =  binding.samedayInfoBottom.layoutParams
-                paramss.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                paramss.width = ViewGroup.LayoutParams.MATCH_PARENT
-
-                binding.samedayInfoBottom.gravity = gravity
-                binding.samedayInfoBottom.layoutParams = paramss
-
-            }
-        }**/
-
-        println("onStopMain")
     }
 
     override fun onBackPressed() {
-        //super.onBackPressed()
-        startActivity(Intent(this, MainActivity::class.java))
+        super.onBackPressed()
+        //startActivity(Intent(this, MainActivity::class.java))
         //navController.navigateUp()
     }
 
