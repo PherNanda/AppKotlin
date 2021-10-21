@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var sheetBehavior: BottomSheetBehavior<LinearLayout>
 
-
     private val listener =
         NavController.OnDestinationChangedListener { controller, destination, arguments ->
             if (destination.id == R.id.navigation_orders) {
@@ -59,6 +58,7 @@ class MainActivity : AppCompatActivity() {
                 //val params: ViewGroup.LayoutParams = binding.headerMain.layoutParams!!
                 //params.height = ViewGroup.LayoutParams.WRAP_CONTENT
                 //binding.headerMain.layoutParams = params
+                println(" destination 1 $destination")
 
             }
             if (destination.id == R.id.navigation_home) {
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 val viewSameDayInfoMain = findViewById<View>(R.id.samedayInfoMain)
                 viewSameDayInfoMain.visibility = View.VISIBLE**/
 
-
+                println(" destination 2 $destination")
 
             }
             if (destination.id == R.id.navigation_product) {
@@ -90,18 +90,9 @@ class MainActivity : AppCompatActivity() {
                 val params: ViewGroup.LayoutParams = binding.headerMain.layoutParams!!
                 params.height = 260
                 binding.headerMain.layoutParams = params**/
+                println(" destination 3 $destination")
 
             }
-            //else{
-
-                //val viewLocationLinearLayoutmain = findViewById<View>(R.id.locationLinearLayoutmain)
-                //viewLocationLinearLayoutmain.visibility = View.VISIBLE
-
-                //val viewSameDayInfoMain = findViewById<View>(R.id.samedayInfoMain)
-                //viewSameDayInfoMain.visibility = View.VISIBLE
-
-            //}
-
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -125,20 +116,17 @@ class MainActivity : AppCompatActivity() {
 
         }**/
 
-
-
-
         val sameDayExplainOne = findViewById<TextView>(R.id.same_day_explain_one)
-        sameDayExplainOne.text = boldColorMyText(getString(R.string.second_text_info_sameday_one),0,23, ContextCompat.getColor(this, R.color.app_pink))
+        sameDayExplainOne.text = boldColorMyText(getString(R.string.second_text_info_sameday_one),startIndex,30, ContextCompat.getColor(this, R.color.app_pink))
 
         val sameDayExplainTwo = findViewById<TextView>(R.id.same_day_explain_two)
-        sameDayExplainTwo.text = boldColorMyText(getString(R.string.second_text_info_sameday_two),0,23, ContextCompat.getColor(this, R.color.app_pink))
+        sameDayExplainTwo.text = boldColorMyText(getString(R.string.second_text_info_sameday_two),startIndex,35, ContextCompat.getColor(this, R.color.app_pink))
 
         val sameDayExplainThree = findViewById<TextView>(R.id.same_day_explain_three)
-        sameDayExplainThree.text = boldColorMyText(getString(R.string.second_text_info_sameday_three),0,23, ContextCompat.getColor(this, R.color.app_pink))
+        sameDayExplainThree.text = boldColorMyText(getString(R.string.second_text_info_sameday_three),startIndex,40, ContextCompat.getColor(this, R.color.app_pink))
 
         val sameDayExplainFour = findViewById<TextView>(R.id.same_day_explain_four)
-        sameDayExplainFour.text = boldColorMyText(getString(R.string.second_text_info_sameday_four),0,23, ContextCompat.getColor(this, R.color.app_pink))
+        sameDayExplainFour.text = boldColorMyText(getString(R.string.second_text_info_sameday_four),startIndex,endIndex, ContextCompat.getColor(this, R.color.app_pink))
 
         val navigationHome = findViewById<BottomNavigationItemView>(R.id.navigation_home)
 
@@ -243,7 +231,7 @@ class MainActivity : AppCompatActivity() {
                     binding.textSamedayMain.text = getString(R.string.title_sameday)
                     binding.textSamedayMain.text = colorMyText(
                         getString(R.string.title_sameday),
-                        0,
+                        startIndex,
                         11,
                         ContextCompat.getColor(this, R.color.app_pink)
                     )
@@ -388,19 +376,18 @@ class MainActivity : AppCompatActivity() {
 
             println("onStartMain viewModel.authStore.getRetailID() MainActivity line 428 \n ${viewModel.authStore.getRetailID()} ")
 
-            if (viewModel.authStore.getRetailID() == "0" ){
+            if (viewModel.authStore.getRetailID() == idEcommerce ){
 
                 binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_home_new_search))
                 binding.textSamedayMain.text = getString(R.string.same_day_off)
                 binding.imageSamedayCheck.visibility = View.GONE
                 binding.textSamedayMain.text = colorMyText(getString(R.string.same_day_off),11,37, ContextCompat.getColor(this, R.color.app_pink))
 
-                //binding.locationTextMain.text = colorMyText(it.postalCode+ ", " + it.city,0,binding.locationTextMain.text.length,  ContextCompat.getColor(this, R.color.new_app_grey))
                 println("onStartMain viewModel.authStore.getRetailID() MainActivity line 438 \n ${viewModel.authStore.getRetailID()} ")
 
             }
 
-            if (viewModel.authStore.getRetailID()  != "0" ){
+            if (viewModel.authStore.getRetailID()  != idEcommerce ){
 
                 binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_same_day_on))
                 binding.textSamedayMain.text = getString(R.string.title_sameday)
@@ -425,8 +412,6 @@ class MainActivity : AppCompatActivity() {
                 binding.locationTextMain.text=
                     it.postalCode+ ", " + it.city
 
-                println("it.postalCode line 467 OnStartMain \n ${it.postalCode}")
-
                 it.postalCode.let { postalCode ->
                     viewModel.checkPostalCode(postalCode)
 
@@ -434,9 +419,6 @@ class MainActivity : AppCompatActivity() {
                 }
 
             }
-
-
-
 
 
         }
@@ -478,7 +460,7 @@ class MainActivity : AppCompatActivity() {
 
                 println("onRestartMain viewModel.authStore.getRetailID() MainActivity line 444 ${viewModel.authStore.getRetailID()} ")
 
-                if (viewModel.authStore.getRetailID() == "0" ){
+                if (viewModel.authStore.getRetailID() == idEcommerce ){
 
                 binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_home_new_search))
                 binding.textSamedayMain.text = getString(R.string.same_day_off)
@@ -488,18 +470,14 @@ class MainActivity : AppCompatActivity() {
 
                 println("onRestartMain viewModel.authStore.getRetailID() MainActivity line 454 ${viewModel.authStore.getRetailID()} ")
                 }
-                if (viewModel.authStore.getRetailID() != "0" ){
+                if (viewModel.authStore.getRetailID() != idEcommerce ){
 
                 binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_same_day_on))
                 binding.textSamedayMain.text = getString(R.string.title_sameday)
                 binding.textSamedayMain.text = colorMyText(getString(R.string.title_sameday),0,11, ContextCompat.getColor(this, R.color.app_pink))
                 binding.imageSamedayCheck.visibility = View.VISIBLE
 
-                println("onRestartMain viewModel.authStore.getRetailID() MainActivity line 462 ${viewModel.authStore.getRetailID()} ")
-
-                }
-
-
+                    }
                 }
 
             }
@@ -523,7 +501,6 @@ class MainActivity : AppCompatActivity() {
                 binding.samedayInfoBottom.gravity = gravity
                 binding.samedayInfoBottom.layoutParams = paramss
 
-                println("onRestartMain viewModel.authStore.getRetailID() MainActivity line 619 \n ${viewModel.authStore.getRetailID()} ")
 
             }
         }
@@ -531,21 +508,17 @@ class MainActivity : AppCompatActivity() {
 
         if (viewModel.requestID.value?.retail_shop_id != null) {
 
-            println("onRestartMain viewModel.authStore.getRetailID() MainActivity line 534 \n ${viewModel.authStore.getRetailID()} ")
-            println("onRestartMain viewModel.requestID.value?.retail_shop_id MainActivity line 535 \n ${viewModel.requestID.value?.retail_shop_id} ")
-
-
-            if (viewModel.authStore.getRetailID() == "0" ){
+            if (viewModel.authStore.getRetailID() == idEcommerce ){
 
                 binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_home_new_search))
                 binding.textSamedayMain.text = getString(R.string.same_day_off)
                 binding.imageSamedayCheck.visibility = View.GONE
                 binding.textSamedayMain.text = colorMyText(getString(R.string.same_day_off),11,37, ContextCompat.getColor(this, R.color.app_pink))
-                //binding.locationTextMain.text = colorMyText(it.postalCode+ ", " + it.city,0,binding.locationTextMain.text.length,  ContextCompat.getColor(this, R.color.new_app_grey))
+
 
                 println("onRestartMain viewModel.authStore.getRetailID() MainActivity line 544 \n ${viewModel.authStore.getRetailID()} ")
             }
-            if (viewModel.authStore.getRetailID() != "0" ){
+            if (viewModel.authStore.getRetailID() != idEcommerce ){
 
                 binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_same_day_on))
                 binding.textSamedayMain.text = getString(R.string.title_sameday)
@@ -589,9 +562,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun changeSizeMyText( size:Float, textView: TextView): TextView {
-
-        textView.setTextSize(size)
-
+        textView.textSize = size
         return textView
     }
 
@@ -619,6 +590,10 @@ class MainActivity : AppCompatActivity() {
         super.onStop()
 
         println("onStopMain")
+        viewModel.loadSelectedLocation()
+        viewModel.selectedLocation.observe(this) {
+            return@observe
+        }
 
     }
 
@@ -631,6 +606,9 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "MainActivity"
+        private const val startIndex = 0
+        private const val endIndex = 23
+        private const val idEcommerce = "0"
     }
 
 

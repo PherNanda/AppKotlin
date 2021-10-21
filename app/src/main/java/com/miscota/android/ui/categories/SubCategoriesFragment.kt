@@ -100,8 +100,6 @@ class SubCategoriesFragment : Fragment() {
         }**/
 
 
-       // Initializing a String Array
-       val qtyNumbers = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11","12","13","14","15")
         val test: MutableMap<String, List<MainCategoriesUiModel.Item>> = mutableMapOf()
         val testTwo = ArrayList<MainCategoriesUiModel.Item>()
         val testT = ArrayList<String>()
@@ -154,7 +152,6 @@ class SubCategoriesFragment : Fragment() {
                     println("  itCategoryProductsFragment $it")
                     subCategory.add(it.toString().split("=")[1])
                     subCategory.add(item.title.toString())
-
                     val bundle = Bundle()
                     bundle.putParcelableArrayList("listCategory", subCategory as java.util.ArrayList<out Parcelable> )
 
@@ -180,14 +177,9 @@ class SubCategoriesFragment : Fragment() {
             popup.show()
 
             println("it subcatsss dosss: $it")
-
             println(" it.subItems.size ${it.subItems.size}")
+            println("  subbsssItem ${it.subItems}")
 
-            //if(it.title  == it1.title){
-                println("  subbsssItem ${it.subItems}")
-
-
-            //}
         }
 
         }
@@ -210,10 +202,6 @@ class SubCategoriesFragment : Fragment() {
         )
 
         adapterT.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
-
-
-
-
 
         binding.recyclerViewSub.apply {
             layoutManager = LinearLayoutManager(requireContext())

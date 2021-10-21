@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.miscota.android.MainActivity
 import com.miscota.android.R
 import com.miscota.android.databinding.FragmentMainCategoriesBinding
+import com.miscota.android.databinding.ItemLoaderBinding
 import com.miscota.android.util.RecyclerViewLoadMoreListener
 import com.miscota.android.util.autoClean
 import okhttp3.internal.notify
@@ -25,6 +27,7 @@ class MainCategoriesFragment : Fragment() {
 
     private val viewModel by viewModel<MainCategoriesViewModel>()
     private var binding by autoClean<FragmentMainCategoriesBinding>()
+    private val bindingLoader by autoClean<ItemLoaderBinding>()
 
     private lateinit var listAdapter: MainCategoriesItemAdapter
 

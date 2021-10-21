@@ -215,6 +215,7 @@
 
     <style name="Theme.AppComponents.Card.New.Ui.SameDay.Flag" parent="Theme.Maskokotas">
         <item name="cardBackgroundColor">@color/transparent</item>
+
         <item name="cardCornerRadius">60dp</item>
         <item name="cardElevation">2dp</item>
     </style>

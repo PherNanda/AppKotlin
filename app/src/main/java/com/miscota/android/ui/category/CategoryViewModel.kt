@@ -20,6 +20,8 @@ class CategoryViewModel(
     private var topProductPageNumber = 0
     private var shouldTopProductsFetch = false
 
+    var showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+
     private val _selectedCategories: MutableList<CategoryUiModel.CategoryListItem.Category> =
         mutableListOf()
 
@@ -176,8 +178,6 @@ class CategoryViewModel(
                         return@launch
                     }
 
-                    println(" categoryId $categoryId")
-
                     val brands = _categories.value?.toMutableList() ?: mutableListOf()
                     brands.addAll(response.map { it.toBrandsUiModel() })
                     _categories.value = brands.distinctBy { it.title }.map { brand ->
@@ -188,21 +188,25 @@ class CategoryViewModel(
                         }
                     }
                     //selectCategory(categoryId)
-
+                    println(" chibato 3 in loadTopProducts()")
                     val list = _topProductList.value?.toMutableList() ?: mutableListOf()
                     list.addAll(response.map { it.toCategoryProductUiModel() })
                     _topProductList.value = list
 
                     topProductPageNumber += PAGE_LIMIT
                     shouldTopProductsFetch = true
+                    showLoading.value = shouldTopProductsFetch
+                    println(" chibato 4 in loadTopProducts()")
                 }
 
                 val exception = result.exceptionOrNull()
                 if (exception != null && exception !is CancellationException) {
                     Timber.e(exception.message.toString())
                     _messageEvent.value = Event("Something went wrong")
+                    println(" chibato 5 in loadTopProducts() exception")
                 }
             }
+        println(" chibato 6 in loadTopProducts()")
 
     }
 

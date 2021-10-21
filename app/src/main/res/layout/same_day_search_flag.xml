@@ -8,7 +8,7 @@
 
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/productsCardSameday"
+        android:id="@+id/productsCardSamedayFlag"
         style="@style/Theme.AppComponents.Card.New.Ui.SameDay.Flag"
         android:layout_width="95dp"
         android:layout_height="33dp"

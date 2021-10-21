@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.android.material.card.MaterialCardView
 import com.miscota.android.MainActivity
 import com.miscota.android.R
 import com.miscota.android.databinding.FragmentCategoryProductsBinding
@@ -59,6 +59,16 @@ class CategoryProductsFragment : Fragment() {
         println(" categoryList.get() ${categoryList[0]}")
         println(" categoryList.get(1) ${categoryList[1].split("}").firstOrNull()}")
 
+        viewModel.showLoading.observe(viewLifecycleOwner) {
+            if (!viewModel.showLoading.value!!) {
+                binding.loading.visibility = View.VISIBLE
+                binding.fragmentProduct.setBackgroundResource(R.drawable.ic_background_loading_transp)
+            }
+            if (viewModel.showLoading.value!!) {
+                binding.loading.visibility = View.GONE
+            }
+        }
+
 
         (requireActivity() as MainActivity).binding.imageBack.isVisible = true
         (requireActivity() as MainActivity).binding.imageBack.setOnClickListener {
@@ -78,6 +88,9 @@ class CategoryProductsFragment : Fragment() {
 
         if(viewModel.getType() == "sameday"){
             binding.samedayFlagBottom.background = ContextCompat.getDrawable(requireContext(), R.drawable.background_sameday_flag)
+            /**val sdView: View? = null
+            val sameDayFlag = sdView?.findViewById<MaterialCardView>(R.id.productsCardSamedayFlag)
+            sameDayFlag?.background = ContextCompat.getDrawable(requireContext(), R.drawable.background_sameday_flag)**/
             binding.textSamedayFlag.visibility = View.GONE
         }
 
@@ -108,6 +121,7 @@ class CategoryProductsFragment : Fragment() {
             },
             typeProduct = viewModel.getType()!!
         )
+
 
         val categoryAdapter = CategoryAdapter {
             println("selectCategory(it) title: ${it.title} it: $it  isChecked: ${it.isChecked}")

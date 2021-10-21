@@ -87,6 +87,17 @@ class SearchProductsFragment : Fragment() {
 
         binding.searchAutoComplete.doAfterTextChanged {
             if (it != null) {
+
+                viewModel.showLoading.observe(viewLifecycleOwner) {
+                    if (!viewModel.showLoading.value!!) {
+                        binding.loadingSearch.visibility = View.VISIBLE
+                        binding.fragmentSearch.setBackgroundResource(R.drawable.ic_background_loading_transp)
+                    }
+                    if (viewModel.showLoading.value!!) {
+                        binding.loadingSearch.visibility = View.GONE
+                    }
+                }
+
                 if(it.length > 2){
                     viewModel.search(it?.toString() ?: "",viewModel.getType()!!)
 

@@ -1,16 +1,27 @@
 package com.miscota.android.ui.categories
 
+
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.getColor
+
+import androidx.core.graphics.drawable.DrawableCompat
+
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+
 import com.miscota.android.R
 import com.miscota.android.databinding.ItemLoaderBinding
 import com.miscota.android.databinding.ItemMainCategoriesBinding
+import kotlinx.coroutines.currentCoroutineContext
+import kotlin.coroutines.coroutineContext
+
 
 class MainCategoriesItemAdapter(
     private val itemClickListener: (MainCategoriesUiModel.Item) -> Unit
@@ -64,10 +75,18 @@ class MainCategoriesItemAdapter(
 
         abstract fun bind(item: MainCategoriesUiModel)
 
-        class LoaderViewHolder(binding: ItemLoaderBinding) : ListViewHolder(binding.root) {
+        class LoaderViewHolder(private val binding: ItemLoaderBinding) : ListViewHolder(binding.root) {
             override fun bind(item: MainCategoriesUiModel) {
+                //binding.progressBar.setBackgroundColor(Color.parseColor("#FFFFFFFF"))
+                //Drawable(R.drawable.ic_background_loading_transp)
+                DrawableCompat.setTint(
+                    binding.progressBar.indeterminateDrawable,
+                    Color.parseColor("#4FC3F7")
+                )
+
             }
         }
+
 
         class ItemViewHolder(
             private val binding: ItemMainCategoriesBinding,
@@ -91,7 +110,10 @@ class MainCategoriesItemAdapter(
                 }
             }
         }
+
     }
+
+
 
     object ListDiffUtil : DiffUtil.ItemCallback<MainCategoriesUiModel>() {
         override fun areItemsTheSame(oldItem: MainCategoriesUiModel, newItem: MainCategoriesUiModel): Boolean {

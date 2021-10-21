@@ -16,6 +16,3 @@
     app:drawableEndCompat="@drawable/ic_next_down_new">
 
 </TextView>
-
-<!--android:textColor="@drawable/text_color_selector"
-android:background="@drawable/time_selected_same_day"-->
