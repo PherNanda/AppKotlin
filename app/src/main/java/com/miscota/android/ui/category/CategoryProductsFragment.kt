@@ -88,6 +88,11 @@ class CategoryProductsFragment : Fragment() {
 
         if(viewModel.getType() == "sameday"){
             binding.samedayFlagBottom.background = ContextCompat.getDrawable(requireContext(), R.drawable.background_sameday_flag)
+            /****val sdView: View? = null
+            val sameDayFlag = sdView?.findViewById<MaterialCardView>(R.id.productsCardSamedayFlag)
+            sameDayFlag?.cardForegroundColor(ContextCompat.getDrawable(requireContext(), R.drawable.background_sameday_flag))
+            sameDayFlag.c**/
+
             /**val sdView: View? = null
             val sameDayFlag = sdView?.findViewById<MaterialCardView>(R.id.productsCardSamedayFlag)
             sameDayFlag?.background = ContextCompat.getDrawable(requireContext(), R.drawable.background_sameday_flag)**/
@@ -227,18 +232,6 @@ class CategoryProductsFragment : Fragment() {
 
         return outPutBoldText
     }
-
-    public inline fun <T, K> Iterable<T>.distinctBy(selector: (T) -> K): ArrayList<T> {
-        val set = HashSet<K>()
-        val list = ArrayList<T>()
-        for (e in this) {
-            val key = selector(e)
-            if (set.add(key))
-                list.add(e)
-        }
-        return list
-    }
-
 
 
 }

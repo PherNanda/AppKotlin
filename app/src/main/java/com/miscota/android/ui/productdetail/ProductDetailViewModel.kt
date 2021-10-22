@@ -142,8 +142,7 @@ class ProductDetailViewModel(
     }
 
     fun addToCart(product: CartProduct, context: Context, options: OptionUiModel.Option?) {
-        // Obtain the FirebaseAnalytics instance.
-        firebaseAnalytics = Firebase.analytics
+
                 try {
                     if ( product.combinationStock!! > 0 ) {
                         authStore.addToCart(
@@ -159,21 +158,12 @@ class ProductDetailViewModel(
 
                         val itemToCart = eventsManager.itemToCart(product, product.brand)
                         eventsManager.addToCart(itemToCart, product, quantity.value!!)
-                        _totalItemsCart.value = authStore.getTotalCartItens() + 1
+                        _totalItemsCart.value = authStore.getTotalCartItens() + quantity.value!!
                         authStore.setTotalCartItens(_totalItemsCart.value!!)
+                        authStore.getTotalCartItens()
 
                         val list = loadCheckout()
-                        /**var userType = false
-                        if (isLoggedIn())
-                        else
-                        userType = true
-                        carriersCheckout(userType, list, authStore.getRetailID()?:"0")**/
 
-                        /**firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                        param(FirebaseAnalytics.Param.ITEM_ID, product.combinationReference)
-                        param(FirebaseAnalytics.Param.ITEM_NAME, product.title)
-                        param(FirebaseAnalytics.Param.CONTENT_TYPE, product.image)
-                        }**/
                     }
                 } catch (e: Exception) {
                     _messageEvent.value = Event(e.message)
@@ -181,8 +171,12 @@ class ProductDetailViewModel(
                 }
                 if (product.combinationStock > 0) {
                     _messageEvent.value = Event(context.getString(R.string.item_added_to_cart))
+                    _totalItemsCart.value
+                    totalItensCart.value
                 }else{
                     _messageEvent.value = Event(context.getString(R.string.item_dont_added_to_cart))
+                    _totalItemsCart.value = authStore.getTotalCartItens()
+                    totalItensCart.value
                 }
 
     }

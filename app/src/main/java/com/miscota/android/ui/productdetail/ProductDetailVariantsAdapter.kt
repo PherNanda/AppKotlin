@@ -69,6 +69,7 @@ class ProductDetailVariantsAdapter(
             ProductDetailViewHolder(binding.root) {
             private lateinit var option: OptionUiModel.Option
             init {
+
                 binding.button.setOnClickListener{
                     itemClickListener.invoke(option.id)
                     //binding.priceText.text = boldMyText(option.price,0,option.price.length)

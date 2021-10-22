@@ -57,23 +57,25 @@ class MaskokotasWebFragment : Fragment() {
         if (!viewModel.isLoggedIn()) {
             startActivity(Intent(requireContext(), AuthActivity::class.java))
             //startActivity(Intent(requireContext(), MainActivity::class.java))
-            navController.navigate(R.id.navigation_home)
+            //navController.navigate(R.id.navigation_home)
         }
 
         if (navController.currentDestination?.id == R.id.navigation_orders) {
-            firebaseAnalytics.logEvent("screen_orders") {
-                param(FirebaseAnalytics.Param.SCREEN_NAME, "screen_orders")
-                param(FirebaseAnalytics.Param.SCREEN_CLASS, "MiscotaWebFragment")
-                param(FirebaseAnalytics.Param.METHOD, "getOrdersURL")
+
+            if (!viewModel.isLoggedIn()) {
+                startActivity(Intent(requireContext(), AuthActivity::class.java))
+            }else {
+                destinationUrl = viewModel.getOrdersURL()
             }
-            destinationUrl = viewModel.getOrdersURL()
+
         } else if (navController.currentDestination?.id == R.id.navigation_profile) {
-            firebaseAnalytics.logEvent("screen_profile") {
-                param(FirebaseAnalytics.Param.SCREEN_NAME, "screen_profile")
-                param(FirebaseAnalytics.Param.SCREEN_CLASS, "MiscotaWebFragment")
-                param(FirebaseAnalytics.Param.METHOD, "getProfileURL")
+
+            if (!viewModel.isLoggedIn()) {
+                startActivity(Intent(requireContext(), AuthActivity::class.java))
+            }else {
+                destinationUrl = viewModel.getProfileURL()
             }
-            destinationUrl = viewModel.getProfileURL()
+            
         }
 
         binding.webView.addJavascriptInterface(AjaxHandler(requireContext()), "ajaxHandler")
@@ -105,6 +107,10 @@ class MaskokotasWebFragment : Fragment() {
                 (requireActivity() as MainActivity).binding.headerMain.layoutParams!!
             params.height = ViewGroup.LayoutParams.WRAP_CONTENT
             (requireActivity() as MainActivity).binding.headerMain.layoutParams = params
+        }
+        if(!viewModel.isLoggedIn()) {
+
+            startActivity(Intent(requireContext(), MainActivity::class.java))
         }
 
     }

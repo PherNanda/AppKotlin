@@ -305,6 +305,7 @@
     <string name="label_price">Precio estándar</string>
     <string name="title_type_order">¿Cuándo lo necesitas?</string>
     <string name="title_another_type_order">¿Cuándo llegará?</string>
+    <string name="variant_not_checked_message">No hay ninguna opción seleccionada</string>
 
     <!--card number-->
     <string name="add_card_number">Añadir tarjeta</string>

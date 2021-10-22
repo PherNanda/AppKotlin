@@ -17,6 +17,7 @@ import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
+import com.miscota.android.MainActivity
 import com.miscota.android.R
 import com.miscota.android.databinding.FragmentProductDetailBinding
 import com.miscota.android.ui.cart.CartUiModel
@@ -53,8 +54,8 @@ class ProductDetailFragment : Fragment() {
         args?.let { product ->
             viewModel.getProductStock(product.productId,viewModel.getType()?:"")
             println("viewModel.getType() ${viewModel.getType()}")
+            product.productType = viewModel.getType()
             binding.productType.text = product.productType
-            //product.productType = product.productType
             binding.productNameBrand.text = colorMyText(product.brand,0,product.brand.length,
                 ContextCompat.getColor(requireContext(), R.color.app_blue))
 
@@ -84,7 +85,7 @@ class ProductDetailFragment : Fragment() {
             val indexItem = viewModel.eventsManager.indexItem(item)
             viewModel.eventsManager.viewItemList(product, indexItem)
             //viewModel.eventsManager.selectItem(item)
-
+            println("stock product ${product.combinationOptions[0].stock}")
 
         }
 
@@ -92,9 +93,13 @@ class ProductDetailFragment : Fragment() {
             //binding.optionsRecyclerView[R.id.samedayProduct].visibility = View.INVISIBLE
             //binding.optionsRecyclerView[0].visibility = View.INVISIBLE
             //binding.optionsRecyclerView[1].visibility = View.INVISIBLE
-
+            println("ecommerce detail product ${viewModel.getType()}")
             //println(binding.optionsRecyclerView)
         }
+         if(viewModel.getType() == getString(R.string.type_sameday)){
+             println("sameday detail product ${viewModel.getType()}")
+
+         }
 
         val selectedCombination: OptionUiModel.Option? = null
         selectedCombination.let { option ->
@@ -163,19 +168,19 @@ class ProductDetailFragment : Fragment() {
         }
 
         viewModel.optionss.observe(viewLifecycleOwner){
-            println(" print observe $it")
             return@observe
         }
 
 
 
         binding.addToCartButton.setOnClickListener {
-
+        var checked = false
             if(optionAdapter?.currentList != null){
                 optionAdapter?.currentList!!.map { it2 ->
                     if (it2 is OptionUiModel.Option) {
                         if(it2.isChecked){
                             var stock = 0
+                            checked = true
 
                             val cartItem = args?.let {
                                 viewModel.product?.combinations?.map {
@@ -208,11 +213,16 @@ class ProductDetailFragment : Fragment() {
                                     requireNotNull(cartItem), requireContext(), it2
                                 )
 
+                            viewModel.totalItensCart.observe(viewLifecycleOwner){
+                                (requireActivity() as MainActivity).binding.cartItemsText.text = viewModel.totalItensCart.value.toString()
+                                return@observe
+                            }
+
                         }
                     }
                 }
             }else if (viewModel.selectedCombination != null){
-
+                checked = true
                 val cartItem = args?.let {
                     CartProduct(
                         productId = it.productId.toInt(),
@@ -237,10 +247,14 @@ class ProductDetailFragment : Fragment() {
                     viewModel.addToCart(
                         requireNotNull(cartItem), requireContext(), it
                     )
+                    viewModel.totalItensCart.observe(viewLifecycleOwner){
+                        (requireActivity() as MainActivity).binding.cartItemsText.text = viewModel.totalItensCart.value.toString()
+                        return@observe
+                    }
                 }
             }
-            else{
-                Toast.makeText(requireContext(), "No hay ninguna opción seleccionada", Toast.LENGTH_SHORT).show()
+            if(!checked){
+                Toast.makeText(requireContext(), getString(R.string.variant_not_checked_message), Toast.LENGTH_SHORT).show()
             }
 
         }
@@ -249,7 +263,6 @@ class ProductDetailFragment : Fragment() {
         //addButton
         viewModel.quantity.observe(viewLifecycleOwner) { qty ->
             binding.quantityTextTwo.text = qty.toString()
-            //binding.quantityText.text = qty.toString()
 
             viewModel.stock.value?.let { stock ->
                 if (stock == -1)
@@ -350,7 +363,7 @@ class ProductDetailFragment : Fragment() {
                                 //println(" option  ${it.optionPrice} - ${it.variant.split(" ").firstOrNull()?.toDouble()} - ${it.optionPrice / it.variant.split(" ").firstOrNull()?.toDouble()!!} ")
                                  binding.priceText.text = it.price
 
-                                print(" productTypeOption ${it.productTypeOption}")
+                                print(" productTypeOption:::: ${it.productTypeOption}")
                                 it.copy(isChecked = true)
                             } else {
                                 it.copy(isChecked = false)

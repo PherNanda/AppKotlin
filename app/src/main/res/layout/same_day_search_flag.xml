@@ -10,8 +10,11 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/productsCardSamedayFlag"
         style="@style/Theme.AppComponents.Card.New.Ui.SameDay.Flag"
-        android:layout_width="95dp"
-        android:layout_height="33dp"
+        app:cardBackgroundColor="@color/transparent"
+        app:cardCornerRadius="60dp"
+        app:cardElevation="2dp"
+        android:layout_width="98dp"
+        android:layout_height="37dp"
         android:layout_marginTop="1dp"
         android:layout_marginBottom="1dp"
         android:layout_marginEnd="1dp"

@@ -74,7 +74,7 @@ fun CategoryUiModel.Product.toProductDetailUiModel(): Product {
             oldPrice = discountPrice,
             hasDiscount = hasDiscount,
             combinationOptions = combinationsToOptionsUiModel(),
-            productType = productType,
+            productType = productType ,
             brand = brand,
             descr = descr
     )
