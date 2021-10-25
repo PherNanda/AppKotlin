@@ -1,5 +1,6 @@
 package com.miscota.android.ui.productdetail
 
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,6 +41,9 @@ class ProductDetailVariantsAdapter(
 
     override fun onBindViewHolder(holder: ProductDetailViewHolder, position: Int) {
         holder.bind(item = getItem(position))
+        /**if (position == 0){
+            getItem(position)
+        }**/
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -69,13 +73,19 @@ class ProductDetailVariantsAdapter(
             ProductDetailViewHolder(binding.root) {
             private lateinit var option: OptionUiModel.Option
             init {
-
                 binding.button.setOnClickListener{
                     itemClickListener.invoke(option.id)
                     //binding.priceText.text = boldMyText(option.price,0,option.price.length)
                     if(option.isChecked){
 
                         binding.priceText.text = "${String.format("%.2f", option.optionPrice)}"
+
+                        /**if (option.productTypeOption == "ecommerce") {
+                            DrawableCompat.setTint(
+                                binding.button.background,
+                                R.drawable.time_selector_new_ecommerce
+                            )
+                        }**/
 
                     }
                     println("product detal variants adapter ")
@@ -87,6 +97,7 @@ class ProductDetailVariantsAdapter(
                     println("button.option.price "+option.price)
                     println("button.option.isChecked "+option.isChecked)
                     println("button.option.stockItens "+option.stockItens)
+                    println("button.option.productTypeOption "+option.productTypeOption)
 
                 }
 
@@ -118,8 +129,17 @@ class ProductDetailVariantsAdapter(
                 println("model.stock "+model.stock)
                 println("model.stockItens "+model.stockItens)
                 println("model.unitsPack "+model.unitsPack)
+                println("model.productTypeOption "+model.productTypeOption)
                 //println("model.uid "+model.)
 
+                /**if (model.productTypeOption == "ecommerce") {
+                    DrawableCompat.setTint(
+                        binding.button.background,
+                        R.drawable.time_selector_new_ecommerce
+                    )
+                }**/
+
+                //binding.button.background = DrawableCompat.setTint(R.drawable.time_selector_new_ecommerce)
 
 
             }

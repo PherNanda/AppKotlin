@@ -126,10 +126,10 @@ class ProductDetailViewModel(
 
                             _options.value = listOf(it)
                             if (it.id == optionId) {
-                                it.copy(isChecked = true)
+                                it.copy(isChecked = true, productTypeOption = authStore.getType())
 
                             } else {
-                                it.copy(isChecked = false)
+                                it.copy(isChecked = false, productTypeOption = authStore.getType())
                             }
                         } else {
                             it

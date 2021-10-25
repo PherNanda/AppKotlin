@@ -7,12 +7,11 @@ import org.koin.dsl.module
 val categoryModule = module {
     viewModel { (bundle: Bundle) ->
         val categoryId = requireNotNull(
-            //bundle.getIntegerArrayList("listCategory")
-             bundle.getStringArrayList("listCategory")
+             bundle.getParcelableArrayList("listCategory")?: arrayListOf<CategoryOne>()
         )
 
             CategoryViewModel(
-                categoryId = categoryId[0].split("}").firstOrNull()?.toLong()?:0L,
+                categoryId = categoryId[0].id!!.split("}").firstOrNull()?.toLong()?:0L,
                 productRepository = get(),
                 autoStore = get()
             )

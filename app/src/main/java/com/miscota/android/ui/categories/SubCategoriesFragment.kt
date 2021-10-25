@@ -4,18 +4,15 @@ package com.miscota.android.ui.categories
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Parcelable
-import android.text.Layout
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.PopupMenu
-import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -26,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.miscota.android.MainActivity
 import com.miscota.android.R
 import com.miscota.android.databinding.FragmentSubCategoriesBinding
+import com.miscota.android.ui.category.CategoryOne
 import com.miscota.android.ui.category.CategoryProductsFragment
 import com.miscota.android.util.autoClean
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -75,9 +73,6 @@ class SubCategoriesFragment : Fragment() {
         println(" item.subItems.size: ${item.subItems.size}")
 
 
-        val subCategory = ArrayList<String>()
-
-
         val subCat = ArrayList<MainCategoriesUiModel.Item>()
         for(iten in item.subItems)
 
@@ -101,8 +96,10 @@ class SubCategoriesFragment : Fragment() {
 
 
         val test: MutableMap<String, List<MainCategoriesUiModel.Item>> = mutableMapOf()
-        val testTwo = ArrayList<MainCategoriesUiModel.Item>()
+
         val testT = ArrayList<String>()
+        val subCategory = ArrayList<CategoryOne>()
+
         subCat.map { it1->
             it1.title
 
@@ -116,17 +113,16 @@ class SubCategoriesFragment : Fragment() {
                 testT.add(it2.title)
             }
 
-
+        var idCategory = ""
         listAdapter = SubCategoriesItemAdapter { it ->
             bundleOf(CategoryProductsFragment.KEY_LONG_CATEGORY_ID to it.id).also {
                /** findNavController().navigate(
                     R.id.action_subCategoriesFragment_to_categoryProductsFragment,
                     it
                 )**/
-                println("it subcatsss:::::1 $it")
                 println(" subcatsss:::::2  $id")
                 println(" subcatsss sub  $it")
-                it.toString().split("=")[1].let { it2 -> subCategory.add(it2) }
+                it.toString().split("=")[1].let { it2 ->  idCategory = it2} //id category
 
             }
 
@@ -135,23 +131,28 @@ class SubCategoriesFragment : Fragment() {
 
            popup.menuInflater
                 .inflate(R.menu.sub_category, popup.menu)
+            val subCategoryItens = ArrayList<CategoryOne>()
 
             popup.menu.add(boldColorMyText(it.title,0,it.title.length, ContextCompat.getColor(requireContext(), R.color.blue_new_app)))
             for (itens in it.subItems) {
                 popup.menu.add(itens.title)
-                subCategory.add(itens.title)
+                subCategoryItens.add(CategoryOne(category = "", id = itens.id.toString(), name = itens.title))
             }
             //subCategory.add(itens.title)
-            val text = "Todo ${it.title}"
+            val text = "${getString(R.string.all_products_of_category)} ${it.title}"
             popup.menu.add(colorMyText(text,0,text.length, ContextCompat.getColor(requireContext(), R.color.blue_new_app)))
 
 
             popup.setOnMenuItemClickListener { item ->
 
                 bundleOf(CategoryProductsFragment.KEY_LONG_CATEGORY_ID to it.title).also { it ->
-                    println("  itCategoryProductsFragment $it")
-                    subCategory.add(it.toString().split("=")[1])
-                    subCategory.add(item.title.toString())
+                    if (idCategory.length > 1) {
+                        subCategory.add(CategoryOne(category = "", id = idCategory.split("}")[0], name = it.toString().split("=")[1].split("}")[0]))
+                    }
+
+                    subCategoryItens.map {
+                        subCategory.add(CategoryOne(category = idCategory.split("}")[0], id= it.id, name= it.name))
+                    }
                     val bundle = Bundle()
                     bundle.putParcelableArrayList("listCategory", subCategory as java.util.ArrayList<out Parcelable> )
 
@@ -165,11 +166,6 @@ class SubCategoriesFragment : Fragment() {
                 //val fragment = CategoryProductsFragment()
                 //fragment.arguments = bundle
 
-                /**Toast.makeText(
-                    requireActivity(),
-                    "You Clicked : " + item.title,
-                    Toast.LENGTH_SHORT
-                ).show()+*/
                 true
             }
 

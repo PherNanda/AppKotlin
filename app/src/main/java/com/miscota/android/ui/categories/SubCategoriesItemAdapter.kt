@@ -92,21 +92,6 @@ class SubCategoriesItemAdapter(
 
                     if(uiModel.subItems.isNotEmpty()) {
 
-
-                        //binding.textView.text = boldColorMyText(uiModel.title,0,uiModel.title.length, Color.parseColor("#00A9E2"))
-                        binding.textView.text = uiModel.title
-
-                        println(" uiModel.title::::: ${uiModel.title}")
-                        println(" uiModel.subItems.get(1).title ${uiModel.subItems[0].title}")
-                        println("item SubCategoriesItemAdapter ${uiModel.title}   ${uiModel.subItems}")
-
-                        /**binding.subSubCategoryBottom.visibility = View.VISIBLE
-                        }**/
-
-                        //binding.recyclerCategoryThirdLevel.adapter
-                        //binding.textView.text = uiModel.subItems.get(1).title
-                        //itemClickListener.invoke(uiModel.subItems.get(0))
-
                         itemClickListener.invoke(uiModel)
                     }else{
 

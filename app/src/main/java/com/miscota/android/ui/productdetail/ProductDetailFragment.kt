@@ -87,12 +87,41 @@ class ProductDetailFragment : Fragment() {
             //viewModel.eventsManager.selectItem(item)
             println("stock product ${product.combinationOptions[0].stock}")
 
+            product.combinationOptions[0].productTypeOption = product.productType
+            println("stock product viewModel.stock ${product.combinationOptions[0].stock}")
+            println("stock product it.productTypeOption ${product.combinationOptions[0].productTypeOption}")
+            println("stock product it.stockItens ${product.combinationOptions[0].stockItens}")
+            println("stock product it.combinationOptions[0].isChecked ${product.combinationOptions[0].isChecked}")
+
+
+            /**if(optionAdapter?.currentList != null){
+                optionAdapter?.currentList!!.map { it2 ->
+
+                   println("stock product currentlist $it2")
+
+                }
+            }**/
+
+            val cartItem = args.let {
+                viewModel.product?.combinations?.map {
+                    if (it.ref == product.combinationOptions[0].id) {
+                        product.combinationOptions[0].stock = it.stock!!
+                    }
+                }
+                println("stock product viewModel ${product.combinationOptions[0].stock}")
+                println("stock product it ${it.combinationOptions[0].stock}")
+                println("stock product it.id ${it.combinationOptions[0].id}")
+            }
+
+
+
         }
 
         if(viewModel.getType() == getString(R.string.type_ecommerce)){
             //binding.optionsRecyclerView[R.id.samedayProduct].visibility = View.INVISIBLE
             //binding.optionsRecyclerView[0].visibility = View.INVISIBLE
             //binding.optionsRecyclerView[1].visibility = View.INVISIBLE
+
             println("ecommerce detail product ${viewModel.getType()}")
             //println(binding.optionsRecyclerView)
         }
@@ -351,6 +380,11 @@ class ProductDetailFragment : Fragment() {
                     options.add(OptionUiModel.Spacer)
                 }
             }
+            options.map {
+                if(it is OptionUiModel.Option){
+                    it.copy(productTypeOption = viewModel.getType())
+                }
+            }
 
 
                 optionAdapter = ProductDetailVariantsAdapter { optionId ->
@@ -362,11 +396,15 @@ class ProductDetailFragment : Fragment() {
                                 //binding.variationPriceText.text = "${it.optionPrice / it.variant.split(" ").firstOrNull()?.toDouble()!!}"
                                 //println(" option  ${it.optionPrice} - ${it.variant.split(" ").firstOrNull()?.toDouble()} - ${it.optionPrice / it.variant.split(" ").firstOrNull()?.toDouble()!!} ")
                                  binding.priceText.text = it.price
+                                print("option stock ${it.stock}")
 
-                                print(" productTypeOption:::: ${it.productTypeOption}")
-                                it.copy(isChecked = true)
+                                print("\n productTypeOption:::: ${it.productTypeOption}")
+                                print("\n viewModel.getType():::: ${viewModel.getType()}")
+                                it.copy(isChecked = true, productTypeOption = viewModel.getType())
+
                             } else {
-                                it.copy(isChecked = false)
+                                it.copy(isChecked = false, productTypeOption = viewModel.getType())
+
                             }
                         } else {
                             it
@@ -378,14 +416,17 @@ class ProductDetailFragment : Fragment() {
                     options.map {
                         if (it is OptionUiModel.Option) {
                             if (it.id == it3.toString()) {
-                                viewModel.selectedCombination?.copy(isChecked = true)
+                                viewModel.selectedCombination?.copy(isChecked = true, productTypeOption = viewModel.getType())
+
                                 for( optionProduct in product.combinationOptions )
                                     if (viewModel.selectedCombination!!.id == optionProduct.id) {
                                         viewModel.selectedCombination =
                                             optionProduct
                                     }
                             }
-                            else { viewModel.selectedCombination?.copy(isChecked = false)}
+                            else { viewModel.selectedCombination?.copy(isChecked = false, productTypeOption = viewModel.getType())
+
+                            }
                         } else {
                             it
                         }
@@ -409,6 +450,10 @@ class ProductDetailFragment : Fragment() {
 
         } else if (product.combinationOptions.size == 1) {
             viewModel.selectedCombination = product.combinationOptions[0]
+
+            /****/
+
+            /****/
         }
     }
 

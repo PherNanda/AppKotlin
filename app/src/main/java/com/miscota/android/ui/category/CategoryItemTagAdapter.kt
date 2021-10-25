@@ -1,6 +1,6 @@
 package com.miscota.android.ui.category
 
-import android.graphics.Color
+
 import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
@@ -36,56 +36,65 @@ class CategoryItemTagAdapter (
 
     override fun onBindViewHolder(holder: CategoryItemTagAdapter.ViewHolder, position: Int) {
         with(holder){
-            with(categoryList[position]){
-                //binding.checkBox.text = this.name.split("}").firstOrNull()
+            with(position < categoryList[0].categories[0].categories.size) {
 
-                if ( this.categories[0].categories[position].split("}").firstOrNull() != this.id.split("}").firstOrNull() ) {
+                /**binding.checkBox.text =
+                this.categories[0].categories[position].name**/
+                //val max = categoryList[0].categories[0].categories.size
+                println("position $position")
+                println("categoryList[0].categories[0].categories.size ${categoryList[0].categories[0].categories.size}")
 
-                    binding.checkBox.text =
-                        this.categories[0].categories[position].split("}").firstOrNull()
+                if (position < categoryList[0].categories[0].categories.size) {
 
-                }else{
-                    binding.checkBox.visibility = View.GONE
-                }
+                    if (position < categoryList[0].categories[0].categories.size) {
 
-                //binding.checkBox.text = this.categories[position].name
-                //binding.checkBoxCard.tag = this.categories[position].categories[position]
-                //binding.categoryName.text = this.name.split("}").firstOrNull()
-                //binding.categoryName.text = this.categories[position].categories[position]
-                println(" this ${this.name}")
+                        binding.checkBox.text =
+                            categoryList[0].categories[0].categories[position].name
+                    }else{
 
-                if (this.categories!=null){
-                println(" this.categories ${this.categories}") // this 2}], this Pienso, this Comida húmeda, this Dieta Veterinaria
-                    println(" categoryList[position]    ${categoryList[position]}")
-                    println(" this.id    ${this.id.split("}").firstOrNull()}")
-                    println(" categoryList[position].categories    ${categoryList[position].categories}")
-                    println(" categoryList[position].name    ${categoryList[position].name.split("}").firstOrNull()}")
-                    println(" categoryList[position].id    ${categoryList[position].id.split("}").firstOrNull()}")
-                    println(" this.categories[0].categories    ${this.categories[0].categories}")
-                    println(" this.categories[0].categories[0]    ${this.categories[0].categories[0].split("}").firstOrNull()}")
-                    println(" this.categories[0].categories[position].split    ${this.categories[0].categories[position].split("}").firstOrNull()}")
-                }
+                        binding.checkBox.visibility = View.GONE
+                    }
+
+
+
                 binding.checkBox.setOnClickListener {
                     println(" position checkeada $position")
 
                     //binding.checkBox.text = boldMyText(this.name.split("}").firstOrNull()?:"",0,this.name.split("}").firstOrNull()?.length?:0)
-                    this.categories[0].categories[position].split("}").firstOrNull()?.let { it1 ->
-                        categoryList[position].id.split("}").firstOrNull()?.let { it2 ->
+                    /**this.categories[0].categories[position].name.split("}").firstOrNull()?.let { it1 ->
+                    categoryList[position].id.split("}").firstOrNull()?.let { it2 ->
+                    CategoryUiModel.CategoryListItem.Category(
+                    uid = it2.toLong(),
+                    title = it1,
+                    isChecked = true
+
+                    )
+                    }
+                    }?.let { it2 ->
+                    optionsMenuClickListener.onOptionsMenuClicked(position,
+                    category = it2
+                    )
+                    }**/
+                    println(" position it $it $position")
+                    categoryList[0].categories[0].categories[position].name.let { it1 ->
+                        categoryList[0].categories[0].categories[position].id.let { it2 ->
                             CategoryUiModel.CategoryListItem.Category(
-                                uid = it2.toLong(),
-                                title = it1,
+                                uid = it2!!.toLong(),
+                                title = it1!!,
                                 isChecked = true
 
                             )
                         }
-                    }?.let { it2 ->
-                        optionsMenuClickListener.onOptionsMenuClicked(position,
+                    }.let { it2 ->
+                        optionsMenuClickListener.onOptionsMenuClicked(
+                            position,
                             category = it2
                         )
                     }
-                    println(" position it $it $position")
 
                 }
+
+            }
 
             }
         }

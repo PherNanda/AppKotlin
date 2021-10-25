@@ -38,7 +38,7 @@ class CategoryProductsFragment : Fragment() {
     private lateinit var listAdapter: CategoryItemAdapter
 
     private lateinit var listCatAdapter: CategoryItemTagAdapter
-    private var categoryList = ArrayList<String>()
+    private var categoryList = ArrayList<CategoryOne>()
     private var categoryListAdapter = ArrayList<CategoryItemTagItem>()
 
 
@@ -54,10 +54,10 @@ class CategoryProductsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val bundleCategory: Bundle? = arguments
-        categoryList = bundleCategory?.getStringArrayList("listCategory")!!
+        categoryList = bundleCategory?.getParcelableArrayList("listCategory")!!
         println(" categoryList ${categoryList.size}")
         println(" categoryList.get() ${categoryList[0]}")
-        println(" categoryList.get(1) ${categoryList[1].split("}").firstOrNull()}")
+        //println(" categoryList.get(1) ${categoryList[1].split("}").firstOrNull()}")
 
         viewModel.showLoading.observe(viewLifecycleOwner) {
             if (!viewModel.showLoading.value!!) {
@@ -148,18 +148,29 @@ class CategoryProductsFragment : Fragment() {
             CategoryProducts categoryList [2}], Pienso, Comida húmeda, Dieta Veterinaria, Comida}], Pienso] categoryList[0] 2}]  item Pienso
              * **/
 
-            list.add(Category(categories = categoryList, id = categoryList[0], name = item))
+            categoryList[0].id?.let { item.name?.let { it1 -> Category(categories = categoryList, id = it, name = it1) } }?.let {
+                list.add(
+                    it
+                )
+            }
 
-            val listUnique = list.distinctBy { Category(it.categories, it.id, it.name) }
+            list.distinctBy { Category(it.categories, it.id, it.name) }
 
-            categoryListAdapter.add(
-                CategoryItemTagItem(
-                    categories = list,
-                    id = categoryList[0],
-                    name = item)
-            )
+            categoryList[0].id?.let {
+                categoryList[0].name?.let { it1 ->
+                    CategoryItemTagItem(
+                        categories = list,
+                        id = it,
+                        name = it1
+                    )
+                }
+            }?.let {
+                categoryListAdapter.add(
+                    it
+                )
+            }
             //binding.titleProductsCategory.text = "$item ${getString(R.string.result_category_of, item)}"
-            binding.titleProductsCategory.text = item
+            binding.titleProductsCategory.text = categoryList[0].name.toString()
         }
 
 

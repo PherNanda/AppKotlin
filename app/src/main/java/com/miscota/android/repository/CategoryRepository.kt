@@ -11,7 +11,6 @@ class CategoryRepository(private val categoryApi: CategoryApi, private val authS
             authHeader = "Bearer " + authStore.getBearerToken(),
             requestRetailId= requestDetail,
             productType = productType,
-
         )
     }
 
