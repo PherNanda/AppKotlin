@@ -126,6 +126,7 @@
         <item name="backgroundTint">@color/white_900</item>
         <item name="fontFamily">@font/bree_regular</item>
         <item name="iconTint">@null</item>
+        <item name="startIconTint">@null</item>
         <item name="android:textColor">@color/new_app_grey</item>
     </style>
 

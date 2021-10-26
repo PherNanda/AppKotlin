@@ -20,9 +20,11 @@ data class Category(
 data class CategoryOne(
     val category: String?,
     val id: String?,
-    val name: String?
+    val name: String?,
+    val checked: String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString()
@@ -32,6 +34,7 @@ data class CategoryOne(
         parcel.writeString(category)
         parcel.writeString(id)
         parcel.writeString(name)
+        parcel.writeString(checked)
     }
 
     override fun describeContents(): Int {

@@ -87,7 +87,7 @@
     <string name="options">Opciones</string>
     <string name="options_product">Peso producto</string>
     <string name="packs_product">Unidades</string>
-    <string name="quantity">Cantidad</string>
+    <string name="quantity">Cantidad</string>options_product
 
     <string name="sign_in_bottom">Iniciar sesión</string>
     <string name="login_title">Inicia con tu usuario Miscota</string>

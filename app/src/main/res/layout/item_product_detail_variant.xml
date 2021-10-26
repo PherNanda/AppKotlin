@@ -14,7 +14,7 @@
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@drawable/time_selector_new"
+        android:background="@drawable/time_selector_new_ecommerce"
         android:button="@android:color/transparent"
         android:checked="false"
         android:maxLines="1"

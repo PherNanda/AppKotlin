@@ -39,41 +39,47 @@ class CategoryItemTagAdapter (
 
                 binding.checkBox.text = categoryList[0].categories[0].categories[position].name
 
-                binding.checkBox.setOnClickListener {
-                    println(" position checkeada $position")
+                println("categoryList[0].categories[0].categories[position] ${categoryList[0].categories[0].categories[position]}")
 
-                    //binding.checkBox.text = boldMyText(this.name.split("}").firstOrNull()?:"",0,this.name.split("}").firstOrNull()?.length?:0)
-                    /**this.categories[0].categories[position].name.split("}").firstOrNull()?.let { it1 ->
-                    categoryList[position].id.split("}").firstOrNull()?.let { it2 ->
-                    CategoryUiModel.CategoryListItem.Category(
-                    uid = it2.toLong(),
-                    title = it1,
-                    isChecked = true
+                if (categoryList[0].categories[0].categories[position].checked == "true"){
+                    binding.checkBox.isChecked = true
+                }
 
-                    )
-                    }
-                    }?.let { it2 ->
-                    optionsMenuClickListener.onOptionsMenuClicked(position,
-                    category = it2
-                    )
-                    }**/
-                    println(" position it $it $position")
-                    categoryList[0].categories[0].categories[position].name.let { it1 ->
-                        categoryList[0].categories[0].categories[position].id.let { it2 ->
-                            CategoryUiModel.CategoryListItem.Category(
-                                uid = it2!!.toLong(),
-                                title = it1!!,
-                                isChecked = true
+            }
 
-                            )
-                        }
-                    }.let { it2 ->
-                        optionsMenuClickListener.onOptionsMenuClicked(
-                            position,
-                            category = it2
+            binding.checkBox.setOnClickListener {
+                println(" position checkeada $position")
+
+                //binding.checkBox.text = boldMyText(this.name.split("}").firstOrNull()?:"",0,this.name.split("}").firstOrNull()?.length?:0)
+                /**this.categories[0].categories[position].name.split("}").firstOrNull()?.let { it1 ->
+                categoryList[position].id.split("}").firstOrNull()?.let { it2 ->
+                CategoryUiModel.CategoryListItem.Category(
+                uid = it2.toLong(),
+                title = it1,
+                isChecked = true
+
+                )
+                }
+                }?.let { it2 ->
+                optionsMenuClickListener.onOptionsMenuClicked(position,
+                category = it2
+                )
+                }**/
+                println(" position it $it $position")
+                categoryList[0].categories[0].categories[position].name.let { it1 ->
+                    categoryList[0].categories[0].categories[position].id.let { it2 ->
+                        CategoryUiModel.CategoryListItem.Category(
+                            uid = it2!!.toLong(),
+                            title = it1!!,
+                            isChecked = true
+
                         )
                     }
-
+                }.let { it2 ->
+                    optionsMenuClickListener.onOptionsMenuClicked(
+                        position,
+                        category = it2
+                    )
                 }
 
             }

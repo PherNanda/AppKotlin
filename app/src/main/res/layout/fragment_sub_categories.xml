@@ -18,8 +18,10 @@
         android:textSize="15sp"
         android:layout_marginTop="18dp"
         android:paddingEnd="18dp"
-        app:icon="@drawable/ic_search"
+        app:icon="@drawable/ic_lupa_search"
+        app:iconTintMode="add"
         app:iconPadding="16dp"
+        app:iconTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

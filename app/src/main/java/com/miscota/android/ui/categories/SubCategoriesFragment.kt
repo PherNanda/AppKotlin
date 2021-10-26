@@ -122,7 +122,7 @@ class SubCategoriesFragment : Fragment() {
             popup.menu.add(boldColorMyText(it.title,0,it.title.length, ContextCompat.getColor(requireContext(), R.color.blue_new_app)))
             for (itens in it.subItems) {
                 popup.menu.add(itens.title)
-                subCategoryItens.add(CategoryOne(category = "", id = itens.id.toString(), name = itens.title))
+                subCategoryItens.add(CategoryOne(category = "", id = itens.id.toString(), name = itens.title, checked = "false"))
             }
 
             val text = "${getString(R.string.all_products_of_category)} ${it.title}"
@@ -133,11 +133,11 @@ class SubCategoriesFragment : Fragment() {
 
                 bundleOf(CategoryProductsFragment.KEY_LONG_CATEGORY_ID to it.title).also { it ->
                     if (idCategory.length > 1) {
-                        subCategory.add(CategoryOne(category = "", id = idCategory.split("}")[0], name = it.toString().split("=")[1].split("}")[0]))
+                        subCategory.add(CategoryOne(category = "", id = idCategory.split("}")[0], name = it.toString().split("=")[1].split("}")[0],checked = "false"))
                     }
-
+                    println("item:::: popup $item")
                     subCategoryItens.map {
-                        subCategory.add(CategoryOne(category = idCategory.split("}")[0], id= it.id, name= it.name))
+                        subCategory.add(CategoryOne(category = idCategory.split("}")[0], id= it.id, name= it.name, checked = if (it.name == item.toString()) "true" else "false"))
                     }
                     val bundle = Bundle()
                     bundle.putParcelableArrayList("listCategory", subCategory as java.util.ArrayList<out Parcelable> )

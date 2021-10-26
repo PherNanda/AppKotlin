@@ -76,10 +76,11 @@ class CategoryProductsFragment : Fragment() {
         }
 
         //change widht search
-        val params: ViewGroup.LayoutParams = binding.searchLayout.layoutParams!!
+        /**val params: ViewGroup.LayoutParams = binding.searchLayout.layoutParams!!
         params.width = ViewGroup.LayoutParams.WRAP_CONTENT
-        binding.searchLayout.layoutParams = params
+        binding.searchLayout.layoutParams = params**/
 
+        //visibility off samedayFlagBottom
         binding.textSamedayFlag.text = boldMyText(getString(R.string.same_day_flag_text),28,40)
 
         if(viewModel.getType() == "sameday"){

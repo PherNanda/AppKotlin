@@ -137,9 +137,11 @@ class ProductDetailFragment : Fragment() {
                 it.combinationOptions.filter {
                     println(" it.id::  ${it.id}")
                     println(" it.variant::  ${it.variant}")
+                    println(" it.stock::  ${it.stock}")
 
                     if (option != null) {
                         println(" option.id::  ${option.id}")
+                        println(" option.stock::  ${option.stock}")
                     }
                     it.id == option?.id ?: 0
 
@@ -155,41 +157,8 @@ class ProductDetailFragment : Fragment() {
             viewModel.increment()
         }
 
-        // Initializing a String Array
-        val qtyNumbers = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11","12","13","14","15", "16","17","18","19","20")
-
-        // Initializing an ArrayAdapter
-        val adapter = ArrayAdapter(
-            requireActivity(), // Context
-            R.layout.simple_spinner_item_custom, // Layout
-            qtyNumbers // Array
-        )
-
-        adapter.setDropDownViewResource(R.layout.simple_dropdown_item_1line_custom)
-
-        binding.spinner.adapter = adapter
-
-        binding.spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(parent:AdapterView<*>, view: View, position: Int, id: Long){
-                //binding.textVView.text = "Spinner selected : ${parent.getItemAtPosition(position).toString()}"
-                val qty = parent.getItemAtPosition(position).toString()
-                val qtyProduct = qty.toInt()
-
-                viewModel.incrementCart(qtyProduct)
-
-                println("Spinner selected : ${parent.getItemAtPosition(position).toString()}  - qtyProduct $qtyProduct")
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>){
-                // Another interface callback
-            }
-        }
-
-
-
         binding.botonCart.setOnClickListener {
             //viewModel.increment()
-
         }
 
         binding.removeButton.setOnClickListener {
@@ -199,8 +168,6 @@ class ProductDetailFragment : Fragment() {
         viewModel.optionss.observe(viewLifecycleOwner){
             return@observe
         }
-
-
 
         binding.addToCartButton.setOnClickListener {
         var checked = false
@@ -316,6 +283,38 @@ class ProductDetailFragment : Fragment() {
             } else {
                 binding.addToCartButton.isEnabled = true
                 binding.addToCartButton.text = getString(R.string.add_to_cart)
+                println("stock observe::: $stock")
+
+            }
+        }
+
+        // Initializing a String Array
+        val qtyNumbers = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11","12","13","14","15", "16","17","18","19","20")
+
+        // Initializing an ArrayAdapter
+        val adapter = ArrayAdapter(
+            requireActivity(), // Context
+            R.layout.simple_spinner_item_custom, // Layout
+            qtyNumbers // Array
+        )
+
+        adapter.setDropDownViewResource(R.layout.simple_dropdown_item_1line_custom)
+
+        binding.spinner.adapter = adapter
+
+        binding.spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent:AdapterView<*>, view: View, position: Int, id: Long){
+                //binding.textVView.text = "Spinner selected : ${parent.getItemAtPosition(position).toString()}"
+                val qty = parent.getItemAtPosition(position).toString()
+                val qtyProduct = qty.toInt()
+
+                viewModel.incrementCart(qtyProduct)
+
+                println("Spinner selected : ${parent.getItemAtPosition(position).toString()}  - qtyProduct $qtyProduct")
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>){
+                // Another interface callback
             }
         }
 
@@ -449,11 +448,103 @@ class ProductDetailFragment : Fragment() {
             binding.optionsLabel.visibility = View.VISIBLE
 
         } else if (product.combinationOptions.size == 1) {
-            viewModel.selectedCombination = product.combinationOptions[0]
 
-            /****/
+            //if(product.combinationOptions[0].variant.length > 0) {
+                viewModel.selectedCombination = product.combinationOptions[0]
 
-            /****/
+                /****/
+                product.combinationOptions.forEachIndexed { index, combinationOption ->
+
+                    options.add(combinationOption)
+                    if (index - 1 != options.size) {
+                        options.add(OptionUiModel.Spacer)
+                    }
+                }
+                options.map {
+                    if (it is OptionUiModel.Option) {
+                        it.copy(productTypeOption = viewModel.getType())
+                    }
+                }
+
+
+                optionAdapter = ProductDetailVariantsAdapter { optionId ->
+                    optionAdapter?.submitList(
+                        options.map {
+                            if (it is OptionUiModel.Option) {
+                                if (it.id == optionId) {
+
+                                    //binding.variationPriceText.text = "${it.optionPrice / it.variant.split(" ").firstOrNull()?.toDouble()!!}"
+                                    //println(" option  ${it.optionPrice} - ${it.variant.split(" ").firstOrNull()?.toDouble()} - ${it.optionPrice / it.variant.split(" ").firstOrNull()?.toDouble()!!} ")
+                                    binding.priceText.text = it.price
+                                    print("option stock 2222 ${it.stock}")
+
+                                    print("\n productTypeOption:::: 2222 ${it.productTypeOption}")
+                                    print("\n viewModel.getType():::: 222 ${viewModel.getType()}")
+                                    it.copy(
+                                        isChecked = true,
+                                        productTypeOption = viewModel.getType()
+                                    )
+
+                                } else {
+                                    it.copy(
+                                        isChecked = false,
+                                        productTypeOption = viewModel.getType()
+                                    )
+
+                                }
+                            } else {
+                                it
+                            }
+                        }
+                    )
+                }
+                viewModel.selectedCombination?.id?.map { it3 ->
+                    options.map {
+                        if (it is OptionUiModel.Option) {
+                            if (it.id == it3.toString()) {
+                                viewModel.selectedCombination?.copy(
+                                    isChecked = true,
+                                    productTypeOption = viewModel.getType()
+                                )
+
+                                for (optionProduct in product.combinationOptions)
+                                    if (viewModel.selectedCombination!!.id == optionProduct.id) {
+                                        viewModel.selectedCombination =
+                                            optionProduct
+                                    }
+                            } else {
+                                viewModel.selectedCombination?.copy(
+                                    isChecked = false,
+                                    productTypeOption = viewModel.getType()
+                                )
+
+                            }
+                        } else {
+                            it
+                        }
+                    }
+
+                }
+
+                optionAdapter?.submitList(options)
+
+
+                binding.optionsRecyclerView.apply {
+                    layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                    adapter = optionAdapter
+                    itemAnimator = null
+
+                }
+
+                binding.optionsRecyclerView.visibility = View.VISIBLE
+                binding.optionsLabel.visibility = View.VISIBLE
+                /****/
+            /** }
+            else{
+                binding.optionsRecyclerView.visibility = View.GONE
+                binding.optionsLabel.visibility = View.GONE
+            }**/
         }
     }
 
