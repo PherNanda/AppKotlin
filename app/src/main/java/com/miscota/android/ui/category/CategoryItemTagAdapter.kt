@@ -36,24 +36,42 @@ class CategoryItemTagAdapter (
 
     override fun onBindViewHolder(holder: CategoryItemTagAdapter.ViewHolder, position: Int) {
         with(holder){
-            with(position < categoryList[0].categories[0].categories.size) {
+            with(categoryList[0].categories[0].categories[position]) {
+                //with(position < categoryList[0].categories[0].categories.size) {
 
                 /**binding.checkBox.text =
                 this.categories[0].categories[position].name**/
                 //val max = categoryList[0].categories[0].categories.size
-                println("position $position")
+                println("position::::: ${this.name}")
+                println("categoryList[position].categories.size ${categoryList[position].categories.size}")
+                    println("this.categories[0].categories[position].name")
                 println("categoryList[0].categories[0].categories.size ${categoryList[0].categories[0].categories.size}")
+                println("categoryList[0].categories[0].categories[0].name ${categoryList[0].name}")
+                println("categoryList[0].categories[0].categories[position].name ${categoryList[position].name}")
+                println("categoryList[0].categories[0].categories[position].name ${categoryList[position].name}")
+                println("categoryList[position].categories[position] ${categoryList[0].categories[0].categories[0]}")
+                println("categoryList[position].categories[position] ${categoryList[0].categories[0].categories[1]}")
+                println("categoryList[position].categories[0].name ${categoryList[0].categories[0].name}")
 
-                if (position < categoryList[0].categories[0].categories.size) {
+                //if (position < categoryList[0].categories[0].categories.size) {
 
-                    if (position < categoryList[0].categories[0].categories.size) {
+                    //if (categoryList[0].categories[0].categories[position].name != null ) {
+
+                println("categoryList[0].categories[position].name ${categoryList[0].categories[0].categories[position].name}")
+                println("categoryList[0].categories[position].name ${categoryList[0].categories[position].name}")
+                println("categoryList[0].categories[position] ${categoryList[0].categories[position]}")
+                println("categoryList[0].categories[position].categories ${categoryList[0].categories[position].categories}")
+                println("categoryList[0].categories[position].categories ${categoryList[0].categories[position].categories}")
+                println("categoryList[0].categories[0].categories ${categoryList[0].categories[0].categories}")
+                println("categoryList[0].categories[0].categories[position] ${categoryList[0].categories[0].categories[position]}")
+                println("categoryList[0].categories[position].categories[position].name ${categoryList[0].categories[position].categories[position].name}")
 
                         binding.checkBox.text =
-                            categoryList[0].categories[0].categories[position].name
-                    }else{
+                            categoryList[0].categories[0].categories.toString()
+                    //}else{
 
-                        binding.checkBox.visibility = View.GONE
-                    }
+                        //binding.checkBox.visibility = View.GONE
+                    //}
 
 
 
@@ -94,7 +112,7 @@ class CategoryItemTagAdapter (
 
                 }
 
-            }
+            //}
 
             }
         }

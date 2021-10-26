@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.card.MaterialCardView
 import com.miscota.android.MainActivity
 import com.miscota.android.R
 import com.miscota.android.databinding.FragmentCategoryProductsBinding
@@ -53,12 +52,11 @@ class CategoryProductsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        categoryList = arrayListOf()
+
         val bundleCategory: Bundle? = arguments
         categoryList = bundleCategory?.getParcelableArrayList("listCategory")!!
-        println(" categoryList ${categoryList.size}")
-        println(" categoryList.get() ${categoryList[0]}")
-        //println(" categoryList.get(1) ${categoryList[1].split("}").firstOrNull()}")
-
+        println(" categoryList ${categoryList.map { it }}")
         viewModel.showLoading.observe(viewLifecycleOwner) {
             if (!viewModel.showLoading.value!!) {
                 binding.loading.visibility = View.VISIBLE
@@ -76,8 +74,6 @@ class CategoryProductsFragment : Fragment() {
             //fragmentManager?.popBackStackImmediate()
             findNavController().navigateUp()
         }
-
-
 
         //change widht search
         val params: ViewGroup.LayoutParams = binding.searchLayout.layoutParams!!
@@ -114,7 +110,7 @@ class CategoryProductsFragment : Fragment() {
 
                     println("it.combinations ${it.combinations}")
                     println("it.productId ${it.productId}")
-                    var produtId = it.productId
+                    it.productId
 
                     println("it.combinations 1 ${it.combinations}")
 
@@ -127,26 +123,15 @@ class CategoryProductsFragment : Fragment() {
             typeProduct = viewModel.getType()!!
         )
 
-
         val categoryAdapter = CategoryAdapter {
             println("selectCategory(it) title: ${it.title} it: $it  isChecked: ${it.isChecked}")
             viewModel.selectCategory(it)
         }
-
-        //CategoryItemTagItem(categories=[Category(categories=[2}], Pienso, Comida húmeda, Dieta Veterinaria, Comida}], Comida húmeda], id=2}], name=Comida húmeda)], id=, name=Comida húmeda)
-
+        val listDistincty = ArrayList<Category>()
         for (item in categoryList) {
             val list = ArrayList<Category>()
 
             println(" CategoryProducts categoryList $categoryList categoryList[0] ${categoryList[0]}  item $item ")
-            /**
-             *CategoryProducts categoryList [2}], Pienso, Comida húmeda, Dieta Veterinaria, Comida}], Pienso] categoryList[0] 2}]  item 2}]
-            CategoryProducts categoryList [2}], Pienso, Comida húmeda, Dieta Veterinaria, Comida}], Pienso] categoryList[0] 2}]  item Pienso
-            CategoryProducts categoryList [2}], Pienso, Comida húmeda, Dieta Veterinaria, Comida}], Pienso] categoryList[0] 2}]  item Comida húmeda
-            CategoryProducts categoryList [2}], Pienso, Comida húmeda, Dieta Veterinaria, Comida}], Pienso] categoryList[0] 2}]  item Dieta Veterinaria
-            CategoryProducts categoryList [2}], Pienso, Comida húmeda, Dieta Veterinaria, Comida}], Pienso] categoryList[0] 2}]  item Comida}]
-            CategoryProducts categoryList [2}], Pienso, Comida húmeda, Dieta Veterinaria, Comida}], Pienso] categoryList[0] 2}]  item Pienso
-             * **/
 
             categoryList[0].id?.let { item.name?.let { it1 -> Category(categories = categoryList, id = it, name = it1) } }?.let {
                 list.add(
@@ -156,23 +141,29 @@ class CategoryProductsFragment : Fragment() {
 
             list.distinctBy { Category(it.categories, it.id, it.name) }
 
-            categoryList[0].id?.let {
-                categoryList[0].name?.let { it1 ->
-                    CategoryItemTagItem(
-                        categories = list,
-                        id = it,
-                        name = it1
-                    )
-                }
-            }?.let {
-                categoryListAdapter.add(
-                    it
-                )
-            }
+            println(" list after list.distinctBy  ${list.map { it }}")
+
+            listDistincty.add(list[0])
+
+
+            println("listDistincty ${listDistincty.map { it }}")
             //binding.titleProductsCategory.text = "$item ${getString(R.string.result_category_of, item)}"
-            binding.titleProductsCategory.text = categoryList[0].name.toString()
         }
 
+        categoryList[0].id?.let {
+            categoryList[0].name?.let { it1 ->
+                CategoryItemTagItem(
+                    categories = listDistincty,
+                    id = it,
+                    name = it1
+                )
+            }
+        }?.let {
+            categoryListAdapter.add(
+                it
+            )
+        }
+        binding.titleProductsCategory.text = categoryList[0].name.toString()
 
         listCatAdapter = CategoryItemTagAdapter(categoryList = categoryListAdapter , object : CategoryItemTagAdapter.OptionsMenuClickListener{
 
