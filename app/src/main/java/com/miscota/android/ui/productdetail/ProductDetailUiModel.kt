@@ -86,7 +86,7 @@ fun CategoryUiModel.Product.combinationsToOptionsUiModel(): List<OptionUiModel.O
             id = combination.ref ?: "",
             variant = combination.variation ?: "",
             price = CurrencyUtils.formatPrice(combination.price),
-            isChecked = false,
+            isChecked = if (index == 0) true else false,
             optionPrice = combination.price ?: 0.0,
             stock = combination.stock,
             unitsPack = combination.unitsPack ?: 0,

@@ -7,7 +7,6 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.miscota.android.databinding.ItemCategoryTagBinding
@@ -36,44 +35,9 @@ class CategoryItemTagAdapter (
 
     override fun onBindViewHolder(holder: CategoryItemTagAdapter.ViewHolder, position: Int) {
         with(holder){
-            with(categoryList[0].categories[0].categories[position]) {
-                //with(position < categoryList[0].categories[0].categories.size) {
+            with(categoryList[0].categories[0].categories[0]) {
 
-                /**binding.checkBox.text =
-                this.categories[0].categories[position].name**/
-                //val max = categoryList[0].categories[0].categories.size
-                println("position::::: ${this.name}")
-                println("categoryList[position].categories.size ${categoryList[position].categories.size}")
-                    println("this.categories[0].categories[position].name")
-                println("categoryList[0].categories[0].categories.size ${categoryList[0].categories[0].categories.size}")
-                println("categoryList[0].categories[0].categories[0].name ${categoryList[0].name}")
-                println("categoryList[0].categories[0].categories[position].name ${categoryList[position].name}")
-                println("categoryList[0].categories[0].categories[position].name ${categoryList[position].name}")
-                println("categoryList[position].categories[position] ${categoryList[0].categories[0].categories[0]}")
-                println("categoryList[position].categories[position] ${categoryList[0].categories[0].categories[1]}")
-                println("categoryList[position].categories[0].name ${categoryList[0].categories[0].name}")
-
-                //if (position < categoryList[0].categories[0].categories.size) {
-
-                    //if (categoryList[0].categories[0].categories[position].name != null ) {
-
-                println("categoryList[0].categories[position].name ${categoryList[0].categories[0].categories[position].name}")
-                println("categoryList[0].categories[position].name ${categoryList[0].categories[position].name}")
-                println("categoryList[0].categories[position] ${categoryList[0].categories[position]}")
-                println("categoryList[0].categories[position].categories ${categoryList[0].categories[position].categories}")
-                println("categoryList[0].categories[position].categories ${categoryList[0].categories[position].categories}")
-                println("categoryList[0].categories[0].categories ${categoryList[0].categories[0].categories}")
-                println("categoryList[0].categories[0].categories[position] ${categoryList[0].categories[0].categories[position]}")
-                println("categoryList[0].categories[position].categories[position].name ${categoryList[0].categories[position].categories[position].name}")
-
-                        binding.checkBox.text =
-                            categoryList[0].categories[0].categories.toString()
-                    //}else{
-
-                        //binding.checkBox.visibility = View.GONE
-                    //}
-
-
+                binding.checkBox.text = categoryList[0].categories[0].categories[position].name
 
                 binding.checkBox.setOnClickListener {
                     println(" position checkeada $position")
@@ -111,8 +75,6 @@ class CategoryItemTagAdapter (
                     }
 
                 }
-
-            //}
 
             }
         }
@@ -155,6 +117,7 @@ class CategoryItemTagAdapter (
 
 
     override fun getItemCount(): Int {
-        return categoryList.size
+        println(" categoryList[0].categories[0].categories.size ${categoryList[0].categories[0].categories.size}")
+        return categoryList[0].categories[0].categories.size
     }
 }

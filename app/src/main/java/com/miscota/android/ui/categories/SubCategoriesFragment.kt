@@ -64,15 +64,6 @@ class SubCategoriesFragment : Fragment() {
         binding.allCategoriesLabel.text = getString(R.string.all_categories_of, item.title)
 
 
-        println(" item.subItens sucategoryFragment: ${item.subItems}")
-
-        println(" item.title: ${item.title}")
-
-        println(" item.subItems.get(0).title: ${item.subItems[0].title}")
-        println(" item.subItems.get(1).title: ${item.subItems[1].title}")
-        println(" item.subItems.size: ${item.subItems.size}")
-
-
         val subCat = ArrayList<MainCategoriesUiModel.Item>()
         for(iten in item.subItems)
 
@@ -106,9 +97,6 @@ class SubCategoriesFragment : Fragment() {
 
             test[it1.title] = it1.subItems
 
-            println(" it.title... ${it1.title}")
-            println(" it.subItems... ${it1.subItems}")
-
             it1.subItems.map { it2->
                 testT.add(it2.title)
             }
@@ -120,8 +108,6 @@ class SubCategoriesFragment : Fragment() {
                     R.id.action_subCategoriesFragment_to_categoryProductsFragment,
                     it
                 )**/
-                println(" subcatsss:::::2  $id")
-                println(" subcatsss sub  $it")
                 it.toString().split("=")[1].let { it2 ->  idCategory = it2} //id category
 
             }
@@ -138,7 +124,7 @@ class SubCategoriesFragment : Fragment() {
                 popup.menu.add(itens.title)
                 subCategoryItens.add(CategoryOne(category = "", id = itens.id.toString(), name = itens.title))
             }
-            //subCategory.add(itens.title)
+
             val text = "${getString(R.string.all_products_of_category)} ${it.title}"
             popup.menu.add(colorMyText(text,0,text.length, ContextCompat.getColor(requireContext(), R.color.blue_new_app)))
 
@@ -160,21 +146,13 @@ class SubCategoriesFragment : Fragment() {
                         R.id.action_subCategoriesFragment_to_categoryProductsFragment,
                         bundle
                     )
-                    println("it subcatssSetOnClicks: $it")
                 }
-
-                //val fragment = CategoryProductsFragment()
-                //fragment.arguments = bundle
 
                 true
             }
 
 
             popup.show()
-
-            println("it subcatsss dosss: $it")
-            println(" it.subItems.size ${it.subItems.size}")
-            println("  subbsssItem ${it.subItems}")
 
         }
 

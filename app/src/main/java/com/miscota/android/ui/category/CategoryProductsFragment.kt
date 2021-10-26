@@ -56,7 +56,7 @@ class CategoryProductsFragment : Fragment() {
 
         val bundleCategory: Bundle? = arguments
         categoryList = bundleCategory?.getParcelableArrayList("listCategory")!!
-        println(" categoryList ${categoryList.map { it }}")
+
         viewModel.showLoading.observe(viewLifecycleOwner) {
             if (!viewModel.showLoading.value!!) {
                 binding.loading.visibility = View.VISIBLE
@@ -128,10 +128,8 @@ class CategoryProductsFragment : Fragment() {
             viewModel.selectCategory(it)
         }
         val listDistincty = ArrayList<Category>()
+        val list = ArrayList<Category>()
         for (item in categoryList) {
-            val list = ArrayList<Category>()
-
-            println(" CategoryProducts categoryList $categoryList categoryList[0] ${categoryList[0]}  item $item ")
 
             categoryList[0].id?.let { item.name?.let { it1 -> Category(categories = categoryList, id = it, name = it1) } }?.let {
                 list.add(
@@ -140,15 +138,8 @@ class CategoryProductsFragment : Fragment() {
             }
 
             list.distinctBy { Category(it.categories, it.id, it.name) }
-
-            println(" list after list.distinctBy  ${list.map { it }}")
-
-            listDistincty.add(list[0])
-
-
-            println("listDistincty ${listDistincty.map { it }}")
-            //binding.titleProductsCategory.text = "$item ${getString(R.string.result_category_of, item)}"
         }
+        listDistincty.add(list[0])
 
         categoryList[0].id?.let {
             categoryList[0].name?.let { it1 ->
