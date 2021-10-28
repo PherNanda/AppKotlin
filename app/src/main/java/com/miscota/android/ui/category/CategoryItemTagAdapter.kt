@@ -39,10 +39,13 @@ class CategoryItemTagAdapter (
 
                 binding.checkBox.text = categoryList[0].categories[0].categories[position].name
 
-                println("categoryList[0].categories[0].categories[position] ${categoryList[0].categories[0].categories[position]}")
+                println("::::categoryList[0].categories[0].categories[position] ${categoryList[0].categories[0].categories[position]}")
 
                 if (categoryList[0].categories[0].categories[position].checked == "true"){
                     binding.checkBox.isChecked = true
+                }
+                if (categoryList[0].categories[0].categories[position].checked == "false") {
+                    binding.checkBox.isChecked = false
                 }
 
             }

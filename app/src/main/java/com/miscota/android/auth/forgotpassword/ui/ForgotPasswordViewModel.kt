@@ -10,6 +10,7 @@ import com.miscota.android.R
 import com.miscota.android.repository.AuthRepository
 import com.miscota.android.util.AuthStore
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
 class ForgotPasswordViewModel(private val authRepository: AuthRepository, private val authStore: AuthStore) :
     ViewModel() {
@@ -21,6 +22,7 @@ class ForgotPasswordViewModel(private val authRepository: AuthRepository, privat
     val forgotPasswordResult: LiveData<ForgotPasswordResult> = _forgotPasswordResult
 
     fun recoverPassword(email: String) {
+        try{
         viewModelScope.launch {
             val result = runCatching {
                 authRepository.recover(
@@ -28,13 +30,29 @@ class ForgotPasswordViewModel(private val authRepository: AuthRepository, privat
                 )
             }
 
-            if (result.isSuccess) {
-                val response = result.getOrThrow()
-                _forgotPasswordResult.value =
-                    ForgotPasswordResult(success = ForgotPasswordUserView(send = response.send))
-            } else {
-                _forgotPasswordResult.value = ForgotPasswordResult(error = R.string.login_failed)
+            if (result != null) {
+
+                if (result.isSuccess) {
+                    val response = result.getOrThrow()
+                    _forgotPasswordResult.value =
+                        ForgotPasswordResult(
+                            success = ForgotPasswordUserView(
+                                success = response.success,
+                                error = response.error,
+                                send = response.send
+                            )
+                        )
+                }
+                else {
+                    _forgotPasswordResult.value = ForgotPasswordResult(error = R.string.recover_failed)
+                }
             }
+            else{
+                _forgotPasswordResult.value = ForgotPasswordResult(error = R.string.recover_failed)
+            }
+        }
+        }catch (e: HttpException){
+            println(" Error Forgot ${e.message}")
         }
     }
 

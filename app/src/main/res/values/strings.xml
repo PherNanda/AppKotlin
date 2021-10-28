@@ -34,6 +34,7 @@
     <string name="terms_error">Por favor acepta las condiciones de servicio primero</string>
     <string name="login_description">Regístrate y disfruta de todas las ventajas de la app.</string>
     <string name="login_failed">Error en inicio se sesión</string>
+    <string name="recover_failed">Añada un correo electrónico válido para recuperar su contraseña</string>
     <string name="login_with_email_failed">El correo electrónico o la contraseña introducidos no son correctos</string>
     <string name="checkout_failed">Error en el checkout</string>
     <string name="login_social_buttons_separator">o</string>
@@ -59,8 +60,8 @@
     <string name="address">Dirección</string>
     <string name="address_new">Escribe tu código postal o dirección</string>
     <string name="already_have_account">Ya tengo una cuenta</string>
-    <string name="restore_password_description">Escribe tu correo electrónico y te mandaremos una nueva contraseña.</string>
-    <string name="restore_password">Restablecer contraseña</string>
+    <string name="restore_password_description">Introduce tu email y te enviaremos las instrucciones de recuperación</string>
+    <string name="restore_password">Recuperar contraseña</string>
     <string name="my_orders">Mis pedidos</string>
     <string name="my_profile">Mi perfil</string>
     <string name="products">Todos los \nproductos</string>
@@ -69,7 +70,7 @@
     <string name="our_stores">Nuestras \ntiendas</string>
     <string name="schedule_your_order">Mis pedidos programados</string>
     <string name="next_schedule_order">Próximo pedido programados</string>
-    <string name="restore_password_email_sent">Se ha enviado un email apra restablecer la contraseña a tu dirección de correo electrónico</string>
+    <string name="restore_password_email_sent">Se ha enviado un email para restablecer la contraseña a tu correo electrónico</string>
     <string name="next_order_arrives_on">El pedido programado llega en %s</string>
     <string name="current_location">Ubicación actual</string>
     <string name="current_location_new">Usar mi posición actual</string>

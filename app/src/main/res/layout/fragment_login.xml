@@ -109,7 +109,7 @@
             android:text="@string/forgot_password"
             android:textColor="@color/app_blue"
             android:textSize="14sp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginVertical="0dp"
             app:fontFamily="@font/bree"
             app:layout_constraintEnd_toEndOf="@+id/passwordLayout"

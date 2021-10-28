@@ -11,7 +11,7 @@ val categoryModule = module {
         )
 
             CategoryViewModel(
-                categoryId = categoryId[0].id!!.split("}").firstOrNull()?.toLong()?:0L,
+                categorys = categoryId,
                 productRepository = get(),
                 autoStore = get()
             )

@@ -133,7 +133,7 @@ class SubCategoriesFragment : Fragment() {
 
                 bundleOf(CategoryProductsFragment.KEY_LONG_CATEGORY_ID to it.title).also { it ->
                     if (idCategory.length > 1) {
-                        subCategory.add(CategoryOne(category = "", id = idCategory.split("}")[0], name = it.toString().split("=")[1].split("}")[0],checked = "false"))
+                        subCategory.add(CategoryOne(category = "", id = idCategory.split("}")[0], name = it.toString().split("=")[1].split("}")[0],checked = if (it.toString().split("=")[1].split("}")[0] == item.toString() || "${getString(R.string.all_products_of_category)} ${it.toString().split("=")[1].split("}")[0]}" == item.toString()) "true" else "false"))
                     }
                     println("item:::: popup $item")
                     subCategoryItens.map {

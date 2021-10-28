@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class CategoryViewModel(
-    private val categoryId: Long,
+    private val categorys:  ArrayList<CategoryOne>,
     private val productRepository: ProductRepository,
     private val autoStore: AuthStore
 ) : ViewModel() {
@@ -19,6 +19,8 @@ class CategoryViewModel(
 
     private var topProductPageNumber = 0
     private var shouldTopProductsFetch = false
+
+    private var categoryId: CategoryOne = CategoryOne("","","","")
 
     var showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
 
@@ -41,6 +43,7 @@ class CategoryViewModel(
     private val categoryListItem = CategoryUiModel.CategoryListItem(categories = listOf())
 
     private lateinit var retailID: String
+    
 
     val dataList: LiveData<List<CategoryUiModel>> =
         MediatorLiveData<List<CategoryUiModel>>().apply {
@@ -105,9 +108,14 @@ class CategoryViewModel(
     val messageEvent: LiveData<Event<String>> = _messageEvent
 
     init {
+
+        categorys.map {
+            if (it.checked == "true")
+                categoryId = it
+        }
+
         loadTopProducts()
         loadProducts()
-
 
 
     }
@@ -118,7 +126,7 @@ class CategoryViewModel(
             val result = runCatching {
                 val response =
                     productRepository.fetchProductsByCategory(
-                        categoryId = categoryId.toInt(),
+                        categoryId = categoryId.id?.toInt()?:0,
                         page = productPageNumber,
                         limit = PAGE_LIMIT,
                         retailID = autoStore.getRetailID()?:"5",
@@ -130,7 +138,7 @@ class CategoryViewModel(
                     //println(" response.isEmpty() autoStore.getRetailID()?.map ${it.retail_shop_id} - ${it.name} ")
                 }
 
-                println(" categoryId.toInt()  ${categoryId.toInt()}")
+                println(" categoryId.toInt()  ${categoryId.id!!.toInt()}")
                 val list = _products.value?.toMutableList() ?: mutableListOf()
                 list.addAll(response.map { it.toCategoryProductUiModel() })
                 println("  map  loadProducts:::: " +
@@ -167,7 +175,7 @@ class CategoryViewModel(
                 val result = runCatching {
                     val response =
                         productRepository.fetchProductsByCategory(
-                            categoryId = categoryId.toInt(),
+                            categoryId = categoryId.id?.toInt()?:0,
                             page = productPageNumber,
                             limit = 20,
                             retailID =autoStore.getRetailID()?:"5",
@@ -253,6 +261,8 @@ class CategoryViewModel(
     }
 
     fun selectCategoryTwo(categoryUiModel: CategoryUiModel.CategoryListItem.Category) {
+
+        loadProducts()
 
         println("categoryListItem.categories.size 1 ${categoryListItem.categories.size}")
         for (category in categoryListItem.categories)

@@ -35,8 +35,13 @@ class ForgotPasswordActivity : AppCompatActivity() {
             }
 
             doneButton.setOnClickListener {
-                loadingState()
-                viewModel.recoverPassword(emailEditText.text.toString())
+                if ( emailEditText.text?.isNotEmpty() == true ) {
+                    loadingState()
+                    viewModel.recoverPassword(emailEditText.text.toString())
+                }
+                else{
+                    Toast.makeText(this@ForgotPasswordActivity,getString(R.string.recover_failed),Toast.LENGTH_LONG).show()
+                }
             }
 
             emailEditText.afterTextChanged {
