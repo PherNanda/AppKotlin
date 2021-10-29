@@ -128,16 +128,15 @@ class TramitarPedidoFragment : Fragment() {
         binding.ecommercePrice.text = viewModelCart.authStore.getCarriersEco()+" €"
         binding.totalPrice.text = String.format("%.2f", totalCheckout)+" €"
 
-
-        if( cardNumber != null ){
-
-            binding.creditCardNumber.text = String.format(resources.getString(R.string.card_mask),cardNumber.substring(14,19))
-
-        }
         if (viewModelCart.authStore.getCard() != null){
 
             binding.creditCardNumber.text = String.format(resources.getString(R.string.card_mask), viewModelCart.authStore.getCard()!!.card.substring(14,19))
             binding.creditCardName.text = viewModelCart.authStore.getCard()!!.owner.toString()
+        }
+        if( cardNumber != null ){
+
+            binding.creditCardNumber.text = String.format(resources.getString(R.string.card_mask),cardNumber.substring(14,19))
+
         }
         if(cardOwner != null ){
             binding.creditCardName.text = cardOwner.toString()
@@ -551,7 +550,7 @@ class TramitarPedidoFragment : Fragment() {
         val expiryDate = ExpiryDate(expireDate.toInt(), expire.toInt())
         val securityCode = securityCode
 
-        //try {
+        try {
 
         val cardType =
             CardType.estimate(cardNumber)[0] // This is just an estimation and could be empty
@@ -593,22 +592,23 @@ class TramitarPedidoFragment : Fragment() {
             paymentResult = false
 
         }
-       /** }catch (e: IndexOutOfBoundsException){
+        }catch (e: IndexOutOfBoundsException){
             println("Exception Card ${e.message}  ${e.printStackTrace()}  $e")
 
-            Toast.makeText(requireContext(),"Tarjeta inválida",Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),"Tarjeta inválida, compruebe la tarjeta",Toast.LENGTH_SHORT).show()
             return PaymentMethod(
                 encryptedCardNumber = "0000 0000 0000 0000",
                 encryptedExpiryMonth =  "00/00",
-                encryptedExpiryYear =  "0/00",
+                encryptedExpiryYear =  "00/00",
                 encryptedSecurityCode =  "000",
                 encryptedUserName = "user name default")
+
+            val card = CardN(card="0000 0000 0000 0000", security= "000",expireYear="00/00".split("/").get(1), expireMonth="00/00".split("/").first(), owner="user name default")
+            viewModelCart.authStore.setCard(card)
+
             paymentResult = false
 
-       val card = CardN(card=cardNumber, security= cardSecurity,expireYear=cardYear.split("/").get(1), expireMonth=cardMonth.split("/").first(), owner=cardOwner)
-       viewModelCart.authStore.setCard(card)
-
-        }**/
+                 }
         return paymentMethod!!
 
     }
