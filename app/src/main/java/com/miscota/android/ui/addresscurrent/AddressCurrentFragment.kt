@@ -1,29 +1,25 @@
 package com.miscota.android.ui.addresscurrent
 
 import android.graphics.Typeface
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.miscota.android.R
 import com.miscota.android.address.AddressViewModel
 import com.miscota.android.databinding.AddressCurrentFragmentBinding
-import com.miscota.android.databinding.PartialLayoutRecentAddressBinding
 import com.miscota.android.databinding.PartialLayoutRecentAddressCartBinding
-import com.miscota.android.databinding.PartialLayoutRecentAddressCartNewBinding
 import com.miscota.android.ui.addaddress.AddAddressFragment
-import com.miscota.android.ui.cart.CartViewModel
 import com.miscota.android.ui.tramitarpedido.TramitarPedidoFragment
 import com.miscota.android.util.Address
 import com.miscota.android.util.autoClean
@@ -82,7 +78,8 @@ class AddressCurrentFragment : Fragment() {
                 partialBinding.currentLocationText.text = "${address.postalCode}, ${address.city}, ${address.countryName}"
                 println("address $address")
 
-
+                println("address groupingBy 01 ${recentAddresses.groupingBy { it }.eachCount().filter { it.value > 1 }}")
+                println("address groupingBy 01 == 1 ${recentAddresses.groupingBy { it }.eachCount().filter { it.value == 1 } }")
 
 
                 partialBinding.root.setOnClickListener {
@@ -100,7 +97,9 @@ class AddressCurrentFragment : Fragment() {
                     //partialBinding.currentLocation.setBackgroundDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.background_home_new_search))
                     //partialBinding.currentLocation.setBackgroundDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.background_home_new_search))
 
-                    viewModelAddress.setAddressInfo(address.addressNumber, address)
+                    viewModelAddress.setAdressUser(address)
+
+                    println("\naddress.addressNumber fragment ${address.addressNumber} $address")
 
                     val fragment = TramitarPedidoFragment()
                     fragment.arguments = bundleAddress
@@ -118,9 +117,12 @@ class AddressCurrentFragment : Fragment() {
                 partialBinding.currentLocation.text = address.addressNumber
                 partialBinding.currentLocationText.text = "${address.postalCode}, ${address.city}, ${address.countryName}"
 
+
+
                 println("address two $address")
 
-
+                println("address groupingBy 02 ${recentAddresses.groupingBy { it }.eachCount().filter { it.value > 1 }}")
+                println("address groupingBy 02 == 1 ${recentAddresses.groupingBy { it }.eachCount().filter { it.value == 1 } }")
 
                 partialBinding.root.setOnClickListener {
 
@@ -132,7 +134,8 @@ class AddressCurrentFragment : Fragment() {
 
                     println("address partialBinding.root.setOnClickListener two $address")
 
-                    viewModelAddress.setAddressInfo(address.addressNumber, address)
+                    viewModelAddress.setAdressUser(address)
+                    println("\naddress.addressNumber fragment ${address.addressNumber} $address")
 
                     val fragment = TramitarPedidoFragment()
                     fragment.arguments = bundleAddress

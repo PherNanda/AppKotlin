@@ -548,10 +548,13 @@ class TramitarPedidoFragment : Fragment() {
         val cardNumber = cardNumber
         val ownerName = "ownerName"
         val expire = "20$expireYear"
-        val cardType =
-            CardType.estimate(cardNumber)[0] // This is just an estimation and could be empty
         val expiryDate = ExpiryDate(expireDate.toInt(), expire.toInt())
         val securityCode = securityCode
+
+        //try {
+
+        val cardType =
+            CardType.estimate(cardNumber)[0] // This is just an estimation and could be empty
 
         if (CardValidationUtils.validateCardNumber(cardNumber).isValid
             && CardValidationUtils.validateExpiryDate(expiryDate).isValid
@@ -590,7 +593,22 @@ class TramitarPedidoFragment : Fragment() {
             paymentResult = false
 
         }
+       /** }catch (e: IndexOutOfBoundsException){
+            println("Exception Card ${e.message}  ${e.printStackTrace()}  $e")
 
+            Toast.makeText(requireContext(),"Tarjeta inválida",Toast.LENGTH_SHORT).show()
+            return PaymentMethod(
+                encryptedCardNumber = "0000 0000 0000 0000",
+                encryptedExpiryMonth =  "00/00",
+                encryptedExpiryYear =  "0/00",
+                encryptedSecurityCode =  "000",
+                encryptedUserName = "user name default")
+            paymentResult = false
+
+       val card = CardN(card=cardNumber, security= cardSecurity,expireYear=cardYear.split("/").get(1), expireMonth=cardMonth.split("/").first(), owner=cardOwner)
+       viewModelCart.authStore.setCard(card)
+
+        }**/
         return paymentMethod!!
 
     }

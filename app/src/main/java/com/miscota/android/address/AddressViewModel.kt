@@ -201,6 +201,8 @@ class AddressViewModel(
     fun setAddressInfo(additionalAddress: String, address: Address?) {
         val newAddress = address?.copy(address = "$additionalAddress ${address.address}")
 
+        println("\nnewAddress.addressNumber activity viewModel ${newAddress!!.addressNumber} $newAddress")
+
         authStore.setAddressInfo(newAddress)
         authStore.addRecentAddressInfo(newAddress)
         println("test aqui setAddressInfo")

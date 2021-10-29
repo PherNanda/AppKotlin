@@ -380,6 +380,10 @@ class DefaultAuthStore constructor(context: Context) : AuthStore {
 
             val recentAddresses = getRecentAddressesInfo()?.toMutableList() ?: mutableListOf()
             if (addressInfo != null) {
+
+                /**recentAddresses.map { if (addressInfo != it)
+                    recentAddresses.add(0, addressInfo)
+                }**/
                 recentAddresses.add(0, addressInfo)
             }
 
