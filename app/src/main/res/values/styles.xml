@@ -108,6 +108,40 @@
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
+    <style name="Widget.AppComponents.Button.OutlinedButton.SignUp.CP" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">63dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="backgroundTint">@color/light_grey</item>
+        <item name="fontFamily">@font/bree</item>
+        <item name="strokeColor">@color/light_grey_label</item>
+        <item name="android:gradientRadius">@color/white_900</item>
+        <item name="android:textColor">@color/new_app_grey</item>
+        <item name="boxStrokeColor">@color/login_input_colors</item>
+    </style>
+
+    <style name="Widget.AppComponents.Button.OutlinedButton.SignUp" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">41dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="backgroundTint">@color/rose</item>
+        <item name="fontFamily">@font/bree_regular</item>
+        <item name="strokeColor">@color/light_grey_label</item>
+        <item name="android:gradientRadius">@color/white_900</item>
+        <item name="android:textColor">@color/white_900</item>
+    </style>
+
+    <style name="Widget.AppComponents.Button.OutlinedButton.SignUp.Button" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">41dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="backgroundTint">@color/rose</item>
+        <item name="fontFamily">@font/bree_regular</item>
+        <item name="strokeColor">@color/light_grey_label</item>
+        <item name="android:gradientRadius">@color/white_900</item>
+        <item name="android:textColor">@color/white_900</item>
+    </style>
+
     <style name="Widget.AppComponents.Button.OutlinedButton.Search" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="cornerRadius">24dp</item>
         <item name="textAllCaps">false</item>

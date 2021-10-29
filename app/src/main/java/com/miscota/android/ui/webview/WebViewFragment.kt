@@ -39,8 +39,6 @@ class WebViewFragment : Fragment() {
 
 
 
-
-
     companion object {
         const val KEY_STRING_WEB_VIEW_URL = "webViewUrl"
     }

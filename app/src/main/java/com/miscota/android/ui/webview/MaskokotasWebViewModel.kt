@@ -30,6 +30,7 @@ class MaskokotasWebViewModel(private val authStore: AuthStore) :
         return url
     }
 
+
     fun isLoggedIn(): Boolean {
         return authStore.isLoggedIn()
     }

@@ -72,11 +72,12 @@ class ProductDetailViewModel(
 
     fun increment() {
         _quantity.value = _quantity.value!! + 1
+        println(" increment _quantity.value ${_quantity.value}")
     }
 
     fun incrementCart(qtyProduct: Int) {
         _quantity.value = qtyProduct
-        println(" _quantity.value ${_quantity.value}")
+        println(" increment cart _quantity.value ${_quantity.value}")
     }
 
     fun decrement() {
@@ -242,6 +243,10 @@ class ProductDetailViewModel(
         } catch (e: Exception) {
             println("${e.message}  -Error-  ${e.printStackTrace()}")
         }
+    }
+
+    fun getTotalItens(): Int{
+        return authStore.getTotalCartItens()
     }
 
 

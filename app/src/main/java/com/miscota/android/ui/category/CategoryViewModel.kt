@@ -122,6 +122,11 @@ class CategoryViewModel(
 
     private fun loadProducts() {
 
+        categorys.map {
+            if (it.checked == "true")
+                categoryId = it
+        }
+
         viewModelScope.launch {
             val result = runCatching {
                 val response =

@@ -207,6 +207,7 @@ class MainActivity : AppCompatActivity() {
 
                     binding.textSamedayMain.text = getString(R.string.same_day_off)
                     binding.imageSamedayCheck.visibility = View.GONE
+                    //binding.imageSamedayMain.visibility = View.GONE
                     binding.textSamedayMain.text = colorMyText(
                         getString(R.string.same_day_off),
                         11,
@@ -234,6 +235,7 @@ class MainActivity : AppCompatActivity() {
                         ContextCompat.getColor(this, R.color.app_pink)
                     )
                     binding.imageSamedayCheck.visibility = View.VISIBLE
+                    binding.imageSamedayMain.visibility = View.VISIBLE
 
                     //println("line238 MainActivity inn::: line 249 \n ${viewModel.authStore.getRetailID()} ")
                 }
@@ -258,6 +260,28 @@ class MainActivity : AppCompatActivity() {
             if (it == null){
                 binding.textSamedayMain.text = getString(R.string.text_default_main)
                 binding.imageSamedayCheck.visibility = View.GONE
+                binding.imageSamedayMain.visibility = View.GONE
+                binding.samedayInfoMain.setBackgroundDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.background_same_day_off
+                    )
+                )
+
+                binding.samedayInfo.visibility = View.GONE
+
+                //binding.samedayInfoBottom.gravity = Gravity.END
+                changeSizeMyText(14F,binding.textSamedayMain)
+                val gravity = Gravity.CENTER
+
+                val paramss: ViewGroup.LayoutParams =  binding.samedayInfoBottom.layoutParams
+                paramss.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                paramss.width = ViewGroup.LayoutParams.MATCH_PARENT
+
+                binding.samedayInfoBottom.gravity = gravity
+                binding.samedayInfoBottom.layoutParams = paramss
+
+
 
             }
 
@@ -269,6 +293,7 @@ class MainActivity : AppCompatActivity() {
         }
         else {
             binding.cartItemsText.text = viewModel.getTotalItens().toString()
+            binding.cartItemsText.visibility = View.VISIBLE
         }
 
         binding.cartItemsText.setOnClickListener {
@@ -392,6 +417,7 @@ class MainActivity : AppCompatActivity() {
                 binding.textSamedayMain.text = colorMyText(getString(R.string.title_sameday),0,11, ContextCompat.getColor(this, R.color.app_pink))
                 binding.imageSamedayCheck.visibility = View.VISIBLE
 
+
                 //println("onStartMain viewModel.authStore.getRetailID() MainActivity inn::: line 449 \n ${viewModel.authStore.getRetailID()} ")
 
             }
@@ -409,6 +435,7 @@ class MainActivity : AppCompatActivity() {
                 changeSizeMyText(18F,binding.locationTextMain)
                 binding.locationTextMain.text=
                     it.postalCode+ ", " + it.city
+
 
                 it.postalCode.let { postalCode ->
                     viewModel.checkPostalCode(postalCode)
@@ -590,6 +617,7 @@ class MainActivity : AppCompatActivity() {
         println("onStopMain")
         viewModel.loadSelectedLocation()
         viewModel.selectedLocation.observe(this) {
+
             return@observe
         }
 

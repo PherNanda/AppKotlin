@@ -71,7 +71,7 @@ class ConsultingFragment : Fragment() {
 
        val mksAppHeaders: MutableMap<String, String> = HashMap()
         mksAppHeaders["x-buddy-client"] = "android-app"
-        var destinationUrl = "https://www.miscota.es/contact-form"
+        val destinationUrl = "https://www.miscota.es/contact-form"
 
 
         binding.webViewContact.isVerticalScrollBarEnabled = true

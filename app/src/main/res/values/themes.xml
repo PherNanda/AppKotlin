@@ -61,6 +61,18 @@
         <item name="boxStrokeErrorColor">@color/red</item>
     </style>
 
+    <style name="Widget.AppComponents.TextInputLayout.OutlinedBox.SignUp" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxCornerRadiusTopStart">63dp</item>
+        <item name="boxCornerRadiusTopEnd">63dp</item>
+        <item name="boxCornerRadiusBottomStart">63dp</item>
+        <item name="boxCornerRadiusBottomEnd">63dp</item>
+        <item name="hintEnabled">false</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeColor">@color/login_input_colors</item>
+        <item name="boxBackgroundColor">@color/light_grey_background</item>
+        <item name="boxStrokeErrorColor">@color/red</item>
+    </style>
+
 
     <style name="Widget.AppComponents.TextInputLayout.RoundedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxCornerRadiusTopStart">24dp</item>

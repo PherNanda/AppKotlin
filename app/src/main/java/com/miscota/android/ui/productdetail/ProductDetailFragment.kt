@@ -210,7 +210,12 @@ class ProductDetailFragment : Fragment() {
                                 )
 
                             viewModel.totalItensCart.observe(viewLifecycleOwner){
+
+                                if (viewModel.totalItensCart.value!! > 0){
+                                    (requireActivity() as MainActivity).binding.cartItemsText.visibility = View.VISIBLE
+                                }
                                 (requireActivity() as MainActivity).binding.cartItemsText.text = viewModel.totalItensCart.value.toString()
+                                //viewModel.getTotalItens()
                                 return@observe
                             }
 
@@ -244,7 +249,12 @@ class ProductDetailFragment : Fragment() {
                         requireNotNull(cartItem), requireContext(), it
                     )
                     viewModel.totalItensCart.observe(viewLifecycleOwner){
+                        if (viewModel.totalItensCart.value!! > 0){
+                            (requireActivity() as MainActivity).binding.cartItemsText.visibility = View.VISIBLE
+                        }
+
                         (requireActivity() as MainActivity).binding.cartItemsText.text = viewModel.totalItensCart.value.toString()
+                        //viewModel.getTotalItens()
                         return@observe
                     }
                 }

@@ -111,7 +111,7 @@ class LoginViewModel(private val authRepository: AuthRepository, private val aut
                             )
                     }
                     if (error != null) {
-                        println(" error.error first ${error.error}")
+
                         if (error.error.isNotEmpty()) {
                             println(" error.error ${error.error}")
                         }
@@ -119,13 +119,12 @@ class LoginViewModel(private val authRepository: AuthRepository, private val aut
                     }
                 }
                 if (result.isFailure){
-                    println("failure")
+
                     _loginResult.value = LoginResult(error = R.string.login_with_email_failed)
                     println(" failure login_with_email_failed ${_loginResult.value}")
                 }
             } else {
                 _loginResult.value = LoginResult(error = R.string.login_with_email_failed)
-                println(" login_with_email_failed ${_loginResult.value}")
             }
         }
 

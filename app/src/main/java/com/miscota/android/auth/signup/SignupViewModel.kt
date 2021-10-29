@@ -55,6 +55,8 @@ class SignupViewModel(
             if (result.isSuccess) {
                 val user = result.getOrThrow().info.toUserModel()
                 authStore.setUser(user)
+                authStore.setAutoLoginParam(result.getOrThrow().autologin_param)
+                authStore.setAutoLoginParamExpire(result.getOrThrow().autologin_param_expire)
                 _signupResult.value =
                     SignUpResult(success = LoggedInUserView(displayName = user.name?:"invitado"))
             } else {
@@ -104,8 +106,10 @@ class SignupViewModel(
     }
 
     // A placeholder password validation check
+    val pattern = Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$")
+    //^(?=\w*\d)(?=\w*[A-Za-z])\S{6,}$
     private fun isPasswordValid(password: String): Boolean {
-        return password.length > 5
+      return pattern.containsMatchIn(password) && password.length > 5
     }
 
     // A placeholder username validation check

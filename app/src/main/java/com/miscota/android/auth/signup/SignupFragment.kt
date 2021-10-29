@@ -1,31 +1,39 @@
 package com.miscota.android.auth.signup
 
-import android.Manifest
+
 import android.app.Activity
-import android.content.Intent
+import android.graphics.Typeface
 import android.location.Geocoder
 import android.os.Bundle
+import android.text.Editable
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 import com.miscota.android.R
-import com.miscota.android.address.AddressActivity
 import com.miscota.android.afterTextChanged
 import com.miscota.android.auth.AuthViewModel
 import com.miscota.android.auth.login.ui.LoggedInUserView
 import com.miscota.android.databinding.FragmentSignupBinding
+import com.miscota.android.ui.addresscurrent.AddressCurrentFragment
+import com.miscota.android.ui.termsprivacity.TermsPrivacityFragment
+import com.miscota.android.ui.tramitarpedido.TramitarPedidoFragment
 import com.miscota.android.util.autoClean
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -83,8 +91,23 @@ class SignupFragment : Fragment() {
 
         firebaseAnalytics = Firebase.analytics
 
+        binding.readTermConditions.text = boldColorMyText(getString(R.string.terms_and_conditions),
+            startIndexTerm,
+            binding.readTermConditions.text.length, ContextCompat.getColor(requireContext(), R.color.app_blue))
+
+        binding.readTermConditions.setOnClickListener {
+
+            val fragment: Fragment = TermsPrivacityFragment()
+            val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.termsPrivacy, fragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
+
         with(binding) {
             signupViewModel.signupFormState.observe(viewLifecycleOwner) {
+
                 if (!it.isDataValid) {
                     defaultState()
                 }
@@ -140,7 +163,7 @@ class SignupFragment : Fragment() {
                     password = password.text.toString(),
                     confirmPassword = confirmPassword.text.toString(),
                     email = email.text.toString(),
-                    address = address.text.toString(),
+                    address = addressInput.text.toString(),
                     terms = termsSwitch.isChecked,
                 )
             }
@@ -150,7 +173,7 @@ class SignupFragment : Fragment() {
                     password = password.text.toString(),
                     confirmPassword = confirmPassword.text.toString(),
                     email = email.text.toString(),
-                    address = address.text.toString(),
+                    address = addressInput.text.toString(),
                     terms = termsSwitch.isChecked,
                 )
             }
@@ -160,17 +183,31 @@ class SignupFragment : Fragment() {
                     password = password.text.toString(),
                     confirmPassword = confirmPassword.text.toString(),
                     email = email.text.toString(),
-                    address = address.text.toString(),
+                    address = addressInput.text.toString(),
                     terms = termsSwitch.isChecked,
                 )
             }
+
+            addressInput.doAfterTextChanged {
+                println("Address signUp $it  ")
+                signupViewModel.loginDataChanged(
+                    username = username.text.toString(),
+                    password = password.text.toString(),
+                    confirmPassword = confirmPassword.text.toString(),
+                    email = email.text.toString(),
+                    address = addressInput.text.toString(),
+                    terms = termsSwitch.isChecked,
+                )
+            }
+
+
             confirmPassword.afterTextChanged {
                 signupViewModel.loginDataChanged(
                     username = username.text.toString(),
                     password = password.text.toString(),
                     confirmPassword = confirmPassword.text.toString(),
                     email = email.text.toString(),
-                    address = address.text.toString(),
+                    address = addressInput.text.toString(),
                     terms = termsSwitch.isChecked,
                 )
             }
@@ -191,19 +228,34 @@ class SignupFragment : Fragment() {
             }
 
             signupViewModel.selectedAddress.observe(viewLifecycleOwner) {
-                binding.address.text = it ?: getString(R.string.address)
+                binding.addressInput.text = (it ?: getString(R.string.address)) as Editable?
             }
         }
 
-        binding.address.setOnClickListener {
-            startActivity(Intent(requireContext(), AddressActivity::class.java))
+        binding.addressInput.setOnClickListener {
+            //startActivity(Intent(requireContext(), AddressActivity::class.java))
         }
+
+
 
         binding.loginButton.setOnClickListener {
             authViewModel.setScreen(AuthViewModel.Screen.LoginScreen)
         }
     }
 
+    private fun boldColorMyText(inputText:String,startIndex:Int,endIndex:Int,textColor:Int): Spannable {
+        val outPutBoldColorText: Spannable = SpannableString(inputText)
+        outPutBoldColorText.setSpan(
+            StyleSpan(Typeface.BOLD), startIndex, endIndex,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        outPutBoldColorText.setSpan(
+            ForegroundColorSpan(textColor), startIndex, endIndex,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        return outPutBoldColorText
+    }
     override fun onStart() {
         super.onStart()
 
@@ -266,6 +318,10 @@ class SignupFragment : Fragment() {
                 Timber.e("Location permission not granted")
             }
         }
+    }
+
+    companion object{
+        private const val startIndexTerm = 0
     }
 
 }

@@ -3,6 +3,8 @@
 
     <item>
         <bitmap android:src="@drawable/ic_splash_screen_all"/>
+
+
     </item>
 
 
@@ -10,7 +12,9 @@
         android:id="@+id/loading"
         android:gravity="center"
         android:bottom="260dp"
-        android:drawable="@drawable/ic_loader_spinner"/>-->
+        android:drawable="@drawable/ic_loader_spinner"
+
+        />-->
 
     <!--<item android:gravity="top" android:drawable="@drawable/background_splash_screen"/>
     <item android:gravity="fill_vertical" android:height="479dp" android:drawable="@drawable/background_splash_screen"/>

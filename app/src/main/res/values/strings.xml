@@ -27,12 +27,12 @@
     <string name="action_sign_in_short">Iniciar sesión</string>
     <string name="welcome">Bienvenido</string>
     <string name="invalid_username">Usuario inválido</string>
-    <string name="invalid_password">La contraseña debe tener mas de 5 carácteres</string>
+    <string name="invalid_password">La contraseña debe tener mínimo 6 carácteres \n(con almenos 1 letra y 1 número)</string>
     <string name="invalid_confirm_password">Las claves no coinciden</string>
     <string name="invalid_email">E-Mail inválido</string>
     <string name="invalid_address">Dirección no válida</string>
     <string name="terms_error">Por favor acepta las condiciones de servicio primero</string>
-    <string name="login_description">Regístrate y disfruta de todas las ventajas de la app.</string>
+    <string name="login_description">y disfruta de todas las ventajas</string>
     <string name="login_failed">Error en inicio se sesión</string>
     <string name="recover_failed">Añada un correo electrónico válido para recuperar su contraseña</string>
     <string name="login_with_email_failed">El correo electrónico o la contraseña introducidos no son correctos</string>
@@ -52,14 +52,16 @@
     <string name="signing">Iniciando sesión...</string>
     <string name="remember_password">Recordar contraseña</string>
     <string name="full_name">Nombre completo</string>
-    <string name="newsletter_subscription">Subscripción a newsletter</string>
+    <string name="newsletter_subscription">Acepto suscribirme a la newsletter</string>
     <string name="accept_terms_and_conditions">Acepto la política de privacidad</string>
-    <string name="sign_up">Registrarme</string>
+    <string name="accept_terms_conditions">Acepto la </string>
+    <string name="terms_and_conditions">política de privacidad</string>
+    <string name="sign_up">Crear cuenta</string>
     <string name="sign_up_error">Error en el registro</string>
     <string name="confirm_password">Confirmar contraseña</string>
-    <string name="address">Dirección</string>
+    <string name="address">Codigo Postal</string>
     <string name="address_new">Escribe tu código postal o dirección</string>
-    <string name="already_have_account">Ya tengo una cuenta</string>
+    <string name="already_have_account">Ya tengo cuenta Miscota</string>
     <string name="restore_password_description">Introduce tu email y te enviaremos las instrucciones de recuperación</string>
     <string name="restore_password">Recuperar contraseña</string>
     <string name="my_orders">Mis pedidos</string>
@@ -348,7 +350,7 @@
     <string name="id_name_email_gender_birthday">id,name,email,gender, birthday</string>
     <string name="name_fb">name</string>
     <string name="email_fb">email</string>
-    
+
     <!--thank you text-->
     <string name="order_placed">¡Pedido realizado!</string>
     <string name="order_thank_you">Muchas gracias por comprar en Miscota</string>
@@ -372,7 +374,7 @@
 
     <string name="date_shipping_sameday">currentDate</string>
     <string name="delivery_type_sameday">deliveryType</string>
-    
+
     <string name="text_default_main">Introduce tu código postal y\n
               comprueba si tienes “Entrega Hoy” en tu zona</string>
 
@@ -394,7 +396,6 @@
 
     <!--messages-->
     <string name="need_login">Haga login para finalizar su pedido</string>
-
 
 
 </resources>
