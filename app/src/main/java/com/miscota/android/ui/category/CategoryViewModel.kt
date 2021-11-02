@@ -24,6 +24,8 @@ class CategoryViewModel(
 
     var showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
 
+    var showEmpty: MutableLiveData<Boolean> = MutableLiveData(false)
+
     private val _selectedCategories: MutableList<CategoryUiModel.CategoryListItem.Category> =
         mutableListOf()
 
@@ -109,9 +111,12 @@ class CategoryViewModel(
 
     init {
 
-        categorys.map {
-            if (it.checked == "true")
-                categoryId = it
+        if (categoryId.id.isNullOrEmpty()) {
+
+            categorys.map {
+                if (it.checked == "true")
+                    categoryId = it
+            }
         }
 
         loadTopProducts()
@@ -122,9 +127,13 @@ class CategoryViewModel(
 
     private fun loadProducts() {
 
-        categorys.map {
-            if (it.checked == "true")
-                categoryId = it
+        if (categoryId.id.isNullOrEmpty()) {
+            if (categoryId.id.isNullOrEmpty()) {
+                categorys.map {
+                    if (it.checked == "true")
+                        categoryId = it
+                }
+            }
         }
 
         viewModelScope.launch {
@@ -161,7 +170,8 @@ class CategoryViewModel(
             if (exception != null && exception !is CancellationException) {
                 Timber.e(exception.message.toString())
                 println(exception.message.toString())
-                _messageEvent.value = Event("algo no ha ido bien vuelva a intentar")
+                _messageEvent.value = Event("Algo no ha ido bien, no hay productos para mostrar")
+                println(" chibato loadProducts() exception _messageEvent.value")
             }
          }
 
@@ -215,7 +225,9 @@ class CategoryViewModel(
                 val exception = result.exceptionOrNull()
                 if (exception != null && exception !is CancellationException) {
                     Timber.e(exception.message.toString())
-                    _messageEvent.value = Event("Something went wrong")
+                    showLoading.value = true
+                    showEmpty.value = true
+                    //_messageEvent.value = Event("Algo no ha ido bien, no hay productos para mostrar")
                     println(" chibato 5 in loadTopProducts() exception")
                 }
             }
@@ -267,12 +279,15 @@ class CategoryViewModel(
 
     fun selectCategoryTwo(categoryUiModel: CategoryUiModel.CategoryListItem.Category) {
 
-        loadProducts()
+        val listTwo = loadProductsCategory(categoryUiModel)
 
         println("categoryListItem.categories.size 1 ${categoryListItem.categories.size}")
         for (category in categoryListItem.categories)
 
             println(" category.title 1 ${category.title}")
+
+        //_products.value = list.value
+        //_topProductList.value = list.value
 
         _categories.value?.map {
             println(" select categories.value $it")
@@ -290,6 +305,61 @@ class CategoryViewModel(
             }
         }
         _categories.value = list
+    }
+
+    private fun loadProductsCategory(categoryUiModel: CategoryUiModel.CategoryListItem.Category):  MutableLiveData<List<CategoryUiModel.Product>> {
+        println("categoryUiModel.isChecked ${categoryUiModel.isChecked}")
+        println("categoryUiModel.title ${categoryUiModel.title}")
+        println("categoryUiModel.uid ${categoryUiModel.uid}")
+
+            categorys.map {
+               // if (it.checked == "true")
+                println("it.category ${it.category}")
+                    categoryId = CategoryOne(categoryUiModel.uid.toString(),categoryUiModel.uid.toString(),categoryUiModel.title,categoryUiModel.isChecked.toString())
+            }
+
+            viewModelScope.launch {
+                val result = runCatching {
+                    val response =
+                        productRepository.fetchProductsByCategory(
+                            categoryId = categoryId.id?.toInt()?:0,
+                            page = productPageNumber,
+                            limit = PAGE_LIMIT,
+                            retailID = autoStore.getRetailID()?:"5",
+                            type = autoStore.getType()!!
+                        )
+
+                    if (response.isEmpty()) {
+                        return@launch
+                        //println(" response.isEmpty() autoStore.getRetailID()?.map ${it.retail_shop_id} - ${it.name} ")
+                    }
+
+                    println(" categoryId.toInt()  ${categoryId.id!!.toInt()}")
+                    val list = _products.value?.toMutableList() ?: mutableListOf()
+                    list.addAll(response.map { it.toCategoryProductUiModel() })
+                    println("  map  loadProducts:::: " +
+                            "${response.map {
+
+                                it.toCategoryProductUiModel()
+                            }} ")
+                    _products.value = list
+                    //_topProductList.value = list
+
+                    productPageNumber += PAGE_LIMIT
+                    shouldProductsFetch = true
+                }
+
+                val exception = result.exceptionOrNull()
+                if (exception != null && exception !is CancellationException) {
+                    Timber.e(exception.message.toString())
+                    println(exception.message.toString())
+                    _messageEvent.value = Event("Algo no ha ido bien, no hay productos para mostrar")
+                    println(" chibato loadProductsCategory() exception _messageEvent.value")
+                }
+            }
+
+        return _products
+
     }
 
     fun selectCategoryItem(categoryUiModel: CategoryUiModel.CategoryListItem) {

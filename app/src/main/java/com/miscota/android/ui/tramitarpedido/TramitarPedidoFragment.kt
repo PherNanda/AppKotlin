@@ -46,6 +46,7 @@ class TramitarPedidoFragment : Fragment() {
 
     companion object {
         fun newInstance() = TramitarPedidoFragment()
+        const val maxLengthCard = 16
     }
 
     private lateinit var viewModel: TramitarPedidoViewModel
@@ -130,12 +131,12 @@ class TramitarPedidoFragment : Fragment() {
 
         if (viewModelCart.authStore.getCard() != null){
 
-            binding.creditCardNumber.text = String.format(resources.getString(R.string.card_mask), viewModelCart.authStore.getCard()!!.card.substring(14,19))
+            binding.creditCardNumber.text = String.format(resources.getString(R.string.card_mask), viewModelCart.authStore.getCard()!!.card.substring(12,maxLengthCard))
             binding.creditCardName.text = viewModelCart.authStore.getCard()!!.owner.toString()
         }
         if( cardNumber != null ){
 
-            binding.creditCardNumber.text = String.format(resources.getString(R.string.card_mask),cardNumber.substring(14,19))
+            binding.creditCardNumber.text = String.format(resources.getString(R.string.card_mask),cardNumber.substring(12,maxLengthCard))
 
         }
         if(cardOwner != null ){
@@ -654,7 +655,7 @@ class TramitarPedidoFragment : Fragment() {
         }
         else if (cardNumber != null){
 
-            if (cardNumber.length == 19){
+            if (cardNumber.length == maxLengthCard){
                 checkoutCard = true
             }else{
 

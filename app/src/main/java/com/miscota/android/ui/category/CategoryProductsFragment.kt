@@ -59,11 +59,19 @@ class CategoryProductsFragment : Fragment() {
 
         viewModel.showLoading.observe(viewLifecycleOwner) {
             if (!viewModel.showLoading.value!!) {
+
                 binding.loading.visibility = View.VISIBLE
                 binding.fragmentProduct.setBackgroundResource(R.drawable.ic_background_loading_transp)
             }
             if (viewModel.showLoading.value!!) {
+
                 binding.loading.visibility = View.GONE
+
+                    viewModel.showEmpty.observe(viewLifecycleOwner) {
+                        if (viewModel.showEmpty.value!!){
+                            binding.emptyView.visibility = View.VISIBLE
+                        }
+                    }
             }
         }
 
@@ -126,7 +134,7 @@ class CategoryProductsFragment : Fragment() {
 
         val categoryAdapter = CategoryAdapter {
             println("selectCategory(it) title: ${it.title} it: $it  isChecked: ${it.isChecked}")
-            viewModel.selectCategory(it)
+            viewModel.selectCategoryTwo(it)
         }
         val listDistincty = ArrayList<Category>()
         val list = ArrayList<Category>()
@@ -205,7 +213,8 @@ class CategoryProductsFragment : Fragment() {
 
         viewModel.dataList.observe(viewLifecycleOwner) {
             listAdapter.submitList(it)
-            println()
+            println("it.size listAdapter ${it.size}")
+            println("it listAdapter ${it.get(0)}")
         }
 
         viewModel.categories.observe(viewLifecycleOwner) {

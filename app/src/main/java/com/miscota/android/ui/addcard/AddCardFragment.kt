@@ -24,6 +24,7 @@ class AddCardFragment : Fragment() {
 
     companion object {
         fun newInstance() = AddCardFragment()
+        const val maxLengthCard = 16
     }
 
     private lateinit var viewModel: AddCardViewModel
@@ -72,7 +73,7 @@ class AddCardFragment : Fragment() {
         binding.cardNumberInput.doAfterTextChanged { inputCardNumbers ->
             //(requireActivity() as MainActivity).binding.navView.menu.getItem(1).isChecked = true
 
-            if (inputCardNumbers != null && inputCardNumbers.length < 16) {
+            if (inputCardNumbers != null && inputCardNumbers.length < maxLengthCard) {
                 var cardNumberError = ""
 
                 if (TextUtils.isEmpty(binding.cardNumberInput.text) || inputCardNumbers.length < 17) {
@@ -86,15 +87,16 @@ class AddCardFragment : Fragment() {
                     getDrawable(requireContext(), R.drawable.ic_card_check_off)
                 )
 
-            } else if (inputCardNumbers != null && inputCardNumbers.length == 19) {
+            } else if (inputCardNumbers != null && inputCardNumbers.length == maxLengthCard) {
 
                 var cardNumberMsgOk = ""
-                if (!TextUtils.isEmpty(binding.cardNumberInput.text) && inputCardNumbers.length == 19) {
+                if (!TextUtils.isEmpty(binding.cardNumberInput.text) && inputCardNumbers.length == maxLengthCard) {
                     cardNumberMsgOk = getString(R.string.perfect)
 
                     binding.cardNumberLayout.endIconDrawable =
                         getDrawable(requireContext(), R.drawable.ic_card_check_on)
                     inputCard = binding.cardNumberInput.text
+
 
                     paymentMethodWithout =
                         PaymentMethod(
@@ -120,11 +122,23 @@ class AddCardFragment : Fragment() {
                 binding.cardNumberLayout.isErrorEnabled = false
                 binding.cardNumberInput.text
 
+
             }
 
         }
 
-        binding.expirationCardInput.requestFocus()
+        /**val s: StringBuilder =
+            java.lang.StringBuilder(binding.cardNumberInput.text.toString())
+
+        var i = 4
+        while (i < s.length) {
+            s.insert(i, " ")
+            i += 5
+        }
+        println("sssss $s")
+        binding.cardNumberInput.setText(s.toString())**/
+
+
         //showKeyboard(binding.expirationCardInput)
 
         binding.expirationCardInput.doOnTextChanged { inputExpirationNumber, _, _, _ ->
@@ -247,7 +261,7 @@ class AddCardFragment : Fragment() {
 
                 if (paymentMethodWithout?.encryptedSecurityCode?.length == 3 &&
                     paymentMethodWithout?.encryptedExpiryMonth?.length == 5 &&
-                    paymentMethodWithout?.encryptedCardNumber?.trim()?.length == 16 &&
+                    paymentMethodWithout?.encryptedCardNumber?.trim()?.length == maxLengthCard &&
                     paymentMethodWithout?.encryptedExpiryYear?.length == 5 &&
                     paymentMethodWithout?.encryptedUserName?.length!! > 7
 
@@ -338,7 +352,7 @@ class AddCardFragment : Fragment() {
 
                 if (paymentMethodWithout?.encryptedSecurityCode?.length == 3 &&
                     paymentMethodWithout?.encryptedExpiryMonth?.length == 5 &&
-                    paymentMethodWithout?.encryptedCardNumber?.length == 19 &&
+                    paymentMethodWithout?.encryptedCardNumber?.length == maxLengthCard &&
                     paymentMethodWithout?.encryptedExpiryYear?.length == 5 &&
                     paymentMethodWithout?.encryptedUserName?.length!! > 6
                 ) {

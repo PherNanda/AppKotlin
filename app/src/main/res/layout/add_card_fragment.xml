@@ -84,21 +84,22 @@
          app:iconPadding="10dp"
          app:endIconDrawable="@drawable/card_check">
 
-         <!--  <com.google.android.material.textfield.TextInputEditText
+         <com.google.android.material.textfield.TextInputEditText
                android:id="@+id/cardNumberInput"
                android:layout_width="match_parent"
                android:layout_height="match_parent"
                android:textAlignment="viewStart"
                android:inputType="number"
+               android:maxLength="16"
                android:maxLines="1"
-               />-->
+               />
 
-        <com.adyen.checkout.card.ui.CardNumberInput
-            android:id="@+id/cardNumberInput"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:maxLength="19"
-            android:textAlignment="viewStart"/>
+         <!-- <com.adyen.checkout.card.ui.CardNumberInput
+             android:id="@+id/cardNumberInput"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:maxLength="19"
+             android:textAlignment="viewStart"/>-->
 
      </com.google.android.material.textfield.TextInputLayout>
 

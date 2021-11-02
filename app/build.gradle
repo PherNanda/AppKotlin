@@ -16,7 +16,7 @@ android {
         applicationId 'com.miscota.android'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 90
+        versionCode 91
         versionName "2.0"
         //multiDexEnabled true
 

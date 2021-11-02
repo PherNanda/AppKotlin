@@ -84,6 +84,7 @@
     <string name="all_categories">Todos los productos</string>
     <string name="all_products_of_category">Todo</string>
     <string name="no_item_found">No item found</string>
+    <string name="no_item_category">No hay productos para mostrar en esta categoria</string>
     <string name="all_categories_of"> %s</string>
     <string name="top_products">Top Products</string>
     <string name="all_products">Todos los productos</string>

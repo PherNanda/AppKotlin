@@ -12,10 +12,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.miscota.android.R
 import com.miscota.android.databinding.PaymentMethodFragmentBinding
-import com.miscota.android.databinding.TramitarPedidoFragmentBinding
 import com.miscota.android.ui.addcard.AddCardFragment
 import com.miscota.android.ui.cart.CartViewModel
-import com.miscota.android.ui.discount.DiscountFragment
 import com.miscota.android.ui.tramitarpedido.TramitarPedidoFragment
 import com.miscota.android.util.autoClean
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -24,6 +22,8 @@ class PaymentMethodFragment : Fragment() {
 
     companion object {
         fun newInstance() = PaymentMethodFragment()
+
+        const val maxLengthCard = 16
     }
 
     private lateinit var viewModel: PaymentMethodViewModel
@@ -61,7 +61,7 @@ class PaymentMethodFragment : Fragment() {
 
                 binding.cardOption.isChecked = true
 
-                binding.cardNumber.text = String.format(resources.getString(R.string.card_mask), viewModelCart.authStore.getCard()!!.card.substring(14,19))
+                binding.cardNumber.text = String.format(resources.getString(R.string.card_mask), viewModelCart.authStore.getCard()!!.card.substring(12,maxLengthCard))
                 binding.cardExpirationDate.text = "${viewModelCart.authStore.getCard()!!.expireMonth} / ${viewModelCart.authStore.getCard()!!.expireYear}"
                 binding.cardUserName.text = viewModelCart.authStore.getCard()!!.owner.toString()
         }
@@ -136,7 +136,7 @@ class PaymentMethodFragment : Fragment() {
         }
 
         if (cardNumber != null) {
-            binding.cardNumber.text = String.format(resources.getString(R.string.card_mask), cardNumber.substring(14, 19))
+            binding.cardNumber.text = String.format(resources.getString(R.string.card_mask), cardNumber.substring(12, maxLengthCard))
 
             if(binding.cardOption.isChecked){
                 binding.cardUser.strokeColor = ContextCompat.getColor(requireContext(),R.color.cian)
