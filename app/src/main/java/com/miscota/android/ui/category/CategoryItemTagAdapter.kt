@@ -17,7 +17,7 @@ class CategoryItemTagAdapter (
 ) : RecyclerView.Adapter<CategoryItemTagAdapter.ViewHolder>(){
 
     interface OptionsMenuClickListener {
-        fun onOptionsMenuClicked(position: Int, category: CategoryUiModel.CategoryListItem.Category)
+        fun onOptionsMenuClicked(position: Int, category: CategoryUiModel.CategoryListItem.Category, categoryOne: CategoryOne)
     }
 
     inner class ViewHolder(val binding: ItemCategoryTagBinding) : RecyclerView.ViewHolder(binding.root)
@@ -68,7 +68,21 @@ class CategoryItemTagAdapter (
                 category = it2
                 )
                 }**/
+                val cOne: CategoryOne
                 println(" position it $it $position")
+                categoryList[0].categories[0].categories[position].name.let { it1 ->
+                    categoryList[0].categories[0].categories[position].id.let { it2 ->
+                        cOne = CategoryOne(
+                            category = it1,
+                            id = it2!!,
+                            name = it1!!,
+                            checked = "true"
+
+                        )
+                    }
+                }
+
+
                 categoryList[0].categories[0].categories[position].name.let { it1 ->
                     categoryList[0].categories[0].categories[position].id.let { it2 ->
                         CategoryUiModel.CategoryListItem.Category(
@@ -81,7 +95,8 @@ class CategoryItemTagAdapter (
                 }.let { it2 ->
                     optionsMenuClickListener.onOptionsMenuClicked(
                         position,
-                        category = it2
+                        category = it2,
+                        categoryOne = cOne
                     )
                 }
 

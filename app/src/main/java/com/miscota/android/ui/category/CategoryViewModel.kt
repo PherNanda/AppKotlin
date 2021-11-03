@@ -36,6 +36,10 @@ class CategoryViewModel(
         MutableLiveData(listOf())
     val categories: LiveData<List<CategoryUiModel.CategoryListItem.Category>> = _categories
 
+    private val _categoriesOne: MutableLiveData<List<CategoryOne>> =
+        MutableLiveData(listOf())
+    val categoriesOne: LiveData<List<CategoryOne>> = _categoriesOne
+
     private val _categoriesT: MutableLiveData<List<CategoryUiModel.CategoryListItem>> =
         MutableLiveData(listOf())
     val categoriesT: LiveData<List<CategoryUiModel.CategoryListItem>> = _categoriesT
@@ -277,18 +281,25 @@ class CategoryViewModel(
             }
         }
         _categories.value = list
+
     }
 
-    fun selectCategoryTwo(categoryUiModel: CategoryUiModel.CategoryListItem.Category) {
+    fun selectCategoryTwo(
+        categoryUiModel: CategoryUiModel.CategoryListItem.Category,
+        t: ArrayList<CategoryOne>
+    ) {
 
         val listTwo = loadProductsCategory(categoryUiModel)
 
-        if (_products.value?.isNotEmpty() == true){
+        /*if (_products.value?.isNotEmpty() == true){
             _products = MutableLiveData(listOf())
+
+            println(" _products::: in ${_products.value?.map { it.combinations }}")
             //shouldProductsFetch = false
             //_products.value?.toMutableList()
-        }
-
+        }**/
+        println(" _topProductList::: up ${_topProductList.value?.map { it.combinations }}")
+        println(" _products::: up ${_products.value?.map { it.productPrice }}")
         println("categoryListItem.categories.size 1 ${categoryListItem.categories.size}")
         for (category in categoryListItem.categories)
 
@@ -312,7 +323,21 @@ class CategoryViewModel(
         _categories.value = list
 
         //_products.value = list.value
-        //_topProductList.value = list.value
+        _products.value = listTwo.value
+
+        val listTest = t.map {
+            if (categoryUiModel.title == it.name) {
+                if (categoryUiModel.isChecked) {
+                    _selectedCategories.removeAll { brand -> brand.title == categoryUiModel.title }
+                } else {
+                    _selectedCategories.add(categoryUiModel)
+                }
+                return@map it.copy(checked = if (it.checked == "false") "false" else null)
+            } else {
+                return@map it
+            }
+        }
+        _categoriesOne.value = listTest
 
     }
 
@@ -326,7 +351,6 @@ class CategoryViewModel(
                 println("it.category ${it.category}")
                     categoryId = CategoryOne(categoryUiModel.uid.toString(),categoryUiModel.uid.toString(),categoryUiModel.title,categoryUiModel.isChecked.toString())
             }
-
             viewModelScope.launch {
                 val result = runCatching {
                     val response =
@@ -345,7 +369,7 @@ class CategoryViewModel(
 
                     println(" categoryId.toInt()  ${categoryId.id!!.toInt()}")
 
-
+                    _products.value = listOf()
                     val list = _products.value?.toMutableList() ?: mutableListOf()
                     list.addAll(response.map { it.toCategoryProductUiModel() })
                     println("  map  loadProducts:::: " +
@@ -366,42 +390,15 @@ class CategoryViewModel(
                     Timber.e(exception.message.toString())
                     println(exception.message.toString())
                     _messageEvent.value = Event("Algo no ha ido bien, no hay productos para mostrar")
-                    println(" chibato loadProductsCategory() exception _messageEvent.value")
                 }
             }
 
         println(" _products::: ${_products.value?.map { it.combinations }}")
+        println(" _topProductList::: ${_topProductList.value?.map { it.combinations }}")
 
         return _products
 
     }
-
-    /**fun loadMoreProductsCategory() {
-        var categoryUiModel = CategoryUiModel.CategoryListItem.Category(0L,"",false)
-
-        if (categoryId.id.isNullOrEmpty()) {
-
-            categorys.map {
-                if (it.checked == "true")
-                    categoryId = it
-                categoryUiModel = it.id?.let { it1 -> it.name?.let { it2 -> CategoryUiModel.CategoryListItem.Category(uid = it1.toLong(), title = it2, isChecked = it.checked.toBoolean()) } }!!
-            }
-                if (shouldTopProductsFetch) {
-                    shouldTopProductsFetch = false
-                    loadProductsCategory(categoryUiModel)
-                }
-        }
-        if (!categoryId.id.isNullOrEmpty()){
-                categoryUiModel = categoryId.name?.let { CategoryUiModel.CategoryListItem.Category(uid = categoryId.id!!.toLong(),title = it, isChecked = categoryId.checked.toBoolean()) }!!
-
-                if (shouldTopProductsFetch) {
-                    shouldTopProductsFetch = false
-                    loadProductsCategory(categoryUiModel)
-                }
-        }
-
-
-    }**/
 
     fun selectCategoryItem(categoryUiModel: CategoryUiModel.CategoryListItem) {
 

@@ -106,6 +106,12 @@ class CategoryProductsFragment : Fragment() {
 
         binding.samedayFlagBottom.visibility = View.VISIBLE
 
+        //selected category
+        val categoryListAdapterChanges = ArrayList<CategoryItemTagItem>()
+        val t =  ArrayList<CategoryOne>()
+        val listDistinctyNew = ArrayList<Category>()
+        var categorie = CategoryUiModel.CategoryListItem.Category(0L,"",false)
+
         listAdapter = CategoryItemAdapter(
             loadMoreTopProducts = {
                 viewModel.loadMoreTopProducts()
@@ -126,15 +132,15 @@ class CategoryProductsFragment : Fragment() {
                 }
            },
             onCategoryClickListener = {
-                println("selectCategory(it) : ${it.title} it: $it  isChecked: ${it.isChecked}")
-                viewModel.selectCategory(it)
+                viewModel.selectCategoryTwo(it,t)
             },
             typeProduct = viewModel.getType()!!
         )
 
+
+
         val categoryAdapter = CategoryAdapter {
-            println("selectCategory(it) title: ${it.title} it: $it  isChecked: ${it.isChecked}")
-            viewModel.selectCategoryTwo(it)
+            viewModel.selectCategoryTwo(it, t)
         }
         val listDistincty = ArrayList<Category>()
         val list = ArrayList<Category>()
@@ -145,7 +151,7 @@ class CategoryProductsFragment : Fragment() {
                     it
                 )
             }
-
+            println(" item:::: name ${item.name} id ${item.id} category ${item.category} checked ${item.checked}")
             list.distinctBy { Category(it.categories, it.id, it.name) }
         }
         listDistincty.add(list[0])
@@ -167,17 +173,40 @@ class CategoryProductsFragment : Fragment() {
 
         listCatAdapter = CategoryItemTagAdapter(categoryList = categoryListAdapter , object : CategoryItemTagAdapter.OptionsMenuClickListener{
 
-            override fun onOptionsMenuClicked(position: Int, category: CategoryUiModel.CategoryListItem.Category) {
+            override fun onOptionsMenuClicked(position: Int, category: CategoryUiModel.CategoryListItem.Category, categoryOne: CategoryOne) {
                 //performOptionsMenuClick(position)
-
-                //println(" selectCategory(it) title: ${it.title} it: $it  isChecked: ${it.isChecked}")
+                println("categoryListAdapter.map { it.categories } ${categoryListAdapter.map { it.categories }}")
                 println("CategoryItemTagAdapter position:::: $position")
                 println("CategoryItemTagAdapter position:::: category $category")
-                viewModel.selectCategoryTwo(category)
+                println("CategoryItemTagAdapter position:::: categoryOne $categoryOne")
+
+               for (item in categoryListAdapter){
+                   for (items in item.categories){
+                       for (it in items.categories){
+                           if (it.name != category.title){
+                               it.checked == "false"
+                               println("itemmm two $it")
+                               t.add(CategoryOne("",it.id,it.name,"false"))
+
+                           }
+                       }
+                   }
+               }
+
+                t.add(CategoryOne("",categoryOne.id,categoryOne.name,categoryOne.checked))
+                categorie = categoryOne.id?.let { it1 ->
+                    CategoryUiModel.CategoryListItem.Category(
+                        it1.toLong(),categoryOne.name!!,categoryOne.checked.toBoolean())
+                }!!
+
+                viewModel.selectCategoryTwo(category, t)
+
             }
 
         })
+
         listCatAdapter.notifyDataSetChanged()
+
 
         binding.brandRecyclerView.apply {
 
@@ -213,13 +242,26 @@ class CategoryProductsFragment : Fragment() {
 
         viewModel.dataList.observe(viewLifecycleOwner) {
             listAdapter.submitList(it)
-            println("it.size listAdapter ${it.size}")
-            println("it listAdapter ${it.get(0)}")
         }
 
         viewModel.categories.observe(viewLifecycleOwner) {
             categoryAdapter.submitList(it)
         }
+
+       /** if (t.size > 0) {
+            listDistinctyNew.add(Category(categories = t, categorie.uid.toString(), categorie.title))
+
+            categoryListAdapterChanges.add(
+                CategoryItemTagItem(
+                    categories = listDistinctyNew,
+                    id = categorie.uid.toString(),
+                    name = categorie.title
+                )
+            )
+
+            categoryListAdapter = categoryListAdapterChanges
+            listCatAdapter.notifyDataSetChanged()
+        }**/
     }
 
     companion object {
