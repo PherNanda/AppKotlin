@@ -228,7 +228,8 @@ class SignupFragment : Fragment() {
             }
 
             signupViewModel.selectedAddress.observe(viewLifecycleOwner) {
-                binding.addressInput.text = (it ?: getString(R.string.address)) as Editable?
+                //binding.addressInput.text = ((it ?: getString(R.string.address)) as Editable?) //android 30 no ok and android 29 ok
+                binding.addressInput.setText((it ?: getString(R.string.address))) //android 30 and android 29 ok
             }
         }
 

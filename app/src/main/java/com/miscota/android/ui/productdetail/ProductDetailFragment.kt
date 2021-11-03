@@ -215,7 +215,7 @@ class ProductDetailFragment : Fragment() {
                                     (requireActivity() as MainActivity).binding.cartItemsText.visibility = View.VISIBLE
                                 }
                                 (requireActivity() as MainActivity).binding.cartItemsText.text = viewModel.totalItensCart.value.toString()
-                                //viewModel.getTotalItens()
+
                                 return@observe
                             }
 
@@ -254,7 +254,7 @@ class ProductDetailFragment : Fragment() {
                         }
 
                         (requireActivity() as MainActivity).binding.cartItemsText.text = viewModel.totalItensCart.value.toString()
-                        //viewModel.getTotalItens()
+
                         return@observe
                     }
                 }
@@ -290,6 +290,7 @@ class ProductDetailFragment : Fragment() {
             if (it == 0) {
                 binding.addToCartButton.isEnabled = false
                 binding.addToCartButton.text = getString(R.string.no_disponible)
+                binding.spinner.isEnabled = false
             } else {
                 binding.addToCartButton.isEnabled = true
                 binding.addToCartButton.text = getString(R.string.add_to_cart)
@@ -325,6 +326,7 @@ class ProductDetailFragment : Fragment() {
 
             override fun onNothingSelected(parent: AdapterView<*>){
                 // Another interface callback
+                println("parent.firstVisiblePosition : ${parent.firstVisiblePosition} ")
             }
         }
 
@@ -381,6 +383,17 @@ class ProductDetailFragment : Fragment() {
 
         if (product.combinationOptions.size > 1) {
             println("viewModel.product?.combinations?.get(0)?.stockItem ?: 0  "+ (viewModel.product?.combinations?.get(0)?.stock ?: 0)+"")
+            // Initializing a String Array
+            val qtyNumbers = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11","12","13","14","15", "16","17","18","19","20")
+
+            // Initializing an ArrayAdapter
+            val adapterSp = ArrayAdapter(
+                requireActivity(), // Context
+                R.layout.simple_spinner_item_custom, // Layout
+                qtyNumbers // Array
+            )
+
+            adapterSp.setDropDownViewResource(R.layout.simple_dropdown_item_1line_custom)
 
             product.combinationOptions.forEachIndexed { index, combinationOption ->
 
@@ -405,11 +418,14 @@ class ProductDetailFragment : Fragment() {
                                 //binding.variationPriceText.text = "${it.optionPrice / it.variant.split(" ").firstOrNull()?.toDouble()!!}"
                                 //println(" option  ${it.optionPrice} - ${it.variant.split(" ").firstOrNull()?.toDouble()} - ${it.optionPrice / it.variant.split(" ").firstOrNull()?.toDouble()!!} ")
                                  binding.priceText.text = it.price
+                                binding.spinner.adapter = adapterSp
                                 print("option stock ${it.stock}")
-
+                                print("\n option test it.isChecked:::: ${it.isChecked}")
+                                print("\n option test it.price:::: ${it.price}")
                                 print("\n productTypeOption:::: ${it.productTypeOption}")
                                 print("\n viewModel.getType():::: ${viewModel.getType()}")
                                 it.copy(isChecked = true, productTypeOption = viewModel.getType())
+
 
                             } else {
                                 it.copy(isChecked = false, productTypeOption = viewModel.getType())
@@ -487,6 +503,12 @@ class ProductDetailFragment : Fragment() {
                                     //println(" option  ${it.optionPrice} - ${it.variant.split(" ").firstOrNull()?.toDouble()} - ${it.optionPrice / it.variant.split(" ").firstOrNull()?.toDouble()!!} ")
                                     binding.priceText.text = it.price
                                     print("option stock 2222 ${it.stock}")
+
+                                    print("option stock::::2222 ${it.stock}")
+                                    print("\n option test it.isChecked::::2222 ${it.isChecked}")
+                                    print("\n option test it.price::::2222 ${it.price}")
+                                    print("\n productTypeOption::::2222 ${it.productTypeOption}")
+                                    print("\n viewModel.getType()::::2222 ${viewModel.getType()}")
 
                                     print("\n productTypeOption:::: 2222 ${it.productTypeOption}")
                                     print("\n viewModel.getType():::: 222 ${viewModel.getType()}")

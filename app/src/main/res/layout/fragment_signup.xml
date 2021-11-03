@@ -244,7 +244,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="55dp"
+            android:layout_marginEnd="47dp"
             android:textColor="@color/blue_new_app"
             android:textSize="13sp"
             android:text="@string/terms_and_conditions"

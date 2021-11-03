@@ -20,6 +20,9 @@ class CategoryViewModel(
     private var topProductPageNumber = 0
     private var shouldTopProductsFetch = false
 
+    private var categoryProductPageNumber = 0
+    //private var shouldCatProductsFetch = false
+
     private var categoryId: CategoryOne = CategoryOne("","","","")
 
     var showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -39,7 +42,7 @@ class CategoryViewModel(
 
     private val _topProductList: MutableLiveData<List<CategoryUiModel.Product>> =
         MutableLiveData(listOf())
-    private val _products: MutableLiveData<List<CategoryUiModel.Product>> =
+    private var _products: MutableLiveData<List<CategoryUiModel.Product>> =
         MutableLiveData(listOf())
 
     private val categoryListItem = CategoryUiModel.CategoryListItem(categories = listOf())
@@ -121,6 +124,7 @@ class CategoryViewModel(
 
         loadTopProducts()
         loadProducts()
+        //loadProductsCategory()
 
 
     }
@@ -211,7 +215,6 @@ class CategoryViewModel(
                         }
                     }
                     //selectCategory(categoryId)
-                    println(" chibato 3 in loadTopProducts()")
                     val list = _topProductList.value?.toMutableList() ?: mutableListOf()
                     list.addAll(response.map { it.toCategoryProductUiModel() })
                     _topProductList.value = list
@@ -219,7 +222,6 @@ class CategoryViewModel(
                     topProductPageNumber += PAGE_LIMIT
                     shouldTopProductsFetch = true
                     showLoading.value = shouldTopProductsFetch
-                    println(" chibato 4 in loadTopProducts()")
                 }
 
                 val exception = result.exceptionOrNull()
@@ -228,7 +230,6 @@ class CategoryViewModel(
                     showLoading.value = true
                     showEmpty.value = true
                     //_messageEvent.value = Event("Algo no ha ido bien, no hay productos para mostrar")
-                    println(" chibato 5 in loadTopProducts() exception")
                 }
             }
         println(" chibato 6 in loadTopProducts()")
@@ -236,6 +237,7 @@ class CategoryViewModel(
     }
 
     fun loadMoreTopProducts() {
+
         if (shouldTopProductsFetch) {
             shouldTopProductsFetch = false
             loadTopProducts()
@@ -281,13 +283,16 @@ class CategoryViewModel(
 
         val listTwo = loadProductsCategory(categoryUiModel)
 
+        if (_products.value?.isNotEmpty() == true){
+            _products = MutableLiveData(listOf())
+            //shouldProductsFetch = false
+            //_products.value?.toMutableList()
+        }
+
         println("categoryListItem.categories.size 1 ${categoryListItem.categories.size}")
         for (category in categoryListItem.categories)
 
             println(" category.title 1 ${category.title}")
-
-        //_products.value = list.value
-        //_topProductList.value = list.value
 
         _categories.value?.map {
             println(" select categories.value $it")
@@ -305,6 +310,10 @@ class CategoryViewModel(
             }
         }
         _categories.value = list
+
+        //_products.value = list.value
+        //_topProductList.value = list.value
+
     }
 
     private fun loadProductsCategory(categoryUiModel: CategoryUiModel.CategoryListItem.Category):  MutableLiveData<List<CategoryUiModel.Product>> {
@@ -323,7 +332,7 @@ class CategoryViewModel(
                     val response =
                         productRepository.fetchProductsByCategory(
                             categoryId = categoryId.id?.toInt()?:0,
-                            page = productPageNumber,
+                            page = categoryProductPageNumber,
                             limit = PAGE_LIMIT,
                             retailID = autoStore.getRetailID()?:"5",
                             type = autoStore.getType()!!
@@ -335,6 +344,8 @@ class CategoryViewModel(
                     }
 
                     println(" categoryId.toInt()  ${categoryId.id!!.toInt()}")
+
+
                     val list = _products.value?.toMutableList() ?: mutableListOf()
                     list.addAll(response.map { it.toCategoryProductUiModel() })
                     println("  map  loadProducts:::: " +
@@ -345,8 +356,9 @@ class CategoryViewModel(
                     _products.value = list
                     //_topProductList.value = list
 
-                    productPageNumber += PAGE_LIMIT
+                    categoryProductPageNumber += PAGE_LIMIT
                     shouldProductsFetch = true
+                    showLoading.value = shouldProductsFetch
                 }
 
                 val exception = result.exceptionOrNull()
@@ -358,9 +370,38 @@ class CategoryViewModel(
                 }
             }
 
+        println(" _products::: ${_products.value?.map { it.combinations }}")
+
         return _products
 
     }
+
+    /**fun loadMoreProductsCategory() {
+        var categoryUiModel = CategoryUiModel.CategoryListItem.Category(0L,"",false)
+
+        if (categoryId.id.isNullOrEmpty()) {
+
+            categorys.map {
+                if (it.checked == "true")
+                    categoryId = it
+                categoryUiModel = it.id?.let { it1 -> it.name?.let { it2 -> CategoryUiModel.CategoryListItem.Category(uid = it1.toLong(), title = it2, isChecked = it.checked.toBoolean()) } }!!
+            }
+                if (shouldTopProductsFetch) {
+                    shouldTopProductsFetch = false
+                    loadProductsCategory(categoryUiModel)
+                }
+        }
+        if (!categoryId.id.isNullOrEmpty()){
+                categoryUiModel = categoryId.name?.let { CategoryUiModel.CategoryListItem.Category(uid = categoryId.id!!.toLong(),title = it, isChecked = categoryId.checked.toBoolean()) }!!
+
+                if (shouldTopProductsFetch) {
+                    shouldTopProductsFetch = false
+                    loadProductsCategory(categoryUiModel)
+                }
+        }
+
+
+    }**/
 
     fun selectCategoryItem(categoryUiModel: CategoryUiModel.CategoryListItem) {
 
