@@ -40,8 +40,19 @@ class CategoryAdapter(
         init {
             binding.checkBox.setOnCheckedChangeListener { _, checked ->
                 if (uiModel.isChecked != checked) {
-                    categoryClickListener.invoke(uiModel)
+                    println(" uimodel setOn 0 ${uiModel.isChecked}  ${uiModel.title}")
+
+                    println(" uimodel setOn 00 ${uiModel.isChecked}  ${uiModel.title}")
+                    categoryClickListener.invoke(uiModel.copy(isChecked = true))
                 }
+                else{
+                    println(" uimodel setOn 1 ${uiModel.isChecked}  ${uiModel.title}")
+                    categoryClickListener.invoke(uiModel.copy(isChecked = false))
+                }
+                /**if (uiModel.isChecked == checked){
+                    println(" uimodel setOn 1 ${uiModel.isChecked}  ${uiModel.title}")
+                    categoryClickListener.invoke(uiModel)
+                }**/
             }
         }
 

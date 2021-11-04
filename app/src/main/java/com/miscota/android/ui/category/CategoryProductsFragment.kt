@@ -107,10 +107,8 @@ class CategoryProductsFragment : Fragment() {
         binding.samedayFlagBottom.visibility = View.VISIBLE
 
         //selected category
-        val categoryListAdapterChanges = ArrayList<CategoryItemTagItem>()
         val t =  ArrayList<CategoryOne>()
-        val listDistinctyNew = ArrayList<Category>()
-        var categorie = CategoryUiModel.CategoryListItem.Category(0L,"",false)
+
 
         listAdapter = CategoryItemAdapter(
             loadMoreTopProducts = {
@@ -122,13 +120,8 @@ class CategoryProductsFragment : Fragment() {
                         R.id.action_categoryProductsFragment_to_productDetailFragment,
                         this
                     )
-
-                    println("it.combinations ${it.combinations}")
                     println("it.productId ${it.productId}")
                     it.productId
-
-                    println("it.combinations 1 ${it.combinations}")
-
                 }
            },
             onCategoryClickListener = {
@@ -151,7 +144,6 @@ class CategoryProductsFragment : Fragment() {
                     it
                 )
             }
-            println(" item:::: name ${item.name} id ${item.id} category ${item.category} checked ${item.checked}")
             list.distinctBy { Category(it.categories, it.id, it.name) }
         }
         listDistincty.add(list[0])
@@ -174,11 +166,6 @@ class CategoryProductsFragment : Fragment() {
         listCatAdapter = CategoryItemTagAdapter(categoryList = categoryListAdapter , object : CategoryItemTagAdapter.OptionsMenuClickListener{
 
             override fun onOptionsMenuClicked(position: Int, category: CategoryUiModel.CategoryListItem.Category, categoryOne: CategoryOne) {
-                //performOptionsMenuClick(position)
-                println("categoryListAdapter.map { it.categories } ${categoryListAdapter.map { it.categories }}")
-                println("CategoryItemTagAdapter position:::: $position")
-                println("CategoryItemTagAdapter position:::: category $category")
-                println("CategoryItemTagAdapter position:::: categoryOne $categoryOne")
 
                for (item in categoryListAdapter){
                    for (items in item.categories){
@@ -194,10 +181,6 @@ class CategoryProductsFragment : Fragment() {
                }
 
                 t.add(CategoryOne("",categoryOne.id,categoryOne.name,categoryOne.checked))
-                categorie = categoryOne.id?.let { it1 ->
-                    CategoryUiModel.CategoryListItem.Category(
-                        it1.toLong(),categoryOne.name!!,categoryOne.checked.toBoolean())
-                }!!
 
                 viewModel.selectCategoryTwo(category, t)
 
@@ -211,8 +194,8 @@ class CategoryProductsFragment : Fragment() {
         binding.brandRecyclerView.apply {
 
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-            adapter = listCatAdapter
-
+            //adapter = listCatAdapter
+            adapter = categoryAdapter
             itemAnimator = null
         }
 
@@ -248,20 +231,6 @@ class CategoryProductsFragment : Fragment() {
             categoryAdapter.submitList(it)
         }
 
-       /** if (t.size > 0) {
-            listDistinctyNew.add(Category(categories = t, categorie.uid.toString(), categorie.title))
-
-            categoryListAdapterChanges.add(
-                CategoryItemTagItem(
-                    categories = listDistinctyNew,
-                    id = categorie.uid.toString(),
-                    name = categorie.title
-                )
-            )
-
-            categoryListAdapter = categoryListAdapterChanges
-            listCatAdapter.notifyDataSetChanged()
-        }**/
     }
 
     companion object {

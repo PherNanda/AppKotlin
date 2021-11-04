@@ -57,7 +57,9 @@ class CategoryViewModel(
     val dataList: LiveData<List<CategoryUiModel>> =
         MediatorLiveData<List<CategoryUiModel>>().apply {
             fun updateList() {
+
                 val categories = _categories.value ?: listOf()
+
 
                 val categoryItem = categoryListItem.copy(
                     categories = categories,
@@ -73,18 +75,19 @@ class CategoryViewModel(
                                             && brandModel.isChecked
                                 }
                             }
-                    } else {
+                    }else {
                         topProducts
                     }
                 )
 
                 val products = _products.value ?: listOf()
 
+
                 val mergedList = mutableListOf<CategoryUiModel>()
                 // FIXME: Hide top products
                 //mergedList.add(featureProduct)
                 mergedList.add(CategoryUiModel.TextItem)
-                mergedList.addAll(if (categories.any { it.isChecked }) {
+                /**mergedList.addAll(if (categories.any { it.isChecked }) {
                     products
                         .filter { product ->
                             categories.any { brandModel ->
@@ -94,7 +97,11 @@ class CategoryViewModel(
                         }
                 } else {
                     products
-                })
+                })**/
+
+                mergedList.addAll(
+                    products
+                )
                 mergedList.add(CategoryUiModel.SpacerItem)
 
                 value = mergedList
@@ -123,13 +130,15 @@ class CategoryViewModel(
             categorys.map {
                 if (it.checked == "true")
                     categoryId = it
+
+               /** _categories.value = categorys.mapIndexed { index, categoryOne ->
+                    (CategoryUiModel.CategoryListItem.Category(categoryOne.id!!.toLong(), categoryOne.name!!, categoryOne.checked.toBoolean()))
+                }**/
             }
         }
 
         loadTopProducts()
         loadProducts()
-        //loadProductsCategory()
-
 
     }
 
@@ -151,23 +160,18 @@ class CategoryViewModel(
                         categoryId = categoryId.id?.toInt()?:0,
                         page = productPageNumber,
                         limit = PAGE_LIMIT,
-                        retailID = autoStore.getRetailID()?:"5",
+                        retailID = autoStore.getRetailID()?:"0",
                         type = autoStore.getType()!!
                     )
 
                 if (response.isEmpty()) {
                     return@launch
-                    //println(" response.isEmpty() autoStore.getRetailID()?.map ${it.retail_shop_id} - ${it.name} ")
                 }
 
                 println(" categoryId.toInt()  ${categoryId.id!!.toInt()}")
                 val list = _products.value?.toMutableList() ?: mutableListOf()
                 list.addAll(response.map { it.toCategoryProductUiModel() })
-                println("  map  loadProducts:::: " +
-                        "${response.map { 
-                            
-                            it.toCategoryProductUiModel() 
-                        }} ")
+
                 _products.value = list
 
                 productPageNumber += PAGE_LIMIT
@@ -179,7 +183,6 @@ class CategoryViewModel(
                 Timber.e(exception.message.toString())
                 println(exception.message.toString())
                 _messageEvent.value = Event("Algo no ha ido bien, no hay productos para mostrar")
-                println(" chibato loadProducts() exception _messageEvent.value")
             }
          }
 
@@ -211,13 +214,18 @@ class CategoryViewModel(
 
                     val brands = _categories.value?.toMutableList() ?: mutableListOf()
                     brands.addAll(response.map { it.toBrandsUiModel() })
-                    _categories.value = brands.distinctBy { it.title }.map { brand ->
+                   /** _categories.value = brands.distinctBy { it.title }.map { brand ->
                         return@map if (_selectedCategories.any { it.title == brand.title }) {
                             brand.copy(isChecked = true)
                         } else {
                             brand
                         }
+                    }**/
+
+                    _categories.value = categorys.mapIndexed { index, categoryOne ->
+                       (CategoryUiModel.CategoryListItem.Category(categoryOne.id!!.toLong(), categoryOne.name!!, categoryOne.checked.toBoolean()))
                     }
+
                     //selectCategory(categoryId)
                     val list = _topProductList.value?.toMutableList() ?: mutableListOf()
                     list.addAll(response.map { it.toCategoryProductUiModel() })
@@ -236,7 +244,6 @@ class CategoryViewModel(
                     //_messageEvent.value = Event("Algo no ha ido bien, no hay productos para mostrar")
                 }
             }
-        println(" chibato 6 in loadTopProducts()")
 
     }
 
@@ -291,16 +298,8 @@ class CategoryViewModel(
 
         val listTwo = loadProductsCategory(categoryUiModel)
 
-        /*if (_products.value?.isNotEmpty() == true){
-            _products = MutableLiveData(listOf())
+        println(" itmap::: ${t.map { it }}")
 
-            println(" _products::: in ${_products.value?.map { it.combinations }}")
-            //shouldProductsFetch = false
-            //_products.value?.toMutableList()
-        }**/
-        println(" _topProductList::: up ${_topProductList.value?.map { it.combinations }}")
-        println(" _products::: up ${_products.value?.map { it.productPrice }}")
-        println("categoryListItem.categories.size 1 ${categoryListItem.categories.size}")
         for (category in categoryListItem.categories)
 
             println(" category.title 1 ${category.title}")
@@ -308,36 +307,8 @@ class CategoryViewModel(
         _categories.value?.map {
             println(" select categories.value $it")
         }
-        val list = _categories.value?.map {
-            if (categoryUiModel.title == it.title) {
-                if (categoryUiModel.isChecked) {
-                    _selectedCategories.removeAll { brand -> brand.title == categoryUiModel.title }
-                } else {
-                    _selectedCategories.add(categoryUiModel)
-                }
-                return@map it.copy(isChecked = !it.isChecked)
-            } else {
-                return@map it
-            }
-        }
-        _categories.value = list
-
         //_products.value = list.value
         _products.value = listTwo.value
-
-        val listTest = t.map {
-            if (categoryUiModel.title == it.name) {
-                if (categoryUiModel.isChecked) {
-                    _selectedCategories.removeAll { brand -> brand.title == categoryUiModel.title }
-                } else {
-                    _selectedCategories.add(categoryUiModel)
-                }
-                return@map it.copy(checked = if (it.checked == "false") "false" else null)
-            } else {
-                return@map it
-            }
-        }
-        _categoriesOne.value = listTest
 
     }
 
@@ -392,9 +363,6 @@ class CategoryViewModel(
                     _messageEvent.value = Event("Algo no ha ido bien, no hay productos para mostrar")
                 }
             }
-
-        println(" _products::: ${_products.value?.map { it.combinations }}")
-        println(" _topProductList::: ${_topProductList.value?.map { it.combinations }}")
 
         return _products
 
