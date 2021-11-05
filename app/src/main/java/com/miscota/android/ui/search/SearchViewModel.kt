@@ -38,13 +38,17 @@ class SearchViewModel(
     }
 
     fun search(query: String, type: String) {
-        searchQuery = query
-        loadTopProducts(type)
+        if (query.length < 3){
+            _topProductList.value = mutableListOf()
+        }else {
+            searchQuery = query
+            loadTopProducts(type)
+        }
     }
 
     private fun loadTopProducts(type: String) {
         searchJob?.cancel()
-        println("chibato 1 loadMoreTopProducts $type")
+
         searchJob = viewModelScope.launch {
             delay(300)
             _topProductList.value = mutableListOf()
@@ -58,11 +62,9 @@ class SearchViewModel(
 //                    page = 0,
 //                    limit = 450,
 //                )
-                println("chibato 2 loadMoreTopProducts $type")
                 if (response.isEmpty()) {
                     return@launch
                 }
-                println("chibato 3 loadMoreTopProducts $type")
                 val list = _topProductList.value?.toMutableList() ?: mutableListOf()
                 list.addAll(response.map { it.toCategoryProductUiModel() })
                 _topProductList.value = list
@@ -70,7 +72,6 @@ class SearchViewModel(
                 topProductPageNumber++
                 shouldTopProductsFetch = false
                 showLoading.value = true
-                println("chibato 4 loadMoreTopProducts $type")
             }
 
             val exception = result.exceptionOrNull()
@@ -78,17 +79,14 @@ class SearchViewModel(
                 Timber.e(exception.message.toString())
                 println(exception.message.toString())
                 _messageEvent.value = Event("algo no ha ido bien")
-                println("chibato 5 loadMoreTopProducts exception $type")
             }
         }
-        println("chibato 6 loadMoreTopProducts $type")
     }
 
     fun loadMoreTopProducts(type: String) {
         if (shouldTopProductsFetch) {
             shouldTopProductsFetch = false
             loadTopProducts(type)
-            println("chibato 0 loadMoreTopProducts $type")
         }
     }
 

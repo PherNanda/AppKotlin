@@ -5,7 +5,6 @@ import android.app.Activity
 import android.graphics.Typeface
 import android.location.Geocoder
 import android.os.Bundle
-import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -31,9 +30,7 @@ import com.miscota.android.afterTextChanged
 import com.miscota.android.auth.AuthViewModel
 import com.miscota.android.auth.login.ui.LoggedInUserView
 import com.miscota.android.databinding.FragmentSignupBinding
-import com.miscota.android.ui.addresscurrent.AddressCurrentFragment
 import com.miscota.android.ui.termsprivacity.TermsPrivacityFragment
-import com.miscota.android.ui.tramitarpedido.TramitarPedidoFragment
 import com.miscota.android.util.autoClean
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel

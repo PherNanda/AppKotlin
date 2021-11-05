@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.miscota.android.MainActivity
 import com.miscota.android.R
 import com.miscota.android.databinding.FragmentSearchProductsBinding
+import com.miscota.android.ui.category.CategoryUiModel
 import com.miscota.android.ui.productdetail.ProductDetailFragment
 import com.miscota.android.ui.productdetail.toProductDetailUiModel
 import com.miscota.android.util.RecyclerViewLoadMoreListener
@@ -54,7 +55,6 @@ class SearchProductsFragment : Fragment() {
         val bundleProduct: Bundle? = arguments
         requestDetailID = bundleProduct?.get("requestDetailID").toString()
         viewModel.setRetailId(requestDetailID)
-        println(" search requestDetailID $requestDetailID")
 
         listAdapter = SearchProductsAdapter(
             productClickListener = {
@@ -86,7 +86,7 @@ class SearchProductsFragment : Fragment() {
         }
 
         binding.searchAutoComplete.doAfterTextChanged {
-            if (it != null) {
+            if (it != null && it.length > MIN_SEARCH) {
 
                 viewModel.showLoading.observe(viewLifecycleOwner) {
                     if (!viewModel.showLoading.value!!) {
@@ -98,15 +98,20 @@ class SearchProductsFragment : Fragment() {
                     }
                 }
 
-                if(it.length > 2){
-                    viewModel.search(it?.toString() ?: "",viewModel.getType()!!)
-
-                    println("it $it")
+                if(it.length > MIN_SEARCH){
+                    viewModel.search(it.toString(),viewModel.getType()!!)
                     binding.titleSearch.visibility = View.VISIBLE
 
                     binding.titleSearch.text = getString(R.string.search_of, it)
 
                 }
+
+            }
+            if(it != null &&  it.length < NOT_SEARCH){
+                viewModel.search(it.toString(),viewModel.getType()!!)
+                binding.titleSearch.visibility = View.INVISIBLE
+                binding.titleSearch.visibility =  View.INVISIBLE
+
             }
 
             (requireActivity() as MainActivity).binding.navView.menu.getItem(1).isChecked = true
@@ -123,6 +128,11 @@ class SearchProductsFragment : Fragment() {
         viewModel.topProductList.observe(viewLifecycleOwner) {
             listAdapter.submitList(it)
         }
+    }
+
+    companion object {
+        const val MIN_SEARCH = 2
+        const val NOT_SEARCH = 3
     }
 
 }
