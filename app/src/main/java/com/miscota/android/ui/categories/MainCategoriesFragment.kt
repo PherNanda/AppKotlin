@@ -208,7 +208,7 @@ class MainCategoriesFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
 
-        println("listAdapter.currentList.size onDestroy ${listAdapter.currentList.size}")
+        //println("listAdapter.currentList.size onDestroy ${listAdapter.currentList.size}")
 
         val mainActivity = requireActivity() as MainActivity
         mainActivity.binding.root.setBackgroundColor(ContextCompat.getColor(mainActivity, R.color.app_blue_alpha))
@@ -230,20 +230,20 @@ class MainCategoriesFragment : Fragment() {
         params.height = ViewGroup.LayoutParams.WRAP_CONTENT
         (requireActivity() as MainActivity).binding.headerMain.layoutParams = params
 
-        println("listAdapter.currentList.size onStart ${listAdapter.currentList.size}")
+        //println("listAdapter.currentList.size onStart ${listAdapter.currentList.size}")
 
     }
 
     override fun onDetach() {
         super.onDetach()
-        println("listAdapter.currentList.size onDetach  ${listAdapter.currentList.size}")
+        //println("listAdapter.currentList.size onDetach  ${listAdapter.currentList.size}")
     }
 
     override fun onResume() {
         super.onResume()
 
-        println("listAdapter.currentList.size onResume  ${listAdapter.currentList.size}")
-        println("listAdapter.currentList.size onResume it  ${listAdapter.currentList.map { it }}")
+        //println("listAdapter.currentList.size onResume  ${listAdapter.currentList.size}")
+        //println("listAdapter.currentList.size onResume it  ${listAdapter.currentList.map { it }}")
     }
 
     override fun onAttach(context: Context) {

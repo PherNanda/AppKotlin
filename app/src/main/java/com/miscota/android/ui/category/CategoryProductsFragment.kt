@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.miscota.android.MainActivity
 import com.miscota.android.R
 import com.miscota.android.databinding.FragmentCategoryProductsBinding
+import com.miscota.android.ui.productdetail.OptionUiModel
 import com.miscota.android.ui.productdetail.ProductDetailFragment
 import com.miscota.android.ui.productdetail.toProductDetailUiModel
 import com.miscota.android.util.RecyclerViewLoadMoreListener
@@ -125,7 +126,7 @@ class CategoryProductsFragment : Fragment() {
                 }
            },
             onCategoryClickListener = {
-                viewModel.selectCategoryTwo(it,t)
+                viewModel.selectCategoryTwo(it)
             },
             typeProduct = viewModel.getType()!!
         )
@@ -133,8 +134,9 @@ class CategoryProductsFragment : Fragment() {
 
 
         val categoryAdapter = CategoryAdapter {
-            viewModel.selectCategoryTwo(it, t)
+            viewModel.selectCategoryTwo(it)
         }
+
         val listDistincty = ArrayList<Category>()
         val list = ArrayList<Category>()
         for (item in categoryList) {
@@ -182,7 +184,7 @@ class CategoryProductsFragment : Fragment() {
 
                 t.add(CategoryOne("",categoryOne.id,categoryOne.name,categoryOne.checked))
 
-                viewModel.selectCategoryTwo(category, t)
+                //viewModel.selectCategoryTwo(category)
 
             }
 

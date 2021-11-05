@@ -60,10 +60,11 @@ class CategoryViewModel(
 
                 val categories = _categories.value ?: listOf()
 
-
+                println(" categories::: ${categories.map { it }}")
                 val categoryItem = categoryListItem.copy(
                     categories = categories,
                 )
+                println(" categoryItem::: ${categoryItem.categories.map { it }}")
 
                 val topProducts = _topProductList.value ?: listOf()
                 val featureProduct = CategoryUiModel.TopProductListItem(
@@ -98,6 +99,9 @@ class CategoryViewModel(
                 } else {
                     products
                 })**/
+
+                //test //mergedList.addAll(if (categories.any { it.isChecked }) else CategoryUiModel.CategoryListItem.Category)
+
 
                 mergedList.addAll(
                     products
@@ -292,13 +296,10 @@ class CategoryViewModel(
     }
 
     fun selectCategoryTwo(
-        categoryUiModel: CategoryUiModel.CategoryListItem.Category,
-        t: ArrayList<CategoryOne>
+        categoryUiModel: CategoryUiModel.CategoryListItem.Category
     ) {
 
         val listTwo = loadProductsCategory(categoryUiModel)
-
-        println(" itmap::: ${t.map { it }}")
 
         for (category in categoryListItem.categories)
 
@@ -307,6 +308,23 @@ class CategoryViewModel(
         _categories.value?.map {
             println(" select categories.value $it")
         }
+
+       /** _categories.value?.map {
+            println(" select categories.value $it")
+
+            if (categoryUiModel.isChecked && it.uid == categoryUiModel.uid)
+            {
+                return@map it.copy(isChecked = categoryUiModel.isChecked)
+            }
+            else{
+                return@map it.copy(isChecked = !categoryUiModel.isChecked)
+            }
+        }**/
+
+        println("categoryUiModel:::  $categoryUiModel")
+        /**_categories.value = categorys.mapIndexed { index, categoryOne ->
+            (CategoryUiModel.CategoryListItem.Category(categoryOne.id!!.toLong(), categoryOne.name!!, categoryOne.checked.toBoolean()))
+        }**/
         //_products.value = list.value
         _products.value = listTwo.value
 

@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -24,6 +25,7 @@ import com.miscota.android.ui.tramitarpedido.TramitarPedidoFragment
 import com.miscota.android.util.Address
 import com.miscota.android.util.autoClean
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import zendesk.messaging.MessagingActivityModule_HandlerFactory.handler
 
 class AddressCurrentFragment : Fragment() {
 
@@ -67,8 +69,8 @@ class AddressCurrentFragment : Fragment() {
         loadRecentAddresses()
         loadAddressesUser()
 
-        val bundleAddress: Bundle? = arguments
-
+        val bundleAddressCurrent: Bundle? = arguments
+        //val delaySeconds = 1
         viewModelAddress.recentAddressesUser.observe(viewLifecycleOwner) {
             it.forEach { address ->
                 val partialBinding = PartialLayoutRecentAddressCartBinding.inflate(layoutInflater)
@@ -78,34 +80,29 @@ class AddressCurrentFragment : Fragment() {
                 partialBinding.currentLocationText.text = "${address.postalCode}, ${address.city}, ${address.countryName}"
                 println("address $address")
 
-                println("address groupingBy 01 ${recentAddresses.groupingBy { it }.eachCount().filter { it.value > 1 }}")
-                println("address groupingBy 01 == 1 ${recentAddresses.groupingBy { it }.eachCount().filter { it.value == 1 } }")
-
-
+                //handler().postDelayed( {
                 partialBinding.root.setOnClickListener {
-                    //val additionalAddress = binding.additionalAddress.text.toString()
-                    //viewModel.goToMain(address)
-                    bundleAddress?.putString("addressB", address.addressNumber)
-                    bundleAddress?.putString("postalCodeB", address.postalCode)
-                    bundleAddress?.putString("cityB", address.city)
-                    bundleAddress?.putString("provinceB", address.state)
-                    bundleAddress?.putString("phoneB", address.phone.toString())
+
+                    bundleAddressCurrent?.putString("addressBC", address.addressNumber)
+                    bundleAddressCurrent?.putString("postalCodeBC", address.postalCode)
+                    bundleAddressCurrent?.putString("cityBC", address.city)
+                    bundleAddressCurrent?.putString("provinceBC", address.state)
+                    bundleAddressCurrent?.putString("phoneBC", address.phone.toString())
 
                     //val additionalAddress =  partialBinding.currentLocation.text.toString()
-                    println("address partialBinding.root.setOnClickListener $address")
-                    //println("additionalAddress $additionalAddress")
-                    //partialBinding.currentLocation.setBackgroundDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.background_home_new_search))
-                    //partialBinding.currentLocation.setBackgroundDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.background_home_new_search))
+                    partialBinding.currentLocation.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checkbox_true, 0, 0, 0)
+
 
                     viewModelAddress.setAdressUser(address)
 
                     println("\naddress.addressNumber fragment ${address.addressNumber} $address")
 
                     val fragment = TramitarPedidoFragment()
-                    fragment.arguments = bundleAddress
+                    fragment.arguments = bundleAddressCurrent
                     replaceFragment(fragment)
                     
                 }
+                       //}, (delaySeconds * 1000).toLong())
             }
         }
 
@@ -113,32 +110,24 @@ class AddressCurrentFragment : Fragment() {
             it.forEach { address ->
                 val partialBinding = PartialLayoutRecentAddressCartBinding.inflate(layoutInflater)
                 binding.recentAddressLayout.addView(partialBinding.root)
-
                 partialBinding.currentLocation.text = address.addressNumber
                 partialBinding.currentLocationText.text = "${address.postalCode}, ${address.city}, ${address.countryName}"
 
-
-
-                println("address two $address")
-
-                println("address groupingBy 02 ${recentAddresses.groupingBy { it }.eachCount().filter { it.value > 1 }}")
-                println("address groupingBy 02 == 1 ${recentAddresses.groupingBy { it }.eachCount().filter { it.value == 1 } }")
-
                 partialBinding.root.setOnClickListener {
 
-                    bundleAddress?.putString("addressB", address.addressNumber)
-                    bundleAddress?.putString("postalCodeB", address.postalCode)
-                    bundleAddress?.putString("cityB", address.city)
-                    bundleAddress?.putString("provinceB", address.state)
-                    bundleAddress?.putString("phoneB", address.phone.toString())
-
-                    println("address partialBinding.root.setOnClickListener two $address")
+                    partialBinding.currentLocation.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checkbox_true, 0, 0, 0)
 
                     viewModelAddress.setAdressUser(address)
-                    println("\naddress.addressNumber fragment ${address.addressNumber} $address")
+
+                    bundleAddressCurrent?.putString("addressBC", address.addressNumber)
+                    bundleAddressCurrent?.putString("postalCodeBC", address.postalCode)
+                    bundleAddressCurrent?.putString("cityBC", address.city)
+                    bundleAddressCurrent?.putString("provinceBC", address.state)
+                    bundleAddressCurrent?.putString("phoneBC", address.phone.toString())
+
 
                     val fragment = TramitarPedidoFragment()
-                    fragment.arguments = bundleAddress
+                    fragment.arguments = bundleAddressCurrent
                     replaceFragment(fragment)
 
                 }
@@ -249,5 +238,6 @@ class AddressCurrentFragment : Fragment() {
             }
         }?.commit()
     }
+
 
 }

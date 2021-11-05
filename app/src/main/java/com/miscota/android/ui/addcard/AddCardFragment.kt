@@ -76,16 +76,17 @@ class AddCardFragment : Fragment() {
             if (inputCardNumbers != null && inputCardNumbers.length < maxLengthCard) {
                 var cardNumberError = ""
 
+
                 if (TextUtils.isEmpty(binding.cardNumberInput.text) || inputCardNumbers.length < 17) {
                     cardNumberError = getString(R.string.not_valid_card)
+
+                    /**binding.cardNumberInput.setError(
+                        getString(R.string.not_valid_card),
+                        getDrawable(requireContext(), R.drawable.ic_card_check_off)
+                    )**/
                 }
                 binding.cardNumberLayout.error = cardNumberError
                 binding.cardNumberLayout.isErrorEnabled = true
-
-                binding.cardNumberInput.setError(
-                    getString(R.string.not_valid_card),
-                    getDrawable(requireContext(), R.drawable.ic_card_check_off)
-                )
 
             } else if (inputCardNumbers != null && inputCardNumbers.length == maxLengthCard) {
 

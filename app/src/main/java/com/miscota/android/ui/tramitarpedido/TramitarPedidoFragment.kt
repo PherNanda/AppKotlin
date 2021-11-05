@@ -63,6 +63,10 @@ class TramitarPedidoFragment : Fragment() {
 
     lateinit var recentAddressesUser: List<Address>
 
+    private var addressUser: Address? = null
+
+    private var addressUserInfo: Address? = null
+
     private var paymentMethod: PaymentMethod? = null
     private var paymentResult = false
 
@@ -90,6 +94,8 @@ class TramitarPedidoFragment : Fragment() {
 
         loadRecentAddresses()
         loadAddressesUser()
+        loadAddressUser()
+        loadAddressInfo()
 
         loadCartToItem()
 
@@ -108,6 +114,15 @@ class TramitarPedidoFragment : Fragment() {
         val postalCodeB: String? = bundleAddress?.getString("postalCodeB")
         val cityB: String? = bundleAddress?.getString("cityB")
         val phoneB: String? = bundleAddress?.getString("phoneB")
+
+        val bundleAddressCurrent: Bundle? = arguments
+        val addressBC: String? = bundleAddressCurrent?.getString("addressBC")
+        val provinceBC: String? = bundleAddressCurrent?.getString("provinceBC")
+        val postalCodeBC: String? = bundleAddressCurrent?.getString("postalCodeBC")
+        val cityBC: String? = bundleAddressCurrent?.getString("cityBC")
+        val phoneBC: String? = bundleAddressCurrent?.getString("phoneBC")
+
+
         //val currentTime: String? = currentTimeBundle?.getString(getString(R.string.date_shipping_sameday))
 
         if( cardNumber != null && cardMonth != null && cardYear !=  null && cardSecurity != null && cardNumber.isNotEmpty()) {
@@ -149,32 +164,46 @@ class TramitarPedidoFragment : Fragment() {
             binding.addressShipping.text = addressB
             binding.addressShippingComplement.text = "$postalCodeB, $cityB, $phoneB ,$provinceB, España"
             viewModelCart.authStore.setPhone(phoneB)
-            println("bundle Address  $addressB, España")
-            println("bundle Address  $postalCodeB, $cityB, $phoneB ,$provinceB, España")
+        }
+        if (addressBC != null && provinceBC != null && postalCodeBC != null && cityBC != null && phoneBC != null){
+
+            binding.addressShipping.text = addressBC
+            binding.addressShippingComplement.text = "$postalCodeBC, $cityBC, $phoneBC ,$provinceBC, España"
+            viewModelCart.authStore.setPhone(phoneBC)
 
         }
-        if( recentAddressesUser.isNotEmpty() ) {
-
-            binding.addressShipping.text = recentAddressesUser.first().addressNumber
-            binding.addressShippingComplement.text = "${recentAddressesUser.first().postalCode}, ${recentAddressesUser.first().city}, ${recentAddressesUser.first().state}, ${recentAddressesUser.first().countryName}"
-            println("recentAddresses it.addressNumber ${recentAddressesUser.first().postalCode}, ${recentAddressesUser.first().city}, ${recentAddressesUser.first().state}, ${recentAddressesUser.first().countryName}")
-            println("recentAddresses  ${recentAddressesUser.first().postalCode}, ${recentAddressesUser.first().city}, ${recentAddressesUser.first().state}, ${recentAddressesUser.first().countryName}")
+        if (addressUser?.addressNumber != null){
+            binding.addressShipping.text = addressUser?.addressNumber
+            binding.addressShippingComplement.text = "${addressUser?.postalCode}, ${addressUser?.city}, ${addressUser?.state} ,${addressUser?.region}, España"
 
         }
-        else{
-            if ( recentAddresses.isNotEmpty() ) {
+        else {
+            if (addressUserInfo != null){
 
-                recentAddresses.map {
-                    it.address
-                    binding.addressShipping.text = it.addressNumber
+                binding.addressShipping.text = addressUserInfo?.addressNumber
+                binding.addressShippingComplement.text = "${addressUserInfo?.postalCode}, ${addressUserInfo?.city}, ${addressUserInfo?.state} ,${addressUserInfo?.region}, España"
+
+            }else {
+
+                if (recentAddressesUser.isNotEmpty()) {
+
+                    binding.addressShipping.text = recentAddressesUser.first().addressNumber
                     binding.addressShippingComplement.text =
-                        "${it.postalCode}, ${it.city}, ${it.state}, ${it.countryName}"
-                    println("recentAddresses it.addressNumber ${it.addressNumber}, ${it.city}, ${it.state}, ${it.countryName}")
-                    println("recentAddresses  ${it.postalCode}, ${it.city}, ${it.state}, ${it.countryName}")
+                        "${recentAddressesUser.first().postalCode}, ${recentAddressesUser.first().city}, ${recentAddressesUser.first().state}, ${recentAddressesUser.first().countryName}"
+
+                } else {
+                    if (recentAddresses.isNotEmpty()) {
+
+                        recentAddresses.map {
+                            it.address
+                            binding.addressShipping.text = it.addressNumber
+                            binding.addressShippingComplement.text =
+                                "${it.postalCode}, ${it.city}, ${it.state}, ${it.countryName}"
+                        }
+                    }
                 }
             }
         }
-
 
         if(isLogued()){
             binding.clientName.text = "${viewModelCart.authStore.getUser()?.name}"
@@ -241,10 +270,6 @@ class TramitarPedidoFragment : Fragment() {
                     viewModelCart.removeItemRef(it.combinationReference, it.type?:getString(R.string.type_ecommerce),requireContext())
                 }
             }
-
-            println("just after map products currentTime ${currentTime.split("(").firstOrNull()}")
-
-            println("just after map products deliveryType $deliveryType")
 
             //test
             /**paymentMethod =
@@ -829,8 +854,16 @@ class TramitarPedidoFragment : Fragment() {
         recentAddresses = viewModelCart.authStore.getRecentAddresses() ?: listOf()
     }
 
-    fun loadAddressesUser() {
+    private fun loadAddressesUser() {
         recentAddressesUser = viewModelCart.authStore.getRecentAddressesInfo() ?: listOf()
+    }
+
+    private fun loadAddressUser(){
+        addressUser = viewModelCart.authStore.getAddress()
+    }
+
+    private fun loadAddressInfo(){
+        addressUserInfo = viewModelCart.authStore.getAddressInfo()
     }
 
     override fun onStart() {

@@ -147,6 +147,7 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$androidFragment"
     implementation "androidx.viewpager2:viewpager2:$viewpager2"
 
+
     // Network
     implementation "com.github.ihsanbal:LoggingInterceptor:$okhttpInterceptor"
     implementation "com.squareup.okhttp3:okhttp:$okhttp"
