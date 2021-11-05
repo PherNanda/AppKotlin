@@ -106,12 +106,14 @@ class LoginFragment : Fragment() {
                 // disable login button unless both username / password is valid
                 loginButton.isEnabled = loginState.isDataValid
 
-                if (loginState.usernameError != null) {
+                if (loginState.usernameError != null && password.text!!.length > 5) {
                     usernameLayout.error = getString(loginState.usernameError)
                 } else {
                     usernameLayout.error = null
                 }
-                if (loginState.passwordError != null) {
+                if (loginState.passwordError != null && username.text != null && username.text!!.length > 10
+                    && usernameLayout.error == null
+                    && password.text!!.length < 5) {
                     passwordLayout.error = getString(loginState.passwordError)
                 } else {
                     passwordLayout.error = null

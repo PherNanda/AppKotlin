@@ -43,6 +43,7 @@
           <option name="pluginClasspaths">
             <array>
               <option value="$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/org.jetbrains.intellij.deps/trove4j/1.0.20181211/216c2e14b070f334479d800987affe4054cd563f/trove4j-1.0.20181211.jar" />
+              <option value="$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.4.30/48e8dbe6be3d41726e98bb0575f0148239c9f9cc/kotlin-annotation-processing-gradle-1.4.30.jar" />
               <option value="$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.4.30/320bc62a2dfa19a24bc1613894ae0eabc909052c/kotlin-compiler-embeddable-1.4.30.jar" />
               <option value="$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-embeddable/1.4.30/bc024798c5378570ded42ffe3db82ca8ac86dabc/kotlin-daemon-embeddable-1.4.30.jar" />
               <option value="$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-parcelize-compiler/1.4.30/82e3fef6ca192a4e0b304f743a31b53632b89a95/kotlin-parcelize-compiler-1.4.30.jar" />

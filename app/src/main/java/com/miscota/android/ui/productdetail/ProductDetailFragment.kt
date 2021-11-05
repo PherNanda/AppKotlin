@@ -419,11 +419,6 @@ class ProductDetailFragment : Fragment() {
                                 //println(" option  ${it.optionPrice} - ${it.variant.split(" ").firstOrNull()?.toDouble()} - ${it.optionPrice / it.variant.split(" ").firstOrNull()?.toDouble()!!} ")
                                  binding.priceText.text = it.price
                                 binding.spinner.adapter = adapterSp
-                                print("option stock ${it.stock}")
-                                print("\n option test it.isChecked:::: ${it.isChecked}")
-                                print("\n option test it.price:::: ${it.price}")
-                                print("\n productTypeOption:::: ${it.productTypeOption}")
-                                print("\n viewModel.getType():::: ${viewModel.getType()}")
                                 it.copy(isChecked = true, productTypeOption = viewModel.getType())
 
 
