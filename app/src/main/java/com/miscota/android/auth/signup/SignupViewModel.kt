@@ -35,7 +35,7 @@ class SignupViewModel(
         newsLetter: Boolean,
     ) {
         if (!terms) {
-            _signupForm.value = SignupFormState(termsAcceptedError = R.string.terms_error)
+            _signupForm.value = SignupFormState(termsAcceptedError = R.string.sign_up_error)
             return
         } else {
             _signupForm.value = SignupFormState(isDataValid = true)
@@ -59,7 +59,8 @@ class SignupViewModel(
                 authStore.setAutoLoginParamExpire(result.getOrThrow().autologin_param_expire)
                 _signupResult.value =
                     SignUpResult(success = LoggedInUserView(displayName = user.name?:"invitado"))
-            } else {
+            }
+            else {
                 _signupResult.value = SignUpResult(error = R.string.sign_up_error)
             }
         }
@@ -93,7 +94,7 @@ class SignupViewModel(
 
     // A placeholder username validation check
     private fun isUserNameValid(username: String): Boolean {
-        return username.length > 5
+        return username.length > 2
     }
 
     // A placeholder username validation check
@@ -104,6 +105,8 @@ class SignupViewModel(
             email.isNotBlank()
         }
     }
+
+
 
     // A placeholder password validation check
     val pattern = Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$")

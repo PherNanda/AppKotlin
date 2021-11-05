@@ -29,7 +29,7 @@
     <string name="invalid_username">Usuario inválido</string>
     <string name="invalid_password">La contraseña debe tener mínimo 6 carácteres \n(con almenos 1 letra y 1 número)</string>
     <string name="invalid_confirm_password">Las claves no coinciden</string>
-    <string name="invalid_email">E-Mail inválido</string>
+    <string name="invalid_email">E-mail inválido</string>
     <string name="invalid_address">Dirección no válida</string>
     <string name="terms_error">Por favor acepta las condiciones de servicio primero</string>
     <string name="login_description">y disfruta de todas las ventajas</string>
@@ -397,6 +397,8 @@
 
     <!--messages-->
     <string name="need_login">Haga login para finalizar su pedido</string>
+
+    <string name="guest">invitado</string>
 
 
 </resources>
