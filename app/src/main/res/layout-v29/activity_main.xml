@@ -184,7 +184,7 @@
                 android:layout_marginHorizontal="2dp"
                 android:layout_marginStart="13dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/sameday_icon_web" />
+                android:src="@drawable/sameday_icon_web_4x" />
 
             <TextView
                 android:id="@+id/textSamedayMain"
