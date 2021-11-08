@@ -121,7 +121,6 @@ class CategoryProductsFragment : Fragment() {
                         R.id.action_categoryProductsFragment_to_productDetailFragment,
                         this
                     )
-                    println("it.productId ${it.productId}")
                     it.productId
                 }
            },
@@ -174,7 +173,6 @@ class CategoryProductsFragment : Fragment() {
                        for (it in items.categories){
                            if (it.name != category.title){
                                it.checked == "false"
-                               println("itemmm two $it")
                                t.add(CategoryOne("",it.id,it.name,"false"))
 
                            }
@@ -183,8 +181,6 @@ class CategoryProductsFragment : Fragment() {
                }
 
                 t.add(CategoryOne("",categoryOne.id,categoryOne.name,categoryOne.checked))
-
-                //viewModel.selectCategoryTwo(category)
 
             }
 

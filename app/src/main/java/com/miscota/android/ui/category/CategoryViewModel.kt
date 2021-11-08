@@ -64,7 +64,9 @@ class CategoryViewModel(
                 val categoryItem = categoryListItem.copy(
                     categories = categories,
                 )
-                println(" categoryItem::: ${categoryItem.categories.map { it }}")
+                println("categoryItem::: ${categoryItem.categories.map { it }}")
+                println("_categories.value?.map::: ${_categories.value?.map { it }}")
+                println("categorys::::  ${categorys.map { it }}")
 
                 val topProducts = _topProductList.value ?: listOf()
                 val featureProduct = CategoryUiModel.TopProductListItem(
@@ -171,8 +173,7 @@ class CategoryViewModel(
                 if (response.isEmpty()) {
                     return@launch
                 }
-
-                println(" categoryId.toInt()  ${categoryId.id!!.toInt()}")
+                
                 val list = _products.value?.toMutableList() ?: mutableListOf()
                 list.addAll(response.map { it.toCategoryProductUiModel() })
 
@@ -218,13 +219,6 @@ class CategoryViewModel(
 
                     val brands = _categories.value?.toMutableList() ?: mutableListOf()
                     brands.addAll(response.map { it.toBrandsUiModel() })
-                   /** _categories.value = brands.distinctBy { it.title }.map { brand ->
-                        return@map if (_selectedCategories.any { it.title == brand.title }) {
-                            brand.copy(isChecked = true)
-                        } else {
-                            brand
-                        }
-                    }**/
 
                     _categories.value = categorys.mapIndexed { index, categoryOne ->
                        (CategoryUiModel.CategoryListItem.Category(categoryOne.id!!.toLong(), categoryOne.name!!, categoryOne.checked.toBoolean()))
@@ -269,31 +263,7 @@ class CategoryViewModel(
         loadTopProducts()
     }
 
-    fun selectCategory(categoryUiModel: CategoryUiModel.CategoryListItem.Category) {
 
-        println("categoryListItem.categories.size 1 ${categoryListItem.categories.size}")
-        for (category in categoryListItem.categories)
-
-            println(" category.title 1 ${category.title}")
-
-        _categories.value?.map {
-            println(" select categories.value $it")
-        }
-        val list = _categories.value?.map {
-            if (categoryUiModel.title == it.title) {
-                if (categoryUiModel.isChecked) {
-                    _selectedCategories.removeAll { brand -> brand.title == categoryUiModel.title }
-                } else {
-                    _selectedCategories.add(categoryUiModel)
-                }
-                return@map it.copy(isChecked = !it.isChecked)
-            } else {
-                return@map it
-            }
-        }
-        _categories.value = list
-
-    }
 
     fun selectCategoryTwo(
         categoryUiModel: CategoryUiModel.CategoryListItem.Category
@@ -303,41 +273,30 @@ class CategoryViewModel(
 
         for (category in categoryListItem.categories)
 
-            println(" category.title 1 ${category.title}")
-
         _categories.value?.map {
-            println(" select categories.value $it")
+
         }
 
-       /** _categories.value?.map {
-            println(" select categories.value $it")
+        val newList = _categories.value?.map {
 
-            if (categoryUiModel.isChecked && it.uid == categoryUiModel.uid)
+            if (categoryUiModel.isChecked && it.uid == categoryUiModel.uid )
             {
-                return@map it.copy(isChecked = categoryUiModel.isChecked)
+                return@map it.copy(isChecked = true)
             }
             else{
-                return@map it.copy(isChecked = !categoryUiModel.isChecked)
+                return@map it.copy(isChecked = false)
             }
-        }**/
+        }
 
-        println("categoryUiModel:::  $categoryUiModel")
-        /**_categories.value = categorys.mapIndexed { index, categoryOne ->
-            (CategoryUiModel.CategoryListItem.Category(categoryOne.id!!.toLong(), categoryOne.name!!, categoryOne.checked.toBoolean()))
-        }**/
-        //_products.value = list.value
         _products.value = listTwo.value
+        _categories.value = newList
 
     }
 
     private fun loadProductsCategory(categoryUiModel: CategoryUiModel.CategoryListItem.Category):  MutableLiveData<List<CategoryUiModel.Product>> {
-        println("categoryUiModel.isChecked ${categoryUiModel.isChecked}")
-        println("categoryUiModel.title ${categoryUiModel.title}")
-        println("categoryUiModel.uid ${categoryUiModel.uid}")
 
             categorys.map {
-               // if (it.checked == "true")
-                println("it.category ${it.category}")
+
                     categoryId = CategoryOne(categoryUiModel.uid.toString(),categoryUiModel.uid.toString(),categoryUiModel.title,categoryUiModel.isChecked.toString())
             }
             viewModelScope.launch {
@@ -353,10 +312,7 @@ class CategoryViewModel(
 
                     if (response.isEmpty()) {
                         return@launch
-                        //println(" response.isEmpty() autoStore.getRetailID()?.map ${it.retail_shop_id} - ${it.name} ")
                     }
-
-                    println(" categoryId.toInt()  ${categoryId.id!!.toInt()}")
 
                     _products.value = listOf()
                     val list = _products.value?.toMutableList() ?: mutableListOf()
@@ -378,6 +334,7 @@ class CategoryViewModel(
                 if (exception != null && exception !is CancellationException) {
                     Timber.e(exception.message.toString())
                     println(exception.message.toString())
+                    showEmpty.value = true
                     _messageEvent.value = Event("Algo no ha ido bien, no hay productos para mostrar")
                 }
             }
@@ -388,23 +345,15 @@ class CategoryViewModel(
 
     fun selectCategoryItem(categoryUiModel: CategoryUiModel.CategoryListItem) {
 
-        println( " categoryListItem.categories.size ${categoryListItem.categories.size}")
         for (category in categoryListItem.categories)
 
-            println( " category.title ${category.title}")
-
         _categoriesT.value?.map {
-            println(" select categories.value $it")
         }
         val list = _categoriesT.value?.map {
-
-                 println(" categoryUiModel.categories[0].title ${categoryUiModel.categories[0].title}")
 
                 _selectedCategories.add(categoryUiModel.categories[0])
 
                 return@map it
-
-                println(" categoryUiModel.categories[0].title T ${categoryUiModel.categories[0].title}")
 
         }
         _categoriesT.value = list as List<CategoryUiModel.CategoryListItem>?

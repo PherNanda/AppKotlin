@@ -4,7 +4,7 @@
    <!-- <item android:state_checked="true"
         android:drawable="@drawable/ic_checkbox_true"/>-->
     <item android:state_checked="true"
-        android:drawable="@drawable/ic_selected_on_new"/>
+        android:drawable="@drawable/ic_checkbox_true"/>
 
     <!--<item android:state_checked="true"
         android:drawable="@drawable/ic_checkbox_true"/>-->

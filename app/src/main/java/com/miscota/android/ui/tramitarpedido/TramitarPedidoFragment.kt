@@ -828,6 +828,10 @@ class TramitarPedidoFragment : Fragment() {
         if ( totalSameDay > 0 ){
             binding.totalProductsCartSameDay.text = String.format(resources.getString(R.string.total_products_exemple),totalSameDay)
             println("currentDelivered $currentDelivered")
+            binding.totalProductsCartSameDay.visibility = View.VISIBLE
+            binding.typeOrderSameday.visibility = View.VISIBLE
+            binding.imageSameday.visibility = View.VISIBLE
+            binding.goEditTypeOrder.isEnabled = true
 
         }
         if ( totalEcommerce > 0 ){
@@ -839,6 +843,10 @@ class TramitarPedidoFragment : Fragment() {
             binding.totalProductsCartSameDay.text = String.format(resources.getString(R.string.total_products_exemple),"0")
             binding.dateOrderReceiveSameDay.visibility = View.GONE
             binding.infoOrderReceiveSameday.visibility = View.GONE
+            binding.totalProductsCartSameDay.visibility = View.GONE
+            binding.typeOrderSameday.visibility = View.GONE
+            binding.imageSameday.visibility = View.GONE
+            binding.goEditTypeOrder.isEnabled = false
         }
         if ( totalEcommerce == 0 ){
             binding.totalProductsCartEcommerce.text = String.format(resources.getString(R.string.total_products_exemple),"0")
