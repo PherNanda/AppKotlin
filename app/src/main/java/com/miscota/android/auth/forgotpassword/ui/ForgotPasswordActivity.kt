@@ -1,8 +1,12 @@
 package com.miscota.android.auth.forgotpassword.ui
 
+import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.view.get
 import com.miscota.android.R
 import com.miscota.android.afterTextChanged
 import com.miscota.android.databinding.ActivityForgotPasswordBinding
@@ -29,6 +33,26 @@ class ForgotPasswordActivity : AppCompatActivity() {
             }
         }
 
+        DrawableCompat.setTint(
+            binding.loading.indeterminateDrawable,
+            Color.parseColor("#4FC3F7")
+        )
+
+        viewModel.showLoading.observe(this) {
+            if (!viewModel.showLoading.value!!) {
+                binding.loadingLayout.visibility = View.GONE
+                binding.loading.visibility = View.GONE
+                binding.loadingText.visibility = View.GONE
+
+            }
+            if (viewModel.showLoading.value!!) {
+                binding.loadingLayout.visibility = View.VISIBLE
+                binding.loading.visibility = View.VISIBLE
+                binding.loadingText.visibility = View.VISIBLE
+
+            }
+        }
+
         with(binding) {
             backImage.setOnClickListener {
                 finish()
@@ -38,6 +62,8 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 if ( emailEditText.text?.isNotEmpty() == true ) {
                     loadingState()
                     viewModel.recoverPassword(emailEditText.text.toString())
+                    viewModel.showLoading.value = true
+                    //binding.emailLayout.visibility = View.INVISIBLE
                 }
                 else{
                     Toast.makeText(this@ForgotPasswordActivity,getString(R.string.recover_failed),Toast.LENGTH_LONG).show()
@@ -60,6 +86,8 @@ class ForgotPasswordActivity : AppCompatActivity() {
             }
             if (result.success != null) {
                     Toast.makeText(this, getString(R.string.restore_password_email_sent), Toast.LENGTH_SHORT).show()
+                viewModel.showLoading.value = false
+                //binding.emailLayout.visibility = View.VISIBLE
             }
         }
     }

@@ -21,6 +21,8 @@ class ForgotPasswordViewModel(private val authRepository: AuthRepository, privat
     private val _forgotPasswordResult = MutableLiveData<ForgotPasswordResult>()
     val forgotPasswordResult: LiveData<ForgotPasswordResult> = _forgotPasswordResult
 
+    var showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+
     fun recoverPassword(email: String) {
         try{
         viewModelScope.launch {
@@ -42,6 +44,7 @@ class ForgotPasswordViewModel(private val authRepository: AuthRepository, privat
                                 send = response.send
                             )
                         )
+                    //showLoading.value = true
                 }
                 else {
                     _forgotPasswordResult.value = ForgotPasswordResult(error = R.string.recover_failed)

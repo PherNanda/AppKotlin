@@ -24,9 +24,10 @@
         android:minWidth="90dp"
         style="@android:style/Widget.Holo.ProgressBar.Large"
         android:background="@drawable/loaderspinner"
-        android:backgroundTint="@color/dark_grey"
+        android:backgroundTint="@color/blue_new_ux"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        />
     <!--android:progressDrawable="@drawable/ic_gos_tres"-->
     <!--android:indeterminateDrawable="@drawable/ic_gos_tres"-->
     <!--android:background="@drawable/ic_gos_tres"
@@ -37,9 +38,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/loading"
-        android:textColor="@color/blue_new_ux"
+        android:textColor="@color/new_app_grey"
         android:layout_marginTop="6dp"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar"/>

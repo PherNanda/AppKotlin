@@ -244,8 +244,7 @@ class TramitarPedidoFragment : Fragment() {
             binding.clientName.text = getString(R.string.need_login)
             binding.addressShipping.visibility = View.VISIBLE
             binding.addressShipping.text = addressUser?.addressNumber?:addressUserInfo?.addressNumber
-            binding.addressShippingComplement.text = "${addressUser?.postalCode}, ${addressUser?.city}, ${addressUser?.state} ,${addressUser?.region}, España"?:
-                    "${addressUserInfo?.postalCode}, ${addressUserInfo?.city}, ${addressUserInfo?.state} ,${addressUserInfo?.region}, España"
+            binding.addressShippingComplement.text = "${addressUser?.postalCode}, ${addressUser?.city}, ${addressUser?.state} ,${addressUser?.region}, España"
 
         }
 

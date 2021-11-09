@@ -114,7 +114,7 @@ class PaymentMethodFragment : Fragment() {
                 replaceFragment(fragment)
 
             }
-            else{
+            else if(viewModelCart.authStore.getCard() == null  && cardNumber == null){
                 Toast.makeText(requireContext(),getString(R.string.card_number_message),Toast.LENGTH_LONG).show()
             }
 

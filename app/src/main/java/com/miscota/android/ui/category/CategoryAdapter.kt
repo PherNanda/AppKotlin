@@ -41,8 +41,6 @@ class CategoryAdapter(
             binding.checkBox.setOnCheckedChangeListener { _, checked ->
                 if (checked) {
 
-                    println("checked::: $checked")
-                    println("binding.checkBox::: ${binding.checkBox.text}")
                     categoryClickListener.invoke(uiModel.copy(isChecked = true))
                 }
                 /**else{

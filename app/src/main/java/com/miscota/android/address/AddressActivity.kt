@@ -189,10 +189,10 @@ class AddressActivity : AppCompatActivity() {
                             lng = listAddress[0].longitude,
                             state = listAddress[0].subAdminArea, //region
                             postalCode = listAddress[0].postalCode?:"08000",
-                            city = listAddress[0].locality,
-                            region = listAddress[0].adminArea,
+                            city = listAddress[0].locality?:"-",
+                            region = listAddress[0].adminArea?:"ad-a",
                             phone = listAddress[0].phone ?: "0",
-                            countryId = listAddress[0].countryCode,
+                            countryId = listAddress[0].countryCode?:"c-cd",
                             countryName = listAddress[0].countryName,
                             countryCode = listAddress[0].countryCode,
                             countrylang = "ES",
