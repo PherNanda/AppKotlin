@@ -147,8 +147,7 @@
     <fragment
         android:id="@+id/pedidoFragment"
         android:name="com.miscota.android.ui.pedido.Pedido"
-        android:label="@string/pedido_registrado"
-        tools:layout="@layout/pedido_fragment">
+        android:label="@string/pedido_registrado">
 
     <action
         android:id="@+id/action_pedidoFragment_to_webViewFragmentProfile"

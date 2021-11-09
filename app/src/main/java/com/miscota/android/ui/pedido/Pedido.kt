@@ -1,16 +1,17 @@
 package com.miscota.android.ui.pedido
 
+import android.content.ContentValues.TAG
 import android.content.Intent
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.miscota.android.MainActivity
 import com.miscota.android.R
 import com.miscota.android.databinding.PedidoFragmentBinding
@@ -18,14 +19,12 @@ import com.miscota.android.ui.cart.CartUiModel
 import com.miscota.android.ui.cart.CartViewModel
 import com.miscota.android.ui.cart.toCartItemUiModel
 import com.miscota.android.ui.cart.toCartUiModel
-import com.miscota.android.ui.paymentmethod.PaymentMethodFragment
 import com.miscota.android.ui.productdetail.CartProduct
-import com.miscota.android.ui.webview.WebViewFragment
 import com.miscota.android.util.Address
 import com.miscota.android.util.autoClean
-import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.ArrayList
+import java.util.*
+
 
 class Pedido : Fragment() {
 
@@ -55,6 +54,20 @@ class Pedido : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        /**val navHostFragment = fragmentManager?.findFragmentById(R.id.nav_host_fragment_test) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        println(" navController.currentDestination.id ${navController.currentDestination?.id}")**/
+
+        //findNavController()
+
+        //println(" findNavController().currentDestination?.id ${findNavController()}")
+
+
+        /**findNavController().navigate(
+            R.id.action_pedidoFragment_to_webViewFragmentProfile
+        )**/
 
         val bundleEcommerce: Bundle? = arguments
         val pedido: String? = bundleEcommerce?.getString(getString(R.string.get_order_ref_number))
@@ -107,6 +120,7 @@ class Pedido : Fragment() {
         }
 
         binding.goToUserZoneImageButton.setOnClickListener {
+            //to orders zone
 
             //val navigationProfile = view?.findViewById<BottomNavigationItemView>(R.id.navigation_profile)
 
@@ -121,11 +135,29 @@ class Pedido : Fragment() {
                 //navController.navigate(R.id.navigation_home)
             //}
 
-
+            Log.v(TAG, "click profile")
             listCheckoutProducts.map {
                 viewModelCart.removeItemRef(it.ref, it.type?: getString(R.string.type_ecommerce),requireContext())
             }
             startActivity(Intent(requireContext(), MainActivity::class.java))
+
+            /**findNavController().currentDestination?.id
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_test)**/
+
+
+            //Log.v(TAG, "${Navigation.setViewNavController(R.id.navigation_orders)}")
+
+            //val navHostFragment = findNavController()
+            //navHostFragment.currentDestination?.id
+
+            /**val navHostFragment: NavHostFragment =
+                fragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            navHostFragment.childFragmentManager.fragments[0]**/
+            //(requireActivity() as MainActivity).binding.navView.menu.getItem(2)
+
+            //    supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            //val navController = navHostFragment.navController
+
         }
         binding.goToUserZoneText.setOnClickListener {
 

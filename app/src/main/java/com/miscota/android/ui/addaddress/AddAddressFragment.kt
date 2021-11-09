@@ -138,8 +138,6 @@ class AddAddressFragment : Fragment() {
                 )
             }
 
-
-
         }
         binding.addreesCartInput.requestFocus()
         binding.postalCodeInput.doOnTextChanged { it, _, _, _ ->
@@ -166,6 +164,8 @@ class AddAddressFragment : Fragment() {
 
                 )
             }
+
+            //postalCode = if (viewModelCart.authStore.getAddress()?.postalCode == null) postalCode.toString() else viewModelCart.authStore.getAddress()!!.postalCode
 
         }
         binding.addreesCartInput.requestFocus()
