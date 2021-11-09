@@ -170,7 +170,6 @@ class MainCategoriesFragment : Fragment() {
         viewModel.loadCategoriesType(productType = productType, requestDetailID = requestDetailID)
         viewModel.setType(productType)
 
-        println(" productType after loadCategoriesType $requestDetailID")
         viewModel.setRetailId(requestDetailID)
 
         println(" productType after loadCategoriesType $productType")
@@ -184,8 +183,6 @@ class MainCategoriesFragment : Fragment() {
                 } else {
                     binding.emptyView.visibility = View.VISIBLE
                 }
-                println("size observe ${listAdapter.currentList.size}")
-                println("size observe it ${list.map { it }}")
             }
 
         )

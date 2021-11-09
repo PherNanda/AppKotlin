@@ -70,9 +70,6 @@ class PaymentMethodFragment : Fragment() {
             binding.myCardsTitle.visibility = View.GONE
         }
 
-
-        println("  cardOwner  $cardOwner")
-
         binding.toolbar.imageBack.setOnClickListener {
             getFragmentManager()?.popBackStackImmediate()
 

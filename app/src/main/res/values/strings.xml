@@ -232,6 +232,7 @@
     <!--dirección envío-->
     <string name="address_header_text">Dirección de envío</string>
     <string name="addrees_send">¿Dónde te lo enviamos?</string>
+    <string name="address_shipping">Dirección</string>
 
     <!--payments-->
     <string name="value_key">amount_value</string>
@@ -356,6 +357,7 @@
     <string name="order_placed">¡Pedido realizado!</string>
     <string name="order_thank_you">Muchas gracias por comprar en Miscota</string>
     <string name="order_user_message">%s, te hemos enviado un email con todos los datos del pedido. También puedes consultar los detalles en el apartado</string>
+    <string name="order_user_message_two">, te hemos enviado un email con todos los datos del pedido. También puedes consultar los detalles en el apartado</string>
     <string name="order_user_zone_button"><u>Pedidos en tu zona de usuario.</u></string>
     <string name="order_go_to_home">Seguir comprando</string>
     <string name="order_title">Envío</string>

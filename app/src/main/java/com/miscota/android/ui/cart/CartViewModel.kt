@@ -564,10 +564,10 @@ class CartViewModel(
                 _checkoutResult.value =
                     CheckoutResult(success = "chekout Ok" ?: " -- ")
 
-                println(" result s: ${result.isSuccess}")
+               /** println(" result s: ${result.isSuccess}")
                 println(" result f: ${result.isFailure}")
                 println(" result exceptionOrNull: ${result.exceptionOrNull()}")
-                println("  paymentMethods:: ${result.getOrThrow().name}")
+                println("  paymentMethods:: ${result.getOrThrow().name}")**/
             } else {
                 _checkoutResult.value = CheckoutResult(error = R.string.checkout_failed ?: 0)
             }
@@ -590,7 +590,7 @@ class CartViewModel(
                         result.getOrThrow()
                             ?.toString()// About this thread blocking annotation : https://github.com/square/retrofit/issues/3255
                 )
-                Log.d("Pretty Printed JSON :", prettyJson)
+                Log.d("Pretty Printed JSON Payment Test:", prettyJson)
                 _checkoutResult.value = CheckoutResult(result.getOrThrow().resultCode)
 
             } else {

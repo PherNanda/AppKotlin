@@ -149,6 +149,17 @@ class TramitarPedidoFragment : Fragment() {
             binding.creditCardNumber.text = String.format(resources.getString(R.string.card_mask), viewModelCart.authStore.getCard()!!.card.substring(12,maxLengthCard))
             binding.creditCardName.text = viewModelCart.authStore.getCard()!!.owner.toString()
         }
+        if (viewModelCart.authStore.getCard() == null){
+
+            binding.creditCardTitle.text = getString(R.string.card_number_message)
+            binding.creditCardNumber.visibility = View.GONE
+            binding.creditCardName.visibility = View.GONE
+
+            val params = (binding.creditCardTitle.layoutParams as ViewGroup.MarginLayoutParams)
+            params.setMargins(0, 90, 0, 20)
+            binding.creditCardTitle.layoutParams = params
+
+        }
         if( cardNumber != null ){
 
             binding.creditCardNumber.text = String.format(resources.getString(R.string.card_mask),cardNumber.substring(12,maxLengthCard))
@@ -211,8 +222,31 @@ class TramitarPedidoFragment : Fragment() {
             if (viewModelCart.authStore.getUser()?.surname != null){
                 binding.clientName.text = "${viewModelCart.authStore.getUser()?.name}, ${viewModelCart.authStore.getUser()?.surname}"
             }
-        }else{
+        }
+        if(!isLogued()){
             binding.clientName.text = getString(R.string.need_login)
+            val params = (binding.clientName.layoutParams as ViewGroup.MarginLayoutParams)
+            params.setMargins(0, 90, 0, 20)
+            binding.clientName.layoutParams = params
+        }
+
+        if(!isLogued()  && (addressUser?.addressNumber == null  || addressUserInfo?.addressNumber == null)){
+            binding.clientName.text = getString(R.string.need_login)
+            binding.addressShipping.visibility = View.GONE
+            binding.addressShippingComplement.visibility = View.GONE
+
+            val params = (binding.clientName.layoutParams as ViewGroup.MarginLayoutParams)
+            params.setMargins(0, 90, 0, 20)
+            binding.clientName.layoutParams = params
+        }
+
+        if(!isLogued()  && (addressUser?.addressNumber != null  || addressUserInfo?.addressNumber != null)){
+            binding.clientName.text = getString(R.string.need_login)
+            binding.addressShipping.visibility = View.VISIBLE
+            binding.addressShipping.text = addressUser?.addressNumber?:addressUserInfo?.addressNumber
+            binding.addressShippingComplement.text = "${addressUser?.postalCode}, ${addressUser?.city}, ${addressUser?.state} ,${addressUser?.region}, España"?:
+                    "${addressUserInfo?.postalCode}, ${addressUserInfo?.city}, ${addressUserInfo?.state} ,${addressUserInfo?.region}, España"
+
         }
 
         val bundleCategory: Bundle? = arguments
@@ -376,8 +410,8 @@ class TramitarPedidoFragment : Fragment() {
                             reference = viewModelCart.refOrder.value!!,
                             returnUrl = "miscota://paymentResult"
                         )
-                        //viewModelCart.fetchPaymentTest(paymentRequest)
-                        viewModelCart.fetchPaymentPro(paymentRequest)
+                        viewModelCart.fetchPaymentTest(paymentRequest)
+                        //viewModelCart.fetchPaymentPro(paymentRequest)
 
                         viewModelCart.checkoutResult.observe(requireActivity()) {
 
@@ -508,7 +542,7 @@ class TramitarPedidoFragment : Fragment() {
 
         val list = viewModelCart.items
         list.value?.map {
-            println(" it tramitar pedido $it ")
+            //println(" it tramitar pedido $it ")
         }
        for (item in list.value!!)
            println(" item tramitar pedido$item")
@@ -516,8 +550,8 @@ class TramitarPedidoFragment : Fragment() {
         val listTwo = viewModelCart.authStore.getCart()
         listTwo.map {
             it.currentTimeDelivered
-            println(" it.currentTimeDelivered ${it.currentTimeDelivered}")
-            println(" it.deliveredTypeOne ${it.deliveredTypeOne}")
+            //println(" it.currentTimeDelivered ${it.currentTimeDelivered}")
+            //println(" it.deliveredTypeOne ${it.deliveredTypeOne}")
         }
 
         listAdapter =
@@ -594,8 +628,8 @@ class TramitarPedidoFragment : Fragment() {
 
             val encryptedCard = Encryptor.INSTANCE.encryptFields(
                 rawCardData,
-                //PUBLIC_KEY
-                BuildConfig.PUBLIC_KEY_MIS
+                PUBLIC_KEY
+                //BuildConfig.PUBLIC_KEY_MIS
             )
 
             paymentMethod = PaymentMethod(
@@ -831,7 +865,6 @@ class TramitarPedidoFragment : Fragment() {
             binding.totalProductsCartSameDay.visibility = View.VISIBLE
             binding.typeOrderSameday.visibility = View.VISIBLE
             binding.imageSameday.visibility = View.VISIBLE
-            binding.goEditTypeOrder.isEnabled = true
 
         }
         if ( totalEcommerce > 0 ){
@@ -846,10 +879,20 @@ class TramitarPedidoFragment : Fragment() {
             binding.totalProductsCartSameDay.visibility = View.GONE
             binding.typeOrderSameday.visibility = View.GONE
             binding.imageSameday.visibility = View.GONE
-            binding.goEditTypeOrder.isEnabled = false
+
+            val params = (binding.typeOrderEcommerce.layoutParams as ViewGroup.MarginLayoutParams)
+            params.setMargins(0, 90, 0, 20)
+            binding.typeOrderEcommerce.layoutParams = params
+
+            val paramsTwo = (binding.totalProductsCartEcommerce.layoutParams as ViewGroup.MarginLayoutParams)
+            paramsTwo.setMargins(0, 90, 0, 20)
+            binding.totalProductsCartEcommerce.layoutParams = paramsTwo
+
         }
         if ( totalEcommerce == 0 ){
             binding.totalProductsCartEcommerce.text = String.format(resources.getString(R.string.total_products_exemple),"0")
+            binding.typeOrderEcommerce.visibility = View.GONE
+            binding.totalProductsCartEcommerce.visibility = View.GONE
         }
 
     }

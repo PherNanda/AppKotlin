@@ -7,7 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.miscota.android.MainActivity
 import com.miscota.android.R
 import com.miscota.android.databinding.PedidoFragmentBinding
@@ -15,7 +18,9 @@ import com.miscota.android.ui.cart.CartUiModel
 import com.miscota.android.ui.cart.CartViewModel
 import com.miscota.android.ui.cart.toCartItemUiModel
 import com.miscota.android.ui.cart.toCartUiModel
+import com.miscota.android.ui.paymentmethod.PaymentMethodFragment
 import com.miscota.android.ui.productdetail.CartProduct
+import com.miscota.android.ui.webview.WebViewFragment
 import com.miscota.android.util.Address
 import com.miscota.android.util.autoClean
 import org.koin.android.ext.android.bind
@@ -38,6 +43,8 @@ class Pedido : Fragment() {
 
     lateinit var recentAddressesUser: List<Address>
 
+    private lateinit var address: Address
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,9 +63,13 @@ class Pedido : Fragment() {
 
         loadRecentAddresses()
         loadAddressesUser()
+        loadAddress()
 
 
         binding.userNameThankYou.text = viewModelCart.authStore.getUser()?.name
+        binding.userTextInfoOrder.text = "${viewModelCart.authStore.getUser()?.name.toString()}${getString(R.string.order_user_message_two)}"
+
+        println(" viewModelCart.authStore.getUser()?.name ${viewModelCart.authStore.getUser()?.name}")
 
         binding.orderNumber.text = pedido
 
@@ -70,11 +81,61 @@ class Pedido : Fragment() {
             it.address
             binding.addressThankYou.text = it.addressNumber
             binding.addressComplementThankYou.text = "${it.postalCode}, ${it.city}, ${it.state}, ${it.countryName}"
+
+            println("recentAddresses it.address thankYou ${it.address}")
+        }
+
+        recentAddressesUser.map {
+            it.address
+            println("recentAddressesUser it.address thankYou ${it.address}")
+        }
+
+        if(address != null){
+            binding.addressThankYou.text = address.addressNumber
+            binding.addressComplementThankYou.text = "${address.postalCode}, ${address.city}, ${address.state}, ${address.countryName}"
+
+            println("address it.address thankYou ${address.address}")
         }
 
         val listCheckoutProducts = loadCheckout()
 
         binding.goToProductsHome.setOnClickListener {
+            listCheckoutProducts.map {
+                viewModelCart.removeItemRef(it.ref, it.type?: getString(R.string.type_ecommerce),requireContext())
+            }
+            startActivity(Intent(requireContext(), MainActivity::class.java))
+        }
+
+        binding.goToUserZoneImageButton.setOnClickListener {
+
+            //val navigationProfile = view?.findViewById<BottomNavigationItemView>(R.id.navigation_profile)
+
+            /**findNavController().navigate(
+                R.id.action_pedidoFragment_to_webViewFragmentProfile, bundleOf(
+                    WebViewFragment.KEY_STRING_WEB_VIEW_URL to it
+                )
+            )**/
+
+            //navigationProfile?.setOnClickListener {
+                //startActivity(Intent(requireContext(), MainActivity::class.java)) to navigationProfile
+                //navController.navigate(R.id.navigation_home)
+            //}
+
+
+            listCheckoutProducts.map {
+                viewModelCart.removeItemRef(it.ref, it.type?: getString(R.string.type_ecommerce),requireContext())
+            }
+            startActivity(Intent(requireContext(), MainActivity::class.java))
+        }
+        binding.goToUserZoneText.setOnClickListener {
+
+            //val navigationOrders = view?.findViewById<BottomNavigationItemView>(R.id.navigation_orders)
+
+            /**navigationOrders?.setOnClickListener {
+                startActivity(Intent(this, MainActivity::class.java))
+                //navController.navigate(R.id.navigation_home)
+            }**/
+
             listCheckoutProducts.map {
                 viewModelCart.removeItemRef(it.ref, it.type?: getString(R.string.type_ecommerce),requireContext())
             }
@@ -174,9 +235,14 @@ class Pedido : Fragment() {
             binding.totalProductsCartSameDay.text = String.format(resources.getString(R.string.total_products_exemple),"0")
             binding.dateOrderReceiveSameDay.visibility = View.GONE
             binding.orderInfoSameDay.visibility = View.GONE
+            binding.totalProductsCartSameDay.visibility = View.GONE
+            binding.typeOrderSameday.visibility = View.GONE
+            binding.imageSameday.visibility = View.GONE
         }
         if ( totalEcommerce == 0 ){
             binding.totalProductsCartEcommerce.text = String.format(resources.getString(R.string.total_products_exemple),"0")
+            binding.orderEcommerceTitle.visibility = View.GONE
+            binding.totalProductsCartEcommerce.visibility = View.GONE
         }
 
         val totalProducts = totalEcommerce.plus(totalSameDay)
@@ -191,6 +257,10 @@ class Pedido : Fragment() {
 
     fun loadAddressesUser() {
         recentAddressesUser = viewModelCart.authStore.getRecentAddressesInfo() ?: listOf()
+    }
+
+    fun loadAddress() {
+        address = viewModelCart.authStore.getAddress()?: Address("","",0.0,0.0,"","","","","","","","","")
     }
 
 }

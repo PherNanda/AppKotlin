@@ -59,8 +59,6 @@ class CategoryViewModel(
             fun updateList() {
 
                 val categories = _categories.value ?: listOf()
-
-                println(" categories::: ${categories.map { it }}")
                 val categoryItem = categoryListItem.copy(
                     categories = categories,
                 )
@@ -102,9 +100,6 @@ class CategoryViewModel(
                     products
                 })**/
 
-                //test //mergedList.addAll(if (categories.any { it.isChecked }) else CategoryUiModel.CategoryListItem.Category)
-
-
                 mergedList.addAll(
                     products
                 )
@@ -132,14 +127,9 @@ class CategoryViewModel(
     init {
 
         if (categoryId.id.isNullOrEmpty()) {
-
             categorys.map {
                 if (it.checked == "true")
                     categoryId = it
-
-               /** _categories.value = categorys.mapIndexed { index, categoryOne ->
-                    (CategoryUiModel.CategoryListItem.Category(categoryOne.id!!.toLong(), categoryOne.name!!, categoryOne.checked.toBoolean()))
-                }**/
             }
         }
 
@@ -173,7 +163,7 @@ class CategoryViewModel(
                 if (response.isEmpty()) {
                     return@launch
                 }
-                
+
                 val list = _products.value?.toMutableList() ?: mutableListOf()
                 list.addAll(response.map { it.toCategoryProductUiModel() })
 
@@ -271,12 +261,6 @@ class CategoryViewModel(
 
         val listTwo = loadProductsCategory(categoryUiModel)
 
-        for (category in categoryListItem.categories)
-
-        _categories.value?.map {
-
-        }
-
         val newList = _categories.value?.map {
 
             if (categoryUiModel.isChecked && it.uid == categoryUiModel.uid )
@@ -294,7 +278,7 @@ class CategoryViewModel(
     }
 
     private fun loadProductsCategory(categoryUiModel: CategoryUiModel.CategoryListItem.Category):  MutableLiveData<List<CategoryUiModel.Product>> {
-
+        categoryProductPageNumber = 0
             categorys.map {
 
                     categoryId = CategoryOne(categoryUiModel.uid.toString(),categoryUiModel.uid.toString(),categoryUiModel.title,categoryUiModel.isChecked.toString())
@@ -306,7 +290,7 @@ class CategoryViewModel(
                             categoryId = categoryId.id?.toInt()?:0,
                             page = categoryProductPageNumber,
                             limit = PAGE_LIMIT,
-                            retailID = autoStore.getRetailID()?:"5",
+                            retailID = autoStore.getRetailID()?:"0",
                             type = autoStore.getType()!!
                         )
 
@@ -344,7 +328,6 @@ class CategoryViewModel(
     }
 
     fun selectCategoryItem(categoryUiModel: CategoryUiModel.CategoryListItem) {
-
         for (category in categoryListItem.categories)
 
         _categoriesT.value?.map {
@@ -354,14 +337,13 @@ class CategoryViewModel(
                 _selectedCategories.add(categoryUiModel.categories[0])
 
                 return@map it
-
         }
         _categoriesT.value = list as List<CategoryUiModel.CategoryListItem>?
     }
 
 
     companion object {
-        const val PAGE_LIMIT = 6
+        const val PAGE_LIMIT = 10
     }
 
     fun setType(

@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.miscota.android.MainActivity
 import com.miscota.android.R
 import com.miscota.android.databinding.FragmentCategoryProductsBinding
-import com.miscota.android.ui.productdetail.OptionUiModel
 import com.miscota.android.ui.productdetail.ProductDetailFragment
 import com.miscota.android.ui.productdetail.toProductDetailUiModel
 import com.miscota.android.util.RecyclerViewLoadMoreListener
@@ -179,9 +178,7 @@ class CategoryProductsFragment : Fragment() {
                        }
                    }
                }
-
                 t.add(CategoryOne("",categoryOne.id,categoryOne.name,categoryOne.checked))
-
             }
 
         })

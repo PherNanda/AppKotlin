@@ -1,5 +1,7 @@
 package com.miscota.android.ui.tipodeenvio
 
+import android.R.attr.left
+import android.R.attr.right
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,20 +10,16 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.miscota.android.R
 import com.miscota.android.databinding.TipoEnvioFragmentBinding
-import com.miscota.android.ui.addcard.AddCardFragment
 import com.miscota.android.ui.cart.CartActivity
 import com.miscota.android.ui.cart.CartViewModel
-import com.miscota.android.ui.paymentmethod.PaymentMethodFragment
-import com.miscota.android.ui.productdetail.CartProduct
 import com.miscota.android.ui.tramitarpedido.TramitarPedidoFragment
-import com.miscota.android.ui.tramitarpedido.TramitarPedidoImageAdapter
 import com.miscota.android.util.CartItem
 import com.miscota.android.util.autoClean
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -77,11 +75,9 @@ class TipoEnvioFragment : Fragment() {
         binding.toolbar.cartHeader.text = getString(R.string.tipo_envio_header_text)
         //(requireActivity() as MainActivity).binding.imageBack.isVisible = true
 
-        //val spinner = findViewById(R.id.spinner) as Spinner
-
 
         val day = 1
-        var valores = arrayListOf<String>()
+        val valores = arrayListOf<String>()
         val startDay = Calendar.getInstance()
         startDay.add(Calendar.DATE, day)
 
@@ -207,6 +203,19 @@ class TipoEnvioFragment : Fragment() {
 
 
         val listTwo = viewModelCart.authStore.getCart()
+
+
+        for (cartItem in listTwo) {
+            if (cartItem.type == getString(R.string.type_sameday)){
+                binding.selectReceiveSameday.visibility = View.VISIBLE
+            }
+        }
+
+        if (binding.selectReceiveSameday.visibility == View.GONE){
+            val params = (binding.titleTypeOrder.layoutParams as ViewGroup.MarginLayoutParams)
+            params.setMargins(0, 150, 0, 0)
+            binding.titleTypeOrder.layoutParams = params
+        }
 
 
         listAdapter =
