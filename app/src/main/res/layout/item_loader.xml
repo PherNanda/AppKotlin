@@ -31,8 +31,7 @@
     <!--android:progressDrawable="@drawable/ic_gos_tres"-->
     <!--android:indeterminateDrawable="@drawable/ic_gos_tres"-->
     <!--android:background="@drawable/ic_gos_tres"
-       style="?android:attr/progressBarStyleLarge"
-       android:indeterminateDrawable="@drawable/ic_pet"-->
+       style="?android:attr/progressBarStyleLarge"-->
     <TextView
         android:id="@+id/loadingText"
         android:layout_width="wrap_content"
