@@ -26,6 +26,8 @@ class SignupViewModel(
     private val _signupResult = MutableLiveData<SignUpResult>()
     val signUpResult: LiveData<SignUpResult> = _signupResult
 
+    var showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+
     fun signUp(
         username: String,
         email: String,
@@ -36,6 +38,7 @@ class SignupViewModel(
     ) {
         if (!terms) {
             _signupForm.value = SignupFormState(termsAcceptedError = R.string.sign_up_error)
+            showLoading.value = false
             return
         } else {
             _signupForm.value = SignupFormState(isDataValid = true)
@@ -62,6 +65,7 @@ class SignupViewModel(
             }
             else {
                 _signupResult.value = SignUpResult(error = R.string.sign_up_error)
+
             }
         }
     }

@@ -2,12 +2,15 @@ package com.miscota.android.ui.tramitarpedido
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
 import android.widget.Toast
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -22,6 +25,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.miscota.android.BuildConfig
 import com.miscota.android.R
 import com.miscota.android.address.AddressActivity
+import com.miscota.android.auth.AuthActivity
 import com.miscota.android.databinding.TramitarPedidoFragmentBinding
 import com.miscota.android.events.EventsInfo
 import com.miscota.android.ui.addresscurrent.AddressCurrentFragment
@@ -91,12 +95,10 @@ class TramitarPedidoFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-
         loadRecentAddresses()
         loadAddressesUser()
         loadAddressUser()
         loadAddressInfo()
-
         loadCartToItem()
 
 
@@ -126,9 +128,10 @@ class TramitarPedidoFragment : Fragment() {
         //val currentTime: String? = currentTimeBundle?.getString(getString(R.string.date_shipping_sameday))
 
         if( cardNumber != null && cardMonth != null && cardYear !=  null && cardSecurity != null && cardNumber.isNotEmpty()) {
-            paymentMethod = encrypt(cardNumber, cardMonth.split("/").first(), cardYear.split("/").get(1), cardSecurity, cardOwner?:"OwnerNameDefault")
+            paymentMethod = encrypt(cardNumber, cardMonth.split("/").first(),
+                cardYear.split("/")[1], cardSecurity, cardOwner?:"OwnerNameDefault")
 
-            val card = CardN(card=cardNumber, security= cardSecurity,expireYear=cardYear.split("/").get(1), expireMonth=cardMonth.split("/").first(), owner=cardOwner)
+            val card = CardN(card=cardNumber, security= cardSecurity,expireYear= cardYear.split("/")[1], expireMonth=cardMonth.split("/").first(), owner=cardOwner)
             viewModelCart.authStore.setCard(card)
 
         }
@@ -266,13 +269,44 @@ class TramitarPedidoFragment : Fragment() {
 
         binding.productTotalCart.text = "( ${viewModelCart.getTotalItens()} )"
 
+        DrawableCompat.setTint(
+            binding.loading.indeterminateDrawable,
+            Color.parseColor("#4FC3F7")
+        )
 
+        viewModelCart.showLoading.observe(requireActivity()) {
+            if (!viewModelCart.showLoading.value!!) {
+                binding.loadingText.visibility = View.GONE
+                binding.loadingLayout.visibility = View.GONE
+                binding.loading.visibility = View.GONE
+
+                binding.orderSummaryCard.visibility = View.VISIBLE
+                binding.productsListCard.visibility = View.VISIBLE
+                binding.typeOrderCard.visibility = View.VISIBLE
+                binding.addressOrderCard.visibility = View.VISIBLE
+                binding.paymentMethodCard.visibility = View.VISIBLE
+
+            }
+            if (viewModelCart.showLoading.value!!) {
+                binding.loadingText.text = getString(R.string.loading_buy)
+                binding.loadingText.visibility = View.VISIBLE
+                binding.loadingLayout.visibility = View.VISIBLE
+                binding.loading.visibility = View.VISIBLE
+
+                binding.orderSummaryCard.visibility = View.INVISIBLE
+                binding.productsListCard.visibility = View.INVISIBLE
+                binding.typeOrderCard.visibility = View.INVISIBLE
+                binding.addressOrderCard.visibility = View.INVISIBLE
+                binding.paymentMethodCard.visibility = View.INVISIBLE
+
+            }
+        }
 
         binding.buyNowButtonCard.setOnClickListener {
-
+            viewModelCart.showLoading.value = true
             val cartItems: LiveData<List<CartUiModel>> = viewModelCart.items
             cartItems.observe(requireActivity()) {
-                println("\n viewModelTramitar.items $it \n")
+
             }
 
             listAdapter.hasObservers()
@@ -289,7 +323,7 @@ class TramitarPedidoFragment : Fragment() {
                 if (it.product.stockItens == 0) {
                     Toast.makeText(
                         requireContext(),
-                        "De este producto tramitar: \n ${it.product.title} ${it.productId}no tenemos stock \n Lo sentimos mucho",
+                        "De este producto: \n ${it.product.title} ${it.productId}no tenemos stock \n Lo sentimos mucho",
                         Toast.LENGTH_SHORT
                     ).show()
 
@@ -297,7 +331,7 @@ class TramitarPedidoFragment : Fragment() {
                 if (it.stock == 0) {
                     Toast.makeText(
                         requireContext(),
-                        "De este producto tramitar: \n ${it.product.title} ${it.productId}no tenemos stock \n Lo sentimos mucho",
+                        "De este producto: \n ${it.product.title} ${it.productId}no tenemos stock \n Lo sentimos mucho",
                         Toast.LENGTH_SHORT
                     ).show()
                     viewModelCart.removeItemRef(it.combinationReference, it.type?:getString(R.string.type_ecommerce),requireContext())
@@ -460,7 +494,7 @@ class TramitarPedidoFragment : Fragment() {
                                 //fragment.arguments = bundleEcommerce
                                 ft.commit()**/
                                 Toast.makeText(requireContext(),
-                                    "No se ha podido realizar el pedido, por favor compruebe que no falten datos por completar ",
+                                    "No se ha podido realizar el pedido, por favor complete los datos que faltan",
                                     Toast.LENGTH_LONG).show()
                             }
 
@@ -707,8 +741,10 @@ class TramitarPedidoFragment : Fragment() {
         }
         else if(!isLoggedIn() && viewModelCart.authStore.getUser() == null){
 
-            Toast.makeText(requireContext(), "Faltan datos de usuario para completar tu compra",
+            Toast.makeText(requireContext(), getString(R.string.login_off_message),
                 Toast.LENGTH_LONG).show()
+            viewModelCart.showLoading.value = false
+            //startActivity(Intent(requireActivity(), AuthActivity::class.java))
             checkoutUser = false
         }
         else if (cardNumber != null){
@@ -717,8 +753,9 @@ class TramitarPedidoFragment : Fragment() {
                 checkoutCard = true
             }else{
 
-                Toast.makeText(requireContext(), "Faltan datos de pago para completar tu compra",
+                Toast.makeText(requireContext(), getString(R.string.payment_off_message),
                     Toast.LENGTH_LONG).show()
+                viewModelCart.showLoading.value = false
                 checkoutCard = false
 
             }
@@ -749,7 +786,7 @@ class TramitarPedidoFragment : Fragment() {
         val list: MutableList<CartUiModel.ItemListCheckout> = mutableListOf()
         viewModelCart.authStore.getCart().map {
             it.toCartItemUiModel()
-            println(" it items checkout: $it")
+
             list.add(
                 CartUiModel.ItemListCheckout(
                     qty = it.qty.toString(),
@@ -758,11 +795,6 @@ class TramitarPedidoFragment : Fragment() {
                     ref = it.combinationReference,
                 )
             )
-
-            //firebase analytics Event viewCart
-            //val itemCart = viewModel.eventsManager.viewItemCart(it)
-            //viewModel.eventsManager.viewCart(it, itemCart)
-            //endfirebase analytics
 
             listMoreInfo.add(
                 CartUiModel.MoreInfoCheckout(
@@ -822,11 +854,6 @@ class TramitarPedidoFragment : Fragment() {
         var totalEcommerce = 0
         var currentDelivered: String? = null
         val cartItems = viewModelCart.authStore.getCart().map {
-            println("imagen ${it.toCartUiModel().image}")
-            println("type ${it.toCartUiModel().type}")
-            println("quantity ${it.toCartUiModel().quantity}")
-            println("productName ${it.toCartUiModel().productName}")
-            println("samedayDelivery ${it.toCartUiModel().samedayDelivery}")
 
             it.toCartItemUiModel()
 

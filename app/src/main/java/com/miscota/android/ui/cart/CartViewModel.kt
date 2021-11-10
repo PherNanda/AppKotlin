@@ -53,6 +53,8 @@ class CartViewModel(
     private var _payment: MutableLiveData<PaymentMethod> = MutableLiveData()
     val payment: LiveData<PaymentMethod> = _payment
 
+    var showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+
 
     init {
         _types.value?.add("")

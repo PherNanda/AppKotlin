@@ -49,6 +49,8 @@
     <string name="create_account">Crear cuenta</string>
     <string name="create_account_new_app">¿No tienes cuenta? Crea tu cuenta aquí</string>
     <string name="loading">Cargando...</string>
+    <string name="loading_sign_up">Creando cuenta...</string>
+    <string name="loading_buy">Procesando tu compra...</string>
     <string name="signing">Iniciando sesión...</string>
     <string name="remember_password">Recordar contraseña</string>
     <string name="full_name">Nombre completo</string>
@@ -225,6 +227,8 @@
     <string name="pay_pal_title">Paypal</string>
     <string name="card_mask">**** **** **** %1$s</string>
     <string name="text_need_hour_receive_sd"> >Seleccione la fecha para Entrega hoy</string>
+    <string name="login_off_message">Faltan datos de usuario para completar tu compra, por favor haga login</string>
+    <string name="payment_off_message">Faltan datos de pago para completar tu compra</string>
 
     <!--tipo envío-->
     <string name="accept_button">Aceptar</string>

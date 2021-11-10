@@ -40,15 +40,17 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
         viewModel.showLoading.observe(this) {
             if (!viewModel.showLoading.value!!) {
+                binding.loadingText.visibility = View.GONE
                 binding.loadingLayout.visibility = View.GONE
                 binding.loading.visibility = View.GONE
-                binding.loadingText.visibility = View.GONE
+
 
             }
             if (viewModel.showLoading.value!!) {
+                binding.loadingText.visibility = View.VISIBLE
                 binding.loadingLayout.visibility = View.VISIBLE
                 binding.loading.visibility = View.VISIBLE
-                binding.loadingText.visibility = View.VISIBLE
+
 
             }
         }
@@ -83,6 +85,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
             defaultState()
             if (result.error != null) {
                 Toast.makeText(this, result.error, Toast.LENGTH_SHORT).show()
+                viewModel.showLoading.value = false
             }
             if (result.success != null) {
                     Toast.makeText(this, getString(R.string.restore_password_email_sent), Toast.LENGTH_SHORT).show()

@@ -2,6 +2,7 @@ package com.miscota.android.auth.signup
 
 
 import android.app.Activity
+import android.graphics.Color
 import android.graphics.Typeface
 import android.location.Geocoder
 import android.os.Bundle
@@ -15,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -102,6 +104,27 @@ class SignupFragment : Fragment() {
             fragmentTransaction.commit()
         }
 
+        DrawableCompat.setTint(
+            binding.loading.indeterminateDrawable,
+            Color.parseColor("#4FC3F7")
+        )
+
+        signupViewModel.showLoading.observe(requireActivity()) {
+            if (!signupViewModel.showLoading.value!!) {
+                binding.loadingText.visibility = View.GONE
+                binding.loadingLayout.visibility = View.GONE
+                binding.loading.visibility = View.GONE
+
+            }
+            if (signupViewModel.showLoading.value!!) {
+                binding.loadingText.text = getString(R.string.loading_sign_up)
+                binding.loadingText.visibility = View.VISIBLE
+                binding.loadingLayout.visibility = View.VISIBLE
+                binding.loading.visibility = View.VISIBLE
+
+            }
+        }
+
         with(binding) {
             signupViewModel.signupFormState.observe(viewLifecycleOwner) {
 
@@ -148,6 +171,7 @@ class SignupFragment : Fragment() {
                 defaultState()
                 if (signupResult.error != null) {
                     showSignUpFailed(signupResult.error)
+                    signupViewModel.showLoading.value = false
                 }
                 if (signupResult.success != null) {
                     updateUiWithUser(signupResult.success)
@@ -211,6 +235,7 @@ class SignupFragment : Fragment() {
 
             signUpButton.setOnClickListener {
                 loadingState()
+                signupViewModel.showLoading.value = true
                 signupViewModel.signUp(
                     username = username.text.toString(),
                     password = password.text.toString(),
