@@ -21,6 +21,8 @@ class LoginViewModel(private val authRepository: AuthRepository, private val aut
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
+    var showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+
     fun login(username: String, password: String) {
 
         try{
@@ -48,12 +50,38 @@ class LoginViewModel(private val authRepository: AuthRepository, private val aut
                         authStore.setUser(user)
                         authStore.setAutoLoginParam(result.getOrThrow().autologin_param)
                         authStore.setAutoLoginParamExpire(result.getOrThrow().autologin_param_expire)
+                        //authStore.setAutoLoginParamExpire("2021-11-11 11:15:59")
 
                         var address: List<LoginResponse.Address>? =
                             result.getOrThrow().address ?: return@launch
 
                         if (address != null && address.size > 0) {
                             authStore.setAddressInfo(address.get(0).address?.let {
+                                address[0].region?.let { it1 ->
+                                    address.get(0).postcode?.let { it2 ->
+                                        address[0].city?.let { it3 ->
+                                            Address(
+                                                address = it,
+                                                lat = 0.0,
+                                                lng = 0.0,
+                                                state = it1,
+                                                postalCode = it2,
+                                                city = it3,
+                                                region = address[0].region,
+                                                phone = address[0].phone,
+                                                countryId = address[0].countryId,
+                                                countryCode = address[0].countryCode,
+                                                countrylang = address[0].countrylang,
+                                                countryName = address[0].countryName,
+                                                addressNumber = it
+                                            )
+                                        }
+                                    }
+                                }
+
+                            })
+
+                            authStore.setAddress(address.get(0).address?.let {
                                 address[0].region?.let { it1 ->
                                     address.get(0).postcode?.let { it2 ->
                                         address[0].city?.let { it3 ->

@@ -25,7 +25,8 @@ class MainActivityViewModel(
     private val storeLocationRepository: StoreLocationRepository
 ) : ViewModel() {
 
-    private val _openLoginActivityEvent: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    private val _openLoginActivityEvent: MutableLiveData<Event<Boolean>> = MutableLiveData(Event(false))
+    //private val _openLoginActivityEvent: MutableLiveData<Event<Boolean>> = MutableLiveData()
     val openLoginActivityEvent: LiveData<Event<Boolean>> = _openLoginActivityEvent
 
     private val _checkoutResult = MutableLiveData<CheckoutResult>()
@@ -49,6 +50,10 @@ class MainActivityViewModel(
 
     val isSameDayEnabled = MutableLiveData<Boolean>()
 
+    private var _isAuthShow = MutableLiveData(0)
+    val isAuthShow: LiveData<Int> = _isAuthShow
+
+
     fun loadSelectedLocation() {
         _selectedLocation.value = authStore.getAddress() ?: return
         println(" authStore.getAddressInfo() MainActivityViewModel ${authStore.getAddressInfo()}")
@@ -60,6 +65,8 @@ class MainActivityViewModel(
 
 
     init {
+        println("isAuthShow.value::: MainActivityViewModel:: init  ${isAuthShow.value}")
+        println("_isAuthShow.value::: MainActivityViewModel:: init  ${_isAuthShow.value}")
         val currentDate = Date()
         val dateExpire = getDateLoginExpire()
         loadSelectedLocation()
@@ -67,16 +74,15 @@ class MainActivityViewModel(
 
         comproveLoginExpireDate(currentDate, dateExpire)
 
-        if (!authStore.isLoggedIn()) {
+        if (!authStore.isLoggedIn() && isAuthShow.value == 0) {
             _openLoginActivityEvent.value = Event(true)
-
+            println(" screen _openLoginActivityEvent.value::: MainActivityViewModel ${openLoginActivityEvent.value}")
+            println("isAuthShow.value::: in if MainActivityViewModel:: init  ${isAuthShow.value}")
+            println("_isAuthShow.value::: in if MainActivityViewModel:: init  ${_isAuthShow.value}")
+            _isAuthShow.value = 1
         }
 
         _loguedIn.value = authStore.isLoggedIn()
-
-        //authStore.getCarriersSd()
-        //authStore.getCarriersEco()
-        //authStore.getCarriers()
 
     }
 
@@ -84,7 +90,6 @@ class MainActivityViewModel(
     fun getTotalItens(): Int{
         return authStore.getTotalCartItens()
     }
-
 
     fun loadCheckout(): MutableList<CartUiModel.ItemListCheckout>{
 
@@ -117,9 +122,6 @@ class MainActivityViewModel(
         return list
     }
 
-
-
-
     fun getDateLoginExpire(): Date {
         var expireLoginDate: Date? = Date()
 
@@ -128,6 +130,7 @@ class MainActivityViewModel(
         if( !authStore.getAutoLoginParamExpire().isNullOrEmpty() )
         {
             val dateLoginExpire = SimpleDateFormat("yyyy-MM-DD hh:mm:ss").parse(authStore.getAutoLoginParamExpire()!!)
+            //val dateLoginExpire = SimpleDateFormat("yyyy-MM-DD hh:mm:ss").parse("2021-11-11 11:15:59")
 
             expireLoginDate = dateLoginExpire
         }
@@ -232,6 +235,19 @@ class MainActivityViewModel(
         }
 
         isSameDayEnabled.value = false
+    }
+
+    fun setShowAuth(authShow: String?){
+        authStore.setShowAuth(authShow?:null)
+        println("isAuthShow.value::: MainActivityViewModel:: setShowAuth()  ${isAuthShow.value}")
+        println("_isAuthShow.value::: MainActivityViewModel:: setShowAuth()  ${_isAuthShow.value}")
+    }
+
+    fun getShowAuth(): Boolean{
+        return authStore.getShowAuth()
+        println("isAuthShow authStore.getShowAuth()::: ${authStore.getShowAuth()}")
+        println("isAuthShow.value::: MainActivityViewModel:: getShowAuth()  ${isAuthShow.value}")
+        println("_isAuthShow.value::: MainActivityViewModel:: getShowAuth()  ${_isAuthShow.value}")
     }
 
 

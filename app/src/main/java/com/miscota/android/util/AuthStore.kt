@@ -5,9 +5,7 @@ import android.content.SharedPreferences
 import com.miscota.android.api.auth.response.LoginResponse
 import com.miscota.android.ui.productdetail.CartProduct
 import com.miscota.android.ui.productdetail.OptionUiModel
-import com.miscota.android.ui.store.Store
 import com.squareup.moshi.*
-import java.lang.Error
 import java.lang.reflect.Type
 import java.util.*
 
@@ -132,6 +130,11 @@ interface AuthStore {
     fun getRetailID():String?
 
     fun setRetailID(retailID: String?)
+
+    fun setShowAuth(showAuth: String?)
+
+    fun getShowAuth():Boolean
+
 }
 
 class DefaultAuthStore constructor(context: Context) : AuthStore {
@@ -719,6 +722,26 @@ class DefaultAuthStore constructor(context: Context) : AuthStore {
         }
     }
 
+
+    override fun setShowAuth(showAuth: String?){
+        with(sharedPreferences.edit()) {
+            putString(KEY_AUTH_SHOW_IN, showAuth)
+
+            if (showAuth == null) {
+                putBoolean(KEY_BOOLEAN_AUTH_SHOW_IN, false)
+            } else {
+                putBoolean(KEY_BOOLEAN_AUTH_SHOW_IN, true)
+            }
+            apply()
+        }
+
+
+    }
+
+    override fun getShowAuth(): Boolean {
+        return sharedPreferences.getBoolean(KEY_BOOLEAN_AUTH_SHOW_IN, false)
+    }
+
     companion object {
         private const val KEY_USER_MODEL = "user"
         private const val KEY_BOOLEAN_LOGGED_IN = "loggedIn"
@@ -745,6 +768,8 @@ class DefaultAuthStore constructor(context: Context) : AuthStore {
         private const val KEY_LIST_ADDRESS_USER_MODEL = "user_addresses"
         private const val KEY_CARD_MODEL = "card_user"
         private const val KEY_CARD = "card_in"
+        private const val KEY_BOOLEAN_AUTH_SHOW_IN = "authShow"
+        private const val KEY_AUTH_SHOW_IN = "authShowIn"
     }
 }
 

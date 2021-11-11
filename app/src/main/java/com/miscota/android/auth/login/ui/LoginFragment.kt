@@ -3,6 +3,7 @@ package com.miscota.android.auth.login.ui
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spannable
@@ -18,6 +19,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat.getColor
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import com.facebook.*
 import com.facebook.login.LoginManager
@@ -99,6 +101,31 @@ class LoginFragment : Fragment() {
         firebaseAnalytics = Firebase.analytics
         recordScreenViewLogin()
 
+
+        DrawableCompat.setTint(
+            binding.loading.indeterminateDrawable,
+            Color.parseColor("#4FC3F7")
+        )
+
+        loginViewModel.showLoading.observe(requireActivity()) {
+            if (!loginViewModel.showLoading.value!!) {
+                binding.loadingText.visibility = View.GONE
+                binding.loadingLayout.visibility = View.GONE
+                binding.loading.visibility = View.GONE
+
+                binding.loginButton.visibility = View.VISIBLE
+
+            }
+            if (loginViewModel.showLoading.value!!) {
+                binding.loadingText.visibility = View.VISIBLE
+                binding.loadingText.text = getString(R.string.signing)
+                binding.loadingLayout.visibility = View.VISIBLE
+                binding.loading.visibility = View.VISIBLE
+
+                binding.loginButton.visibility = View.GONE
+            }
+        }
+
         with(binding) {
             loginViewModel.loginFormState.observe(viewLifecycleOwner) {
                 val loginState = it ?: return@observe
@@ -126,6 +153,7 @@ class LoginFragment : Fragment() {
                 defaultState()
                 if (loginResult.error != null) {
                     showLoginFailed(loginResult.error)
+                    loginViewModel.showLoading.value = false
                 }
                 if (loginResult.success != null) {
                    updateUiWithUser(loginResult.success)
@@ -162,6 +190,7 @@ class LoginFragment : Fragment() {
                     if ( username.text?.isNotEmpty() == true && password.text?.isNotEmpty() == true ) {
                         loadingState()
                         loginViewModel.login(username.text.toString(), password.text.toString())
+                        loginViewModel.showLoading.value = true
                     }
                     else{
                         Toast.makeText(requireContext(),getString(R.string.invalid_pass_user),Toast.LENGTH_LONG).show()

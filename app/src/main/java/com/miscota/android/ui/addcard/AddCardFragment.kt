@@ -55,6 +55,13 @@ class AddCardFragment : Fragment() {
         binding.cardNumberInput.requestFocus()
         //showKeyboard(binding.cardNumberInput)
 
+
+        /**val inputCardNumber = binding.cardNumberInput.text
+        val inputDateCardNumber = binding.expirationCardInput.text
+        val inputOwnerName = binding.cardUserInput.text
+        val inputSecurity = binding.securityCardInput.text**/
+
+
         val inputCardNumber = binding.cardNumberInput.text
         val inputDateCardNumber = binding.expirationCardInput.text
         val inputOwnerName = binding.cardUserInput.text

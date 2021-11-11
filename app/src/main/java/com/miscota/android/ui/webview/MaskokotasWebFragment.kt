@@ -63,17 +63,23 @@ class MaskokotasWebFragment : Fragment() {
         if (navController.currentDestination?.id == R.id.navigation_orders) {
 
             if (!viewModel.isLoggedIn()) {
+                println("no logueado webview orders")
                 startActivity(Intent(requireContext(), AuthActivity::class.java))
             }else {
+                println("si logueado webview orders")
                 destinationUrl = viewModel.getOrdersURL()
+                viewModel.setShowAuth("1")
             }
 
         } else if (navController.currentDestination?.id == R.id.navigation_profile) {
 
             if (!viewModel.isLoggedIn()) {
+                println("no logueado webview profile")
                 startActivity(Intent(requireContext(), AuthActivity::class.java))
             }else {
+                println("si logueado webview profile")
                 destinationUrl = viewModel.getProfileURL()
+                viewModel.setShowAuth("1")
             }
             
         }
@@ -98,7 +104,7 @@ class MaskokotasWebFragment : Fragment() {
         super.onStart()
 
         if(viewModel.isLoggedIn()) {
-
+            println("si logueado on start webview")
             (requireActivity() as MainActivity).binding.samedayInfoMain.visibility = View.GONE
             (requireActivity() as MainActivity).binding.locationLinearLayoutmain.visibility =
                 View.GONE
@@ -109,8 +115,9 @@ class MaskokotasWebFragment : Fragment() {
             (requireActivity() as MainActivity).binding.headerMain.layoutParams = params
         }
         if(!viewModel.isLoggedIn()) {
-
+            println("no logueado on start webview")
             startActivity(Intent(requireContext(), MainActivity::class.java))
+            //viewModel.setShowAuth("1")
         }
 
     }

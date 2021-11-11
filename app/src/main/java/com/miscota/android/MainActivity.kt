@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
@@ -45,7 +46,24 @@ class MainActivity : AppCompatActivity() {
     private val listener =
         NavController.OnDestinationChangedListener { controller, destination, arguments ->
             if (destination.id == R.id.navigation_orders) {
-                print(destination)
+                print("destination orders $destination")
+
+                if (!viewModel.loguedIn.value!!) {
+
+                    viewModel.setShowAuth(null)
+                }
+                if (viewModel.loguedIn.value!!) {
+                    viewModel.setShowAuth("1")
+                }
+            }
+            if (destination.id == R.id.navigation_profile) {
+                print("destination profile $destination")
+                if (!viewModel.loguedIn.value!!) {
+                    viewModel.setShowAuth(null)
+                }
+                if (viewModel.loguedIn.value!!) {
+                    viewModel.setShowAuth("1")
+                }
             }
 
             if (destination.id == R.id.mainCategoriesFragment) {
@@ -62,6 +80,8 @@ class MainActivity : AppCompatActivity() {
 
             }
             if (destination.id == R.id.navigation_home) {
+                print("destination home $destination")
+                //viewModel.setShowAuth("1")
 
                 //controller.navigate(R.id.navigation_home)
 
@@ -320,10 +340,15 @@ class MainActivity : AppCompatActivity() {
         binding.logoImage.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
-
+        val navigationProfile = findViewById<BottomNavigationItemView>(R.id.navigation_profile)
         viewModel.openLoginActivityEvent.observe(this) {
             it.consume()?.let {
-                goToLogin()
+
+                if(!viewModel.getShowAuth()) {
+                    println("isAuthShow it main $it")
+                    goToLogin()
+                }
+                println("isAuthShow it viewModel.getShowAuth() ${viewModel.getShowAuth()}")
             }
         }
 
@@ -339,6 +364,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.costSd.value
             return@observe
         }
+
     }
 
     private fun expandCloseSheet() {
@@ -371,8 +397,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
     private fun goToLogin() {
-        startActivity(Intent(this, AuthActivity::class.java))
+         startActivity(Intent(this, AuthActivity::class.java))
+         viewModel.setShowAuth("1")
     }
 
     override fun onStart() {

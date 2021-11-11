@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.GridView
 import android.widget.Toast
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -22,6 +21,7 @@ import com.adyen.checkout.card.data.ExpiryDate
 import com.adyen.checkout.cse.Card
 import com.adyen.checkout.cse.Encryptor
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.miscota.android.BuildConfig
 import com.miscota.android.R
 import com.miscota.android.address.AddressActivity
@@ -100,7 +100,10 @@ class TramitarPedidoFragment : Fragment() {
         loadAddressUser()
         loadAddressInfo()
         loadCartToItem()
-
+        //START TO TEST - CARD TEST
+        val card = CardN(card="4988438843884305", security= "737",expireYear= "03/30".split("/")[1], expireMonth="03/30".split("/").first(), owner="Persona")
+        viewModelCart.authStore.setCard(card)
+        //END TO TEST
 
         val bundlePayment: Bundle? = arguments
         val currentTimeBundle: Bundle? = arguments
@@ -372,8 +375,8 @@ class TramitarPedidoFragment : Fragment() {
             if (checkoutInit){
                 //firebase analytics begin checkout
                 listCheckoutProducts.map {
-                    //val item = viewModelCart.eventsManager.itemCheckout(it)
-                    //viewModelCart.eventsManager.beginCheckout(item, getTotalPriceAnalytics())
+                    val item = viewModelCart.eventsManager.itemCheckout(it)
+                    viewModelCart.eventsManager.beginCheckout(item, getTotalPriceAnalytics())
                 }
 
                 //test
@@ -413,9 +416,9 @@ class TramitarPedidoFragment : Fragment() {
 
                costdelivered = viewModelCart.authStore.getCarriersEco()?.toDouble() ?: 0.0.plus(viewModelCart.authStore.getCarriersSd()?.toDouble()?:0.0)
 
-                println("just before checkout currentTime ${currentTime.split("(").firstOrNull()}")
+                //println("just before checkout currentTime ${currentTime.split("(").firstOrNull()}")
 
-                println("just before checkout deliveryType $deliveryType")
+                //println("just before checkout deliveryType $deliveryType")
 
                 currentTime.split("(").firstOrNull()?.let { it1 ->
                     viewModelCart.checkout(userType, listCheckoutProducts, costdelivered,
@@ -463,19 +466,19 @@ class TramitarPedidoFragment : Fragment() {
                                 val eventsInfo: EventsInfo
                                         = EventsInfo( screenName = screenName,
                                     methodName = "fetchPaymentPro",
-                                    screenClass = "CartActivity")
+                                    screenClass = "TramitarPedidoFragment")
 
                                 //cartItem: CartItem, order: String, item: Bundle, cartShip: Double, total: Double, eventsInfo: EventsInfo
                                 //viewModel.eventsManager.purchase(arrayOf(list),)
 
                                 /**firebaseAnalytics.logEvent(FirebaseAnalytics.Event.PURCHASE) {
                                     param(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
-                                    param(FirebaseAnalytics.Param.SCREEN_CLASS, "CartActivity")
-                                    param(FirebaseAnalytics.Param.TRANSACTION_ID, viewModel.refOrder.value!!)
-                                    param(FirebaseAnalytics.Param.AFFILIATION, "Miscota App Android")
+                                    param(FirebaseAnalytics.Param.SCREEN_CLASS, "TramitarPedidoFragment")
+                                    param(FirebaseAnalytics.Param.TRANSACTION_ID, viewModelCart.refOrder.value!!)
+                                    param(FirebaseAnalytics.Param.AFFILIATION, "Miscota App Android 2.0")
                                     param(FirebaseAnalytics.Param.VALUE,getTotalPriceAnalytics())
                                     param(FirebaseAnalytics.Param.CURRENCY, "EUR")
-                                    param(FirebaseAnalytics.Param.METHOD, "fetchPaymentPro")
+                                    param(FirebaseAnalytics.Param.METHOD, "fetchPaymentTest")
                                 }**/
 
                                 //vaciar carrito
@@ -629,6 +632,16 @@ class TramitarPedidoFragment : Fragment() {
         return priceToAdyen
     }
 
+    //total price to firebase analytics purchase
+    private fun getTotalPriceAnalytics(): Double{
+        val price = binding.totalPrice.text.toString().split(" ").toTypedArray()
+        var allPrice = price[0].replace(".","")
+        allPrice = price[0].replace(",","")
+        val priceAnalytics = price[0].replace(",",".")
+
+        return priceAnalytics.toDouble()
+    }
+
     private fun encrypt(
         cardNumber: String,
         expireDate: String,
@@ -744,7 +757,7 @@ class TramitarPedidoFragment : Fragment() {
             Toast.makeText(requireContext(), getString(R.string.login_off_message),
                 Toast.LENGTH_LONG).show()
             viewModelCart.showLoading.value = false
-            //startActivity(Intent(requireActivity(), AuthActivity::class.java))
+            startActivity(Intent(requireActivity(), AuthActivity::class.java))
             checkoutUser = false
         }
         else if (cardNumber != null){
@@ -882,8 +895,8 @@ class TramitarPedidoFragment : Fragment() {
             getString(R.string.total_sameday),
             totalSameDay.toString()
         )
-        println("totalSameDay::: $totalSameDay")
-        println("totalEcommerce:::: $totalEcommerce")
+        //println("totalSameDay::: $totalSameDay")
+        //println("totalEcommerce:::: $totalEcommerce")
 
         if ( totalSameDay > 0 ){
             binding.totalProductsCartSameDay.text = String.format(resources.getString(R.string.total_products_exemple),totalSameDay)

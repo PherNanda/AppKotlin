@@ -34,6 +34,13 @@ class MaskokotasWebViewModel(private val authStore: AuthStore) :
     fun isLoggedIn(): Boolean {
         return authStore.isLoggedIn()
     }
+    fun setShowAuth(authShow: String?){
+        authStore.setShowAuth(authShow?:null)
 
+    }
+
+    fun getShowAuth(): Boolean{
+        return authStore.getShowAuth()
+    }
 
 }
