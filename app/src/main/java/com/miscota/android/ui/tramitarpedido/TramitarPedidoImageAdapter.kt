@@ -43,6 +43,12 @@ class TramitarPedidoImageAdapter (private val context: Context,
         with(holder){
             with(itensCart[position]){
 
+                if (this.toCartItemUiModel()!=null){
+                    if(this.product.typeProduct == "sameday"){
+                        binding.cardProductImageItem.strokeColor = Color.parseColor("#FFDE70")
+                    }
+                }
+
             binding.productImage.load(itensCart[position].product.image){
                 error(R.color.placeholder)
                 placeholder(R.color.placeholder)
@@ -50,9 +56,7 @@ class TramitarPedidoImageAdapter (private val context: Context,
             binding.qtyProduct.text = itensCart[position].qty.toString()
 
                 if (this.toCartItemUiModel()!=null){
-
-                    println("test list image ${this.product.image}")
-                    println("test list title ${this.product.title}")
+                    //println("test list type ${this.product.typeProduct}")
 
                 }
             }

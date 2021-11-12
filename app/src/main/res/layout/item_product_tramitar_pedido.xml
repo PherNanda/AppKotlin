@@ -41,8 +41,8 @@
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/productBrandNames"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:orientation="horizontal"
                     android:layout_marginStart="89dp"
 
@@ -53,7 +53,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:layout_marginStart="0dp"
+                        android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
                         android:maxLines="1"
                         android:minLines="1"
