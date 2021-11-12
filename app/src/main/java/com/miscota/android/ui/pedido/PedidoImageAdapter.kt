@@ -1,6 +1,7 @@
 package com.miscota.android.ui.pedido
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +34,12 @@ class PedidoImageAdapter (private val context: Context,
         override fun onBindViewHolder(holder: PedidoImageAdapter.ViewHolder, position: Int) {
             with(holder){
                 with(itensCart[position]){
+
+                    if (this.toCartItemUiModel()!=null){
+                        if(this.product.typeProduct == "sameday"){
+                            binding.cardProductImageItem.strokeColor = Color.parseColor("#FFDE70")
+                        }
+                    }
 
                     binding.productImage.load(itensCart[position].product.image){
                         error(R.color.placeholder)

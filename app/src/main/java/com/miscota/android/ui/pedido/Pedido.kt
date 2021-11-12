@@ -9,8 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.miscota.android.MainActivity
 import com.miscota.android.R
@@ -250,9 +248,6 @@ class Pedido : Fragment() {
 
         }
 
-        println("totalSameDay::: $totalSameDay")
-        println("totalEcommerce:::: $totalEcommerce")
-
         if ( totalSameDay > 0 ){
             binding.totalProductsCartSameDay.text = String.format(resources.getString(R.string.total_products_exemple),totalSameDay)
             println("currentDelivered $currentDelivered")
@@ -264,7 +259,7 @@ class Pedido : Fragment() {
 
         }
         if ( totalSameDay == 0 ){
-            binding.totalProductsCartSameDay.text = String.format(resources.getString(R.string.total_products_exemple),"0")
+            //binding.totalProductsCartSameDay.text = String.format(resources.getString(R.string.total_products_exemple),"0")
             binding.dateOrderReceiveSameDay.visibility = View.GONE
             binding.orderInfoSameDay.visibility = View.GONE
             binding.totalProductsCartSameDay.visibility = View.GONE
@@ -272,7 +267,7 @@ class Pedido : Fragment() {
             binding.imageSameday.visibility = View.GONE
         }
         if ( totalEcommerce == 0 ){
-            binding.totalProductsCartEcommerce.text = String.format(resources.getString(R.string.total_products_exemple),"0")
+            //binding.totalProductsCartEcommerce.text = String.format(resources.getString(R.string.total_products_exemple),"0")
             binding.orderEcommerceTitle.visibility = View.GONE
             binding.totalProductsCartEcommerce.visibility = View.GONE
         }

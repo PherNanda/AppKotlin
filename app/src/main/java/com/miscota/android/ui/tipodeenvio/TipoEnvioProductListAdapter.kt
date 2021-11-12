@@ -70,12 +70,12 @@ class TipoEnvioProductListAdapter (private val context: Context,
                 binding.button2Up.isChecked = true
                 binding.button2Up.text = boldMyText(textSameday,0, textSameday.length)
                 binding.button1Up.visibility = View.INVISIBLE
+                binding.samadayIn.visibility = View.VISIBLE
             }
 
                 if (this.toCartItemUiModel()!=null){
 
                     println("test list image ${this.product.image}")
-                    println("test list title ${this.product.title}")
                     println("test list brand ${this.product.brand}")
 
                 }
