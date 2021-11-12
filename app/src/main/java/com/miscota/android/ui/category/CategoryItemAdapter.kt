@@ -1,13 +1,16 @@
 package com.miscota.android.ui.category
 
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -225,6 +228,7 @@ class CategoryItemAdapter(
                 binding.brandProductName.text = "${item.brand}"
                 binding.productName.text = "${item.productName}"
 
+
                 println(" item.combinations[0].stock ${item.combinations[0].stock}")
                 if(item.imageList.count() > 0){
                     item.imageList[0]?.let {
@@ -241,6 +245,17 @@ class CategoryItemAdapter(
                 if (typeProduct == "sameday"){
                     println(" type product $typeProduct")
                     binding.samedayIn.visibility = View.VISIBLE
+
+                    val gradientDrawable = GradientDrawable(
+                        GradientDrawable.Orientation.RIGHT_LEFT,
+                        intArrayOf(
+                            Color.parseColor("#FFF0B8"),
+                            Color.parseColor("#FFFFFF"),
+                            Color.parseColor("#FFFFFF"))
+                    )
+                    gradientDrawable.cornerRadius = 25f
+                    //Set Gradient
+                    binding.cardProductImage.background = gradientDrawable
                 }
 
                 if (item.combinations.size > 1 ) {
