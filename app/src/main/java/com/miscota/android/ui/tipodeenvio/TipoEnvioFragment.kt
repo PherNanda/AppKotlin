@@ -399,7 +399,7 @@ class TipoEnvioFragment : Fragment() {
         }
 
         var currentTimeDelivered = "22/09/2021"
-        println(" currentTime $currentTime")
+        println(" currentTime tipo envio $currentTime")
         currentTimeDelivered = currentTime
 
         val cartItemsTest = viewModelCart.authStore.getCart().toMutableList()

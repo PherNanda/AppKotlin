@@ -229,9 +229,12 @@
     <string name="text_need_hour_receive_sd"> >Seleccione la fecha para Entrega hoy</string>
     <string name="login_off_message">Faltan datos de usuario para completar tu compra, por favor haga login</string>
     <string name="payment_off_message">Faltan datos de pago para completar tu compra</string>
+    <string name="delivery_type_default">DEFAULT</string>
+    <string name="current_time_default">DEFAULT_TIME</string>
 
     <!--tipo envío-->
     <string name="accept_button">Aceptar</string>
+    <string name="delivery_type_message">Faltan datos de envío para completar tu compra</string>
 
     <!--dirección envío-->
     <string name="address_header_text">Dirección de envío</string>

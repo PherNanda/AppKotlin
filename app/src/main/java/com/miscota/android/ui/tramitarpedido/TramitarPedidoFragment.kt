@@ -234,6 +234,7 @@ class TramitarPedidoFragment : Fragment() {
             val params = (binding.clientName.layoutParams as ViewGroup.MarginLayoutParams)
             params.setMargins(0, 90, 0, 20)
             binding.clientName.layoutParams = params
+            println("test 1")
         }
 
         if(!isLogued()  && (addressUser?.addressNumber == null  || addressUserInfo?.addressNumber == null)){
@@ -244,6 +245,7 @@ class TramitarPedidoFragment : Fragment() {
             val params = (binding.clientName.layoutParams as ViewGroup.MarginLayoutParams)
             params.setMargins(0, 90, 0, 20)
             binding.clientName.layoutParams = params
+            println("test 2")
         }
 
         if(!isLogued()  && (addressUser?.addressNumber != null  || addressUserInfo?.addressNumber != null)){
@@ -251,6 +253,10 @@ class TramitarPedidoFragment : Fragment() {
             binding.addressShipping.visibility = View.VISIBLE
             binding.addressShipping.text = addressUser?.addressNumber?:addressUserInfo?.addressNumber
             binding.addressShippingComplement.text = "${addressUser?.postalCode}, ${addressUser?.city}, ${addressUser?.state} ,${addressUser?.region}, España"
+            val params = (binding.clientName.layoutParams as ViewGroup.MarginLayoutParams)
+            params.setMargins(0, 75, 0, 25)
+            binding.clientName.layoutParams = params
+            println("test 3")
 
         }
 
@@ -314,11 +320,10 @@ class TramitarPedidoFragment : Fragment() {
 
             listAdapter.hasObservers()
 
-            var deliveryType = "DEFAULT"
-            var currentTime = "DEFAULT_TIME"
+            var deliveryType = getString(R.string.delivery_type_default)
+            var currentTime = getString(R.string.current_time_default)
 
             viewModelCart.authStore.getCart().map {
-
 
                 deliveryType = it.deliveredTypeOne
                 currentTime = it.currentTimeDelivered.toString()
@@ -366,13 +371,16 @@ class TramitarPedidoFragment : Fragment() {
                 viewModelCart.authStore.getRecentAddresses()?: listAddress,
                 viewModelCart.authStore.getAddressInfo()?:Address("","",0.0,0.0,"","","","","","","","",""),
                 viewModelCart.authStore.getEmail()?: " ",
-                cardNumber?:viewModelCart.authStore.getCard()?.card?:"0"
+                cardNumber?:viewModelCart.authStore.getCard()?.card?:"0",
+                deliveryType,
+                currentTime
             )
 
 
 
 
             if (checkoutInit){
+
                 //firebase analytics begin checkout
                 listCheckoutProducts.map {
                     val item = viewModelCart.eventsManager.itemCheckout(it)
@@ -507,6 +515,7 @@ class TramitarPedidoFragment : Fragment() {
                     return@observe
                 }
 
+
             }else if( !checkoutInit ){
                 /**val fm: FragmentManager = requireActivity().supportFragmentManager
                 val ft: FragmentTransaction = fm.beginTransaction()
@@ -518,6 +527,7 @@ class TramitarPedidoFragment : Fragment() {
                 Toast.makeText(requireContext(),
                     "No se ha podido realizar el pedido, por favor compruebe que no falten datos por completar ",
                     Toast.LENGTH_LONG).show()
+                viewModelCart.showLoading.value = false
 
             }
             /**listAdapter.currentList.size
@@ -670,7 +680,6 @@ class TramitarPedidoFragment : Fragment() {
                 .setExpiryDate(expiryDate.expiryMonth, expiryDate.expiryYear)
                 .setSecurityCode(securityCode)
                 .build()
-            //println(" rawCardData $rawCardData")
 
             val encryptedCard = Encryptor.INSTANCE.encryptFields(
                 rawCardData,
@@ -726,7 +735,9 @@ class TramitarPedidoFragment : Fragment() {
         addressSecond: List<Address>,
         addressThird: Address,
         email: String,
-        cardNumber: String
+        cardNumber: String,
+        deliveryType: String,
+        currentTime: String
     ): Boolean{
 
         var checkoutStock = true
@@ -734,16 +745,16 @@ class TramitarPedidoFragment : Fragment() {
         var checkoutUser = true
         var checkoutAddress = true
         var checkoutCard = false
+        var checkoutDelivery = false
         //var payment = true
 
         if(list.size == 0){
 
             Toast.makeText(requireContext(), getString(R.string.message_need_product_in_cart),
                 Toast.LENGTH_LONG).show()
-
             checkoutItems = false
         }
-        else if ((addressThird.postalCode == null && addressThird.address == null &&
+        if ((addressThird.postalCode == null && addressThird.address == null &&
                     addressThird.city == null && addressThird.region == null ))
         {
             Toast.makeText(requireContext(), getString(R.string.message_need_address_in_cart),
@@ -752,7 +763,7 @@ class TramitarPedidoFragment : Fragment() {
             startActivity(Intent(requireContext(), AddressActivity::class.java))
             checkoutAddress = false
         }
-        else if(!isLoggedIn() && viewModelCart.authStore.getUser() == null){
+        if(!isLoggedIn() && viewModelCart.authStore.getUser() == null){
 
             Toast.makeText(requireContext(), getString(R.string.login_off_message),
                 Toast.LENGTH_LONG).show()
@@ -760,7 +771,13 @@ class TramitarPedidoFragment : Fragment() {
             startActivity(Intent(requireActivity(), AuthActivity::class.java))
             checkoutUser = false
         }
-        else if (cardNumber != null){
+        if (currentTime.length > 1){
+
+            checkoutDelivery = true
+            viewModelCart.showLoading.value = true
+
+        }
+        if (cardNumber != null){
 
             if (cardNumber.length == maxLengthCard){
                 checkoutCard = true
@@ -772,6 +789,31 @@ class TramitarPedidoFragment : Fragment() {
                 checkoutCard = false
 
             }
+        }
+        if(currentTime.length == 1){
+            viewModelCart.showLoading.value = false
+            checkoutDelivery = false
+
+            Toast.makeText(requireContext(), getString(R.string.delivery_type_message),
+                Toast.LENGTH_LONG).show()
+        }
+        if ((deliveryType == null && currentTime == null) || (deliveryType == getString(R.string.delivery_type_default) && currentTime == getString(R.string.current_time_default))){
+
+            viewModelCart.showLoading.value = false
+            checkoutDelivery = false
+
+            Toast.makeText(requireContext(), getString(R.string.delivery_type_message),
+                Toast.LENGTH_LONG).show()
+
+        }
+        if (deliveryType == getString(R.string.delivery_type_default) && currentTime == getString(R.string.current_time_default)){
+
+            viewModelCart.showLoading.value = false
+            checkoutDelivery = false
+
+            Toast.makeText(requireContext(), getString(R.string.delivery_type_message),
+                Toast.LENGTH_LONG).show()
+
         }
 
 
@@ -787,7 +829,7 @@ class TramitarPedidoFragment : Fragment() {
             }
 
         }
-        return !(!checkoutAddress || !checkoutItems || !checkoutStock || !checkoutUser || !checkoutCard )
+        return !(!checkoutAddress || !checkoutItems || !checkoutStock || !checkoutUser || !checkoutCard || !checkoutDelivery )
     }
 
     fun isLoggedIn(): Boolean {

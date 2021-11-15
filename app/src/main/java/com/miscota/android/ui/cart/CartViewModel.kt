@@ -142,6 +142,8 @@ class CartViewModel(
                     )
                 )
 
+        println("currentTimeDelivered Date::: ${Date()}")
+
         _items.value = list
     }
 
