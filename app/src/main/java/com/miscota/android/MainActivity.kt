@@ -269,13 +269,9 @@ class MainActivity : AppCompatActivity() {
                 binding.locationTextMain.text=
                     it.postalCode+ ", " + it.city
 
-                println("it.postalCode line 217 OnCreate \n ${it.postalCode}")
                 it.postalCode.let { postalCode ->
                     viewModel.checkPostalCode(postalCode)
-
-
                 }
-
             }
             if (it == null){
                 binding.textSamedayMain.text = getString(R.string.text_default_main)
@@ -425,16 +421,12 @@ class MainActivity : AppCompatActivity() {
 
         if (viewModel.authStore.getRetailID() != null) {
 
-            //println("onStartMain viewModel.authStore.getRetailID() MainActivity line 428 \n ${viewModel.authStore.getRetailID()} ")
-
             if (viewModel.authStore.getRetailID() == idEcommerce ){
 
                 binding.samedayInfoMain.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.background_home_new_search))
                 binding.textSamedayMain.text = getString(R.string.same_day_off)
                 binding.imageSamedayCheck.visibility = View.GONE
                 binding.textSamedayMain.text = colorMyText(getString(R.string.same_day_off),11,37, ContextCompat.getColor(this, R.color.app_pink))
-
-                //println("onStartMain viewModel.authStore.getRetailID() MainActivity line 438 \n ${viewModel.authStore.getRetailID()} ")
 
             }
 
@@ -505,13 +497,11 @@ class MainActivity : AppCompatActivity() {
                 binding.locationTextMain.text=
                     it.postalCode+ ", " + it.city
 
-                println("it.postalCode+ it.city line 566 \n  ${it.postalCode} ${it.city}")
 
                 viewModel.checkPostalCode(it.postalCode)
 
                 if (viewModel.authStore.getRetailID() != null) {
 
-                println("onRestartMain viewModel.authStore.getRetailID() MainActivity line 444 ${viewModel.authStore.getRetailID()} ")
 
                 if (viewModel.authStore.getRetailID() == idEcommerce ){
 
@@ -521,7 +511,6 @@ class MainActivity : AppCompatActivity() {
                 binding.textSamedayMain.text = colorMyText(getString(R.string.same_day_off),11,37, ContextCompat.getColor(this, R.color.app_pink))
                 binding.locationTextMain.text = colorMyText(it.postalCode+ ", " + it.city,0,binding.locationTextMain.text.length,  ContextCompat.getColor(this, R.color.new_app_grey))
 
-                println("onRestartMain viewModel.authStore.getRetailID() MainActivity line 454 ${viewModel.authStore.getRetailID()} ")
                 }
                 if (viewModel.authStore.getRetailID() != idEcommerce ){
 

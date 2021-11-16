@@ -1,16 +1,17 @@
 package com.miscota.android.ui.addresscurrent
 
+import android.app.AlertDialog
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -21,11 +22,16 @@ import com.miscota.android.address.AddressViewModel
 import com.miscota.android.databinding.AddressCurrentFragmentBinding
 import com.miscota.android.databinding.PartialLayoutRecentAddressCartBinding
 import com.miscota.android.ui.addaddress.AddAddressFragment
+import com.miscota.android.ui.cart.CartUiModel
+import com.miscota.android.ui.cart.CartViewModel
+import com.miscota.android.ui.cart.toCartItemUiModel
 import com.miscota.android.ui.tramitarpedido.TramitarPedidoFragment
 import com.miscota.android.util.Address
 import com.miscota.android.util.autoClean
+import kotlinx.coroutines.awaitAll
+import okhttp3.internal.wait
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import zendesk.messaging.MessagingActivityModule_HandlerFactory.handler
+
 
 class AddressCurrentFragment : Fragment() {
 
@@ -37,9 +43,13 @@ class AddressCurrentFragment : Fragment() {
 
     private val viewModelAddress by viewModel<AddressViewModel>()
 
+    private val viewModelCart by viewModel<CartViewModel>()
+
     private lateinit var recentAddresses: List<Address>
 
     lateinit var recentAddressesUser: List<Address>
+
+    private lateinit var addressUser: Address
 
     private var binding by autoClean<AddressCurrentFragmentBinding>()
 
@@ -57,6 +67,41 @@ class AddressCurrentFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        var addressSelected: Address? = null
+
+        val bundleAddressCurrent: Bundle? = arguments
+        val listCheckoutProducts = loadCheckout()
+        val dialogo =
+            AlertDialog.Builder(requireContext())
+                .setPositiveButton(getString(R.string.yes_delete)) { dialog, which ->
+
+                    listCheckoutProducts.map {
+                        if (it.type == getString(R.string.type_sameday)) {
+                            viewModelCart.removeItemRef(it.ref, it.type, requireContext())
+
+                        }
+                    }
+                    if ( addressSelected !=  null) {
+
+                        viewModelAddress.setAdressUser(addressSelected)
+
+                        val fragment = TramitarPedidoFragment()
+                        fragment.arguments = bundleAddressCurrent
+                        replaceFragment(fragment)
+                    }
+
+                }
+                .setNegativeButton(
+                    getString(R.string.cancel)
+                ) { dialog, which ->
+
+                    dialog.dismiss()
+                }
+                .setTitle(getString(R.string.atention))
+                .setMessage(getString(R.string.postal_code_message)+
+                        "\n\n"+getString(R.string.delete_products))
+                .create()
+
         binding.toolbar.cartHeader.text = getString(R.string.address_header_text)
 
         binding.toolbar.imageBack.setOnClickListener {
@@ -68,17 +113,20 @@ class AddressCurrentFragment : Fragment() {
 
         loadRecentAddresses()
         loadAddressesUser()
+        loadAddress()
 
-        val bundleAddressCurrent: Bundle? = arguments
+
         //val delaySeconds = 1
         viewModelAddress.recentAddressesUser.observe(viewLifecycleOwner) {
             it.forEach { address ->
                 val partialBinding = PartialLayoutRecentAddressCartBinding.inflate(layoutInflater)
                 binding.recentAddressLayout.addView(partialBinding.root)
 
+                viewModelAddress.currentAddress.value?.postalCode
+
+
                 partialBinding.currentLocation.text = address.addressNumber
                 partialBinding.currentLocationText.text = "${address.postalCode}, ${address.city}, ${address.countryName}"
-                println("address $address")
 
                 //handler().postDelayed( {
                 partialBinding.root.setOnClickListener {
@@ -92,17 +140,30 @@ class AddressCurrentFragment : Fragment() {
                     //val additionalAddress =  partialBinding.currentLocation.text.toString()
                     partialBinding.currentLocation.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checkbox_true, 0, 0, 0)
 
+                    val sameDay = listCheckoutProducts.findLast { product -> product.type == getString(R.string.type_sameday) }
 
-                    viewModelAddress.setAdressUser(address)
+                    if (address.postalCode != addressUser.postalCode && sameDay != null) {
 
-                    println("\naddress.addressNumber fragment ${address.addressNumber} $address")
+                        dialogo.show()
+                        addressSelected = address
+                    }
+                    if (address.postalCode != addressUser.postalCode && sameDay == null)
+                    {
+                        viewModelAddress.setAdressUser(address)
 
-                    val fragment = TramitarPedidoFragment()
-                    fragment.arguments = bundleAddressCurrent
-                    replaceFragment(fragment)
+                        bundleAddressCurrent?.putString("addressBC", address.addressNumber)
+                        bundleAddressCurrent?.putString("postalCodeBC", address.postalCode)
+                        bundleAddressCurrent?.putString("cityBC", address.city)
+                        bundleAddressCurrent?.putString("provinceBC", address.state)
+                        bundleAddressCurrent?.putString("phoneBC", address.phone.toString())
+
+                        val fragment = TramitarPedidoFragment()
+                        fragment.arguments = bundleAddressCurrent
+                        replaceFragment(fragment)
+
+                    }
                     
                 }
-                       //}, (delaySeconds * 1000).toLong())
             }
         }
 
@@ -113,22 +174,34 @@ class AddressCurrentFragment : Fragment() {
                 partialBinding.currentLocation.text = address.addressNumber
                 partialBinding.currentLocationText.text = "${address.postalCode}, ${address.city}, ${address.countryName}"
 
+                viewModelAddress.currentAddress.value?.postalCode
+
                 partialBinding.root.setOnClickListener {
 
                     partialBinding.currentLocation.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checkbox_true, 0, 0, 0)
 
-                    viewModelAddress.setAdressUser(address)
+                    val sameDay = listCheckoutProducts.findLast { product -> product.type == getString(R.string.type_sameday) }
 
-                    bundleAddressCurrent?.putString("addressBC", address.addressNumber)
-                    bundleAddressCurrent?.putString("postalCodeBC", address.postalCode)
-                    bundleAddressCurrent?.putString("cityBC", address.city)
-                    bundleAddressCurrent?.putString("provinceBC", address.state)
-                    bundleAddressCurrent?.putString("phoneBC", address.phone.toString())
+                    if (address.postalCode != addressUser.postalCode && sameDay != null) {
 
+                        dialogo.show()
+                        addressSelected = address
+                    }
+                    if (address.postalCode != addressUser.postalCode && sameDay == null)
+                    {
+                            viewModelAddress.setAdressUser(address)
 
-                    val fragment = TramitarPedidoFragment()
-                    fragment.arguments = bundleAddressCurrent
-                    replaceFragment(fragment)
+                            bundleAddressCurrent?.putString("addressBC", address.addressNumber)
+                            bundleAddressCurrent?.putString("postalCodeBC", address.postalCode)
+                            bundleAddressCurrent?.putString("cityBC", address.city)
+                            bundleAddressCurrent?.putString("provinceBC", address.state)
+                            bundleAddressCurrent?.putString("phoneBC", address.phone.toString())
+
+                            val fragment = TramitarPedidoFragment()
+                            fragment.arguments = bundleAddressCurrent
+                            replaceFragment(fragment)
+
+                    }
 
                 }
             }
@@ -223,6 +296,9 @@ class AddressCurrentFragment : Fragment() {
         recentAddressesUser = viewModelAddress.authStore.getRecentAddressesInfo() ?: listOf()
     }
 
+    fun loadAddress(){
+        addressUser = (viewModelAddress.authStore.getAddress()?:viewModelAddress.authStore.getAddressInfo()) as Address
+    }
 
     private fun replaceFragment(fragment: Fragment) {
         fragmentManager?.beginTransaction()?.apply {
@@ -239,5 +315,37 @@ class AddressCurrentFragment : Fragment() {
         }?.commit()
     }
 
+    fun loadCheckout(): MutableList<CartUiModel.ItemListCheckout>{
+
+        val list: MutableList<CartUiModel.ItemListCheckout> = mutableListOf()
+        viewModelCart.authStore.getCart().map {
+            it.toCartItemUiModel()
+
+            list.add(
+                CartUiModel.ItemListCheckout(
+                    qty = it.qty.toString(),
+                    price = it.combinationPrice.toString(),
+                    type = it.type,
+                    ref = it.combinationReference,
+                )
+            )
+
+        }
+        return list
+    }
+
+    private fun boldColorMyText(inputText:String,startIndex:Int,endIndex:Int,textColor:Int): Spannable {
+        val outPutBoldColorText: Spannable = SpannableString(inputText)
+        outPutBoldColorText.setSpan(
+            StyleSpan(Typeface.BOLD), startIndex, endIndex,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        outPutBoldColorText.setSpan(
+            ForegroundColorSpan(textColor), startIndex, endIndex,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        return outPutBoldColorText
+    }
 
 }

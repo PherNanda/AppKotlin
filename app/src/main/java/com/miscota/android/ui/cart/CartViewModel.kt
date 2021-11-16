@@ -76,7 +76,7 @@ class CartViewModel(
         _total.value = subtotal
 
         for (item in cartItems)
-            println(" item $item")
+            println(" item::::cart $item")
 
         /*********************************************************************/
         var userType = false
@@ -108,6 +108,10 @@ class CartViewModel(
                     authStore.setCarriersEco(result.getOrThrow().ecommerce.toString())
                     authStore.setCarriersSd(result.getOrThrow().sd.toString())
                     authStore.setCarriers(_costDeliver.value.toString())
+                    println("result.getOrThrow().ecommerce.toString()::: ${result.getOrThrow().ecommerce}")
+                    println("result.getOrThrow().sd.toString()::: ${result.getOrThrow().sd}")
+                    println("_costSd.value::: ${_costSd.value}")
+                    println("_costEcommerce.value::: ${_costEcommerce.value}")
 
                     _total.value = subtotal +  result.getOrThrow().sd + result.getOrThrow().ecommerce
                     loadCarriers()
@@ -136,9 +140,9 @@ class CartViewModel(
                             ?: "Ponga su número de movil para comprar como invitado",
                         typeOne = _types.value,
                         payment = _payment.value,
-                        costSd =  authStore.getCarriersSd()?.toDouble()?:0.0,
-                        costEco = authStore.getCarriersEco()?.toDouble()?:0.0,
-                        totalCost = authStore.getCarriers()?.toDouble()?:0.0
+                        costSd =  _costSd.value?:0.0,
+                        costEco = _costEcommerce.value?.toDouble()?:0.0,
+                        totalCost = _costDeliver.value?.toDouble()?:0.0
                     )
                 )
 
@@ -431,6 +435,47 @@ class CartViewModel(
                     authStore.setCarriersEco(result.getOrThrow().ecommerce.toString())
                     authStore.setCarriersSd(result.getOrThrow().sd.toString())
                     authStore.setCarriers(_costDeliver.value.toString())
+
+                    loadCarriers()
+                } else {
+                    _checkoutResult.value = CheckoutResult(error = R.string.checkout_failed)
+                }
+            }
+        } catch (e: Exception) {
+            println("${e.message}  -Error-  ${e.printStackTrace()}")
+        }
+        return costSd
+    }
+
+    fun carriersCostSd(clientType: Boolean, items: List<CartUiModel.ItemListCheckout>): Double {
+        var costSd = 0.0
+        try {
+            viewModelScope.launch {
+                val result = runCatching {
+                    checkoutRepository.fetchCarriersCheckout(
+                        requestRetailId = authStore.getRetailID()?:"0",
+                        clientType = clientType,
+                        items
+                    )
+                }
+
+
+                if (result != null) {
+
+                    _checkoutResult.value =
+                        CheckoutResult(success = "Chekout Ok")
+                    costSd = result.getOrThrow().sd
+                    _costSd.value = result.getOrThrow().sd
+                    _costEcommerce.value = result.getOrThrow().ecommerce
+                    _costDeliver.value = result.getOrThrow().sd.plus(result.getOrThrow().ecommerce)
+
+                    authStore.setCarriersEco(result.getOrThrow().ecommerce.toString())
+                    authStore.setCarriersSd(result.getOrThrow().sd.toString())
+                    authStore.setCarriers(_costDeliver.value.toString())
+
+                    println(" new::: ${result.getOrThrow().ecommerce}")
+                    println(" new two::: ${result.getOrThrow().sd}")
+                    println(" costSd::: $costSd")
 
                     loadCarriers()
                 } else {

@@ -410,7 +410,7 @@ class AddressActivity : AppCompatActivity() {
                     val listOfAddress =
                         geoCoder.getFromLocationName(it.toString(), 10)
 
-                    viewModel.loadPlacesSuggestions(listOfAddress)
+                    viewModel.loadPlacesSuggestions(listOfAddress, it.toString())
 
                     }catch (e: IOException){
 

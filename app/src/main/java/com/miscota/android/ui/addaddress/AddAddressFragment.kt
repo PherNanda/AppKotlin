@@ -49,6 +49,8 @@ class AddAddressFragment : Fragment() {
 
     private lateinit var listAddress:  MutableList<Address>
 
+    private lateinit var recentAddressesCurrentUser: Address
+
     private lateinit var sheetBehavior: BottomSheetBehavior<LinearLayout>
 
     override fun onCreateView(
@@ -64,6 +66,7 @@ class AddAddressFragment : Fragment() {
 
         loadRecentAddresses()
         loadAddressesUser()
+        loadAddressesCurrentUser()
 
         listAddress = arrayListOf()
 
@@ -80,7 +83,15 @@ class AddAddressFragment : Fragment() {
         }
         recentAddressesUser.map {
             it.address
-            binding.postalCodeInput.setText(it.postalCode)
+            if (it.postalCode.isNotEmpty()) {
+                binding.postalCodeInput.setText(it.postalCode)
+                println("it.postalCode ${it.postalCode}")
+            }
+            //binding.postalCodeInput.isEnabled = false
+        }
+        if (recentAddressesCurrentUser.postalCode.isNotEmpty()){
+            binding.postalCodeInput.setText(recentAddressesCurrentUser.postalCode)
+            println("recentAddressesCurrentUser.postalCode ${recentAddressesCurrentUser.postalCode}")
             //binding.postalCodeInput.isEnabled = false
         }
 
@@ -327,6 +338,11 @@ class AddAddressFragment : Fragment() {
     fun loadAddressesUser() {
         recentAddressesUser = viewModelCart.authStore.getRecentAddressesInfo() ?: listOf()
     }
+
+    fun loadAddressesCurrentUser() {
+        recentAddressesCurrentUser = (viewModelCart.authStore.getAddress() ?: viewModelCart.authStore.getAddressInfo()) as Address
+    }
+
 
     private fun replaceFragment(fragment: Fragment) {
         fragmentManager?.beginTransaction()?.apply {

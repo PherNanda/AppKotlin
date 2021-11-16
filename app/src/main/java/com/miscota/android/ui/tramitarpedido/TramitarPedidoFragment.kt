@@ -21,7 +21,6 @@ import com.adyen.checkout.card.data.ExpiryDate
 import com.adyen.checkout.cse.Card
 import com.adyen.checkout.cse.Encryptor
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.logEvent
 import com.miscota.android.BuildConfig
 import com.miscota.android.R
 import com.miscota.android.address.AddressActivity
@@ -83,6 +82,8 @@ class TramitarPedidoFragment : Fragment() {
 
     lateinit var gridView: GridView
 
+    private var carriersSd: Double = 0.0
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -94,6 +95,11 @@ class TramitarPedidoFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        val clientType = isLogued()
+        val items = loadCheckout()
+
+        carriersSd = viewModelCart.carriersCostSd(clientType, items)
 
         loadRecentAddresses()
         loadAddressesUser()
@@ -128,8 +134,8 @@ class TramitarPedidoFragment : Fragment() {
         val phoneBC: String? = bundleAddressCurrent?.getString("phoneBC")
 
 
-        //val currentTime: String? = currentTimeBundle?.getString(getString(R.string.date_shipping_sameday))
-
+        println("addressB $addressB")
+        println("addressBC $addressBC")
         if( cardNumber != null && cardMonth != null && cardYear !=  null && cardSecurity != null && cardNumber.isNotEmpty()) {
             paymentMethod = encrypt(cardNumber, cardMonth.split("/").first(),
                 cardYear.split("/")[1], cardSecurity, cardOwner?:"OwnerNameDefault")
@@ -139,16 +145,31 @@ class TramitarPedidoFragment : Fragment() {
 
         }
 
+        viewModelCart.costSd.observe(requireActivity()){
+            carriersSd = it
+            binding.sameDayPrice.text = "${it.toDouble()}"+" €"
+            return@observe
+        }
+
+        viewModelCart.costEcommerce.observe(requireActivity()){
+            binding.ecommercePrice.text = "${it.toDouble()}"+" €"
+            return@observe
+        }
+
         val subtotal: Double = viewModelCart.authStore.getCart().map {
             it.combinationPrice * it.qty
         }.foldRight(0.0) { acc, d -> acc + d }
 
-        val totalCheckout = subtotal + (viewModelCart.authStore.getCarriersSd()?.toDouble() ?: 0.0) + (viewModelCart.authStore.getCarriersEco()
-            ?.toDouble() ?:0.0)
+        var totalDel: Double
+        viewModelCart.costSd.observe(requireActivity()){
+            totalDel = it.toDouble() + (viewModelCart.authStore.getCarriersEco()
+                ?.toDouble() ?:0.0)
+ 
+            val totalCheckout = subtotal + totalDel
+            binding.totalPrice.text = String.format("%.2f", totalCheckout)+" €" //TO CHANGE
+        }
+        
         binding.productsPrice.text = String.format("%.2f", subtotal)+" €"
-        binding.sameDayPrice.text = viewModelCart.authStore.getCarriersSd()+" €"
-        binding.ecommercePrice.text = viewModelCart.authStore.getCarriersEco()+" €"
-        binding.totalPrice.text = String.format("%.2f", totalCheckout)+" €"
 
         if (viewModelCart.authStore.getCard() != null){
 
@@ -191,11 +212,11 @@ class TramitarPedidoFragment : Fragment() {
         }
         if (addressUser?.addressNumber != null){
             binding.addressShipping.text = addressUser?.addressNumber
-            binding.addressShippingComplement.text = "${addressUser?.postalCode}, ${addressUser?.city}, ${addressUser?.state} ,${addressUser?.region}, España"
+            binding.addressShippingComplement.text = "${addressUser?.postalCode}, ${addressUser?.city}, ${addressUser?.state} ,${addressUser?.countryName}"
 
         }
         else {
-            if (addressUserInfo != null){
+            if (addressUserInfo != null ){
 
                 binding.addressShipping.text = addressUserInfo?.addressNumber
                 binding.addressShippingComplement.text = "${addressUserInfo?.postalCode}, ${addressUserInfo?.city}, ${addressUserInfo?.state} ,${addressUserInfo?.region}, España"
@@ -234,7 +255,7 @@ class TramitarPedidoFragment : Fragment() {
             val params = (binding.clientName.layoutParams as ViewGroup.MarginLayoutParams)
             params.setMargins(0, 90, 0, 20)
             binding.clientName.layoutParams = params
-            println("test 1")
+
         }
 
         if(!isLogued()  && (addressUser?.addressNumber == null  || addressUserInfo?.addressNumber == null)){
@@ -245,18 +266,18 @@ class TramitarPedidoFragment : Fragment() {
             val params = (binding.clientName.layoutParams as ViewGroup.MarginLayoutParams)
             params.setMargins(0, 90, 0, 20)
             binding.clientName.layoutParams = params
-            println("test 2")
+
         }
 
         if(!isLogued()  && (addressUser?.addressNumber != null  || addressUserInfo?.addressNumber != null)){
             binding.clientName.text = getString(R.string.need_login)
-            binding.addressShipping.visibility = View.VISIBLE
-            binding.addressShipping.text = addressUser?.addressNumber?:addressUserInfo?.addressNumber
-            binding.addressShippingComplement.text = "${addressUser?.postalCode}, ${addressUser?.city}, ${addressUser?.state} ,${addressUser?.region}, España"
+            binding.addressShippingComplement.visibility = View.VISIBLE
+            //binding.addressShipping.text = addressUser?.addressNumber?:addressUserInfo?.addressNumber
+            binding.addressShippingComplement.text = "${addressUser?.postalCode}, ${addressUser?.city}, ${addressUser?.state} ,${addressUser?.countryName}"
+                ?:"${addressUserInfo?.postalCode}, ${addressUserInfo?.city}, ${addressUserInfo?.state} ,${addressUserInfo?.countryName}"
             val params = (binding.clientName.layoutParams as ViewGroup.MarginLayoutParams)
-            params.setMargins(0, 75, 0, 25)
+            params.setMargins(0, 75, 0, 0)
             binding.clientName.layoutParams = params
-            println("test 3")
 
         }
 
@@ -504,8 +525,7 @@ class TramitarPedidoFragment : Fragment() {
                                 ft.add(R.id.thankyou, PedidoNoProcesado())
                                 //fragment.arguments = bundleEcommerce
                                 ft.commit()**/
-                                Toast.makeText(requireContext(),
-                                    "No se ha podido realizar el pedido, por favor complete los datos que faltan",
+                                Toast.makeText(requireContext(), getString(R.string.checkout_failed_message_new),
                                     Toast.LENGTH_LONG).show()
                             }
 
@@ -525,24 +545,11 @@ class TramitarPedidoFragment : Fragment() {
                 //fragment.arguments = bundleEcommerce
                 ft.commit()**/
                 Toast.makeText(requireContext(),
-                    "No se ha podido realizar el pedido, por favor compruebe que no falten datos por completar ",
+                    getString(R.string.checkout_failed_message),
                     Toast.LENGTH_LONG).show()
                 viewModelCart.showLoading.value = false
 
             }
-            /**listAdapter.currentList.size
-            listAdapter.currentList.map {
-                println("\n listAdapter.currentList.map it $it")
-            }**/
-
-
-            /**println("\n Subtotal y uid unico para cada venta ${listAdapter.currentList.get(0)}")
-            println("\n SummaryItem = direction, time ${listAdapter.currentList.get(listAdapter.currentList.size-1)}")
-
-            for (item in listAdapter.currentList)
-                println(" \n for item listable $item")
-            println(" \n for item cartItems.value ${cartItems.value?.get(0)}")**/
-            
         }
 
         binding.addressOrderCard.setOnClickListener{
@@ -1000,7 +1007,7 @@ class TramitarPedidoFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        println("onStart")
+        println("onStart TramitarPedido")
 
         val cartItemsTest = viewModelCart.authStore.getCart().toMutableList()
         cartItemsTest.map { item ->
@@ -1009,7 +1016,15 @@ class TramitarPedidoFragment : Fragment() {
                 binding.dateOrderReceiveSameDay.text = getString(R.string.text_need_hour_receive_sd)
             }
 
-            println("item.currentTimeDelivered, item.deliveredTypeOne} ${item.currentTimeDelivered} , ${item.deliveredTypeOne}")
+            viewModelCart.costSd.observe(requireActivity()){
+                println("it sd::: $it")
+                return@observe
+            }
+            viewModelCart.costEcommerce.observe(requireActivity()){
+                println("it eco::: $it")
+                return@observe
+            }
+
             return@map item
         }
 
@@ -1018,22 +1033,23 @@ class TramitarPedidoFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        println("onResume")
+        println("onResume TramitarPedido")
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        println("onAttach")
+        println("onAttach TramitarPedido")
+
     }
 
     override fun onPause() {
         super.onPause()
-        println("onPause")
+        println("onPause TramitarPedido")
     }
 
     override fun onStop() {
         super.onStop()
-        println("onStop")
+        println("onStop TramitarPedido")
         val cartItemsTest = viewModelCart.authStore.getCart().toMutableList()
         val newList = cartItemsTest.map { item ->
             viewModelCart.authStore.setCurrentTimeDelivered("0")

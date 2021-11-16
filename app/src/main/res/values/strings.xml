@@ -37,6 +37,8 @@
     <string name="recover_failed">Añada un correo electrónico válido para recuperar su contraseña</string>
     <string name="login_with_email_failed">El correo electrónico o la contraseña introducidos no son correctos</string>
     <string name="checkout_failed">Error en el checkout</string>
+    <string name="checkout_failed_message">No se ha podido realizar el pedido, por favor compruebe que no falten datos por completar</string>
+    <string name="checkout_failed_message_new">No se ha podido realizar el pedido, por favor complete los datos que faltan</string>
     <string name="login_social_buttons_separator">o</string>
     <string name="put_your_email">Ponga su e-mail</string>
     <string name="put_your_name">Ponga su nombre</string>
@@ -153,7 +155,7 @@
     <string name="message_conected">Compruebe tu conexión a internet para buscar una dirección</string>
     <string name="message_conected_app">Debes estar conectado a internet para utilizar nuestra aplicación</string>
     <string name="no">No</string>
-    <string name="yes">Si</string>
+    <string name="yes">Sí</string>
     <string name="remove_item_msg">Estás seguro de eliminar el producto del carrito?</string>
     <string name="remove_item_heading">Eliminar producto</string>
     <string name="next_day_tem_heading">Información: entregas día siguiente</string>
@@ -196,6 +198,8 @@
     <string name="city">Ciudad</string>
     <string name="province">Provincia</string>
     <string name="phone">Teléfono</string>
+    <string name="yes_delete">Sí, eliminar</string>
+    <string name="atention">Atención</string>
 
     <!--errores carrito-->
     <string name="edit_text_mandatory">este campo es obligatorio</string>
@@ -240,6 +244,9 @@
     <string name="address_header_text">Dirección de envío</string>
     <string name="addrees_send">¿Dónde te lo enviamos?</string>
     <string name="address_shipping">Dirección</string>
+    <string name="change_address_notify">Si cambias el código postal se borrarán los productos\n con entrega hoy de tu cesta</string>
+    <string name="change_address_continue">Continuar</string>
+
 
     <!--payments-->
     <string name="value_key">amount_value</string>
@@ -406,8 +413,9 @@
 
     <!--messages-->
     <string name="need_login">Haga login para finalizar su pedido</string>
-
     <string name="guest">invitado</string>
+    <string name="postal_code_message">Si cambias el código postal se borrarán de tu cesta los productos con entrega hoy</string>
+    <string name="delete_products">¿Deseas borrar los productos?</string>
 
 
 </resources>

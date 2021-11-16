@@ -63,15 +63,15 @@ class AddressViewModel(
         _recentAddressesUser.value = authStore.getRecentAddressesInfo() ?: listOf()
     }
 
-    fun loadPlacesSuggestions(addresses: List<android.location.Address>) {
+    fun loadPlacesSuggestions(addresses: List<android.location.Address>, postalCode: String) {
         _placesSuggestion.value = addresses.map { address ->
             val state = GeocoderState.toShortForm(address.adminArea ?: "")
             val model = Address(
                 address = address.getAddressLine(0)?.split(",")?.firstOrNull() ?: "",
                 addressNumber = address.getAddressLine(0)?.split(",")?.firstOrNull() ?: "",
-                postalCode = address.postalCode ?: "",
+                postalCode = address.postalCode ?: postalCode,
                 state = state,
-                city = address.locality ?: "",
+                city = address.locality ?: address.getAddressLine(0)?.split(",")?.firstOrNull().toString(),
                 lng = address.longitude,
                 lat = address.latitude,
                 region = state,
@@ -82,6 +82,7 @@ class AddressViewModel(
                 countryName = address.countryName ?: ""
 
             )
+
             return@map PlaceSuggestionUiModel(
                 id = (address.longitude + address.latitude).toLong(),
                 placeId = "",

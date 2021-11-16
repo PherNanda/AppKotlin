@@ -52,7 +52,7 @@ class LoginViewModel(private val authRepository: AuthRepository, private val aut
                         authStore.setAutoLoginParamExpire(result.getOrThrow().autologin_param_expire)
                         //authStore.setAutoLoginParamExpire("2021-11-11 11:15:59")
 
-                        var address: List<LoginResponse.Address>? =
+                        val address: List<LoginResponse.Address>? =
                             result.getOrThrow().address ?: return@launch
 
                         if (address != null && address.size > 0) {
@@ -106,7 +106,7 @@ class LoginViewModel(private val authRepository: AuthRepository, private val aut
 
                             })
 
-                            authStore.addRecentAddressInfo(address?.get(0)?.address?.let {
+                            authStore.addRecentAddressInfo(address.get(0).address?.let {
                                 address[0].region?.let { it1 ->
                                     address.get(0).postcode?.let { it2 ->
                                         address[0].city?.let { it3 ->
