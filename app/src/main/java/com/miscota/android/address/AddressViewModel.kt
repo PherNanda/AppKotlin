@@ -48,11 +48,19 @@ class AddressViewModel(
 
     private val isSameDayEnabled = MutableLiveData<Boolean>()
 
+    private var _addressChanged = MutableLiveData(false)
+    val addressChanged: LiveData<Boolean> = _addressChanged
+
     private var job: Job? = null
 
     init {
         loadRecentAddresses()
         loadAddressesUser()
+
+        _recentAddressesUser.value?.let { _recentAddresses.value?.let { it1 ->
+            checkChangeAddress(
+                it1, it)
+        } }
     }
 
     private fun loadRecentAddresses() {
@@ -202,11 +210,8 @@ class AddressViewModel(
     fun setAddressInfo(additionalAddress: String, address: Address?) {
         val newAddress = address?.copy(address = "$additionalAddress ${address.address}")
 
-        println("\nnewAddress.addressNumber activity viewModel ${newAddress!!.addressNumber} $newAddress")
-
         authStore.setAddressInfo(newAddress)
         authStore.addRecentAddressInfo(newAddress)
-        println("test aqui setAddressInfo")
 
         _navigateBackEvent.value = Event(true)
     }
@@ -242,7 +247,6 @@ class AddressViewModel(
             FacebookSdk.getApplicationContext().contentResolver,
             Settings.Secure.LOCATION_PROVIDERS_ALLOWED
         )
-        println("Provider contains=> $provider")
         return provider.contains("gps") || provider.contains("network")
     }
 
@@ -266,7 +270,6 @@ class AddressViewModel(
 
     fun checkPostalCode(postalCode: String) {
 
-        println(" postalCode AddressViewModel: $postalCode")
         viewModelScope.launch {
             val result = runCatching {
                 val response = storeLocationRepository.getSameDayShops(postalCode)
@@ -293,20 +296,23 @@ class AddressViewModel(
                     val retailIdDefault = "0"
                     _requestID.value = Store("Retail_ecommerce",retailIdDefault)
                     authStore.setRetailID(retailIdDefault)
-                    println("AddressViewModel _requestID.value?.retail_shop_id line 306  ${_requestID.value?.retail_shop_id} -- ")
-                    println("AddressViewModel retailIdDefault line 307  $retailIdDefault -- ")
+
                 }
                 if(response.isEmpty()){
                     val retailIdDefault = "0"
                     _requestID.value = Store("Retail_ecommerce",retailIdDefault)
                     authStore.setRetailID(retailIdDefault)
-                    println("AddressViewModel _requestID.value?.retail_shop_id line 313  ${_requestID.value?.retail_shop_id} -- ")
-                    println("AddressViewModel retailIdDefault line 314  $retailIdDefault -- ")
+
                 }
             }
         }
 
         isSameDayEnabled.value = false
+    }
+
+    fun checkChangeAddress(addresses: List<Address>, moreAddresses: List<Address>): Boolean{
+        _addressChanged.value = addresses.isNotEmpty() || moreAddresses.isNotEmpty()
+        return _addressChanged.value!!
     }
 
 

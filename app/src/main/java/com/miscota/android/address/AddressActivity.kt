@@ -1,6 +1,7 @@
 package com.miscota.android.address
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Address
@@ -26,6 +27,9 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.miscota.android.R
 import com.miscota.android.databinding.ActivityAddressBinding
 import com.miscota.android.databinding.PartialLayoutRecentAddressBinding
+import com.miscota.android.ui.cart.CartUiModel
+import com.miscota.android.ui.cart.CartViewModel
+import com.miscota.android.ui.cart.toCartItemUiModel
 import com.miscota.android.ui.store.StoreLocationFragment
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -41,6 +45,8 @@ class AddressActivity : AppCompatActivity() {
 
     private val viewModel by viewModel<AddressViewModel>()
 
+    private val viewModelCart by viewModel<CartViewModel>()
+
     private var _map: GoogleMap? = null
 
     private lateinit var geoCoder: Geocoder
@@ -49,7 +55,7 @@ class AddressActivity : AppCompatActivity() {
 
     private lateinit var lastLocation: Location
 
-            var jobSearchLocation: Job? = null
+    private var jobSearchLocation: Job? = null
 
     var jobPlace: Job? = null
 
@@ -102,7 +108,6 @@ class AddressActivity : AppCompatActivity() {
                 Manifest.permission.ACCESS_FINE_LOCATION
             ))**/
 
-
         geoCoder = Geocoder(this, Locale.getDefault())
 
      /**   val locationPermissionLauncher =
@@ -131,7 +136,7 @@ class AddressActivity : AppCompatActivity() {
 
         initMap()
 
-            setupAutoCompleteSearch()
+        setupAutoCompleteSearch()
 
         binding.currentLocation.setOnClickListener {
 
@@ -272,7 +277,6 @@ class AddressActivity : AppCompatActivity() {
         }
 
         viewModel.requestID.observe(this){
-            println("AddressActivity requestID.value line 283  ${viewModel.requestID.value} -- ")
             return@observe
         }
 
@@ -285,8 +289,60 @@ class AddressActivity : AppCompatActivity() {
 
         viewModel.loadStores()
 
+        val listCheckoutProducts = loadCheckout()
+        val dialogo =
+            AlertDialog.Builder(this)
+                .setPositiveButton(getString(R.string.yes_delete)) { dialog, which ->
+
+                    listCheckoutProducts.map {
+                        if (it.type == getString(R.string.type_sameday)) {
+                            viewModelCart.removeItemRef(it.ref, it.type, this)
+
+                        }
+                    }
+
+                }
+                .setNegativeButton(
+                    getString(R.string.cancel)
+                ) { dialog, which ->
+
+                    dialog.dismiss()
+                }
+                .setTitle(getString(R.string.atention))
+                .setMessage(getString(R.string.postal_code_message)+
+                        "\n\n"+getString(R.string.delete_products))
+                .create()
+
+
+        viewModel.addressChanged.observe(this){
+            val sameDay = listCheckoutProducts.findLast { product -> product.type == getString(R.string.type_sameday) }
+            if (it){
+                if (sameDay != null) {
+                    dialogo.show()
+                }
+            }
+        }
+
     }
 
+    private fun loadCheckout(): MutableList<CartUiModel.ItemListCheckout>{
+
+        val list: MutableList<CartUiModel.ItemListCheckout> = mutableListOf()
+        viewModel.authStore.getCart().map {
+            it.toCartItemUiModel()
+
+            list.add(
+                CartUiModel.ItemListCheckout(
+                    qty = it.qty.toString(),
+                    price = it.combinationPrice.toString(),
+                    type = it.type,
+                    ref = it.combinationReference,
+                )
+            )
+
+        }
+        return list
+    }
 
 
     override fun onRequestPermissionsResult(
@@ -414,14 +470,11 @@ class AddressActivity : AppCompatActivity() {
 
                     }catch (e: IOException){
 
-                        println(" Error: ${e.message} captured")
                          if (isConnected()) {
                              println(" Internet Connected with another Error: ${e.message}")
-
                          }
                         else{
 
-                            println(" Error: ${e.message} because Internet Disconnected")
                             Toast.makeText(this@AddressActivity, R.string.message_conected, Toast.LENGTH_LONG).show()
                         }
 

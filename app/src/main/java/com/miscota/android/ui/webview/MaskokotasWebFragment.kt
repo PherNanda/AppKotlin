@@ -108,6 +108,7 @@ class MaskokotasWebFragment : Fragment() {
             (requireActivity() as MainActivity).binding.samedayInfoMain.visibility = View.GONE
             (requireActivity() as MainActivity).binding.locationLinearLayoutmain.visibility =
                 View.GONE
+            (requireActivity() as MainActivity).binding.imageBack.visibility = View.GONE
 
             val params: ViewGroup.LayoutParams =
                 (requireActivity() as MainActivity).binding.headerMain.layoutParams!!

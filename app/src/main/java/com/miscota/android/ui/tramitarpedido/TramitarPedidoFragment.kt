@@ -147,12 +147,12 @@ class TramitarPedidoFragment : Fragment() {
 
         viewModelCart.costSd.observe(requireActivity()){
             carriersSd = it
-            binding.sameDayPrice.text = "${it.toDouble()}"+" €"
+            binding.sameDayPrice.text = String.format("${it.toDouble()}"+" €")
             return@observe
         }
 
         viewModelCart.costEcommerce.observe(requireActivity()){
-            binding.ecommercePrice.text = "${it.toDouble()}"+" €"
+            binding.ecommercePrice.text = String.format("${it.toDouble()}"+" €")
             return@observe
         }
 
@@ -169,7 +169,7 @@ class TramitarPedidoFragment : Fragment() {
             binding.totalPrice.text = String.format("%.2f", totalCheckout)+" €" //TO CHANGE
         }
         
-        binding.productsPrice.text = String.format("%.2f", subtotal)+" €"
+        binding.productsPrice.text = String.format(String.format("%.2f", subtotal)+" €")
 
         if (viewModelCart.authStore.getCard() != null){
 
@@ -200,26 +200,26 @@ class TramitarPedidoFragment : Fragment() {
         if (addressB != null && provinceB != null && postalCodeB != null && cityB != null && phoneB != null){
 
             binding.addressShipping.text = addressB
-            binding.addressShippingComplement.text = "$postalCodeB, $cityB, $phoneB ,$provinceB, España"
+            binding.addressShippingComplement.text = String.format("$postalCodeB, $cityB, $phoneB ,$provinceB, España")
             viewModelCart.authStore.setPhone(phoneB)
         }
         if (addressBC != null && provinceBC != null && postalCodeBC != null && cityBC != null && phoneBC != null){
 
             binding.addressShipping.text = addressBC
-            binding.addressShippingComplement.text = "$postalCodeBC, $cityBC, $phoneBC ,$provinceBC, España"
+            binding.addressShippingComplement.text = String.format("$postalCodeBC, $cityBC, $phoneBC ,$provinceBC, España")
             viewModelCart.authStore.setPhone(phoneBC)
 
         }
         if (addressUser?.addressNumber != null){
             binding.addressShipping.text = addressUser?.addressNumber
-            binding.addressShippingComplement.text = "${addressUser?.postalCode}, ${addressUser?.city}, ${addressUser?.state} ,${addressUser?.countryName}"
+            binding.addressShippingComplement.text = String.format("${addressUser?.postalCode}, ${addressUser?.city}, ${addressUser?.state} ,${addressUser?.countryName}")
 
         }
         else {
             if (addressUserInfo != null ){
 
                 binding.addressShipping.text = addressUserInfo?.addressNumber
-                binding.addressShippingComplement.text = "${addressUserInfo?.postalCode}, ${addressUserInfo?.city}, ${addressUserInfo?.state} ,${addressUserInfo?.region}, España"
+                binding.addressShippingComplement.text = String.format("${addressUserInfo?.postalCode}, ${addressUserInfo?.city}, ${addressUserInfo?.state} ,${addressUserInfo?.countryName}")
 
             }else {
 
@@ -227,7 +227,7 @@ class TramitarPedidoFragment : Fragment() {
 
                     binding.addressShipping.text = recentAddressesUser.first().addressNumber
                     binding.addressShippingComplement.text =
-                        "${recentAddressesUser.first().postalCode}, ${recentAddressesUser.first().city}, ${recentAddressesUser.first().state}, ${recentAddressesUser.first().countryName}"
+                        String.format("${recentAddressesUser.first().postalCode}, ${recentAddressesUser.first().city}, ${recentAddressesUser.first().state}, ${recentAddressesUser.first().countryName}")
 
                 } else {
                     if (recentAddresses.isNotEmpty()) {
@@ -236,7 +236,7 @@ class TramitarPedidoFragment : Fragment() {
                             it.address
                             binding.addressShipping.text = it.addressNumber
                             binding.addressShippingComplement.text =
-                                "${it.postalCode}, ${it.city}, ${it.state}, ${it.countryName}"
+                                String.format("${it.postalCode}, ${it.city}, ${it.state}, ${it.countryName}")
                         }
                     }
                 }
@@ -247,7 +247,7 @@ class TramitarPedidoFragment : Fragment() {
             binding.clientName.text = "${viewModelCart.authStore.getUser()?.name}"
 
             if (viewModelCart.authStore.getUser()?.surname != null){
-                binding.clientName.text = "${viewModelCart.authStore.getUser()?.name}, ${viewModelCart.authStore.getUser()?.surname}"
+                binding.clientName.text = String.format("${viewModelCart.authStore.getUser()?.name}, ${viewModelCart.authStore.getUser()?.surname}")
             }
         }
         if(!isLogued()){
@@ -297,7 +297,7 @@ class TramitarPedidoFragment : Fragment() {
 
         }
 
-        binding.productTotalCart.text = "( ${viewModelCart.getTotalItens()} )"
+        binding.productTotalCart.text = String.format("( ${viewModelCart.getTotalItens()} )")
 
         DrawableCompat.setTint(
             binding.loading.indeterminateDrawable,

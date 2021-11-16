@@ -28,8 +28,6 @@ import com.miscota.android.ui.cart.toCartItemUiModel
 import com.miscota.android.ui.tramitarpedido.TramitarPedidoFragment
 import com.miscota.android.util.Address
 import com.miscota.android.util.autoClean
-import kotlinx.coroutines.awaitAll
-import okhttp3.internal.wait
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -71,7 +69,7 @@ class AddressCurrentFragment : Fragment() {
 
         val bundleAddressCurrent: Bundle? = arguments
         val listCheckoutProducts = loadCheckout()
-        val dialogo =
+        val dialog =
             AlertDialog.Builder(requireContext())
                 .setPositiveButton(getString(R.string.yes_delete)) { dialog, which ->
 
@@ -126,7 +124,7 @@ class AddressCurrentFragment : Fragment() {
 
 
                 partialBinding.currentLocation.text = address.addressNumber
-                partialBinding.currentLocationText.text = "${address.postalCode}, ${address.city}, ${address.countryName}"
+                partialBinding.currentLocationText.text = String.format("${address.postalCode}, ${address.city}, ${address.countryName}")
 
                 //handler().postDelayed( {
                 partialBinding.root.setOnClickListener {
@@ -144,7 +142,7 @@ class AddressCurrentFragment : Fragment() {
 
                     if (address.postalCode != addressUser.postalCode && sameDay != null) {
 
-                        dialogo.show()
+                        dialog.show()
                         addressSelected = address
                     }
                     if (address.postalCode != addressUser.postalCode && sameDay == null)
@@ -172,7 +170,7 @@ class AddressCurrentFragment : Fragment() {
                 val partialBinding = PartialLayoutRecentAddressCartBinding.inflate(layoutInflater)
                 binding.recentAddressLayout.addView(partialBinding.root)
                 partialBinding.currentLocation.text = address.addressNumber
-                partialBinding.currentLocationText.text = "${address.postalCode}, ${address.city}, ${address.countryName}"
+                partialBinding.currentLocationText.text = String.format("${address.postalCode}, ${address.city}, ${address.countryName}")
 
                 viewModelAddress.currentAddress.value?.postalCode
 
@@ -184,7 +182,7 @@ class AddressCurrentFragment : Fragment() {
 
                     if (address.postalCode != addressUser.postalCode && sameDay != null) {
 
-                        dialogo.show()
+                        dialog.show()
                         addressSelected = address
                     }
                     if (address.postalCode != addressUser.postalCode && sameDay == null)
@@ -292,7 +290,7 @@ class AddressCurrentFragment : Fragment() {
         recentAddresses = viewModelAddress.authStore.getRecentAddresses() ?: listOf()
     }
 
-    fun loadAddressesUser() {
+    private fun loadAddressesUser() {
         recentAddressesUser = viewModelAddress.authStore.getRecentAddressesInfo() ?: listOf()
     }
 

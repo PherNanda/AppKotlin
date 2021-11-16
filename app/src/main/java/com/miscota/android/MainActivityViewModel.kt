@@ -65,8 +65,6 @@ class MainActivityViewModel(
 
 
     init {
-        println("isAuthShow.value::: MainActivityViewModel:: init  ${isAuthShow.value}")
-        println("_isAuthShow.value::: MainActivityViewModel:: init  ${_isAuthShow.value}")
         val currentDate = Date()
         val dateExpire = getDateLoginExpire()
         loadSelectedLocation()
@@ -76,9 +74,6 @@ class MainActivityViewModel(
 
         if (!authStore.isLoggedIn() && isAuthShow.value == 0) {
             _openLoginActivityEvent.value = Event(true)
-            println(" screen _openLoginActivityEvent.value::: MainActivityViewModel ${openLoginActivityEvent.value}")
-            println("isAuthShow.value::: in if MainActivityViewModel:: init  ${isAuthShow.value}")
-            println("_isAuthShow.value::: in if MainActivityViewModel:: init  ${_isAuthShow.value}")
             _isAuthShow.value = 1
         }
 
@@ -97,7 +92,6 @@ class MainActivityViewModel(
 
         val cartItensCheckout = authStore.getCart().map {
             it.toCartItemUiModel()
-            println(" it itens checkoutMain: $it")
 
             list.add(
                 CartUiModel.ItemListCheckout(

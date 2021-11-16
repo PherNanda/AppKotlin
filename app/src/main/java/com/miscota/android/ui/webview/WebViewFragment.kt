@@ -26,7 +26,8 @@ class WebViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (requireActivity() as MainActivity).binding.imageBack.isVisible = true
+        (requireActivity() as MainActivity).binding.imageBack.isVisible = false
+        //(requireActivity() as MainActivity).binding.imageBack.visibility = View.GONE
 
         val url = requireNotNull(requireArguments().getString(KEY_STRING_WEB_VIEW_URL))
 
