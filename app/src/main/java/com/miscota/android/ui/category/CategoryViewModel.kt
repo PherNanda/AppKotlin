@@ -158,6 +158,7 @@ class CategoryViewModel(
                     )
 
                 if (response.isEmpty()) {
+                    showLoading.value = true
                     return@launch
                 }
 
@@ -168,28 +169,29 @@ class CategoryViewModel(
 
                 productPageNumber += PAGE_LIMIT
                 shouldProductsFetch = true
+                showLoading.value = shouldProductsFetch
             }
 
             val exception = result.exceptionOrNull()
             if (exception != null && exception !is CancellationException) {
                 Timber.e(exception.message.toString())
+                showLoading.value = true
                 println(exception.message.toString())
-                _messageEvent.value = Event("Algo no ha ido bien, no hay productos para mostrar")
+                _messageEvent.value = Event("No hay más productos para mostrar")
             }
          }
 
     }
 
     fun loadMoreProducts() {
-        println("updateList()::: category 11")
         if (shouldProductsFetch) {
             shouldProductsFetch = false
+            showLoading.value = shouldProductsFetch
             loadProducts()
         }
     }
 
     private fun loadTopProducts() {
-        println("updateList()::: category 4")
             viewModelScope.launch {
                 val result = runCatching {
                     val response =
@@ -326,21 +328,6 @@ class CategoryViewModel(
         return _products
 
     }
-
-    /**fun selectCategoryItem(categoryUiModel: CategoryUiModel.CategoryListItem) {
-        for (category in categoryListItem.categories)
-
-        _categoriesT.value?.map {
-        }
-        val list = _categoriesT.value?.map {
-
-                _selectedCategories.add(categoryUiModel.categories[0])
-
-                return@map it
-        }
-        _categoriesT.value = list as List<CategoryUiModel.CategoryListItem>?
-    }**/
-
 
     companion object {
         const val PAGE_LIMIT = 20

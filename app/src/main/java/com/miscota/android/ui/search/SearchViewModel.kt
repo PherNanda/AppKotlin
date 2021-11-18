@@ -124,7 +124,8 @@ class SearchViewModel(
             if (exception != null && exception !is CancellationException) {
                 Timber.e(exception.message.toString())
                 println(exception.message.toString())
-                _messageEvent.value = Event("algo no ha ido bien")
+                showLoading.value = true
+                _messageEvent.value = Event("No hay más productos que mostrar")
             }
         }
     }
@@ -133,9 +134,11 @@ class SearchViewModel(
         if (searchQuery?.length!! < 3){
             _topProductList.value = mutableListOf()
             searchProductPageNumber = 0
+            //showLoading.value = false
         }else {
             loadTopProducts(type)
             autoStore.setType(type)
+            showLoading.value = false
         }
 
         //loadTopProducts(type)

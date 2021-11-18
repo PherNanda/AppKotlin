@@ -60,8 +60,9 @@ class CategoryProductsFragment : Fragment() {
         viewModel.showLoading.observe(viewLifecycleOwner) {
             if (!viewModel.showLoading.value!!) {
 
-                binding.loading.visibility = View.VISIBLE
                 binding.fragmentProduct.setBackgroundResource(R.drawable.ic_background_loading_transp)
+                binding.loading.visibility = View.VISIBLE
+
             }
             if (viewModel.showLoading.value!!) {
 
@@ -89,7 +90,8 @@ class CategoryProductsFragment : Fragment() {
         binding.searchLayout.layoutParams = params**/
 
         //visibility off samedayFlagBottom
-        binding.textSamedayFlag.text = boldMyText(getString(R.string.same_day_flag_text),28,40)
+        binding.textSamedayFlag.text = boldMyText(
+            getString(R.string.same_day_flag_text))
 
         if(viewModel.getType() == "sameday"){
             binding.samedayFlagBottom.background = ContextCompat.getDrawable(requireContext(), R.drawable.background_sameday_flag)
@@ -171,8 +173,8 @@ class CategoryProductsFragment : Fragment() {
                    for (items in item.categories){
                        for (it in items.categories){
                            if (it.name != category.title){
-                               it.checked == "false"
-                               t.add(CategoryOne("",it.id,it.name,"false"))
+                               it.checked == CHECKED_FALSE
+                               t.add(CategoryOne("",it.id,it.name,CHECKED_FALSE))
 
                            }
                        }
@@ -220,8 +222,6 @@ class CategoryProductsFragment : Fragment() {
 
         viewModel.dataList.observe(viewLifecycleOwner) {
             listAdapter.submitList(it)
-            println("datalist::: ${it.map { it }}")
-            println("datalist::: size ${it.size}")
         }
 
         viewModel.categories.observe(viewLifecycleOwner) {
@@ -232,12 +232,15 @@ class CategoryProductsFragment : Fragment() {
 
     companion object {
         const val KEY_LONG_CATEGORY_ID = "categoryId"
+        const val CHECKED_FALSE = "false"
+        const val START_INDEX = 28
+        const val END_INDEX = 40
     }
 
-    private fun boldMyText(inputText:String,startIndex:Int,endIndex:Int): Spannable {
+    private fun boldMyText(inputText:String): Spannable {
         val outPutBoldText: Spannable = SpannableString(inputText)
         outPutBoldText.setSpan(
-            StyleSpan(Typeface.BOLD), startIndex, endIndex,
+            StyleSpan(Typeface.BOLD), START_INDEX, END_INDEX,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 

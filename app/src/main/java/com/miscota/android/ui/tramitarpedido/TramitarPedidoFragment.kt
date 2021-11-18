@@ -49,7 +49,8 @@ class TramitarPedidoFragment : Fragment() {
 
     companion object {
         fun newInstance() = TramitarPedidoFragment()
-        const val maxLengthCard = 16
+        const val MAX_LENGTH_CARD = 16
+        const val CURRENT_ZERO_DEFAULT = "0"
     }
 
     private lateinit var viewModel: TramitarPedidoViewModel
@@ -173,7 +174,7 @@ class TramitarPedidoFragment : Fragment() {
 
         if (viewModelCart.authStore.getCard() != null){
 
-            binding.creditCardNumber.text = String.format(resources.getString(R.string.card_mask), viewModelCart.authStore.getCard()!!.card.substring(12,maxLengthCard))
+            binding.creditCardNumber.text = String.format(resources.getString(R.string.card_mask), viewModelCart.authStore.getCard()!!.card.substring(12,MAX_LENGTH_CARD))
             binding.creditCardName.text = viewModelCart.authStore.getCard()!!.owner.toString()
         }
         if (viewModelCart.authStore.getCard() == null){
@@ -189,7 +190,7 @@ class TramitarPedidoFragment : Fragment() {
         }
         if( cardNumber != null ){
 
-            binding.creditCardNumber.text = String.format(resources.getString(R.string.card_mask),cardNumber.substring(12,maxLengthCard))
+            binding.creditCardNumber.text = String.format(resources.getString(R.string.card_mask),cardNumber.substring(12,MAX_LENGTH_CARD))
 
         }
         if(cardOwner != null ){
@@ -287,7 +288,7 @@ class TramitarPedidoFragment : Fragment() {
         binding.toolbar.imageBack.setOnClickListener {
             val cartItemsTest = viewModelCart.authStore.getCart().toMutableList()
             val newList = cartItemsTest.map { item ->
-                    viewModelCart.authStore.setCurrentTimeDelivered("0")
+                    //viewModelCart.authStore.setCurrentTimeDelivered("0")
                 //return@map item.copy(currentTimeDelivered = currentTimeDelivered)
                 return@map item
             }
@@ -392,7 +393,7 @@ class TramitarPedidoFragment : Fragment() {
                 viewModelCart.authStore.getRecentAddresses()?: listAddress,
                 viewModelCart.authStore.getAddressInfo()?:Address("","",0.0,0.0,"","","","","","","","",""),
                 viewModelCart.authStore.getEmail()?: " ",
-                cardNumber?:viewModelCart.authStore.getCard()?.card?:"0",
+                cardNumber?:viewModelCart.authStore.getCard()?.card?:CURRENT_ZERO_DEFAULT,
                 deliveryType,
                 currentTime
             )
@@ -786,7 +787,7 @@ class TramitarPedidoFragment : Fragment() {
         }
         if (cardNumber != null){
 
-            if (cardNumber.length == maxLengthCard){
+            if (cardNumber.length == MAX_LENGTH_CARD){
                 checkoutCard = true
             }else{
 
@@ -921,17 +922,25 @@ class TramitarPedidoFragment : Fragment() {
 
             if (it.toCartUiModel().type == getString(R.string.type_sameday)){
                 totalSameDay += it.toCartUiModel().quantity
+
+                if (it.toCartUiModel().samedayDelivery == null){
+                    binding.dateOrderReceiveSameDay.text = getString(R.string.text_need_hour_receive_sd)
+
+                }
+                if ( it.toCartUiModel().samedayDelivery?.length == 0 && (it.toCartUiModel().samedayDelivery == "" || it.toCartUiModel().samedayDelivery == CURRENT_ZERO_DEFAULT )){
+                    binding.dateOrderReceiveSameDay.text = getString(R.string.text_need_hour_receive_sd)
+
+                }
+                if (it.toCartUiModel().samedayDelivery != null && it.toCartUiModel().samedayDelivery != "" && it.toCartUiModel().samedayDelivery != CURRENT_ZERO_DEFAULT ){
+                    currentDelivered = it.toCartUiModel().samedayDelivery
+                    binding.dateOrderReceiveSameDay.text = it.toCartUiModel().samedayDelivery
+                }
+
             }
             if (it.toCartUiModel().type == getString(R.string.type_ecommerce)){
                 totalEcommerce += it.toCartUiModel().quantity
             }
-            if (it.toCartUiModel().samedayDelivery != null && it.toCartUiModel().type == getString(R.string.type_sameday)){
-                currentDelivered = it.toCartUiModel().samedayDelivery
-                binding.dateOrderReceiveSameDay.text = it.toCartUiModel().samedayDelivery
-            }
-            if ((it.toCartUiModel().samedayDelivery == "" || it.toCartUiModel().samedayDelivery == "0") && it.toCartUiModel().type == getString(R.string.type_sameday)){
-                binding.dateOrderReceiveSameDay.text = getString(R.string.text_need_hour_receive_sd)
-            }
+
 
         }
 
@@ -944,12 +953,11 @@ class TramitarPedidoFragment : Fragment() {
             getString(R.string.total_sameday),
             totalSameDay.toString()
         )
-        //println("totalSameDay::: $totalSameDay")
-        //println("totalEcommerce:::: $totalEcommerce")
 
         if ( totalSameDay > 0 ){
+
             binding.totalProductsCartSameDay.text = String.format(resources.getString(R.string.total_products_exemple),totalSameDay)
-            println("currentDelivered $currentDelivered")
+
             binding.totalProductsCartSameDay.visibility = View.VISIBLE
             binding.typeOrderSameday.visibility = View.VISIBLE
             binding.imageSameday.visibility = View.VISIBLE
@@ -961,7 +969,8 @@ class TramitarPedidoFragment : Fragment() {
 
         }
         if ( totalSameDay == 0 ){
-            binding.totalProductsCartSameDay.text = String.format(resources.getString(R.string.total_products_exemple),"0")
+
+            binding.totalProductsCartSameDay.text = String.format(resources.getString(R.string.total_products_exemple), CURRENT_ZERO_DEFAULT )
             binding.dateOrderReceiveSameDay.visibility = View.GONE
             binding.infoOrderReceiveSameday.visibility = View.GONE
             binding.totalProductsCartSameDay.visibility = View.GONE
@@ -978,7 +987,7 @@ class TramitarPedidoFragment : Fragment() {
 
         }
         if ( totalEcommerce == 0 ){
-            binding.totalProductsCartEcommerce.text = String.format(resources.getString(R.string.total_products_exemple),"0")
+            binding.totalProductsCartEcommerce.text = String.format(resources.getString(R.string.total_products_exemple),CURRENT_ZERO_DEFAULT)
             binding.typeOrderEcommerce.visibility = View.GONE
             binding.totalProductsCartEcommerce.visibility = View.GONE
         }
@@ -1011,17 +1020,42 @@ class TramitarPedidoFragment : Fragment() {
 
         val cartItemsTest = viewModelCart.authStore.getCart().toMutableList()
         cartItemsTest.map { item ->
-            if ((item.toCartUiModel().samedayDelivery == "" || item.toCartUiModel().samedayDelivery == "0")
-                && item.toCartUiModel().type == getString(R.string.type_sameday)){
-                binding.dateOrderReceiveSameDay.text = getString(R.string.text_need_hour_receive_sd)
+            if(item.toCartUiModel().type == getString(R.string.type_sameday)) {
+
+                if (item.toCartUiModel().samedayDelivery != null && item.toCartUiModel().samedayDelivery == "") {
+                    binding.dateOrderReceiveSameDay.text =
+                        getString(R.string.text_need_hour_receive_sd)
+
+                }
+                if(item.toCartUiModel().samedayDelivery == CURRENT_ZERO_DEFAULT ){
+
+                    binding.dateOrderReceiveSameDay.text =
+                        getString(R.string.text_need_hour_receive_sd)
+
+                }
+                if(item.toCartUiModel().samedayDelivery == null){
+
+                    binding.dateOrderReceiveSameDay.text =
+                        getString(R.string.text_need_hour_receive_sd)
+
+                }
+                if (item.toCartUiModel().samedayDelivery != null && item.toCartUiModel().samedayDelivery?.length == 0 && item.toCartUiModel().samedayDelivery != "") {
+
+                    binding.dateOrderReceiveSameDay.text =
+                        getString(R.string.text_need_hour_receive_sd)
+
+                }
+                if (item.toCartUiModel().samedayDelivery != null &&  item.toCartUiModel().samedayDelivery != "" && item.toCartUiModel().samedayDelivery != CURRENT_ZERO_DEFAULT ) {
+
+                    binding.dateOrderReceiveSameDay.text = item.toCartUiModel().samedayDelivery
+                }
+
             }
 
             viewModelCart.costSd.observe(requireActivity()){
-                println("it sd::: $it")
                 return@observe
             }
             viewModelCart.costEcommerce.observe(requireActivity()){
-                println("it eco::: $it")
                 return@observe
             }
 
@@ -1031,7 +1065,7 @@ class TramitarPedidoFragment : Fragment() {
 
     }
 
-    override fun onResume() {
+    /**override fun onResume() {
         super.onResume()
         println("onResume TramitarPedido")
     }
@@ -1045,19 +1079,19 @@ class TramitarPedidoFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         println("onPause TramitarPedido")
-    }
+    }**/
 
     override fun onStop() {
         super.onStop()
         println("onStop TramitarPedido")
         val cartItemsTest = viewModelCart.authStore.getCart().toMutableList()
         val newList = cartItemsTest.map { item ->
-            viewModelCart.authStore.setCurrentTimeDelivered("0")
+            //viewModelCart.authStore.setCurrentTimeDelivered("0")
             return@map item
         }
     }
 
-    override fun onDestroyView() {
+   /** override fun onDestroyView() {
         super.onDestroyView()
         println("onDestroyView")
     }
@@ -1075,5 +1109,6 @@ class TramitarPedidoFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         println("onDetach")
-    }
+    }**/
+
 }

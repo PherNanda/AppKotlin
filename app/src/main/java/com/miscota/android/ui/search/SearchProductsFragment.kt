@@ -2,17 +2,11 @@ package com.miscota.android.ui.search
 
 import android.os.Build
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getColor
-import androidx.core.content.ContextCompat.getColorStateList
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
@@ -22,7 +16,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.miscota.android.MainActivity
 import com.miscota.android.R
 import com.miscota.android.databinding.FragmentSearchProductsBinding
-import com.miscota.android.ui.category.CategoryUiModel
 import com.miscota.android.ui.productdetail.ProductDetailFragment
 import com.miscota.android.ui.productdetail.toProductDetailUiModel
 import com.miscota.android.util.RecyclerViewLoadMoreListener

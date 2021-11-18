@@ -225,8 +225,8 @@ class CategoryItemAdapter(
                 binding.priceText.text = String.format("${String.format("%.2f",item.combinations[0].price)} €")
                 binding.discountText.isVisible = item.hasDiscount
                 binding.discountText.text = item.discountPrice
-                binding.brandProductName.text = String.format(item.brand)
-                binding.productName.text = String.format(item.productName)
+                binding.brandProductName.text = item.brand
+                binding.productName.text = item.productName
 
 
                 println(" item.combinations[0].stock ${item.combinations[0].stock}")
