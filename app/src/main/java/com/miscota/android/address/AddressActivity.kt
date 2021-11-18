@@ -305,8 +305,9 @@ class AddressActivity : AppCompatActivity() {
                 .setNegativeButton(
                     getString(R.string.cancel)
                 ) { dialog, which ->
-
+                    finish()
                     dialog.dismiss()
+
                 }
                 .setTitle(getString(R.string.atention))
                 .setMessage(getString(R.string.postal_code_message)+

@@ -165,6 +165,25 @@
         app:layout_constraintStart_toStartOf="@+id/productName"
         app:layout_constraintTop_toBottomOf="@+id/brandProductName" />
 
+        <TextView
+            android:id="@+id/productCombination"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="13dp"
+            android:maxLines="2"
+            android:minLines="2"
+            android:visibility="gone"
+            android:ellipsize="end"
+            android:textColor="@color/grey_dark"
+            app:fontFamily="@font/bree_regular"
+            android:text="@string/text_default_product_name"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textSize="12sp"
+            app:layout_constraintRight_toRightOf="@+id/priceText"
+            app:layout_constraintRight_toLeftOf="@+id/priceText"
+            app:layout_constraintTop_toBottomOf="@+id/productName" />
+
     <TextView
         android:id="@+id/oldPriceText"
         android:layout_width="0dp"

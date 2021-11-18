@@ -163,17 +163,7 @@
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintTop_toBottomOf="@+id/checkoutButtonNew" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:paddingBottom="100dp"
-        android:visibility="gone"
-        android:src="@drawable/miscota_image_cart"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintBottom_toBottomOf="parent">
 
-    </ImageView>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -262,5 +252,17 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/bottom_nav_menu" />-->
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:paddingBottom="100dp"
+        android:visibility="gone"
+        android:src="@drawable/miscota_image_cart"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    </ImageView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

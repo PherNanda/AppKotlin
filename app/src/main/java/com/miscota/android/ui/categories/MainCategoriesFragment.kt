@@ -245,7 +245,7 @@ class MainCategoriesFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        println("listAdapter.currentList.size onAttach  no inicializada")
+        //println("listAdapter.currentList.size onAttach  no inicializada")
     }
 
     companion object {
