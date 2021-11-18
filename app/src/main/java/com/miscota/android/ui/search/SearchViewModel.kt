@@ -20,6 +20,8 @@ class SearchViewModel(
     private var topProductPageNumber = 1
     private var shouldTopProductsFetch = false
 
+    private var searchProductPageNumber = 0
+
     var showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
 
     private val _topProductList: MutableLiveData<List<CategoryUiModel.Product>> =
@@ -29,47 +31,91 @@ class SearchViewModel(
     private val _messageEvent: MutableLiveData<Event<String>> = MutableLiveData()
     val messageEvent: LiveData<Event<String>> = _messageEvent
 
+    private val _categories: MutableLiveData<List<CategoryUiModel.CategoryListItem.Category>> =
+        MutableLiveData(listOf())
+
+    private var _products: MutableLiveData<List<CategoryUiModel.Product>> =
+        MutableLiveData(listOf())
+
     private var searchQuery: String? = null
 
     private var searchJob: Job? = null
 
-    init {
-        //loadTopProducts(type = autoStore.getType()!!)
-    }
+    /**init {
+        loadTopProducts(type = autoStore.getType()!!)
+    }**/
+
+    val dataList: LiveData<List<CategoryUiModel>> =
+        MediatorLiveData<List<CategoryUiModel>>().apply {
+            fun updateList() {
+
+                val products = _products.value ?: listOf()
+
+                val mergedList = mutableListOf<CategoryUiModel>()
+
+                //mergedList.add(featureProduct)
+                mergedList.add(CategoryUiModel.TextItem)
+
+                mergedList.addAll(
+                    products
+                )
+                mergedList.add(CategoryUiModel.SpacerItem)
+
+                value = mergedList
+            }
+
+            addSource(_categories) {
+                updateList()
+            }
+
+            addSource(_topProductList) {
+                updateList()
+            }
+
+            addSource(_products) {
+                updateList()
+            }
+        }
 
     fun search(query: String, type: String) {
         if (query.length < 3){
             _topProductList.value = mutableListOf()
+            searchProductPageNumber = 0
+            searchQuery = ""
         }else {
             searchQuery = query
             loadTopProducts(type)
+            autoStore.setType(type)
         }
     }
 
     private fun loadTopProducts(type: String) {
+
         searchJob?.cancel()
 
         searchJob = viewModelScope.launch {
             delay(300)
-            _topProductList.value = mutableListOf()
+            //_topProductList.value = mutableListOf()
             val result = runCatching {
                 val response = productRepository.searchProducts(
-                    searchQuery ?: "", type = type, autoStore.getRetailID()?:"0"
+                    searchQuery ?: "", type = type,
+                    autoStore.getRetailID()?:"0",
+                    position = searchProductPageNumber,
+                    limit = PAGE_LIMIT
                 )
-                // for fake searching
-//                productRepository.fetchProductsByCategory(
-//                    categoryId = 2,
-//                    page = 0,
-//                    limit = 450,
-//                )
+
                 if (response.isEmpty()) {
                     return@launch
                 }
+
                 val list = _topProductList.value?.toMutableList() ?: mutableListOf()
                 list.addAll(response.map { it.toCategoryProductUiModel() })
+
                 _topProductList.value = list
+                //_products.value = list
 
                 topProductPageNumber++
+                searchProductPageNumber += PAGE_LIMIT
                 shouldTopProductsFetch = false
                 showLoading.value = true
             }
@@ -84,18 +130,31 @@ class SearchViewModel(
     }
 
     fun loadMoreTopProducts(type: String) {
+        if (searchQuery?.length!! < 3){
+            _topProductList.value = mutableListOf()
+            searchProductPageNumber = 0
+        }else {
+            loadTopProducts(type)
+            autoStore.setType(type)
+        }
+
+        //loadTopProducts(type)
+        //loadProducts(type)
         if (shouldTopProductsFetch) {
             shouldTopProductsFetch = false
-            loadTopProducts(type)
+            //loadTopProducts(type)
         }
     }
 
-    fun getType():String?{
-        var productType = autoStore.getType()
-        return productType
+    fun getType(): String? {
+        return autoStore.getType()
     }
 
     fun setRetailId(retailID: String){
         autoStore.setRetailID(retailID)
+    }
+
+    companion object {
+        const val PAGE_LIMIT = 20
     }
 }

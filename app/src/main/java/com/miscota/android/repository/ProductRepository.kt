@@ -39,12 +39,16 @@ class ProductRepository(private val productApi: ProductApi, private val authStor
     suspend fun searchProducts(
         query: String,
         type: String,
-        retailID: String
+        retailID: String,
+        position: Int,
+        limit: Int
     ): List<ProductNetworkModel> {
         return productApi.searchProducts(
             authHeader = "Bearer " + authStore.getBearerToken(),
             query = query,
             requestRetailId = retailID,
+            position = position,
+            limit = limit,
             type = type
         )
     }

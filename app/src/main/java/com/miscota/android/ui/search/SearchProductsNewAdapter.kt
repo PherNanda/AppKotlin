@@ -5,17 +5,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.miscota.android.R
 import com.miscota.android.databinding.ItemSearchProductBinding
 import com.miscota.android.ui.category.CategoryUiModel
+import com.miscota.android.util.RecyclerViewLoadMoreListener
 
-class SearchProductsAdapter(
+class SearchProductsNewAdapter(
     private val productClickListener: (CategoryUiModel.Product) -> Unit,
     private val loadMoreTopProducts: () -> Unit,
-) : ListAdapter<CategoryUiModel.Product, SearchProductsAdapter.ProductViewHolder>(ListDiffUtil) {
+) : ListAdapter<CategoryUiModel.Product, SearchProductsNewAdapter.ProductViewHolder>(
+    ListDiffUtil
+) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -27,7 +31,8 @@ class SearchProductsAdapter(
                 parent,
                 false
             ),
-            productClickListener = productClickListener
+            productClickListener = productClickListener,
+            loadMoreTopProducts = loadMoreTopProducts
         )
     }
 
@@ -38,6 +43,7 @@ class SearchProductsAdapter(
     class ProductViewHolder(
         private val binding: ItemSearchProductBinding,
         private val productClickListener: (CategoryUiModel.Product) -> Unit,
+        private val loadMoreTopProducts: () -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         lateinit var uiModel: CategoryUiModel.Product
 
@@ -65,6 +71,8 @@ class SearchProductsAdapter(
                 }
             }
         }
+
+
     }
 
     object ListDiffUtil : DiffUtil.ItemCallback<CategoryUiModel.Product>() {

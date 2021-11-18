@@ -43,22 +43,13 @@ class CategoryAdapter(
 
                     categoryClickListener.invoke(uiModel.copy(isChecked = true))
                 }
-                /**else{
-                    println("checked::: two $checked")
-                    println("binding.checkBox::: two ${binding.checkBox.text}")
-                    //binding.checkBox.isChecked = false
-                    categoryClickListener.invoke(uiModel.copy(isChecked = false))
-                }**/
+
             }
         }
 
         fun bind(item: CategoryUiModel.CategoryListItem.Category) {
             uiModel = item
-
-            println(" uiModel.uid ${uiModel.uid}")
-            println(" uiModel.isChecked ${uiModel.isChecked}")
-            println(" item.title ${item.title}")
-            println(" toop ${uiModel.title}")
+            
             binding.checkBox.text = uiModel.title
             binding.checkBox.isChecked = uiModel.isChecked
         }

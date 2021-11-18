@@ -57,14 +57,11 @@ class CategoryViewModel(
     val dataList: LiveData<List<CategoryUiModel>> =
         MediatorLiveData<List<CategoryUiModel>>().apply {
             fun updateList() {
-
+            println("updateList()::: category 33")
                 val categories = _categories.value ?: listOf()
                 val categoryItem = categoryListItem.copy(
                     categories = categories,
                 )
-                println("categoryItem::: ${categoryItem.categories.map { it }}")
-                println("_categories.value?.map::: ${_categories.value?.map { it }}")
-                println("categorys::::  ${categorys.map { it }}")
 
                 val topProducts = _topProductList.value ?: listOf()
                 val featureProduct = CategoryUiModel.TopProductListItem(
@@ -139,7 +136,7 @@ class CategoryViewModel(
     }
 
     private fun loadProducts() {
-
+        println("updateList()::: category 22")
         if (categoryId.id.isNullOrEmpty()) {
             if (categoryId.id.isNullOrEmpty()) {
                 categorys.map {
@@ -184,6 +181,7 @@ class CategoryViewModel(
     }
 
     fun loadMoreProducts() {
+        println("updateList()::: category 11")
         if (shouldProductsFetch) {
             shouldProductsFetch = false
             loadProducts()
@@ -191,7 +189,7 @@ class CategoryViewModel(
     }
 
     private fun loadTopProducts() {
-
+        println("updateList()::: category 4")
             viewModelScope.launch {
                 val result = runCatching {
                     val response =
@@ -236,7 +234,7 @@ class CategoryViewModel(
     }
 
     fun loadMoreTopProducts() {
-
+        println("updateList()::: category 5")
         if (shouldTopProductsFetch) {
             shouldTopProductsFetch = false
             loadTopProducts()
@@ -244,6 +242,7 @@ class CategoryViewModel(
     }
 
     fun forceReload() {
+        println("updateList()::: category 6")
         shouldProductsFetch = false
         productPageNumber = 1
         shouldTopProductsFetch = false
@@ -258,7 +257,7 @@ class CategoryViewModel(
     fun selectCategoryTwo(
         categoryUiModel: CategoryUiModel.CategoryListItem.Category
     ) {
-
+        println("updateList()::: category 7")
         val listTwo = loadProductsCategory(categoryUiModel)
 
         val newList = _categories.value?.map {
@@ -278,6 +277,7 @@ class CategoryViewModel(
     }
 
     private fun loadProductsCategory(categoryUiModel: CategoryUiModel.CategoryListItem.Category):  MutableLiveData<List<CategoryUiModel.Product>> {
+        println("updateList()::: category 8")
         categoryProductPageNumber = 0
             categorys.map {
 
@@ -327,7 +327,7 @@ class CategoryViewModel(
 
     }
 
-    fun selectCategoryItem(categoryUiModel: CategoryUiModel.CategoryListItem) {
+    /**fun selectCategoryItem(categoryUiModel: CategoryUiModel.CategoryListItem) {
         for (category in categoryListItem.categories)
 
         _categoriesT.value?.map {
@@ -339,11 +339,11 @@ class CategoryViewModel(
                 return@map it
         }
         _categoriesT.value = list as List<CategoryUiModel.CategoryListItem>?
-    }
+    }**/
 
 
     companion object {
-        const val PAGE_LIMIT = 10
+        const val PAGE_LIMIT = 20
     }
 
     fun setType(

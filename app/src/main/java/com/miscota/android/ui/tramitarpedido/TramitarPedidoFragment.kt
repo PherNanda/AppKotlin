@@ -166,7 +166,7 @@ class TramitarPedidoFragment : Fragment() {
                 ?.toDouble() ?:0.0)
  
             val totalCheckout = subtotal + totalDel
-            binding.totalPrice.text = String.format("%.2f", totalCheckout)+" €" //TO CHANGE
+            binding.totalPrice.text = String.format(String.format("%.2f", totalCheckout)+" €")
         }
         
         binding.productsPrice.text = String.format(String.format("%.2f", subtotal)+" €")

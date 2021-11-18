@@ -29,11 +29,22 @@ interface ProductApi {
 
 
     @GET("/app/product/search/{type}/{query}/")
+    suspend fun searchProductsOld(
+        @Header("Authorization") authHeader: String,
+        @Header("x-request-domain") requestDomain: String = "www.miscota.es",
+        @Header("x-request-retail-id") requestRetailId: String,
+        @Path("type") type: String,
+        @Path("query") query: String,
+    ): List<ProductNetworkModel>
+
+    @GET("/app/product/search_product/{type}/{position}/{limit}/{query}")
     suspend fun searchProducts(
         @Header("Authorization") authHeader: String,
         @Header("x-request-domain") requestDomain: String = "www.miscota.es",
         @Header("x-request-retail-id") requestRetailId: String,
         @Path("type") type: String,
+        @Path("position") position: Int,
+        @Path("limit") limit: Int,
         @Path("query") query: String,
     ): List<ProductNetworkModel>
 

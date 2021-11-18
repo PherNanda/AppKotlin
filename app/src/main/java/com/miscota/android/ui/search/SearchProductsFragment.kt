@@ -36,6 +36,7 @@ class SearchProductsFragment : Fragment() {
     private val viewModel by viewModel<SearchViewModel>()
 
     private lateinit var listAdapter: SearchProductsAdapter
+    private lateinit var listAdapterChanged: SearchProductsAdapterChanged
     private lateinit var requestDetailID: String
 
     override fun onCreateView(
@@ -56,7 +57,7 @@ class SearchProductsFragment : Fragment() {
         requestDetailID = bundleProduct?.get("requestDetailID").toString()
         viewModel.setRetailId(requestDetailID)
 
-        listAdapter = SearchProductsAdapter(
+       /** listAdapter = SearchProductsAdapter(
             productClickListener = {
                 bundleOf(ProductDetailFragment.PARCELABLE_ARGS_PRODUCT to it.toProductDetailUiModel()).apply {
                     findNavController().navigate(
@@ -65,6 +66,28 @@ class SearchProductsFragment : Fragment() {
                     )
                 }
             },
+            loadMoreTopProducts = {
+                viewModel.loadMoreTopProducts(viewModel.getType()!!)
+            }
+        )**/
+
+
+        listAdapterChanged = SearchProductsAdapterChanged(
+            onCategoryClickListener = {
+                viewModel.showLoading
+            },
+            loadMoreTopProducts = {
+                viewModel.loadMoreTopProducts(viewModel.getType()!!)
+            },
+            onProductClickListener = {
+                bundleOf(ProductDetailFragment.PARCELABLE_ARGS_PRODUCT to it.toProductDetailUiModel()).apply {
+                    findNavController().navigate(
+                        R.id.action_searchProductsFragment_to_productDetailFragment,
+                        this
+                    )
+                }
+            },
+            typeProduct = viewModel.getType()!!
         )
 
         binding.searchAutoComplete.requestFocus()
@@ -73,7 +96,7 @@ class SearchProductsFragment : Fragment() {
         binding.recyclerView.apply {
             val gridLayoutManager = GridLayoutManager(requireContext(), 2)
             layoutManager = gridLayoutManager
-            adapter = listAdapter
+            adapter = listAdapterChanged
 
             addOnScrollListener(
                 RecyclerViewLoadMoreListener(
@@ -125,9 +148,15 @@ class SearchProductsFragment : Fragment() {
             }
         }
 
-        viewModel.topProductList.observe(viewLifecycleOwner) {
-            listAdapter.submitList(it)
+        viewModel.dataList.observe(viewLifecycleOwner) {
+            //listAdapter.submitList(it)
+            return@observe
         }
+
+        viewModel.topProductList.observe(viewLifecycleOwner) {
+            listAdapterChanged.submitList(it)
+        }
+
     }
 
     companion object {
