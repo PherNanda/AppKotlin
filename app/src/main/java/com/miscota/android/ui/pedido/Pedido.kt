@@ -53,6 +53,8 @@ class Pedido : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        //activity?.onBackPressed()
+
         /**val navHostFragment = fragmentManager?.findFragmentById(R.id.nav_host_fragment_test) as NavHostFragment
         val navController = navHostFragment.navController
 
@@ -289,5 +291,11 @@ class Pedido : Fragment() {
     fun loadAddress() {
         address = viewModelCart.authStore.getAddress()?: Address("","",0.0,0.0,"","","","","","","","","")
     }
+
+
+
+    /**fun onBackPressed() {
+        if (fragmentManager!!.backStackEntryCount > 0) fragmentManager!!.popBackStack() else activity?.onBackPressed()
+    }**/
 
 }

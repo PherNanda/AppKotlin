@@ -340,7 +340,8 @@ class AddAddressFragment : Fragment() {
     }
 
     fun loadAddressesCurrentUser() {
-        recentAddressesCurrentUser = (viewModelCart.authStore.getAddress() ?: viewModelCart.authStore.getAddressInfo()) as Address
+        recentAddressesCurrentUser =
+            (viewModelCart.authStore.getAddress() ?: viewModelCart.authStore.getAddressInfo()?: Address("","",0.0,0.0,"","","","","","","","",""))
     }
 
 

@@ -212,27 +212,35 @@ class TramitarPedidoFragment : Fragment() {
 
         }
         if (addressUser?.addressNumber != null){
-            binding.addressShipping.text = addressUser?.addressNumber
-            binding.addressShippingComplement.text = String.format("${addressUser?.postalCode}, ${addressUser?.city}, ${addressUser?.state} ,${addressUser?.countryName}")
-
+            println("11")
+            if(addressUser!!.addressNumber.length > 1) {
+                println("111")
+                binding.addressShipping.text = addressUser?.addressNumber
+                binding.addressShippingComplement.text =
+                    String.format("${addressUser?.postalCode}, ${addressUser?.city}, ${addressUser?.state} ,${addressUser?.countryName}")
+            }
         }
         else {
-            if (addressUserInfo != null ){
-
-                binding.addressShipping.text = addressUserInfo?.addressNumber
-                binding.addressShippingComplement.text = String.format("${addressUserInfo?.postalCode}, ${addressUserInfo?.city}, ${addressUserInfo?.state} ,${addressUserInfo?.countryName}")
-
+            if (addressUserInfo?.addressNumber != null ){
+                println("22")
+                if(addressUserInfo!!.addressNumber.length > 1) {
+                    println("222")
+                    binding.addressShipping.text = addressUserInfo?.addressNumber
+                    binding.addressShippingComplement.text =
+                        String.format("${addressUserInfo?.postalCode}, ${addressUserInfo?.city}, ${addressUserInfo?.state} ,${addressUserInfo?.countryName}")
+                }
             }else {
-
-                if (recentAddressesUser.isNotEmpty()) {
-
+                println("33")
+                if (recentAddressesUser.isNotEmpty() && recentAddressesUser != null) {
+                    println("333")
                     binding.addressShipping.text = recentAddressesUser.first().addressNumber
                     binding.addressShippingComplement.text =
                         String.format("${recentAddressesUser.first().postalCode}, ${recentAddressesUser.first().city}, ${recentAddressesUser.first().state}, ${recentAddressesUser.first().countryName}")
 
                 } else {
-                    if (recentAddresses.isNotEmpty()) {
-
+                    println("44")
+                    if (recentAddresses.isNotEmpty() && recentAddresses != null) {
+                        println("444")
                         recentAddresses.map {
                             it.address
                             binding.addressShipping.text = it.addressNumber
@@ -545,9 +553,9 @@ class TramitarPedidoFragment : Fragment() {
                 ft.add(R.id.thankyou, PedidoNoProcesado())
                 //fragment.arguments = bundleEcommerce
                 ft.commit()**/
-                Toast.makeText(requireContext(),
+                /**Toast.makeText(requireContext(),
                     getString(R.string.checkout_failed_message),
-                    Toast.LENGTH_LONG).show()
+                    Toast.LENGTH_LONG).show()**/
                 viewModelCart.showLoading.value = false
 
             }
@@ -756,6 +764,9 @@ class TramitarPedidoFragment : Fragment() {
         var checkoutDelivery = false
         //var payment = true
 
+        println("deliveryType $deliveryType")
+        println("currentTime $currentTime")
+
         if(list.size == 0){
 
             Toast.makeText(requireContext(), getString(R.string.message_need_product_in_cart),
@@ -805,7 +816,15 @@ class TramitarPedidoFragment : Fragment() {
             Toast.makeText(requireContext(), getString(R.string.delivery_type_message),
                 Toast.LENGTH_LONG).show()
         }
-        if ((deliveryType == null && currentTime == null) || (deliveryType == getString(R.string.delivery_type_default) && currentTime == getString(R.string.current_time_default))){
+        if (deliveryType.isEmpty() && currentTime.isEmpty() && viewModelCart.authStore.getType() == getString(R.string.type_sameday)){
+            viewModelCart.showLoading.value = false
+            checkoutDelivery = false
+
+            Toast.makeText(requireContext(), getString(R.string.delivery_type_message),
+                Toast.LENGTH_LONG).show()
+
+        }
+        if (viewModelCart.authStore.getType() == getString(R.string.type_sameday) && deliveryType == getString(R.string.delivery_type_default) && currentTime == getString(R.string.current_time_default)){
 
             viewModelCart.showLoading.value = false
             checkoutDelivery = false
@@ -814,14 +833,9 @@ class TramitarPedidoFragment : Fragment() {
                 Toast.LENGTH_LONG).show()
 
         }
-        if (deliveryType == getString(R.string.delivery_type_default) && currentTime == getString(R.string.current_time_default)){
-
-            viewModelCart.showLoading.value = false
-            checkoutDelivery = false
-
-            Toast.makeText(requireContext(), getString(R.string.delivery_type_message),
-                Toast.LENGTH_LONG).show()
-
+        if (viewModelCart.authStore.getType()  == getString(R.string.type_ecommerce)){
+            viewModelCart.showLoading.value = true
+            checkoutDelivery = true
         }
 
 

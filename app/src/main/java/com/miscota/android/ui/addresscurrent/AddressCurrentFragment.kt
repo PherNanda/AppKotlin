@@ -92,7 +92,7 @@ class AddressCurrentFragment : Fragment() {
                 .setNegativeButton(
                     getString(R.string.cancel)
                 ) { dialog, which ->
-
+                    fragmentManager?.popBackStackImmediate()
                     dialog.dismiss()
                 }
                 .setTitle(getString(R.string.atention))
@@ -140,7 +140,11 @@ class AddressCurrentFragment : Fragment() {
 
                     val sameDay = listCheckoutProducts.findLast { product -> product.type == getString(R.string.type_sameday) }
 
+                    println("address.postalCode 11 ${address.postalCode} addressUser.postalCode ${addressUser.postalCode} sameDay $sameDay ")
+
                     if (address.postalCode != addressUser.postalCode && sameDay != null) {
+
+                        println("address.postalCode 11 ${address.postalCode} addressUser.postalCode ${addressUser.postalCode} sameDay != null ")
 
                         dialog.show()
                         addressSelected = address
@@ -148,6 +152,8 @@ class AddressCurrentFragment : Fragment() {
                     if (address.postalCode != addressUser.postalCode && sameDay == null)
                     {
                         viewModelAddress.setAdressUser(address)
+
+                        println("address.postalCode 11 ${address.postalCode} addressUser.postalCode ${addressUser.postalCode} sameDay == null ")
 
                         bundleAddressCurrent?.putString("addressBC", address.addressNumber)
                         bundleAddressCurrent?.putString("postalCodeBC", address.postalCode)
@@ -160,7 +166,41 @@ class AddressCurrentFragment : Fragment() {
                         replaceFragment(fragment)
 
                     }
-                    
+
+                    if (address.postalCode == addressUser.postalCode && sameDay == null)
+                    {
+                        viewModelAddress.setAdressUser(address)
+
+                        println("address.postalCode 11 ${address.postalCode} addressUser.postalCode ${addressUser.postalCode} sameDay == null ")
+
+                        bundleAddressCurrent?.putString("addressBC", address.addressNumber)
+                        bundleAddressCurrent?.putString("postalCodeBC", address.postalCode)
+                        bundleAddressCurrent?.putString("cityBC", address.city)
+                        bundleAddressCurrent?.putString("provinceBC", address.state)
+                        bundleAddressCurrent?.putString("phoneBC", address.phone.toString())
+
+                        val fragment = TramitarPedidoFragment()
+                        fragment.arguments = bundleAddressCurrent
+                        replaceFragment(fragment)
+
+                    }
+                    if (address.postalCode == addressUser.postalCode && sameDay != null)
+                    {
+                        viewModelAddress.setAdressUser(address)
+
+                        println("address.postalCode 11 ${address.postalCode} addressUser.postalCode ${addressUser.postalCode} sameDay == null ")
+
+                        bundleAddressCurrent?.putString("addressBC", address.addressNumber)
+                        bundleAddressCurrent?.putString("postalCodeBC", address.postalCode)
+                        bundleAddressCurrent?.putString("cityBC", address.city)
+                        bundleAddressCurrent?.putString("provinceBC", address.state)
+                        bundleAddressCurrent?.putString("phoneBC", address.phone.toString())
+
+                        val fragment = TramitarPedidoFragment()
+                        fragment.arguments = bundleAddressCurrent
+                        replaceFragment(fragment)
+
+                    }
                 }
             }
         }
@@ -180,7 +220,11 @@ class AddressCurrentFragment : Fragment() {
 
                     val sameDay = listCheckoutProducts.findLast { product -> product.type == getString(R.string.type_sameday) }
 
+                    println("address.postalCode 22 ${address.postalCode} addressUser.postalCode ${addressUser.postalCode} sameDay $sameDay ")
+
                     if (address.postalCode != addressUser.postalCode && sameDay != null) {
+
+                        println("address.postalCode 22 ${address.postalCode} addressUser.postalCode ${addressUser.postalCode} sameDay != null ")
 
                         dialog.show()
                         addressSelected = address
@@ -188,6 +232,8 @@ class AddressCurrentFragment : Fragment() {
                     if (address.postalCode != addressUser.postalCode && sameDay == null)
                     {
                             viewModelAddress.setAdressUser(address)
+
+                        println("address.postalCode 22 ${address.postalCode} addressUser.postalCode ${addressUser.postalCode} sameDay == null ")
 
                             bundleAddressCurrent?.putString("addressBC", address.addressNumber)
                             bundleAddressCurrent?.putString("postalCodeBC", address.postalCode)
@@ -198,6 +244,40 @@ class AddressCurrentFragment : Fragment() {
                             val fragment = TramitarPedidoFragment()
                             fragment.arguments = bundleAddressCurrent
                             replaceFragment(fragment)
+
+                    }
+                    if (address.postalCode == addressUser.postalCode && sameDay == null)
+                    {
+                        viewModelAddress.setAdressUser(address)
+
+                        println("address.postalCode 11 ${address.postalCode} addressUser.postalCode ${addressUser.postalCode} sameDay == null ")
+
+                        bundleAddressCurrent?.putString("addressBC", address.addressNumber)
+                        bundleAddressCurrent?.putString("postalCodeBC", address.postalCode)
+                        bundleAddressCurrent?.putString("cityBC", address.city)
+                        bundleAddressCurrent?.putString("provinceBC", address.state)
+                        bundleAddressCurrent?.putString("phoneBC", address.phone.toString())
+
+                        val fragment = TramitarPedidoFragment()
+                        fragment.arguments = bundleAddressCurrent
+                        replaceFragment(fragment)
+
+                    }
+                    if (address.postalCode == addressUser.postalCode && sameDay != null)
+                    {
+                        viewModelAddress.setAdressUser(address)
+
+                        println("address.postalCode 11 ${address.postalCode} addressUser.postalCode ${addressUser.postalCode} sameDay == null ")
+
+                        bundleAddressCurrent?.putString("addressBC", address.addressNumber)
+                        bundleAddressCurrent?.putString("postalCodeBC", address.postalCode)
+                        bundleAddressCurrent?.putString("cityBC", address.city)
+                        bundleAddressCurrent?.putString("provinceBC", address.state)
+                        bundleAddressCurrent?.putString("phoneBC", address.phone.toString())
+
+                        val fragment = TramitarPedidoFragment()
+                        fragment.arguments = bundleAddressCurrent
+                        replaceFragment(fragment)
 
                     }
 
@@ -295,7 +375,8 @@ class AddressCurrentFragment : Fragment() {
     }
 
     fun loadAddress(){
-        addressUser = (viewModelAddress.authStore.getAddress()?:viewModelAddress.authStore.getAddressInfo()) as Address
+        addressUser =
+            (viewModelAddress.authStore.getAddress()?:viewModelAddress.authStore.getAddressInfo()?: Address("","",0.0,0.0,"","","","","","","","",""))
     }
 
     private fun replaceFragment(fragment: Fragment) {

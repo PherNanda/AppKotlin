@@ -242,11 +242,11 @@ class TipoEnvioFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                Toast.makeText(
+               /** Toast.makeText(
                     adapterView.context,
                     adapterView.getItemAtPosition(position) as String,
                     Toast.LENGTH_SHORT
-                ).show()
+                ).show()**/
                 loadCart(adapterView.getItemAtPosition(position) as String)
 
                 println("adapterView.getItemAtPosition(position) as String ${adapterView.getItemAtPosition(position) as String}")
