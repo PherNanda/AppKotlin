@@ -1,12 +1,14 @@
 package com.miscota.android.ui.pedido
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,6 +44,8 @@ class Pedido : Fragment() {
 
     private lateinit var address: Address
 
+    private var listCheckoutProducts: MutableList<CartUiModel.ItemListCheckout> = mutableListOf()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,8 +56,7 @@ class Pedido : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        //activity?.onBackPressed()
+        listCheckoutProducts = loadCheckout()
 
         /**val navHostFragment = fragmentManager?.findFragmentById(R.id.nav_host_fragment_test) as NavHostFragment
         val navController = navHostFragment.navController
@@ -110,7 +113,7 @@ class Pedido : Fragment() {
             println("address it.address thankYou ${address.address}")
         }
 
-        val listCheckoutProducts = loadCheckout()
+
 
         binding.goToProductsHome.setOnClickListener {
             listCheckoutProducts.map {
@@ -293,9 +296,24 @@ class Pedido : Fragment() {
     }
 
 
-
-    /**fun onBackPressed() {
-        if (fragmentManager!!.backStackEntryCount > 0) fragmentManager!!.popBackStack() else activity?.onBackPressed()
-    }**/
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true)
+            {
+                override fun handleOnBackPressed() {
+                    // Leave empty do disable back press or
+                    // write your code which you want
+                    listCheckoutProducts.map {
+                        viewModelCart.removeItemRef(it.ref, it.type?: getString(R.string.type_ecommerce),requireContext())
+                    }
+                    startActivity(Intent(requireContext(), MainActivity::class.java))
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            callback
+        )
+    }
 
 }
