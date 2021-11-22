@@ -1,6 +1,5 @@
 package com.miscota.android.ui.tramitarpedido
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -108,8 +107,8 @@ class TramitarPedidoFragment : Fragment() {
         loadAddressInfo()
         loadCartToItem()
         //START TO TEST - CARD TEST
-        val card = CardN(card="4988438843884305", security= "737",expireYear= "03/30".split("/")[1], expireMonth="03/30".split("/").first(), owner="Persona")
-        viewModelCart.authStore.setCard(card)
+        /**val card = CardN(card="4988438843884305", security= "737",expireYear= "03/30".split("/")[1], expireMonth="03/30".split("/").first(), owner="Persona")
+        viewModelCart.authStore.setCard(card)**/
         //END TO TEST
 
         val bundlePayment: Bundle? = arguments
@@ -725,6 +724,7 @@ class TramitarPedidoFragment : Fragment() {
         }
         }catch (e: IndexOutOfBoundsException){
             println("Exception Card ${e.message}  ${e.printStackTrace()}  $e")
+            viewModelCart.showLoading.value = false
 
             Toast.makeText(requireContext(),"Tarjeta inválida, compruebe la tarjeta",Toast.LENGTH_SHORT).show()
             return PaymentMethod(
@@ -739,7 +739,7 @@ class TramitarPedidoFragment : Fragment() {
 
             paymentResult = false
 
-                 }
+         }
         return paymentMethod!!
 
     }

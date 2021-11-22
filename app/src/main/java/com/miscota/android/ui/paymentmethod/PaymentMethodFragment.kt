@@ -1,15 +1,19 @@
 package com.miscota.android.ui.paymentmethod
 
-import androidx.lifecycle.ViewModelProvider
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.checkSelfPermission
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProvider
 import com.miscota.android.R
 import com.miscota.android.databinding.PaymentMethodFragmentBinding
 import com.miscota.android.ui.addcard.AddCardFragment
@@ -32,6 +36,8 @@ class PaymentMethodFragment : Fragment() {
 
     private var binding by autoClean<PaymentMethodFragmentBinding>()
 
+    private val MY_CAMERA_REQUEST_CODE = 100
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +50,13 @@ class PaymentMethodFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         binding.toolbar.cartHeader.text = getString(R.string.payment_method_header)
+
+
+        if (checkSelfPermission(requireContext(),Manifest.permission.CAMERA)
+            != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(Manifest.permission.CAMERA),
+                MY_CAMERA_REQUEST_CODE)
+        }
 
 
         val bundlePayment: Bundle? = arguments

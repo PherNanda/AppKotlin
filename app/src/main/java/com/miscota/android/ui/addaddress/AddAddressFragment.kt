@@ -10,11 +10,8 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.miscota.android.R
@@ -335,11 +332,11 @@ class AddAddressFragment : Fragment() {
         recentAddresses = viewModelCart.authStore.getRecentAddresses() ?: listOf()
     }
 
-    fun loadAddressesUser() {
+    private fun loadAddressesUser() {
         recentAddressesUser = viewModelCart.authStore.getRecentAddressesInfo() ?: listOf()
     }
 
-    fun loadAddressesCurrentUser() {
+    private fun loadAddressesCurrentUser() {
         recentAddressesCurrentUser =
             (viewModelCart.authStore.getAddress() ?: viewModelCart.authStore.getAddressInfo()?: Address("","",0.0,0.0,"","","","","","","","",""))
     }

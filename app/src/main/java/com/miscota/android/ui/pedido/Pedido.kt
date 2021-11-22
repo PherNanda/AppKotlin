@@ -229,12 +229,6 @@ class Pedido : Fragment() {
         var totalEcommerce = 0
         var currentDelivered: String? = null
         val cartItems = viewModelCart.authStore.getCart().map {
-            println("imagen ${it.toCartUiModel().image}")
-            println("type ${it.toCartUiModel().type}")
-            println("quantity ${it.toCartUiModel().quantity}")
-            println("productName ${it.toCartUiModel().productName}")
-            println("samedayDelivery ${it.toCartUiModel().samedayDelivery}")
-
             it.toCartItemUiModel()
 
             if (it.toCartUiModel().type == getString(R.string.type_sameday)){
