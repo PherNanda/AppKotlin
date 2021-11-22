@@ -792,8 +792,8 @@ class CartActivity : AppCompatActivity() {
 
             val encryptedCard = Encryptor.INSTANCE.encryptFields(
                 rawCardData,
-                //PUBLIC_KEY
-                BuildConfig.PUBLIC_KEY_MIS
+                PUBLIC_KEY
+                //BuildConfig.PUBLIC_KEY_MIS
             )
 
             paymentMethod = PaymentMethod(
