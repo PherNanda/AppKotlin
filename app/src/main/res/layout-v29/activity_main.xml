@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_search_new"
+    android:forceDarkAllowed="false">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/headerMain"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/ic_back_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <ImageView
+        android:id="@+id/imageBack"
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/actionBarItemBackground"
+        android:padding="18dp"
+        android:src="@drawable/ic_back_icon_white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+         />
+
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_miscota_white_xxs"
+        app:layout_constraintBottom_toBottomOf="@+id/storeImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/storeImage" />
+
+        <ImageView
+            android:id="@+id/storeImage"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="12dp"
+            android:src="@drawable/ic_cart_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+        android:id="@+id/cartItemsText"
+        android:layout_width="19dp"
+        android:layout_height="16dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/badge_background_grey"
+        android:text="0"
+
+        android:textAlignment="center"
+        android:textColor="?attr/colorSurface"
+        android:textSize="8sp"
+        app:layout_constraintEnd_toEndOf="@id/storeImage"
+        app:layout_constraintTop_toTopOf="@id/storeImage"
+        tools:ignore="HardcodedText,SmallSp" />
+
+   </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/locationLinearLayoutmain"
+        style="@style/Theme.AppComponents.Card"
+        android:layout_width="0dp"
+        android:layout_height="49dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="115dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/headerMain"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/headerMain"
+        android:forceDarkAllowed="false">
+
+        <ImageView
+            android:id="@+id/locationImageMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="20dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_location_iconspace" />
+
+        <TextView
+            android:id="@+id/locationTextMain"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/without_location"
+            android:textColor="@color/blue_new_app"
+            android:textSize="17sp"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            app:fontFamily="@font/bree_regular" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/samedayInfoMainDefault"
+        style="@style/Theme.AppComponents.Card.Same.Day.Info.Default"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="0dp"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:checkable="false"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/headerMain"
+        app:layout_constraintTop_toBottomOf="@+id/headerMain"
+        android:forceDarkAllowed="false">
+
+        <LinearLayout
+            android:id="@+id/samedayInfoBottomDefault"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:layout_marginTop="44dp"
+            android:layout_marginHorizontal="47dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:forceDarkAllowed="false">
+
+
+            <TextView
+                android:id="@+id/textSamedayMainDefault"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_default_main"
+                android:textColor="@color/new_app_grey"
+                android:textSize="13sp"
+                android:textAlignment="center"
+                android:maxLines="2"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:layout_marginStart="2dp"
+                app:fontFamily="@font/bree" />
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/samedayInfoMain"
+        style="@style/Theme.AppComponents.Card.Same.Day.Info"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="0dp"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:checkable="false"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="@+id/headerMain"
+        app:layout_constraintTop_toBottomOf="@+id/headerMain"
+        android:forceDarkAllowed="false">
+
+        <LinearLayout
+            android:id="@+id/samedayInfoBottom"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:layout_marginTop="44dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:forceDarkAllowed="false">
+
+            <ImageView
+                android:id="@+id/imageSamedayMain"
+                android:layout_width="28dp"
+                android:layout_height="18dp"
+                android:layout_marginHorizontal="2dp"
+                android:layout_marginStart="13dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/sameday_icon_web_4x" />
+
+            <TextView
+                android:id="@+id/textSamedayMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/same_day_off"
+                android:textColor="@color/new_app_grey"
+                android:textSize="14sp"
+                android:textAlignment="textStart"
+                android:maxLines="2"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:layout_marginStart="2dp"
+                app:fontFamily="@font/bree_regular" />
+
+            <ImageView
+                android:id="@+id/imageSamedayCheck"
+                android:layout_width="13dp"
+                android:layout_height="9dp"
+                android:layout_marginHorizontal="1dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="bottom"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/sameday_info_check_vector" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/samedayInfo"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:layout_marginTop="44dp"
+            android:layout_gravity="end"
+            android:paddingStart="22dp"
+            android:paddingEnd="15dp"
+            android:layout_marginEnd="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:forceDarkAllowed="false">
+
+           <TextView
+                android:id="@+id/textSamedayMainInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/text_sameday_off_info"
+                android:textColor="@color/new_app_grey"
+                android:textSize="10sp"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:layout_marginStart="2dp"
+                app:fontFamily="@font/bree_regular" />
+
+            <ImageView
+                android:id="@+id/imageSamedayCheckInfo"
+                android:layout_width="22dp"
+                android:layout_height="20dp"
+                android:layout_marginHorizontal="1dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="bottom"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/same_day_info_bottom" />
+        </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+
+    <LinearLayout
+        android:id="@+id/locationLinearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:forceDarkAllowed="false">
+
+        <ImageView
+            android:id="@+id/locationImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_location_iconspace" />
+
+        <TextView
+            android:id="@+id/locationText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/without_location"
+            android:textAlignment="center"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:fontFamily="@font/bree_regular" />
+
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginVertical="0dp"
+        android:layout_marginHorizontal="0dp"
+        app:labelVisibilityMode="labeled"
+        app:itemIconTint="@color/bottom_navigation_tint_color_new"
+        app:itemTextColor="@color/bottom_navigation_tint_color_new"
+        style="@style/MyWidget.MaterialComponents.BottomNavigationView.PrimarySurfaceTwo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
+
+    <LinearLayout
+        android:id="@+id/samedayBottomInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+        <include layout="@layout/sameday_info" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fragmentHome"
+        style="@style/Theme.AppComponents.Card.New.Ui.Home"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        android:layout_marginHorizontal="0dp"
+        android:layout_marginVertical="0dp"
+        app:layout_constraintBottom_toTopOf="@id/nav_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/samedayInfoMain"
+        app:layout_constraintTop_toBottomOf="@id/samedayInfoMain">
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/mobile_navigation" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

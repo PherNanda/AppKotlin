@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "178148758618",
+    "project_id": "miscota-23d39",
+    "storage_bucket": "miscota-23d39.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:178148758618:android:2deb1d1532fe825d54f463",
+        "android_client_info": {
+          "package_name": "com.miscota.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "178148758618-1bl04uldamvee6cj79s59cd5635tjsui.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.miscota.android",
+            "certificate_hash": "6e28e7a0180627edf9ef3beaef5bf74a730dc38d"
+          }
+        },
+        {
+          "client_id": "178148758618-po8bf027tangs2bltmiq0uuo1ic5ddei.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHKx91U1-TKJDZZqfR8x_LTFsJLWgQK_w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "178148758618-po8bf027tangs2bltmiq0uuo1ic5ddei.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "178148758618-dm5gnnd4huu57uvs2iqmhaue2rmridtm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.miscota.iosapp",
+                "app_store_id": "1565220026"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

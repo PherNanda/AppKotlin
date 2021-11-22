@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.adyen.checkout:blik-ui:3.8.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/d4ded5dddb9d58b29ede82d0da59d366/jetified-blik-ui-3.8.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/d4ded5dddb9d58b29ede82d0da59d366/jetified-blik-ui-3.8.0/res" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/d4ded5dddb9d58b29ede82d0da59d366/jetified-blik-ui-3.8.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/blik-ui/3.8.0/aa0877118b6b54426c28a3f0b23471f82afbfe8a/blik-ui-3.8.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/blik-ui/3.8.0/54f7954af7a101b4b53facca512a6af66595cc6d/blik-ui-3.8.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

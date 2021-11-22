@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <bitmap android:src="@drawable/ic_splash_screen_all"/>
+
+
+    </item>
+
+
+ <!--<item
+        android:id="@+id/loading"
+        android:gravity="center"
+        android:bottom="260dp"
+        android:drawable="@drawable/ic_loader_spinner"
+
+        />-->
+
+    <!--<item android:gravity="top" android:drawable="@drawable/background_splash_screen"/>
+    <item android:gravity="fill_vertical" android:height="479dp" android:drawable="@drawable/background_splash_screen"/>
+    <item android:gravity="center|bottom" android:bottom="100dp"  android:drawable="@drawable/ic_miscota_logo_full_white_xxssmall"/>
+    <item android:gravity="top|center" android:drawable="@drawable/ic_miscota_logo_full_white_xxssmall"/>-->
+</layer-list>

@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.adyen.checkout:eps-ui:3.8.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/2d4a177e1f4af2060250b3c49d2d27e2/jetified-eps-ui-3.8.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/2d4a177e1f4af2060250b3c49d2d27e2/jetified-eps-ui-3.8.0/res" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/2d4a177e1f4af2060250b3c49d2d27e2/jetified-eps-ui-3.8.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/eps-ui/3.8.0/11940f8259e8795b627671db9c18a1728352ba37/eps-ui-3.8.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/eps-ui/3.8.0/e6638d33ab4c3be9e404ee44e42ede655ec9e1ae/eps-ui-3.8.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

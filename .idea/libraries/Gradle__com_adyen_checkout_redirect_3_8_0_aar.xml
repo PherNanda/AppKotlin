@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.adyen.checkout:redirect:3.8.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/b566111397a783bc188d0547eb6196ce/jetified-redirect-3.8.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/b566111397a783bc188d0547eb6196ce/jetified-redirect-3.8.0/res" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/b566111397a783bc188d0547eb6196ce/jetified-redirect-3.8.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/redirect/3.8.0/3c14dc9774252c7291006383a9818ca7589f3572/redirect-3.8.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/redirect/3.8.0/ef9824208905065a6f55a98e2f0aebeaf62dae74/redirect-3.8.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

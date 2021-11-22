@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:id="@+id/sub_sub_categories"
+    android:layout_marginHorizontal="0dp"
+    android:layout_marginVertical="0dp"
+    app:cardBackgroundColor="@color/white_900"
+    app:cardCornerRadius="0dp"
+    android:elevation="0dp"
+    android:forceDarkAllowed="false">
+
+
+   <FrameLayout
+       android:id="@+id/subCategorie"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="2dp"
+            android:drawableEnd="@drawable/ic_next_down"
+            android:textAppearance="@style/Widget.AppComponents.Button.OutlinedButton.Search.SubCategory"
+            android:textStyle="normal" />
+       <ImageView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginStart="0dp"
+           android:layout_marginEnd="0dp"
+           android:visibility="invisible"
+           android:src="@drawable/ic_grey_line_sub_category"
+           android:layout_gravity="bottom">
+       </ImageView>
+       <View
+           android:id="@+id/leftLineOfOr"
+           android:layout_width="match_parent"
+           android:layout_height="1dp"
+           android:layout_marginEnd="20dp"
+           android:layout_marginStart="18dp"
+           android:layout_marginTop="5dp"
+           android:background="@color/grey_line_sub_cat"
+           android:layout_gravity="bottom"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/subSubCategoryBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:cardCornerRadius="22dp"
+            android:elevation="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:orientation="horizontal">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerCategoryThirdLevel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_sub_sub_categories">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <Spinner
+                android:id="@+id/subCatSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/allCategoriesLabel"/>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+
+    </FrameLayout>
+
+
+
+</androidx.cardview.widget.CardView>

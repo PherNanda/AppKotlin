@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_marginStart="0dp"
+    android:layout_marginEnd="0dp"
+    android:layout_height="140dp"
+    android:padding="10dp"
+    android:forceDarkAllowed="false">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardItemCart"
+        style="@style/Theme.AppComponents.Card.Product.List"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="0dp"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="3dp"
+        android:layout_marginVertical="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/productImageBox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/white_900"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/brandProductName">
+
+        <ImageView
+            android:id="@+id/productImage"
+            android:layout_width="75dp"
+            android:layout_height="80dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/productBrandNames"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/productImage">
+
+        <TextView
+            android:id="@+id/brandProductName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="1dp"
+            android:maxLines="1"
+            android:minLines="1"
+            android:ellipsize="end"
+            app:fontFamily="@font/bree"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textColor="@color/grey_dark"
+            android:text="@string/text_default_product_name"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/productImage"
+            />
+
+        <TextView
+            android:id="@+id/productName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="13dp"
+            android:maxLines="2"
+            android:minLines="2"
+            android:ellipsize="end"
+            android:textColor="@color/grey_dark"
+            app:fontFamily="@font/bree_regular"
+            android:text="@string/text_default_product_name"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textSize="12sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/addOrMinusButton"
+            app:layout_constraintLeft_toRightOf="@+id/brandProductName" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/addOrMinusButton"
+            android:layout_width="36dp"
+            android:layout_height="86dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginStart="290dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="0dp"
+            android:padding="10dp"
+            android:backgroundTint="@color/white_900"
+            app:cardCornerRadius="40dp"
+            android:elevation="20dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/productBrandNames">
+
+
+            <ImageView
+                android:id="@+id/removeButton"
+                android:layout_width="28dp"
+                android:layout_height="32dp"
+                android:background="?attr/actionBarItemBackground"
+                android:padding="4dp"
+                android:layout_marginTop="53dp"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_icon_minus_cart"
+               />
+
+            <TextView
+                android:id="@+id/quantityText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="37dp"
+                android:text="1"
+                android:textAlignment="center"
+                android:textColor="@color/grey_dark_text"
+                app:fontFamily="@font/bree_regular"
+                android:textAppearance="?attr/textAppearanceBody1" />
+
+            <ImageView
+                android:id="@+id/addButton"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="2dp"
+                android:background="?attr/actionBarItemBackground"
+                android:padding="4dp"
+                android:src="@drawable/ic_icon_plus_cart"
+                app:itemIconTint="@color/grey_end_icon"
+                />
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/priceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="50dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:textAlignment="textEnd"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:fontFamily="@font/bree_regular"
+        android:textStyle="normal"
+        android:textSize="14sp"
+        android:textColor="@color/grey_dark"
+        android:text="@string/text_default_price"
+        app:layout_constraintLeft_toRightOf="@+id/productImageBox"
+        app:layout_constraintStart_toStartOf="@+id/productName"
+        app:layout_constraintTop_toBottomOf="@+id/brandProductName" />
+
+        <TextView
+            android:id="@+id/productCombination"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="13dp"
+            android:maxLines="2"
+            android:minLines="2"
+            android:visibility="gone"
+            android:ellipsize="end"
+            android:textColor="@color/grey_dark"
+            app:fontFamily="@font/bree_regular"
+            android:text="@string/text_default_product_name"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textSize="12sp"
+            app:layout_constraintRight_toRightOf="@+id/priceText"
+            app:layout_constraintRight_toLeftOf="@+id/priceText"
+            app:layout_constraintTop_toBottomOf="@+id/productName" />
+
+    <TextView
+        android:id="@+id/oldPriceText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/text_default_price"
+        android:visibility="gone"
+        android:textAlignment="textEnd"
+        app:fontFamily="@font/bree_regular"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textColor="@color/grey_400"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/priceText"
+        app:layout_constraintStart_toEndOf="@+id/priceText"
+        app:layout_constraintTop_toTopOf="@+id/priceText" />
+
+    <TextView
+        android:id="@+id/discountText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_discount_background"
+        android:paddingVertical="2dp"
+        android:paddingHorizontal="8dp"
+        android:layout_marginStart="100dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/text_default_discount"
+        android:visibility="gone"
+        android:textAlignment="textEnd"
+        app:fontFamily="@font/bree_regular"
+        android:textAppearance="?attr/textAppearanceCaption"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/priceText"
+        app:layout_constraintStart_toEndOf="@+id/oldPriceText"
+        app:layout_constraintTop_toTopOf="@+id/priceText" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/white_900"
+        app:layout_constraintBottom_toBottomOf="@+id/oldPriceText"
+        app:layout_constraintEnd_toEndOf="@+id/oldPriceText"
+        app:layout_constraintStart_toStartOf="@+id/oldPriceText"
+        app:layout_constraintTop_toTopOf="@+id/oldPriceText" />
+
+
+
+    <ImageView
+        android:id="@+id/removeButtonOne"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="?attr/actionBarItemBackground"
+        android:padding="4dp"
+        android:layout_marginTop="58dp"
+        android:layout_marginStart="300dp"
+        android:visibility="invisible"
+        android:src="@drawable/ic_cart_remove"
+        app:itemIconTint="@color/grey_end_icon"
+        app:layout_constraintTop_toBottomOf="@id/quantityText"
+        app:layout_constraintRight_toRightOf="parent"
+        app:tint="@color/grey_end_icon" />
+
+    <TextView
+        android:id="@+id/quantityTextOne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="312dp"
+        android:layout_marginTop="42dp"
+        android:text="1"
+        android:textAlignment="center"
+        android:visibility="gone"
+        android:textColor="@color/grey_dark_text"
+        app:fontFamily="@font/bree_regular"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:layout_constraintBottom_toBottomOf="@id/removeButton"
+        app:layout_constraintStart_toEndOf="@+id/removeButton"
+        app:layout_constraintTop_toTopOf="@+id/removeButton"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <ImageView
+        android:id="@+id/addButtonOne"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="300dp"
+        android:background="?attr/actionBarItemBackground"
+        android:padding="4dp"
+        android:visibility="invisible"
+        android:src="@drawable/ic_cart_add"
+        app:itemIconTint="@color/grey_end_icon"
+        app:layout_constraintTop_toBottomOf="@id/productName"
+        app:layout_constraintRight_toRightOf="parent"
+        app:tint="@color/grey_end_icon" />
+
+
+    <ImageView
+        android:id="@+id/deleteButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="63dp"
+        android:layout_marginStart="240dp"
+        android:background="?attr/actionBarItemBackground"
+        android:padding="4dp"
+        android:src="@drawable/ic_delete"
+        app:layout_constraintBottom_toBottomOf="@+id/removeButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/removeButton" />
+
+    <TextView
+        android:id="@+id/productTypeCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="@string/type_product"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:visibility="gone"
+        app:fontFamily="@font/bree_regular"
+        android:layout_marginStart="105dp"
+        android:textColor="@color/grey_dark"
+        android:paddingTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/deleteButton"
+        app:layout_constraintTop_toBottomOf="@id/deleteButton" />
+
+        <ImageView
+            android:id="@+id/samedayIn"
+            android:layout_width="120dp"
+            android:layout_height="17dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="80dp"
+            android:src="@drawable/sameday_label"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAlignment="textEnd"
+            android:visibility="invisible"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:fontFamily="@font/bree_regular"
+            android:text="@string/text_default_price"
+            app:layout_constraintTop_toBottomOf="@+id/priceText"
+            app:layout_constraintLeft_toRightOf="@id/productBrandNames"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

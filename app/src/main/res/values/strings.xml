@@ -1,0 +1,421 @@
+<resources>
+    <string name="app_name">Miscota</string>
+    <!--<string name="facebook_app_id">153143726179521</string>-->
+    <string name="facebook_app_id">160966680659447</string>
+    <string name="google_client_id">117513538493776159293</string>
+    <string name="google_client_id_fb">112473988954859915288</string>
+    <string name="google_client_id_fb_android">178148758618-1bl04uldamvee6cj79s59cd5635tjsui.apps.googleusercontent.com</string>
+    <!--<string name="google_client_id">112748142296280321644</string> -->
+    <!--<string name="google_client_id">111593532039934708150</string> -->
+    <string name="key_emma">"9BC04886852EEe278b8f76546e05092fa"</string>
+    <string name="pedido_no_registrado">Tu pedido no ha podido realizarse</string>
+    <!--<string name="google_maps_key">AIzaSyA4dO1Q_Kn5faBwW4V7NalFg70YGNJxXVM</string>-->
+    <string name="google_maps_key">AIzaSyBHKx91U1-TKJDZZqfR8x_LTFsJLWgQK_w</string>
+    <string name="title_user_address_list">Usar mis direcciones guardadas</string>
+    <string name="title_home">Inicio</string>
+    <string name="title_profile">Usuario</string>
+    <string name="title_pedidos">Pedidos</string>
+    <string name="title_product">Productos</string>
+
+    <!--Login-->
+    <string name="invalid_pass_user">falta usuario y contraseña para iniciar sesión</string>
+    <string name="invalid_password_msg">Debe introducir una contraseña</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Iniciar sesión o registrar-se</string>
+    <string name="action_sign_in_short">Iniciar sesión</string>
+    <string name="welcome">Bienvenido</string>
+    <string name="invalid_username">Usuario inválido</string>
+    <string name="invalid_password">La contraseña debe tener mínimo 6 carácteres \n(con almenos 1 letra y 1 número)</string>
+    <string name="invalid_confirm_password">Las claves no coinciden</string>
+    <string name="invalid_email">E-mail inválido</string>
+    <string name="invalid_address">Dirección no válida</string>
+    <string name="terms_error">Por favor acepta las condiciones de servicio primero</string>
+    <string name="login_description">y disfruta de todas las ventajas</string>
+    <string name="login_failed">Error en inicio se sesión</string>
+    <string name="recover_failed">Añada un correo electrónico válido para recuperar su contraseña</string>
+    <string name="login_with_email_failed">El correo electrónico o la contraseña introducidos no son correctos</string>
+    <string name="checkout_failed">Error en el checkout</string>
+    <string name="checkout_failed_message">No se ha podido realizar el pedido, por favor compruebe que no falten datos por completar</string>
+    <string name="checkout_failed_message_new">No se ha podido realizar el pedido, por favor complete los datos que faltan</string>
+    <string name="login_social_buttons_separator">o</string>
+    <string name="put_your_email">Ponga su e-mail</string>
+    <string name="put_your_name">Ponga su nombre</string>
+    <string name="email">Email</string>
+    <string name="password">Contraseña</string>
+    <string name="forgot_password">¿No recuerdas la contraseña?</string>
+    <string name="sign_in_with_e_mail">Iniciar sesión con e-mail</string>
+    <string name="continue_with_facebook">Iniciar sesión con Facebook</string>
+    <string name="continue_with_google">Iniciar sesión con Google</string>
+    <string name="create_account">Crear cuenta</string>
+    <string name="create_account_new_app">¿No tienes cuenta? Crea tu cuenta aquí</string>
+    <string name="loading">Cargando...</string>
+    <string name="loading_sign_up">Creando cuenta...</string>
+    <string name="loading_buy">Procesando tu compra...</string>
+    <string name="signing">Iniciando sesión...</string>
+    <string name="remember_password">Recordar contraseña</string>
+    <string name="full_name">Nombre completo</string>
+    <string name="newsletter_subscription">Acepto suscribirme a la newsletter</string>
+    <string name="accept_terms_and_conditions">Acepto la política de privacidad</string>
+    <string name="accept_terms_conditions">Acepto la </string>
+    <string name="terms_and_conditions">política de privacidad</string>
+    <string name="sign_up">Crear cuenta</string>
+    <string name="sign_up_error">Error en el registro</string>
+    <string name="confirm_password">Confirmar contraseña</string>
+    <string name="address">Codigo Postal</string>
+    <string name="address_new">Escribe tu código postal o dirección</string>
+    <string name="already_have_account">Ya tengo cuenta Miscota</string>
+    <string name="restore_password_description">Introduce tu email y te enviaremos las instrucciones de recuperación</string>
+    <string name="restore_password">Recuperar contraseña</string>
+    <string name="my_orders">Mis pedidos</string>
+    <string name="my_profile">Mi perfil</string>
+    <string name="products">Todos los \nproductos</string>
+    <string name="consulting">Consultas</string>
+    <string name="locate_your_store">Encuentra tu tienda</string>
+    <string name="our_stores">Nuestras \ntiendas</string>
+    <string name="schedule_your_order">Mis pedidos programados</string>
+    <string name="next_schedule_order">Próximo pedido programados</string>
+    <string name="restore_password_email_sent">Se ha enviado un email para restablecer la contraseña a tu correo electrónico</string>
+    <string name="next_order_arrives_on">El pedido programado llega en %s</string>
+    <string name="current_location">Ubicación actual</string>
+    <string name="current_location_new">Usar mi posición actual</string>
+    <string name="recent_addresses">Direcciones recientes</string>
+    <string name="user_addresses">Mis direcciones</string>
+    <string name="delivery_today">Entrega hoy</string>
+    <string name="all_the_products">Todos los productos</string>
+    <string name="sameday_products">Productos con \nEntrega Hoy</string>
+    <string name="all_categories">Todos los productos</string>
+    <string name="all_products_of_category">Todo</string>
+    <string name="no_item_found">No item found</string>
+    <string name="no_item_category">No hay productos para mostrar en esta categoria</string>
+    <string name="all_categories_of"> %s</string>
+    <string name="top_products">Top Products</string>
+    <string name="all_products">Todos los productos</string>
+    <string name="options">Opciones</string>
+    <string name="options_product">Peso producto</string>
+    <string name="packs_product">Unidades</string>
+    <string name="quantity">Cantidad</string>options_product
+
+    <string name="sign_in_bottom">Iniciar sesión</string>
+    <string name="login_title">Inicia con tu usuario Miscota</string>
+
+    <!---cart-->
+    <string name="add_to_cart">Añadir al carrito</string>
+    <string name="description">Descripción</string>
+    <string name="ingredients">Ingredientes</string>
+    <string name="item_added_to_cart">Se ha añadido un producto al carrito</string>
+    <string name="item_dont_added_to_cart">No se ha podido añadir porque no hay stock disponible ahora</string>
+    <string name="item_dont_have_stock">De este producto ya no hay stock, lo siento</string>
+    <string name="item_removed_from_cart">Se ha eliminado un producto del carrito</string>
+    <string name="total_price">Total</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="choose_the_time_slot">Franja horaria</string>
+    <string name="receive_it_between_11_00_a_m_and_14_00_p_m">Recibe entre 11:00 hs a 14:00 hs</string>
+    <string name="receive_it_between_15_00_a_m_and_18_00_p_m">Recibe entre 15:00 hs a 18:00 hs</string>
+    <string name="receive_it_between_20_00_a_m_and_22_00_p_m">Recibe entre 20:00 hs a 22:00 hs</string>
+    <string name="receive_it_between_11_00_a_m_and_14_00_p_m_nextDay">Recibe entre 11:00 hs a 14:00 hs (día siguiente)</string>
+    <string name="receive_it_between_15_00_a_m_and_18_00_p_m_nextDay">Recibe entre 15:00 hs a 18:00 hs (día siguiente)</string>
+    <string name="receive_it_between_20_00_a_m_and_22_00_p_m_nextDay">Recibe entre 20:00 hs a 22:00 hs (día siguiente)</string>
+    <string name="receive_between_11_00_a_m_and_14_00_p_m_sd">de 11:00 h a 14:00 h (sd)</string>
+    <string name="receive_between_15_00_a_m_and_18_00_p_m_sd">de 15:00 h a 18:00 h (sd)</string>
+    <string name="receive_between_20_00_a_m_and_22_00_p_m_sd">de 20:00 h a 22:00 h (sd)</string>
+    <string name="receive_between_11_00_a_m_and_14_00_p_m_nd">de 11:00 h a 14:00 h </string>
+    <string name="receive_between_15_00_a_m_and_18_00_p_m_nd">de 15:00 h a 18:00 h </string>
+    <string name="receive_between_20_00_a_m_and_22_00_p_m_nd">de 20:00 h a 22:00 h </string>
+    <string name="receive_between_11_00_a_m_and_14_00_p_m_nextDay">de 11:00 h a 14:00 h (nd)</string>
+    <string name="receive_between_15_00_a_m_and_18_00_p_m_nextDay">de 15:00 h a 18:00 h (nd)</string>
+    <string name="receive_between_20_00_a_m_and_22_00_p_m_nextDay">de 20:00 h a 22:00 h (nd)</string>
+
+    <string name="text_dont_processed">por favor compruebe que todos los campos hayan sido completados correctamente</string>
+    <string name="cart_header">Carrito</string>
+    <string name="cart_tramitar_pedido">Tramitar pedido</string>
+    <string name="cart_tipo_envio">Tipo de envío</string>
+    <string name="add_address">Añadir dirección</string>
+    <string name="same_day_off_cart">Entrega hoy no disponible</string>
+    <string name="text_sameday_off_info_cart">08015, Valencia, Centro</string>
+
+    <string name="text_default_product_name">Product name long text</string>
+    <string name="text_default_discount">-10%</string>
+    <string name="text_default_price">14,95 €</string>
+    <string name="text_default_delivery_price">15,95 €</string>
+    <string name="delivery_ecommerce">Entrega estándar</string>
+    <string name="delivery_same_day">Entrega hoy</string>
+    <string name="buy_now">Comprar ahora</string>
+    <string name="you_are_buying_as_a_guest">Estás comprando como invitado</string>
+    <string name="go_to_my_account">Ir a mi cuenta</string>
+    <string name="shipping_address">Dirección de envío</string>
+    <string name="change_direction">Cambiar dirección</string>
+    <string name="pay_with_card">Pagar con tarjeta</string>
+    <string name="use_paypal">Usar paypal</string>
+    <string name="card_number">Número tarjeta</string>
+    <string name="owner_name">Propietario</string>
+    <string name="mm_aa">MM / AA</string>
+    <string name="security_code">Código seguridad</string>
+    <string name="message_conected">Compruebe tu conexión a internet para buscar una dirección</string>
+    <string name="message_conected_app">Debes estar conectado a internet para utilizar nuestra aplicación</string>
+    <string name="no">No</string>
+    <string name="yes">Sí</string>
+    <string name="remove_item_msg">Estás seguro de eliminar el producto del carrito?</string>
+    <string name="remove_item_heading">Eliminar producto</string>
+    <string name="next_day_tem_heading">Información: entregas día siguiente</string>
+    <string name="next_day_item_msg">No se hacen entregas los domingos. Si tu entrega es para el día siguiente y hoy es sábado, la entrega será realizada el lunes. En el caso de las entregas en el mismo día, si realizas tu compra un domingo tu entrega se realizará el lunes </string>
+    <string name="next_day_yes">De acuerdo</string>
+    <string name="change_address_tem_heading">Cambio de dirección</string>
+    <string name="change_address_item_msg">Si cambias la dirección se vaciará el carrito de productos con entrega hoy </string>
+    <string name="searched_location">Dirección encontrada</string>
+    <string name="there_is_no_scheduled_order">No hay envío programado</string>
+    <string name="sameday_text">entrega hoy</string>
+    <string name="ecommerce_text">entrega estándar</string>
+    <string name="next_delivery">Próxima entrega: </string>
+    <string name="frequencies">Frecuencias</string>
+    <string name="edit">Editar</string>
+    <string name="total_estimated">Total Estimado</string>
+    <string name="add_product">Añadir producto</string>
+    <string name="pause">Pausa</string>
+    <string name="bottom_sheet_title">¿Quieres pausar el pedido programado?</string>
+    <string name="bottom_sheet_description">Dejarás de disfrutar de las ventajas</string>
+    <string name="bottom_sheet_description2">Envío prioritario más rápido. Recibes tus pedidos automáticamente. Modifícalos cuando quieras. Atención al cliente rápida y personalizada.</string>
+    <string name="orders">Pedidos</string>
+    <string name="search">Buscar producto</string>
+    <string name="send_now">Enviar ya</string>
+    <string name="cancel">Cancelar</string>
+    <string name="save">Guardar</string>
+    <string name="new_frequency">Nueva frecuencia</string>
+    <string name="scheduled_frequency_unit">%1$d semana</string>
+    <string name="scheduled_frequency_units">%1$d semanas</string>
+    <string name="no_disponible">No disponible</string>
+    <string name="guest_email">email</string>
+    <string name="guest_phone">teléfono</string>
+    <string name="you_are_buy_as_a_guest">Como invitado añada: email y teléfono</string>
+    <string name="type_product">tipo de producto</string>
+
+    <!--Address cart-->
+    <string name="name">Nombre</string>
+    <string name="surname">Apellidos</string>
+    <string name="street_address">Calle, número y piso</string>
+    <string name="postal_code">Código Postal</string>
+    <string name="city">Ciudad</string>
+    <string name="province">Provincia</string>
+    <string name="phone">Teléfono</string>
+    <string name="yes_delete">Sí, eliminar</string>
+    <string name="atention">Atención</string>
+
+    <!--errores carrito-->
+    <string name="edit_text_mandatory">este campo es obligatorio</string>
+
+    <!--pedido-->
+    <string name="thanks">Gracias por tu pedido</string>
+    <string name="pedido_registrado">El pedido se ha registrado con éxito!</string>
+    <string name="numero_pedido">numero de pedido</string>
+
+    <!--tramitar pedido-->
+    <string name="tipo_envio_header_text">Tipo de envío</string>
+    <string name="delivery_ecommerce_title">Envío estándar</string>
+    <string name="total_title">Importe total</string>
+    <string name="name_exemple">Maria da Peña</string>
+    <string name="address_exemple_shipping">Carrer de Arago, 324</string>
+    <string name="address_complement_exemple">08015, Barcelona, España</string>
+    <string name="payment_method_title">Método de pago</string>
+    <string name="credit_card_title">Tarjeta de débito/crédito</string>
+    <string name="credit_card_number_exemple">**** **** **** 4362</string>
+    <string name="credit_card_name_exemple">Ander Sebastian</string>
+    <string name="discount_title">Cupón descuento</string>
+    <string name="discount_text_info_exemple">Compra mínima de 19 €</string>
+    <string name="discount_coupon_text_exemple">Cupón FREESHIP19</string>
+    <string name="discount_text_shipping_exemple">Envío gratis.</string>
+    <string name="type_order_title">Tipo de envío</string>
+    <string name="total_products_exemple">(%1$s productos)</string>
+    <string name="info_receive_ecommerce_exemple">Lo recibes el</string>
+    <string name="date_receive_exemple">14/06/2021</string>
+    <string name="pay_pal_title">Paypal</string>
+    <string name="card_mask">**** **** **** %1$s</string>
+    <string name="text_need_hour_receive_sd"> >Seleccione la fecha para Entrega hoy</string>
+    <string name="login_off_message">Faltan datos de usuario para completar tu compra, por favor haga login</string>
+    <string name="payment_off_message">Faltan datos de pago para completar tu compra</string>
+    <string name="delivery_type_default">DEFAULT</string>
+    <string name="current_time_default">DEFAULT_TIME</string>
+
+    <!--tipo envío-->
+    <string name="accept_button">Aceptar</string>
+    <string name="delivery_type_message">Faltan datos de envío para completar tu compra</string>
+
+    <!--dirección envío-->
+    <string name="address_header_text">Dirección de envío</string>
+    <string name="addrees_send">¿Dónde te lo enviamos?</string>
+    <string name="address_shipping">Dirección</string>
+    <string name="change_address_notify">Si cambias el código postal se borrarán los productos\n con entrega hoy de tu cesta</string>
+    <string name="change_address_continue">Continuar</string>
+
+
+    <!--payments-->
+    <string name="value_key">amount_value</string>
+    <string name="currency_key">amount_currency</string>
+    <string name="shopper_reference_key">shopper_reference</string>
+    <string name="shopper_country_key">shopper_country</string>
+    <string name="shopper_locale_key">shopper_locale</string>
+    <string name="shopper_email_key">shopper_email</string>
+    <string name="payment_method_header">Métodos de pago</string>
+
+    <string name="threeds2_key">threeds2</string>
+    <string name="threeds2_title">3DS2</string>
+    <string name="execute3D_key">execute_3d</string>
+    <string name="execute3D_key_title">Execute 3D</string>
+    <string name="merchant_account_key">merchant_account</string>
+
+    <string name="without_location">¿Dónde quieres la entrega hoy?</string>
+    <string name="address_exemple">"Gran Vía, 33, 4º A, 36204 Vigo"</string>
+    <string name="title_activity_address_reverse">AddressActivityReverse</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="payment_method_title_head">¿Cómo quieres pagar?</string>
+    <string name="payment_method_title_second">¿Para pagar?</string>
+    <string name="user_card_title">Mis tarjetas</string>
+
+    <!---samedy_info-->
+
+    <string name="title_sameday">Entrega hoy disponible</string>
+    <string name="title_sameday_info">Entrega hoy</string>
+    <string name="title_sameday_search">Entrega \nhoy</string>
+    <string name="subtitle_sameday_info">PIDE AHORA, RECÍBELO HOY</string>
+    <string name="first_subtitle_info_sameday">¿Que es Entrega Hoy?</string>
+    <string name="second_subtitle_info_sameday">¿Como funciona?</string>
+    <string name="first_text_info_sameday">Es nuestro método de envío más rápido con el \nque podrás hacer tu pedido y recibirlo el mismo \ndía en la franja horaria que desees.</string>
+    <string name="same_day_off">Entrega hoy \nNo disponible en tu zona</string>
+
+    <string name="second_text_info_sameday_one">1. Introduce tu código postal en la barra de \n"Entrega hoy".\n</string>
+    <string name="second_text_info_sameday_two">2. Añade a tu carrito los productos con \n"la etiqueta "Entrega hoy disponible".\n</string>
+    <string name="second_text_info_sameday_three">3.Selecciona en tu carrito los productos que \nquieres recibir hoy.\n</string>
+    <string name="second_text_info_sameday_four">4. Recibe los productos en lo que tardas en\n dar un paseo.</string>
+
+    <string name="text_sameday_off">Entrega hoy \nNo disponible en tu zona</string>
+    <string name="text_sameday_off_info">COMPRA AHORA\nRECIBE EN 2 HORAS</string>
+    <string name="first_text_sameday_off_info">PIDE AHORA, RECÍBELO HOY</string>
+
+    <string name="search_products">¿Qué necesita tu mascota?</string>
+    <string name="same_day_flag_text">\n¡Busca sólo productos \n con entrega hoy!</string>
+
+    <string name="select_receive_sameday_title">Selecciona franja horaria para </string>
+
+
+    <!--postal code info-->
+    <string name="text_postal_code_info">El código postal está bloqueado con tu selección\n de zona para el servicio de "Entrega hoy".</string>
+    <string name="postal_code_info_one">Puedes seleccionar otro código postal cambiando\n la zona de "Entrega hoy".</string>
+    <string name="postal_code_info_two">Ten en cuenta que la disponibilidad de los productos con "Entrega hoy" puede variar entre zonas.</string>
+    <string name="postal_code_bottom">Seleccionar otra zona de "Entrega hoy"</string>
+
+    <!--add address info-->
+    <string name="text_add_address_info">No se puede utilizar esta dirección. Servicio de “Entrega hoy” no disponible en la zona.</string>
+    <string name="add_address_info">Puedes recibir en esta dirección seleccionando\n “Envío estándar” para los productos de tu carrito.</string>
+    <string name="add_address_info_bottom">Utilizar esta dirección y seleccionar el\n envío estándar para todos los productos</string>
+
+    <!--search-->
+    <string name="search_of">Resultados para %s</string>
+    <string name="result_category_of">para %s</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--product detail-->
+    <string name="label_price">Precio estándar</string>
+    <string name="title_type_order">¿Cuándo lo necesitas?</string>
+    <string name="title_another_type_order">¿Cuándo llegará?</string>
+    <string name="variant_not_checked_message">No hay ninguna opción seleccionada</string>
+
+    <!--card number-->
+    <string name="add_card_number">Añadir tarjeta</string>
+    <string name="username_card_number">Titular</string>
+    <string name="cvv_card">CVV</string>
+    <string name="expiration_card">Validez hasta</string>
+    <string name="expiration_card_exemple">03/22</string>
+    <string name="card_number_exemple"> 6425 5421 4352 9894</string>
+    <string name="user_name_card_exemple">Adriana Mendoza</string>
+    <string name="user_alias_button_title">Añadir alias</string>
+
+    <string name="not_valid_card">Ponga todos los dígitos de la tarjeta</string>
+    <string name="perfect">¡Perfecto!</string>
+    <string name="expiration_message">Ponga la validez de la tarjeta</string>
+    <string name="cvv_required_message">Ponga el CVV</string>
+    <string name="username_card_required">Ponga el nombre completo del titular</string>
+    <string name="card_required_message">Faltan los datos de la tarjeta</string>
+    <string name="card_same_data_required">Aún faltan datos de la tarjeta</string>
+
+    <string name="card_number_encrypt">encryptedCardNumber</string>
+    <string name="card_expire_encrypt">encryptedExpiryMonth</string>
+    <string name="card_security_encrypt">encryptedSecurityCode</string>
+    <string name="card_expire_year_encrypt">encryptedExpiryYear</string>
+    <string name="card_user_encrypt">encryptedUserName</string>
+
+    <string name="card_number_message">Añada un método de pago para comprar</string>
+
+    <!--facebook login tags error-->
+    <string name="on_success">facebook:onSuccess:</string>
+    <string name="access_token">facebook:onSuccess it.accessToken:</string>
+    <string name="on_cancel">facebook:onCancel</string>
+    <string name="on_error">facebook:onError</string>
+    <string name="get_instance">LoginManager.getInstance().logOut() -> facebook:onError</string>
+    <string name="login_response">LoginFragment Response</string>
+
+    <!--facebook login fields, parameters-->
+    <string name="fields">fields</string>
+    <string name="id_name_email_gender_birthday">id,name,email,gender, birthday</string>
+    <string name="name_fb">name</string>
+    <string name="email_fb">email</string>
+
+    <!--thank you text-->
+    <string name="order_placed">¡Pedido realizado!</string>
+    <string name="order_thank_you">Muchas gracias por comprar en Miscota</string>
+    <string name="order_user_message">%s, te hemos enviado un email con todos los datos del pedido. También puedes consultar los detalles en el apartado</string>
+    <string name="order_user_message_two">, te hemos enviado un email con todos los datos del pedido. También puedes consultar los detalles en el apartado</string>
+    <string name="order_user_zone_button"><u>Pedidos en tu zona de usuario.</u></string>
+    <string name="order_go_to_home">Seguir comprando</string>
+    <string name="order_title">Envío</string>
+    <string name="count_products_text">productos</string>
+    <string name="order_number_exemple">MIS-ES-5487136487549</string>
+    <string name="order_number_title">Pedido</string>
+    <string name="get_order_ref_number">orderNumberOk</string>
+
+    <string name="retail_id_default">0</string>
+    <string name="text_default_variation">1,8 Kg €</string>
+
+    <!--types shipping-->
+    <string name="type_ecommerce">ecommerce</string>
+    <string name="type_sameday">sameday</string>
+    <string name="total_ecommerce">totalEcommerce</string>
+    <string name="total_sameday">totalSameday</string>
+
+    <string name="date_shipping_sameday">currentDate</string>
+    <string name="delivery_type_sameday">deliveryType</string>
+
+    <string name="text_default_main">Introduce tu código postal y\n
+              comprueba si tienes “Entrega Hoy” en tu zona</string>
+
+    <!--delivery_type-->
+    <string name="delivery_type_T1ND">T1ND</string>
+    <string name="delivery_type_T1SD">T1SD</string>
+    <string name="delivery_type_T2ND">T2ND</string>
+    <string name="delivery_type_T2SD">T2SD</string>
+    <string name="delivery_type_T3SD">T3SD</string>
+    <string name="delivery_type_T3ND">T3ND</string>
+
+
+    <!--message comprove cart-->
+    <string name="message_need_product_in_cart">Debe tener al menos un producto en el carrito</string>
+    <string name="message_need_address_in_cart">Añada tu dirección completa
+                    \n para que podamos entregar correctamente tu pedido</string>
+    <!--<string name="delivery_type_T2ND">T2ND</string>-->
+
+
+    <!--messages-->
+    <string name="need_login">Haga login para finalizar su pedido</string>
+    <string name="guest">invitado</string>
+    <string name="postal_code_message">Si cambias el código postal se borrarán de tu cesta los productos con entrega hoy</string>
+    <string name="delete_products">¿Deseas borrar los productos?</string>
+
+
+</resources>

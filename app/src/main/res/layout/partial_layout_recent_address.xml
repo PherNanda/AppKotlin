@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:paddingHorizontal="24dp"
+    android:paddingVertical="8dp"
+    android:forceDarkAllowed="false">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/currentLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_icon_location"
+        android:drawablePadding="7dp"
+        android:text="@string/current_location"
+        android:textAlignment="textStart"
+        app:fontFamily="@font/bree_regular"
+        android:textSize="15sp"
+        android:textColor="@color/new_app_grey"
+        app:layout_constraintStart_toStartOf="@+id/phoneLayout"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/currentLocationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/current_location"
+        android:textAlignment="textStart"
+        android:textSize="12sp"
+        android:textColor="@color/new_app_grey"
+        app:fontFamily="@font/bree"
+        app:layout_constraintStart_toStartOf="@+id/phoneLayout"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+</LinearLayout>

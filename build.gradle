@@ -1,0 +1,100 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext.kotlinVersion = '1.4.30'
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.2.0-beta04'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath 'com.google.gms:google-services:4.3.8'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.0'
+        //classpath 'com.google.firebase:perf-plugin:1.4.0'
+
+        classpath ('com.google.firebase:perf-plugin:1.4.0') {
+            exclude group: 'com.google.guava', module: 'guava-jdk5'
+        }
+
+
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://repo.emma.io/emma' }
+    }
+}
+
+
+// Versions definition
+ext {
+    minSdkVersion = 27
+    compileSdkVersion = 31
+    targetSdkVersion = 31
+
+    // Basics and UI
+    androidCore = '1.3.2'
+    androidAppCompat = '1.2.0'
+    androidMaterial = '1.3.0'
+    androidConstraintLayout = '2.0.4'
+    androidVectorDrawable = '1.1.0'
+    androidLifeCycleLiveData = '2.3.0'
+    androidLifeCycleViewModel = '2.3.0'
+    androidAnnotation = '1.1.0'
+    androidNavigation = '2.3.3'
+    androidActivity = '1.2.0'
+    androidFragment = '1.3.0'
+    viewpager2 = "1.0.0"
+
+    // Network
+    okhttp = '4.2.2'
+    retrofit = '2.9.0'
+    moshi = '1.11.0'
+    okhttpInterceptor = "3.1.0"
+
+    // Koin
+    koin = "2.2.2"
+
+    // Timber
+    timber = "4.7.1"
+
+    // coroutines
+    coroutine = "1.4.2"
+
+    // coil
+    coil = "1.1.1"
+
+    // fb sdk
+    facebookSdk = "8.1.0"
+
+    // google auth
+    googleAuth = "19.0.0"
+
+    // Google Maps
+    googleMap = '17.0.0'
+
+    // Google Places
+    googlePlaces = '2.4.0'
+
+    // adyen sdk
+    adyen = '3.8.0'
+
+    // Test
+    junit = '4.+'
+    androidExtJunit = '1.1.2'
+    androidExpresso = '3.3.0'
+
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+

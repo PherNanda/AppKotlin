@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_home_new_ui"
+    tools:context=".ui.cart.CartFragment"
+    android:forceDarkAllowed="false">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/partial_toolbar_layout_new_ux"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/samedayInfoMain"
+        style="@style/Theme.AppComponents.Card.Same.Day.Info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:checkable="false"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:forceDarkAllowed="false">
+
+        <LinearLayout
+            android:id="@+id/samedayInfoBottom"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:layout_marginTop="7dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:forceDarkAllowed="false">
+
+            <ImageView
+                android:id="@+id/imageSamedayMain"
+                android:layout_width="20dp"
+                android:layout_height="13dp"
+                android:layout_marginHorizontal="2dp"
+                android:layout_marginStart="0dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/sameday_icon_web" />
+
+            <TextView
+                android:id="@+id/textSamedayMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/same_day_off_cart"
+                android:textColor="@color/new_app_grey"
+                android:textSize="11sp"
+                android:textAlignment="textStart"
+                android:maxLines="2"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="0dp"
+                app:fontFamily="@font/bree_regular" />
+
+            <ImageView
+                android:id="@+id/imageSamedayCheck"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginHorizontal="1dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="bottom"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_info_icon_cart" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/samedayInfo"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:layout_marginTop="7dp"
+            android:layout_gravity="end"
+            android:layout_marginStart="0dp"
+            android:paddingStart="1dp"
+            android:paddingEnd="1dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:forceDarkAllowed="false">
+
+            <ImageView
+                android:id="@+id/imageGpsCart"
+                android:layout_width="13dp"
+                android:layout_height="11dp"
+                android:layout_marginHorizontal="1dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="end"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_gps_cart" />
+
+            <TextView
+                android:id="@+id/textSamedayMainInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/text_sameday_off_info_cart"
+                android:textColor="@color/new_app_grey"
+                android:textSize="10sp"
+                android:textAlignment="center"
+                app:startIconDrawable="@drawable/sameday_info_check_vector"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:layout_marginStart="0dp"
+                app:fontFamily="@font/bree_regular" />
+
+            <ImageView
+                android:id="@+id/imageSamedayCheckInfo"
+                android:layout_width="15dp"
+                android:layout_height="13dp"
+                android:layout_marginHorizontal="1dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="end"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="@color/light_grey_label"
+                android:src="@drawable/sameday_info_check_vector" />
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/checkoutButtonNew"
+        style="@style/Widget.AppComponents.Button.Checkout"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/background_button_add_cart"
+        android:text="@string/cart_tramitar_pedido"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:drawableEnd="@drawable/ic_back_icon_cart_button"
+        app:layout_constraintStart_toStartOf="@+id/recyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/samedayInfoMain"
+        android:forceDarkAllowed="false">
+    </com.google.android.material.button.MaterialButton>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintTop_toBottomOf="@+id/checkoutButtonNew" />
+
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/priceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="@string/total_price"
+            android:visibility="gone"
+            android:textAlignment="center"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:fontFamily="@font/bree_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/priceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_marginStart="8dp"
+            android:text="34,95 €"
+            android:visibility="gone"
+            android:textAlignment="center"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textColor="?attr/colorPrimary"
+            android:textStyle="bold"
+            app:fontFamily="@font/bree_regular"
+            app:layout_constraintStart_toEndOf="@+id/priceLabel"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/checkoutButton"
+            style="@style/Widget.AppComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/buy_now"
+            android:visibility="gone"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/priceLabel" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/emptyView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_item_found"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <FrameLayout
+        android:id="@+id/thankyou"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+   <!--<com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginVertical="0dp"
+        android:layout_marginHorizontal="0dp"
+        app:labelVisibilityMode="labeled"
+        app:itemIconTint="@color/bottom_navigation_tint_color_new"
+        app:itemTextColor="@color/bottom_navigation_tint_color_new"
+        style="@style/MyWidget.MaterialComponents.BottomNavigationView.PrimarySurfaceTwo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_menu" />-->
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:paddingBottom="100dp"
+        android:visibility="gone"
+        android:src="@drawable/miscota_image_cart"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    </ImageView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.adyen.checkout:entercash-ui:3.8.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/5652a69b4355fb995e59d1b847ea8c4d/jetified-entercash-ui-3.8.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/5652a69b4355fb995e59d1b847ea8c4d/jetified-entercash-ui-3.8.0/res" />
+      <root url="file://$USER_HOME$/.gradle/daemon/4.8.1/caches/transforms-2/files-2.1/5652a69b4355fb995e59d1b847ea8c4d/jetified-entercash-ui-3.8.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/entercash-ui/3.8.0/255288fbccc2ea0dc93a24f0bc93d0a1dc70a5a1/entercash-ui-3.8.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/daemon/4.8.1/caches/modules-2/files-2.1/com.adyen.checkout/entercash-ui/3.8.0/46c16ffe0a732437a3e39ce098ccdf7b4b014589/entercash-ui-3.8.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

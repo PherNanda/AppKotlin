@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:forceDarkAllowed="false">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/locationImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_location_iconspace" />
+
+        <TextView
+            android:id="@+id/locationText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/without_location"
+            android:textAlignment="center"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:fontFamily="@font/bree_regular" />
+
+    </LinearLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/productsCard"
+        style="@style/Theme.AppComponents.Card.Large"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="0dp"
+            android:paddingBottom="20dp">
+
+            <ImageView
+                android:id="@+id/productImage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="70dp"
+                android:src="@drawable/ic_products"
+                app:layout_constraintEnd_toEndOf="@+id/productLabel"
+                app:layout_constraintStart_toStartOf="@+id/productLabel"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/productLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/products"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceBody1"
+                app:fontFamily="@font/bree_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/productImage" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/deliveryCard"
+        style="@style/Theme.AppComponents.Card"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:layout_constraintBottom_toBottomOf="@+id/productsCard"
+        app:layout_constraintStart_toStartOf="@+id/productsCard">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/deliveryImage"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:src="@drawable/ic_ship"
+                app:layout_constraintEnd_toEndOf="@+id/deliveryLabel"
+                app:layout_constraintStart_toStartOf="@+id/deliveryLabel"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/deliveryLabel"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/delivery_today"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceBody2"
+                app:fontFamily="@font/bree_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/deliveryImage" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/allProductsCard"
+        style="@style/Theme.AppComponents.Card"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:layout_constraintBottom_toBottomOf="@+id/productsCard"
+        app:layout_constraintEnd_toEndOf="@+id/productsCard">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/allProductsImageView"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_products"
+                app:layout_constraintEnd_toEndOf="@+id/allProductsLabel"
+                app:layout_constraintStart_toStartOf="@+id/allProductsLabel"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/allProductsLabel"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/all_the_products"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceBody2"
+                app:fontFamily="@font/bree_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/allProductsImageView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <ImageView
+        android:id="@+id/autoShipDisabled"
+        android:layout_width="177dp"
+        android:layout_height="35dp"
+        android:src="@drawable/tooltip_black"
+        app:layout_constraintStart_toStartOf="@id/productsCard"
+        app:layout_constraintTop_toBottomOf="@id/deliveryCard" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

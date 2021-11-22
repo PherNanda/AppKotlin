@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_marginStart="0dp"
+    android:layout_marginEnd="0dp"
+    android:layout_height="140dp"
+    android:padding="6dp">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardProductImage"
+        style="@style/Theme.AppComponents.Card.Product.List"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="3dp"
+        android:layout_marginHorizontal="3dp"
+        android:layout_marginVertical="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+<!--android:backgroundTint="@color/white_900"-->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/white_900"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="15dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/brandProductName">
+                <ImageView
+                    android:id="@+id/productImage"
+                    android:layout_width="91dp"
+                    android:layout_height="100dp"
+                    android:layout_marginVertical="10dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerInside"
+                    android:background="@color/transparent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/brandProductName"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/productBrandNames"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="109dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/productImage">
+        <TextView
+            android:id="@+id/brandProductName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="5dp"
+            android:maxLines="1"
+            android:minLines="1"
+            android:ellipsize="end"
+            app:fontFamily="@font/bree"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:text="@string/text_default_product_name"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/productImage"
+            />
+
+        <TextView
+            android:id="@+id/productName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="10dp"
+            android:maxLines="2"
+            android:minLines="2"
+            android:ellipsize="end"
+            app:fontFamily="@font/bree"
+            android:textSize="14sp"
+            android:text="@string/text_default_product_name"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/brandProductName" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <TextView
+            android:id="@+id/priceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="109dp"
+            android:layout_marginTop="40dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAlignment="textEnd"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:fontFamily="@font/bree_regular"
+            android:text="@string/text_default_price"
+            app:layout_constraintLeft_toRightOf="@+id/productImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/productBrandNames"/>
+
+        <TextView
+            android:id="@+id/oldPriceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/text_default_price"
+            android:visibility="invisible"
+            android:textAlignment="textEnd"
+            app:fontFamily="@font/bree_regular"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textColor="@color/grey_400"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/priceText"
+            app:layout_constraintStart_toEndOf="@+id/priceText"
+            app:layout_constraintTop_toTopOf="@+id/priceText" />
+
+        <TextView
+            android:id="@+id/discountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_discount_background"
+            android:paddingVertical="2dp"
+            android:paddingHorizontal="8dp"
+            android:layout_marginStart="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/text_default_discount"
+            android:visibility="invisible"
+            android:textAlignment="textEnd"
+            app:fontFamily="@font/bree_regular"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/priceText"
+            app:layout_constraintStart_toEndOf="@+id/oldPriceText"
+            app:layout_constraintTop_toTopOf="@+id/priceText" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/addToCartButtonList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="90dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="270dp"
+            app:cardElevation="6dp"
+            android:elevation="5dp"
+            android:visibility="invisible"
+            android:background="@color/white_900"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/priceText">
+        <ImageButton
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:src="@drawable/ic_add_to_cart_button_list"
+            android:background="@color/white_900"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/priceText"> </ImageButton>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/optionsProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="30dp"
+            android:layout_marginVertical="0dp"
+            android:layout_marginStart="109dp"
+            android:layout_marginEnd="10dp"
+            android:textSize="11sp"
+            android:fontFamily="@font/bree"
+            android:paddingTop="65dp"
+            app:layout_constraintStart_toStartOf="@+id/priceText"
+            app:layout_constraintBottom_toBottomOf="@+id/addToCartButtonList">
+
+        </androidx.appcompat.widget.AppCompatTextView>
+
+        <ImageView
+            android:id="@+id/samedayIn"
+            android:layout_width="120dp"
+            android:layout_height="17dp"
+            android:layout_marginStart="109dp"
+            android:layout_marginTop="85dp"
+            android:src="@drawable/sameday_label"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAlignment="textEnd"
+            android:visibility="invisible"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:fontFamily="@font/bree_regular"
+            android:text="@string/text_default_price"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addToCartButtonList" />
+
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/white_900"
+            app:layout_constraintBottom_toBottomOf="@+id/oldPriceText"
+            app:layout_constraintEnd_toEndOf="@+id/oldPriceText"
+            app:layout_constraintStart_toStartOf="@+id/oldPriceText"
+            app:layout_constraintTop_toTopOf="@+id/oldPriceText" />
+
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+   <!-- <ImageView
+        android:id="@+id/productImage"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerInside"
+        android:background="@color/placeholder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />-->
+
+ <!--   <TextView
+        android:id="@+id/productName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:maxLines="2"
+        android:minLines="2"
+        android:ellipsize="end"
+        app:fontFamily="@font/bree_regular"
+        android:text="@string/text_default_product_name"
+        android:textAppearance="?attr/textAppearanceBody2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/productImage"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/priceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAlignment="textEnd"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:fontFamily="@font/bree_regular"
+        android:textStyle="bold"
+        android:text="@string/text_default_price"
+        app:layout_constraintStart_toStartOf="@+id/productName"
+        app:layout_constraintTop_toBottomOf="@+id/productName" />
+
+    <TextView
+        android:id="@+id/oldPriceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/text_default_price"
+        android:visibility="invisible"
+        android:textAlignment="textEnd"
+        app:fontFamily="@font/bree_regular"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textColor="@color/grey_400"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/priceText"
+        app:layout_constraintStart_toEndOf="@+id/priceText"
+        app:layout_constraintTop_toTopOf="@+id/priceText" />
+
+    <TextView
+        android:id="@+id/discountText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_discount_background"
+        android:paddingVertical="2dp"
+        android:paddingHorizontal="8dp"
+        android:layout_marginStart="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/text_default_discount"
+        android:visibility="invisible"
+        android:textAlignment="textEnd"
+        app:fontFamily="@font/bree_regular"
+        android:textAppearance="?attr/textAppearanceCaption"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/priceText"
+        app:layout_constraintStart_toEndOf="@+id/oldPriceText"
+        app:layout_constraintTop_toTopOf="@+id/priceText" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/white_900"
+        app:layout_constraintBottom_toBottomOf="@+id/oldPriceText"
+        app:layout_constraintEnd_toEndOf="@+id/oldPriceText"
+        app:layout_constraintStart_toStartOf="@+id/oldPriceText"
+        app:layout_constraintTop_toTopOf="@+id/oldPriceText" />-->
+</androidx.constraintlayout.widget.ConstraintLayout>

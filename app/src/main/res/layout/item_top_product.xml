@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="200dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp">
+
+    <ImageView
+        android:id="@+id/productImage"
+        android:layout_width="0dp"
+        android:layout_height="110dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerInside"
+        android:background="@color/placeholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/productName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:minLines="2"
+        android:layout_marginTop="16dp"
+        android:text="@string/text_default_product_name"
+        android:textAppearance="?attr/textAppearanceBody2"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/productImage"
+        app:layout_constraintTop_toBottomOf="@id/productImage" />
+
+    <TextView
+        android:id="@+id/priceText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAlignment="textEnd"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:fontFamily="@font/bree_regular"
+        android:textStyle="bold"
+        android:text="@string/text_default_price"
+        app:layout_constraintStart_toStartOf="@+id/productName"
+        app:layout_constraintTop_toBottomOf="@+id/productName" />
+
+    <!--<TextView
+        android:id="@+id/oldPriceText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="14,95 €"
+        android:textAlignment="textEnd"
+        android:visibility="invisible"
+        app:fontFamily="@font/bree_regular"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textColor="@color/grey_400"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/priceText"
+        app:layout_constraintStart_toEndOf="@+id/priceText"
+        app:layout_constraintTop_toTopOf="@+id/priceText" />-->
+
+    <TextView
+        android:id="@+id/discountText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_discount_background"
+        android:paddingVertical="2dp"
+        android:paddingHorizontal="8dp"
+        android:layout_marginStart="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/text_default_discount"
+        android:visibility="invisible"
+        android:textAlignment="textEnd"
+        app:fontFamily="@font/bree_regular"
+        android:textAppearance="?attr/textAppearanceCaption"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@+id/priceText"
+        app:layout_constraintStart_toEndOf="@+id/priceText"
+        app:layout_constraintTop_toTopOf="@+id/priceText" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/grey_400"
+        app:layout_constraintBottom_toBottomOf="@+id/priceText"
+        app:layout_constraintEnd_toEndOf="@+id/priceText"
+        app:layout_constraintStart_toStartOf="@+id/priceText"
+        app:layout_constraintTop_toTopOf="@+id/priceText" />
+</androidx.constraintlayout.widget.ConstraintLayout>

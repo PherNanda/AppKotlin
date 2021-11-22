@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="83dp"
+    android:layout_height="60dp"
+    android:paddingHorizontal="0dp"
+    android:paddingVertical="0dp"
+    android:layout_marginHorizontal="0dp"
+    android:layout_marginVertical="0dp"
+    android:forceDarkAllowed="false">
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/time_selector_new_ecommerce"
+        android:button="@android:color/transparent"
+        android:checked="false"
+        android:maxLines="1"
+        android:paddingStart="10dp"
+        android:paddingTop="0dp"
+        android:paddingBottom="12dp"
+        android:text="10Kg"
+        android:textAlignment="textStart"
+        android:textColor="@drawable/text_color_selector"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/priceText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="11dp"
+        android:text="14,95E"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:visibility="gone"
+        android:textAlignment="textStart"
+        android:paddingStart="10dp"
+        android:textSize="11sp"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textColor="@drawable/text_color_selector"
+        app:layout_constraintBottom_toBottomOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/samedayProduct"
+        style="@style/ProductDetailCard"
+        android:layout_width="46dp"
+        android:layout_height="13dp"
+        android:text="@string/delivery_same_day"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="0dp"
+        android:visibility="visible"
+        app:layout_constraintLeft_toRightOf="@+id/imageSameday"
+        app:layout_constraintBottom_toBottomOf="@id/button" />
+
+    <ImageView
+        android:id="@+id/imageSameday"
+        android:layout_width="18dp"
+        android:layout_height="12dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:visibility="visible"
+        android:src="@drawable/sameday_icon_web"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/samedayProduct"
+        app:layout_constraintBottom_toBottomOf="@id/button" />
+
+    <TextView
+        android:id="@+id/labelUnit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="6dp"
+        android:text="@string/packs_product"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textAlignment="textStart"
+        android:textSize="15sp"
+        android:visibility="gone"
+        app:fontFamily="@font/bree_regular"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textColor="@drawable/text_color_selector"
+        app:layout_constraintTop_toBottomOf="@+id/priceText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonMultiPack"/>
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/buttonMultiPack"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@drawable/time_selector_new"
+        android:checked="false"
+        android:text="20Kg"
+        android:paddingBottom="5dp"
+        android:paddingTop="0dp"
+        android:textSize="18sp"
+        android:paddingStart="10dp"
+        android:textAlignment="center"
+        android:maxLines="1"
+        android:visibility="gone"
+        android:button="@android:color/transparent"
+        android:textColor="@drawable/text_color_selector"
+        app:layout_constraintTop_toBottomOf="@+id/labelUnit"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/priceTextMultiPack" />
+
+    <TextView
+        android:id="@+id/priceTextMultiPack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="11dp"
+        android:text="15,95E"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textAlignment="center"
+        android:textSize="9sp"
+        android:visibility="gone"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textColor="@drawable/text_color_selector"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonMultiPack"
+        app:layout_constraintStart_toStartOf="@+id/buttonMultiPack"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

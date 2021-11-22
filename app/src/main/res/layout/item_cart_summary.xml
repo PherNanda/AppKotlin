@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:visibility="gone"
+    android:layout_height="wrap_content"
+    android:forceDarkAllowed="false">
+
+    <TextView
+        android:id="@+id/delieveryDayText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/delivery_same_day"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textStyle="bold"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/delieveryDayTextEco"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/delivery_ecommerce"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textStyle="bold"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintStart_toStartOf="@+id/delieveryDayText"
+        app:layout_constraintTop_toTopOf="@+id/delieveryDayText" />
+
+
+    <TextView
+        android:id="@+id/deliveryPriceTextSd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/text_default_price"
+        android:textAlignment="textEnd"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textStyle="bold"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/delieveryDayText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/delieveryDayText" />
+    <TextView
+        android:id="@+id/deliveryPriceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="290dp"
+        android:layout_marginBottom="20dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/text_default_delivery_price"
+        android:textAlignment="textEnd"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textStyle="bold"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintStart_toStartOf="@+id/delieveryDayTextEco"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/deliveryPriceTextSd" />
+
+    <TextView
+        android:id="@+id/timeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:paddingTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/choose_the_time_slot"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/delieveryDayText" />
+    <View
+        android:id="@+id/view0"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/deliveryPriceText" />
+
+
+
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="16dp"
+        android:orientation="vertical"
+        android:paddingTop="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/button1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/time_selector"
+            android:button="@android:color/transparent"
+            android:visibility="gone"
+            android:enabled="true"
+            android:drawableEnd="@drawable/ic_tick"
+            android:drawableTint="?attr/colorOnPrimary"
+            android:paddingHorizontal="16dp"
+            android:text="@string/receive_it_between_11_00_a_m_and_14_00_p_m"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@drawable/text_color_selector" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/time_selector"
+            android:button="@android:color/transparent"
+            android:drawableEnd="@drawable/ic_tick"
+            android:visibility="gone"
+            android:enabled="true"
+            android:drawableTint="?attr/colorOnPrimary"
+            android:paddingHorizontal="16dp"
+            android:text="@string/receive_it_between_15_00_a_m_and_18_00_p_m"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@drawable/text_color_selector" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/button3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/time_selector"
+            android:button="@android:color/transparent"
+            android:drawableEnd="@drawable/ic_tick"
+            android:visibility="gone"
+            android:checked="true"
+            android:enabled="true"
+            android:drawableTint="?attr/colorOnPrimary"
+            android:paddingHorizontal="16dp"
+            android:text="@string/receive_it_between_20_00_a_m_and_22_00_p_m"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@drawable/text_color_selector" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/button1nextDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/time_selector"
+            android:button="@android:color/transparent"
+            android:layout_marginTop="5dp"
+            android:enabled="true"
+            android:visibility="gone"
+            android:drawableEnd="@drawable/ic_tick"
+            android:drawableTint="?attr/colorOnPrimary"
+            android:paddingHorizontal="16dp"
+            android:text="@string/receive_it_between_11_00_a_m_and_14_00_p_m_nextDay"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@drawable/text_color_selector" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/button2nextDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/time_selector"
+            android:button="@android:color/transparent"
+            android:drawableEnd="@drawable/ic_tick"
+            android:enabled="true"
+            android:visibility="gone"
+            android:drawableTint="?attr/colorOnPrimary"
+            android:paddingHorizontal="16dp"
+            android:text="@string/receive_it_between_15_00_a_m_and_18_00_p_m_nextDay"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@drawable/text_color_selector" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/button3nextDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/time_selector"
+            android:button="@android:color/transparent"
+            android:drawableEnd="@drawable/ic_tick"
+            android:enabled="true"
+            android:visibility="gone"
+            android:drawableTint="?attr/colorOnPrimary"
+            android:paddingHorizontal="16dp"
+            android:text="@string/receive_it_between_20_00_a_m_and_22_00_p_m_nextDay"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@drawable/text_color_selector" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="?attr/colorSurface" />
+    </RadioGroup>
+
+    <!--<RadioGroup
+        android:id="@+id/radioGroupNextDay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="16dp"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/viewNext"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/button1nextDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/time_selector"
+            android:button="@android:color/transparent"
+            android:checked="true"
+            android:enabled="true"
+            android:drawableEnd="@drawable/ic_tick"
+            android:drawableTint="?attr/colorOnPrimary"
+            android:paddingHorizontal="16dp"
+            android:text="@string/receive_it_between_11_00_a_m_and_14_00_p_m_nextDay"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@drawable/text_color_selector" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/button2nextDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:background="@drawable/time_selector"
+            android:button="@android:color/transparent"
+            android:drawableEnd="@drawable/ic_tick"
+            android:enabled="true"
+            android:drawableTint="?attr/colorOnPrimary"
+            android:paddingHorizontal="16dp"
+            android:text="@string/receive_it_between_15_00_a_m_and_18_00_p_m_nextDay"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@drawable/text_color_selector" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/button3nextDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/time_selector"
+            android:button="@android:color/transparent"
+            android:drawableEnd="@drawable/ic_tick"
+            android:enabled="true"
+            android:drawableTint="?attr/colorOnPrimary"
+            android:paddingHorizontal="16dp"
+            android:text="@string/receive_it_between_20_00_a_m_and_22_00_p_m_nextDay"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@drawable/text_color_selector" />
+
+        <View
+            android:id="@+id/viewNext"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="?attr/colorSurface" />
+    </RadioGroup>-->
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radioGroup" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="115dp"
+        android:layout_marginTop="20dp"
+        android:paddingTop="20dp"
+        android:background="?attr/colorSurface"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view1" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_perfil_usuario"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buyingGuestLabel" />
+
+    <TextView
+        android:id="@+id/buyingGuestLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/you_are_buy_as_a_guest"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textStyle="bold"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+    <TextView
+        android:id="@+id/goToAccountLabel"
+        android:layout_width="106dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="4dp"
+        android:background="?attr/selectableItemBackground"
+        android:drawablePadding="8dp"
+        android:text="@string/go_to_my_account"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textColor="?attr/colorPrimary"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintStart_toStartOf="@+id/buyGuestPhone"
+        app:layout_constraintTop_toBottomOf="@+id/buyGuestPhone"
+        app:drawableEndCompat="@drawable/ic_next_arrow" />
+
+    <EditText
+        android:id="@+id/buyGuestEmail"
+        android:layout_width="180dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="4dp"
+        android:background="?attr/selectableItemBackground"
+        android:hint="@string/guest_email"
+        android:textAlignment="textStart"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textColor="?attr/colorPrimary"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintStart_toStartOf="@+id/buyingGuestLabel"
+        app:layout_constraintTop_toBottomOf="@+id/buyingGuestLabel" />
+
+    <EditText
+        android:id="@+id/buyGuestPhone"
+        android:layout_width="179dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="4dp"
+        android:background="?attr/selectableItemBackground"
+        android:hint="@string/guest_phone"
+        android:textAlignment="textStart"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textColor="?attr/colorPrimary"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintStart_toStartOf="@+id/buyGuestEmail"
+        app:layout_constraintTop_toBottomOf="@+id/buyGuestEmail" />
+
+
+    <TextView
+        android:id="@+id/shippingLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/shipping_address"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+    <TextView
+        android:id="@+id/changeDirectionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:drawablePadding="8dp"
+        android:text="@string/change_direction"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textColor="?attr/colorPrimary"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/shippingLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/shippingLabel"
+        app:drawableEndCompat="@drawable/ic_next_arrow" />
+
+
+
+    <TextView
+        android:id="@+id/addressText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="ABC House, XYZ Road, HIJ Country"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:maxLines="2"
+        android:minLines="2"
+        android:ellipsize="end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/shippingLabel"
+        app:layout_constraintTop_toBottomOf="@+id/shippingLabel" />
+
+    <TextView
+        android:id="@+id/payLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/pay_with_card"
+        android:textAppearance="?attr/textAppearanceBody1"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addressText" />
+
+    <!--<TextView
+        android:id="@+id/usePaypalText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:drawableEnd="@drawable/ic_next_arrow"
+        android:drawablePadding="8dp"
+        android:text="@string/use_paypal"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:textColor="?attr/colorPrimary"
+        app:fontFamily="@font/bree_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/payLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/payLabel" />-->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/cardNoLayout"
+        style="@style/Widget.AppComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        app:errorEnabled="true"
+        app:counterEnabled="true"
+        app:counterMaxLength="16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/payLabel">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/cardNoEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/bree_bold"
+            android:hint="@string/card_number"
+            android:textColorHint="@color/app_black"
+            android:inputType="number"
+            android:paddingStart="8dp"
+            android:paddingEnd="4dp"
+            android:maxLength="16"
+            app:fontFamily="@font/bree_regular" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ownerNameLayout"
+        style="@style/Widget.AppComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="2dp"
+        app:errorEnabled="true"
+        app:counterEnabled="true"
+        app:counterMaxLength="50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardNoLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ownerNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/bree_bold"
+            android:hint="@string/owner_name"
+            android:textColorHint="@color/app_black"
+            android:inputType="textPersonName"
+            android:paddingStart="8dp"
+            android:paddingEnd="4dp"
+            android:maxLength="50"
+            app:fontFamily="@font/bree_regular" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dateLayout"
+        style="@style/Widget.AppComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="2dp"
+        app:errorEnabled="true"
+        app:counterEnabled="true"
+        app:counterMaxLength="5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ownerNameLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dateEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/bree_bold"
+            android:hint="@string/mm_aa"
+            android:textColorHint="@color/app_black"
+            android:inputType="text"
+            android:paddingStart="8dp"
+            android:paddingEnd="4dp"
+            android:maxLength="5"
+            app:fontFamily="@font/bree_regular" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/securityLayout"
+        style="@style/Widget.AppComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="2dp"
+        app:errorEnabled="true"
+        app:counterEnabled="true"
+        app:counterMaxLength="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/securityEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/bree_bold"
+            android:hint="@string/security_code"
+            android:textColorHint="@color/app_black"
+            android:inputType="number"
+            android:paddingStart="8dp"
+            android:paddingEnd="4dp"
+            android:maxLength="3"
+            app:fontFamily="@font/bree_regular" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

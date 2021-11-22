@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:transitionGroup="true"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:background="@color/white_search"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:forceDarkAllowed="false">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="67dp"
+            android:text="@string/welcome"
+            android:textAppearance="?attr/textAppearanceHeadline4"
+            android:textSize="36sp"
+            android:textStyle="normal"
+            android:textColor="@color/new_app_grey"
+            app:fontFamily="@font/bree"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/logo_named"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="5dp"
+            android:textAlignment="center"
+            android:text="@string/login_title"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textSize="18sp"
+            android:textColor="@color/light_grey_label"
+            app:fontFamily="@font/bree"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/welcome" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/usernameLayout"
+            style="@style/Widget.AppComponents.TextInputLayout.OutlinedBox.SignIn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="39dp"
+            android:layout_marginTop="49dp"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/logo_named">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/bree"
+            android:hint="@string/email"
+            android:textColorHint="@color/light_grey_label"
+            android:inputType="textEmailAddress"
+            android:textSize="14sp"
+            android:textColor="@color/new_app_grey"
+            android:paddingStart="15dp"
+            android:paddingEnd="4dp"
+            app:fontFamily="@font/bree" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordLayout"
+            style="@style/Widget.AppComponents.TextInputLayout.OutlinedBox.SignIn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="39dp"
+            android:layout_marginTop="0dp"
+            app:endIconTint="@color/grey_400"
+            app:errorEnabled="true"
+            app:endIconMode="password_toggle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/usernameLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/password"
+                android:textColorHint="@color/light_grey_label"
+                android:textColor="@color/new_app_grey"
+                android:inputType="textPassword"
+                android:paddingStart="15dp"
+                android:textSize="14sp"
+                android:paddingEnd="4dp"
+                app:fontFamily="@font/bree" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/forgotButton"
+            style="@style/Widget.AppComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forgot_password"
+            android:textColor="@color/app_blue"
+            android:textSize="14sp"
+            android:visibility="visible"
+            android:layout_marginVertical="0dp"
+            app:fontFamily="@font/bree"
+            app:layout_constraintEnd_toEndOf="@+id/passwordLayout"
+            app:layout_constraintTop_toBottomOf="@id/passwordLayout" />
+
+        <!--<com.google.android.material.button.MaterialButton
+            android:id="@+id/loginButton"
+            style="@style/Widget.AppComponents.Button.OutlinedButton.SignIn"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:minHeight="46dp"
+            android:layout_marginHorizontal="40dp"
+            android:text="@string/sign_in_bottom"
+            android:textColor="@color/white_900"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/forgotButton"
+            app:strokeColor="@color/app_black" />-->
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/loginButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="46dp"
+            android:layout_marginHorizontal="40dp"
+            android:text="@string/sign_in_bottom"
+            android:textColor="@color/white_900"
+            android:fontFamily="@font/bree_regular"
+            android:background="@drawable/background_button_add_cart"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/forgotButton"
+            app:strokeColor="@color/app_black" />
+
+        <TextView
+            android:id="@+id/textOr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:text="@string/login_social_buttons_separator"
+            android:textColor="@color/grey_end_icon"
+            app:layout_constraintEnd_toEndOf="@id/loginButton"
+            app:layout_constraintStart_toStartOf="@id/loginButton"
+            app:layout_constraintTop_toBottomOf="@id/loginButton" />
+
+        <View
+            android:id="@+id/leftLineOfOr"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/grey_end_icon"
+            app:layout_constraintBottom_toBottomOf="@id/textOr"
+            app:layout_constraintEnd_toStartOf="@id/textOr"
+            app:layout_constraintStart_toStartOf="@id/loginButton"
+            app:layout_constraintTop_toTopOf="@id/textOr" />
+
+        <View
+            android:id="@+id/rightLineOfOr"
+            android:layout_width="0dp"
+            android:minWidth="62dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/grey_end_icon"
+            app:layout_constraintBottom_toBottomOf="@id/textOr"
+            app:layout_constraintEnd_toEndOf="@id/loginButton"
+            app:layout_constraintStart_toEndOf="@id/textOr"
+            app:layout_constraintTop_toTopOf="@id/textOr" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fbLoginButton"
+            style="@style/Widget.AppComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerInside"
+            android:text="@string/continue_with_facebook"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:theme="@style/Theme.AppComponents.Button.FacebookButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textOr"
+            app:strokeWidth="2.5dp"
+            app:strokeColor="?attr/colorPrimary" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/googleLoginButton"
+            style="@style/Widget.AppComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="centerInside"
+            android:text="@string/continue_with_google"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:theme="@style/Theme.AppComponents.Button.GoogleButton"
+            app:iconGravity="textStart"
+            app:iconSize="20dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fbLoginButton"
+            app:strokeWidth="2.5dp"
+            app:strokeColor="?attr/colorPrimary" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fbLoginButtonFB"
+            style="@style/Widget.AppComponents.Button.OutlinedButton.FBSign"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="56dp"
+            android:layout_marginHorizontal="39dp"
+            android:layout_marginTop="45dp"
+            android:scaleType="centerInside"
+            android:text="@string/continue_with_facebook"
+            android:textColor="@color/white_900"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textAlignment="center"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/googleLoginButtonFB"
+            app:strokeWidth="2dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/googleLoginButtonFB"
+            style="@style/Widget.AppComponents.Button.OutlinedButton.GOSign"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="56dp"
+            android:layout_marginHorizontal="39dp"
+            android:layout_marginTop="55dp"
+            android:scaleType="centerInside"
+            android:text="@string/continue_with_google"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@color/new_app_grey"
+            app:iconGravity="start"
+            app:iconTintMode="add"
+            android:textAlignment="center"
+            android:paddingStart="14dp"
+            android:paddingEnd="0dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fbLoginButton"
+            app:strokeColor="@color/light_grey" />
+
+
+        <!--<com.facebook.login.widget.LoginButton
+            android:id="@+id/login_button"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:scaleType="centerInside"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fbLoginButton"
+            app:strokeWidth="2.5dp"/>-->
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/signUpButton"
+            style="@style/Widget.AppComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="17dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="42dp"
+            android:text="@string/create_account_new_app"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textColor="@color/new_app_grey"
+            android:visibility="visible"
+            android:theme="@style/Theme.AppComponents.Button.Secondary.New.Sign"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fbLoginButtonFB" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/loadingLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:layout_marginTop="180dp"
+            android:background="@drawable/ic_white_bg_transp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:minWidth="90dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginBottom="400dp"
+
+                style="@android:style/Widget.Holo.ProgressBar.Large"
+                android:background="@drawable/loaderspinner"
+                android:backgroundTint="@color/blue_new_ux"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+            <TextView
+                android:id="@+id/loadingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loading"
+                android:textColor="@color/new_app_grey"
+                android:layout_marginTop="6dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loading"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

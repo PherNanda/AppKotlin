@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragmentProduct"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:forceDarkAllowed="false">
+
+    <LinearLayout
+        android:id="@+id/searchHeader"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:paddingTop="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:orientation="horizontal"
+        android:paddingBottom="0dp"
+        >
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/searchLayout"
+        style="@style/Widget.AppComponents.Button.OutlinedButton.Search.New.SameDay.Flag"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="13dp"
+        android:hint="@string/search_products"
+        android:letterSpacing="0"
+        android:paddingTop="8dp"
+        android:textAlignment="center"
+        android:textColor="@color/app_black"
+        android:textSize="15sp"
+        android:visibility="visible"
+        app:icon="@drawable/ic_lupa_search"
+        app:iconTintMode="add"
+        app:iconPadding="10dp"
+        app:layout_constraintRight_toLeftOf="@id/samedayFlagBottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+  <!--  android:background="@drawable/background_sameday_flag_grey"-->
+    <LinearLayout
+        android:id="@+id/samedayFlagBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="39dp"
+        android:visibility="visible"
+        android:layout_marginStart="25dp"
+        android:layout_marginHorizontal="0dp"
+       android:background="@color/transparent"
+        android:paddingTop="1dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/searchLayout"
+        app:layout_constraintRight_toRightOf="parent">
+       <include layout="@layout/same_day_search_flag" />
+
+    </LinearLayout>
+        <TextView
+            android:id="@+id/textSamedayFlag"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:textSize="10sp"
+            android:layout_marginEnd="9dp"
+            android:background="@drawable/ic_same_day_flag_vector"
+            android:textColor="@color/new_app_grey"
+            android:visibility="gone"
+            android:layout_marginStart="-85dp"
+            android:layout_marginTop="43dp"
+            android:text="@string/same_day_flag_text"
+            app:layout_constraintBottom_toTopOf="@+id/brandRecyclerView"
+            app:layout_constraintTop_toBottomOf="@id/searchLayout"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/titleProductsCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_marginStart="14dp"
+        android:text="@string/result_category_of"
+        android:fontFamily="@font/bree_regular"
+        android:textColor="@color/new_app_grey"
+        android:visibility="visible"
+        android:textSize="16sp"
+        android:layout_marginTop="85dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchHeader"
+        app:layout_constraintBottom_toTopOf="@+id/brandRecyclerView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/brandRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:clipToPadding="false"
+        android:background="@color/transparent"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/titleProductsCategory" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/brandRecyclerView">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/emptyView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_item_category"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/loading"
+        android:layout_width="260dp"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:layout_marginEnd="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <include layout="@layout/item_loader" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
