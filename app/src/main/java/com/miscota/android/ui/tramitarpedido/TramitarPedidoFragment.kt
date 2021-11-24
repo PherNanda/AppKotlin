@@ -20,6 +20,9 @@ import com.adyen.checkout.card.data.ExpiryDate
 import com.adyen.checkout.cse.Card
 import com.adyen.checkout.cse.Encryptor
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import com.miscota.android.BuildConfig
 import com.miscota.android.R
 import com.miscota.android.address.AddressActivity
@@ -95,6 +98,9 @@ class TramitarPedidoFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        // Obtain the FirebaseAnalytics instance.
+        firebaseAnalytics = Firebase.analytics
 
         val clientType = isLogued()
         val items = loadCheckout()
@@ -211,9 +217,8 @@ class TramitarPedidoFragment : Fragment() {
 
         }
         if (addressUser?.addressNumber != null){
-            println("11")
+
             if(addressUser!!.addressNumber.length > 1) {
-                println("111")
                 binding.addressShipping.text = addressUser?.addressNumber
                 binding.addressShippingComplement.text =
                     String.format("${addressUser?.postalCode}, ${addressUser?.city}, ${addressUser?.state} ,${addressUser?.countryName}")
@@ -221,25 +226,21 @@ class TramitarPedidoFragment : Fragment() {
         }
         else {
             if (addressUserInfo?.addressNumber != null ){
-                println("22")
+
                 if(addressUserInfo!!.addressNumber.length > 1) {
-                    println("222")
+
                     binding.addressShipping.text = addressUserInfo?.addressNumber
                     binding.addressShippingComplement.text =
                         String.format("${addressUserInfo?.postalCode}, ${addressUserInfo?.city}, ${addressUserInfo?.state} ,${addressUserInfo?.countryName}")
                 }
             }else {
-                println("33")
                 if (recentAddressesUser.isNotEmpty() && recentAddressesUser != null) {
-                    println("333")
                     binding.addressShipping.text = recentAddressesUser.first().addressNumber
                     binding.addressShippingComplement.text =
                         String.format("${recentAddressesUser.first().postalCode}, ${recentAddressesUser.first().city}, ${recentAddressesUser.first().state}, ${recentAddressesUser.first().countryName}")
 
                 } else {
-                    println("44")
                     if (recentAddresses.isNotEmpty() && recentAddresses != null) {
-                        println("444")
                         recentAddresses.map {
                             it.address
                             binding.addressShipping.text = it.addressNumber
@@ -483,8 +484,8 @@ class TramitarPedidoFragment : Fragment() {
                             reference = viewModelCart.refOrder.value!!,
                             returnUrl = "miscota://paymentResult"
                         )
-                        viewModelCart.fetchPaymentTest(paymentRequest)
-                        //viewModelCart.fetchPaymentPro(paymentRequest)
+                        //viewModelCart.fetchPaymentTest(paymentRequest)
+                        viewModelCart.fetchPaymentPro(paymentRequest)
 
                         viewModelCart.checkoutResult.observe(requireActivity()) {
 
@@ -508,21 +509,17 @@ class TramitarPedidoFragment : Fragment() {
                                 //cartItem: CartItem, order: String, item: Bundle, cartShip: Double, total: Double, eventsInfo: EventsInfo
                                 //viewModel.eventsManager.purchase(arrayOf(list),)
 
-                                /**firebaseAnalytics.logEvent(FirebaseAnalytics.Event.PURCHASE) {
+
+                                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.PURCHASE) {
                                     param(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
                                     param(FirebaseAnalytics.Param.SCREEN_CLASS, "TramitarPedidoFragment")
                                     param(FirebaseAnalytics.Param.TRANSACTION_ID, viewModelCart.refOrder.value!!)
                                     param(FirebaseAnalytics.Param.AFFILIATION, "Miscota App Android 2.0")
                                     param(FirebaseAnalytics.Param.VALUE,getTotalPriceAnalytics())
                                     param(FirebaseAnalytics.Param.CURRENCY, "EUR")
-                                    param(FirebaseAnalytics.Param.METHOD, "fetchPaymentTest")
-                                }**/
+                                    param(FirebaseAnalytics.Param.METHOD, "fetchPayment")
+                                }
 
-                                //vaciar carrito
-                                /**listCheckoutProducts.map {
-                                    viewModelCart.removeItemRef(it.ref, it.type?:getString(R.string.type_ecommerce), requireContext())
-                                    viewModelCart.removeItemRef(it.ref, it.type?:getString(R.string.type_sameday), requireContext())
-                                }**/
 
 
                             } else if (!paymentResult) {
@@ -659,11 +656,13 @@ class TramitarPedidoFragment : Fragment() {
 
     //total price to firebase analytics purchase
     private fun getTotalPriceAnalytics(): Double{
+
+        println("binding.totalPrice.text.toString() ${binding.totalPrice.text}")
         val price = binding.totalPrice.text.toString().split(" ").toTypedArray()
         var allPrice = price[0].replace(".","")
         allPrice = price[0].replace(",","")
         val priceAnalytics = price[0].replace(",",".")
-
+        println("priceAnalytics.toDouble() ${priceAnalytics.toDouble()}")
         return priceAnalytics.toDouble()
     }
 
@@ -698,8 +697,8 @@ class TramitarPedidoFragment : Fragment() {
 
             val encryptedCard = Encryptor.INSTANCE.encryptFields(
                 rawCardData,
-                PUBLIC_KEY
-                //BuildConfig.PUBLIC_KEY_MIS
+                //PUBLIC_KEY
+                BuildConfig.PUBLIC_KEY_MIS
             )
 
             paymentMethod = PaymentMethod(
@@ -809,7 +808,7 @@ class TramitarPedidoFragment : Fragment() {
 
             }
         }
-        if(currentTime.length == 1){
+        if(currentTime.length == 1 && viewModelCart.authStore.getType() == getString(R.string.type_ecommerce)){
             viewModelCart.showLoading.value = false
             checkoutDelivery = false
 
@@ -1079,21 +1078,6 @@ class TramitarPedidoFragment : Fragment() {
 
     }
 
-    /**override fun onResume() {
-        super.onResume()
-        println("onResume TramitarPedido")
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        println("onAttach TramitarPedido")
-
-    }
-
-    override fun onPause() {
-        super.onPause()
-        println("onPause TramitarPedido")
-    }**/
 
     override fun onStop() {
         super.onStop()
@@ -1105,24 +1089,6 @@ class TramitarPedidoFragment : Fragment() {
         }
     }
 
-   /** override fun onDestroyView() {
-        super.onDestroyView()
-        println("onDestroyView")
-    }
 
-    override fun onDestroyOptionsMenu() {
-        super.onDestroyOptionsMenu()
-        println("onDestroyOptionsMenu")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        println("onDestroy")
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        println("onDetach")
-    }**/
 
 }
