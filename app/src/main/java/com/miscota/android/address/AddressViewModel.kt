@@ -19,7 +19,7 @@ import java.util.*
 class AddressViewModel(
     val authStore: AuthStore,
     private val placesRepository: PlacesRepository,
-    private val storeLocationRepository: StoreLocationRepository
+    private val storeLocationRepository: StoreLocationRepository,
 ) : ViewModel() {
 
     private val _currentLocation: MutableLiveData<LatLng> = MutableLiveData()

@@ -293,11 +293,11 @@ class CartFragment : Fragment() {
                 viewModel.setCarriersSd(viewModel.costSd.value.toString())
                 viewModel.setCarriersEco(viewModel.costEcommerce.value.toString())
 
-                var carrriers = (viewModel.costSd.value!! + viewModel.costEcommerce.value!!)
+                val carrriers = (viewModel.costSd.value!! + viewModel.costEcommerce.value!!)
                 viewModel.setCarriers(carrriers.toString())
 
                 //firebase analytics Event removeFromCart
-                var itemCart = viewModel.eventsManager.itemRemoveToCart(itemCarts)
+                val itemCart = viewModel.eventsManager.itemRemoveToCart(itemCarts)
                 viewModel.eventsManager.removeFromCart(itemCart, itemCarts, itemCarts.quantity)
             }
             .setNegativeButton(getString(R.string.no)) { dialogInterface, i ->

@@ -38,8 +38,9 @@ class MainCategoriesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val mainActivity = requireActivity() as MainActivity
-        mainActivity.binding.root.setBackgroundColor(ContextCompat.getColor(mainActivity, R.color.white_900))
+        //val mainActivity = requireActivity() as MainActivity
+        //mainActivity.binding.root.setBackgroundColor(ContextCompat.getColor(mainActivity, R.color.white_900))
+        (requireActivity() as MainActivity).binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white_900))
     }
 
     override fun onCreateView(
