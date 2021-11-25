@@ -152,7 +152,7 @@ class TramitarPedidoFragment : Fragment() {
         }
 
         viewModelCart.costSd.observe(requireActivity()){
-            carriersSd = it
+            carriersSd = it?:0.0
             binding.sameDayPrice.text = String.format("${it.toDouble()}"+" €")
             return@observe
         }
