@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.facebook.FacebookSdk
 import com.google.android.gms.maps.model.LatLng
+import com.miscota.android.events.EventsManager
 import com.miscota.android.repository.StoreLocationRepository
 import com.miscota.android.ui.store.Store
 import com.miscota.android.util.*
@@ -20,6 +21,7 @@ class AddressViewModel(
     val authStore: AuthStore,
     private val placesRepository: PlacesRepository,
     private val storeLocationRepository: StoreLocationRepository,
+    val eventsManager: EventsManager
 ) : ViewModel() {
 
     private val _currentLocation: MutableLiveData<LatLng> = MutableLiveData()
