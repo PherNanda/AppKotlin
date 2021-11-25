@@ -140,8 +140,6 @@ class TramitarPedidoFragment : Fragment() {
         val phoneBC: String? = bundleAddressCurrent?.getString("phoneBC")
 
 
-        println("addressB $addressB")
-        println("addressBC $addressBC")
         if( cardNumber != null && cardMonth != null && cardYear !=  null && cardSecurity != null && cardNumber.isNotEmpty()) {
             paymentMethod = encrypt(cardNumber, cardMonth.split("/").first(),
                 cardYear.split("/")[1], cardSecurity, cardOwner?:"OwnerNameDefault")
