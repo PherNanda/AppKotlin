@@ -1,6 +1,7 @@
 package com.miscota.android.ui.addresscurrent
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spannable
@@ -22,6 +23,7 @@ import com.miscota.android.address.AddressViewModel
 import com.miscota.android.databinding.AddressCurrentFragmentBinding
 import com.miscota.android.databinding.PartialLayoutRecentAddressCartBinding
 import com.miscota.android.ui.addaddress.AddAddressFragment
+import com.miscota.android.ui.cart.CartActivity
 import com.miscota.android.ui.cart.CartUiModel
 import com.miscota.android.ui.cart.CartViewModel
 import com.miscota.android.ui.cart.toCartItemUiModel
@@ -68,24 +70,38 @@ class AddressCurrentFragment : Fragment() {
         var addressSelected: Address? = null
 
         val bundleAddressCurrent: Bundle? = arguments
-        val listCheckoutProducts = loadCheckout()
+
+        val listCheckoutItems = loadCheckoutItem()
         val dialog =
             AlertDialog.Builder(requireContext())
                 .setPositiveButton(getString(R.string.yes_delete)) { dialog, which ->
-
-                    listCheckoutProducts.map {
+                    val newListItems: MutableList<CartUiModel.Item> = mutableListOf()
+                    listCheckoutItems.map {
                         if (it.type == getString(R.string.type_sameday)) {
-                            viewModelCart.removeItemRef(it.ref, it.type, requireContext())
+                            viewModelCart.removeItemRef(it.reference, it.type, requireContext())
 
+                            val itemCart = viewModelCart.eventsManager.itemRemoveToCart(it)
+                            viewModelCart.eventsManager.removeFromCart(itemCart, it, it.quantity)
+                        }
+                        if (it.type == getString(R.string.type_ecommerce)){
+                            newListItems.add(it)
                         }
                     }
-                    if ( addressSelected !=  null) {
+
+                    if ( addressSelected !=  null && newListItems.size > 0) {
 
                         viewModelAddress.setAdressUser(addressSelected)
 
                         val fragment = TramitarPedidoFragment()
                         fragment.arguments = bundleAddressCurrent
                         replaceFragment(fragment)
+                    }
+                    if ( addressSelected !=  null && newListItems.size == 0) {
+
+                       viewModelAddress.setAdressUser(addressSelected)
+                       startActivity(Intent(requireContext(),CartActivity::class.java))
+                       requireActivity().finish()
+
                     }
 
                 }
@@ -138,7 +154,7 @@ class AddressCurrentFragment : Fragment() {
                     //val additionalAddress =  partialBinding.currentLocation.text.toString()
                     partialBinding.currentLocation.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checkbox_true, 0, 0, 0)
 
-                    val sameDay = listCheckoutProducts.findLast { product -> product.type == getString(R.string.type_sameday) }
+                    val sameDay = listCheckoutItems.findLast { product -> product.type == getString(R.string.type_sameday) }
 
                     println("address.postalCode 11 ${address.postalCode} addressUser.postalCode ${addressUser.postalCode} sameDay $sameDay ")
 
@@ -218,7 +234,7 @@ class AddressCurrentFragment : Fragment() {
 
                     partialBinding.currentLocation.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checkbox_true, 0, 0, 0)
 
-                    val sameDay = listCheckoutProducts.findLast { product -> product.type == getString(R.string.type_sameday) }
+                    val sameDay = listCheckoutItems.findLast { product -> product.type == getString(R.string.type_sameday) }
 
                     println("address.postalCode 22 ${address.postalCode} addressUser.postalCode ${addressUser.postalCode} sameDay $sameDay ")
 
@@ -394,22 +410,35 @@ class AddressCurrentFragment : Fragment() {
         }?.commit()
     }
 
-    fun loadCheckout(): MutableList<CartUiModel.ItemListCheckout>{
+    private fun loadCheckoutItem(): MutableList<CartUiModel.Item>{
 
-        val list: MutableList<CartUiModel.ItemListCheckout> = mutableListOf()
+        val list: MutableList<CartUiModel.Item> = mutableListOf()
         viewModelCart.authStore.getCart().map {
             it.toCartItemUiModel()
 
             list.add(
-                CartUiModel.ItemListCheckout(
-                    qty = it.qty.toString(),
-                    price = it.combinationPrice.toString(),
-                    type = it.type,
-                    ref = it.combinationReference,
+                CartUiModel.Item(
+                    productId = it.productId,
+                    productName = it.product.title,
+                    productPrice = it.product.combinationPrice.toString(),
+                    oldPrice = it.product.oldPrice,
+                    image = it.product.image,
+                    quantity = it.qty,
+                    discount = it.product.discount,
+                    stock = it.product.stockItens?:0,
+                    type= it.type,
+                    reference= it.combinationReference,
+                    price= it.combinationPrice,
+                    brand = it.product.brand,
+                    costSd = it.product.costSd,
+                    costEco = it.product.costEco,
+                    totalCost = it.product.totalCost,
+                    samedayDelivery = it.currentTimeDelivered
                 )
             )
 
         }
+
         return list
     }
 
