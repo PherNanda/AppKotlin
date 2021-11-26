@@ -91,43 +91,10 @@ class AddressActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         listAddress = arrayListOf()
-       /** val locationPermissionLauncher =
-            registerForActivityResult(
-                ActivityResultContracts.RequestMultiplePermissions()
-            ) { permissions ->
-                if (!permissions.any { !it.value }) {
-                    setCurrentLocationTwo()
-                }
-            }**/
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        /**locationPermissionLauncher.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ))**/
-
         geoCoder = Geocoder(this, Locale.getDefault())
-
-     /**   val locationPermissionLauncher =
-            registerForActivityResult(
-                ActivityResultContracts.RequestMultiplePermissions()
-            ) { permissions ->
-                if (!permissions.any { !it.value }) {
-                    setCurrentLocation()
-                }
-            }**/
-
-       /** fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        locationPermissionLauncher.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        )
-        geoCoder = Geocoder(this, Locale.getDefault())**/
-
 
         binding.toolbar.imageBack.setOnClickListener {
             finish()
@@ -140,16 +107,6 @@ class AddressActivity : AppCompatActivity() {
 
         binding.currentLocation.setOnClickListener {
 
-           /** if(ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    LOCATION_PERMISSION_REQUEST_CODE
-                )
-                    //setCurrentLocationTwo()
-                return@setOnClickListener
-            }**/
-
             //fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
             locationPermissionLauncher.launch(
                 arrayOf(
@@ -157,14 +114,6 @@ class AddressActivity : AppCompatActivity() {
                     Manifest.permission.ACCESS_FINE_LOCATION
                 ))
 
-            /**ActivityCompat.requestPermissions(
-                this@AddressActivity,
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ),  /* Este codigo es para identificar tu request */
-                1
-            )**/
             //geoCoder = Geocoder(this, Locale.getDefault())
             if(!viewModel.checkIfLocationOpened()) {
                 Toast.makeText(this,"Debes habilitar la localización",Toast.LENGTH_LONG).show()
@@ -289,14 +238,17 @@ class AddressActivity : AppCompatActivity() {
 
         viewModel.loadStores()
 
-        val listCheckoutProducts = loadCheckout()
+        val listCheckoutItems = loadCheckoutItem()
         val dialogo =
             AlertDialog.Builder(this)
                 .setPositiveButton(getString(R.string.yes_delete)) { dialog, which ->
 
-                    listCheckoutProducts.map {
+                    listCheckoutItems.map {
                         if (it.type == getString(R.string.type_sameday)) {
-                            viewModelCart.removeItemRef(it.ref, it.type, this)
+
+                            viewModelCart.removeItemRef(it.reference, it.type, this)
+                            val itemCart = viewModel.eventsManager.itemRemoveToCart(it)
+                            viewModel.eventsManager.removeFromCart(itemCart, it, it.quantity)
 
                         }
                     }
@@ -316,7 +268,7 @@ class AddressActivity : AppCompatActivity() {
 
 
         viewModel.addressChanged.observe(this){
-            val sameDay = listCheckoutProducts.findLast { product -> product.type == getString(R.string.type_sameday) }
+            val sameDay = listCheckoutItems.findLast { product -> product.type == getString(R.string.type_sameday) }
             if (it){
                 if (sameDay != null) {
                     dialogo.show()
@@ -326,23 +278,38 @@ class AddressActivity : AppCompatActivity() {
 
     }
 
-    private fun loadCheckout(): MutableList<CartUiModel.ItemListCheckout>{
+    private fun loadCheckoutItem(): MutableList<CartUiModel.Item>{
+        val list: MutableList<CartUiModel.Item> = mutableListOf()
 
-        val list: MutableList<CartUiModel.ItemListCheckout> = mutableListOf()
         viewModel.authStore.getCart().map {
+
             it.toCartItemUiModel()
 
             list.add(
-                CartUiModel.ItemListCheckout(
-                    qty = it.qty.toString(),
-                    price = it.combinationPrice.toString(),
-                    type = it.type,
-                    ref = it.combinationReference,
-                )
-            )
 
+                    CartUiModel.Item(
+                        productId = it.productId,
+                        productName = it.product.title,
+                        productPrice = it.product.combinationPrice.toString(),
+                        oldPrice = it.product.oldPrice,
+                        image = it.product.image,
+                        quantity = it.qty,
+                        discount = it.product.discount,
+                        stock = it.product.stockItens?:0,
+                        type= it.type,
+                        reference= it.combinationReference,
+                        price= it.combinationPrice,
+                        brand = it.product.brand,
+                        costSd = it.product.costSd,
+                        costEco = it.product.costEco,
+                        totalCost = it.product.totalCost,
+                        samedayDelivery = it.currentTimeDelivered
+
+                    )
+                )
         }
         return list
+
     }
 
 

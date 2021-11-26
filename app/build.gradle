@@ -16,8 +16,8 @@ android {
         applicationId 'com.miscota.android'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 125
-        versionName "2.0.1"
+        versionCode 129
+        versionName "2.1.1"
         //multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -210,7 +210,7 @@ dependencies {
     //firebase
     implementation platform('com.google.firebase:firebase-bom:28.0.1')
     implementation 'com.google.firebase:firebase-analytics-ktx'
-    implementation 'com.google.firebase:firebase-core:19.0.0'
+    implementation 'com.google.firebase:firebase-core:20.0.0'
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:perf-plugin:1.4.0'
     implementation 'com.google.firebase:firebase-perf-ktx'

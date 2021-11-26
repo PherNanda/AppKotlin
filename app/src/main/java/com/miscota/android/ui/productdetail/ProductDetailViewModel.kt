@@ -51,8 +51,8 @@ class ProductDetailViewModel(
             value?.let { option ->
 
                 product?.let {
-                        val combinations = product!!.combinations?.filter {
-                           it.ref == value.id
+                        val combinations = product!!.combinations.filter {
+                            it.ref == value.id
                         }
 
                     if (combinations != null) {

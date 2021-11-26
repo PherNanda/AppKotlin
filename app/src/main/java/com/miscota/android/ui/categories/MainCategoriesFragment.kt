@@ -38,8 +38,9 @@ class MainCategoriesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val mainActivity = requireActivity() as MainActivity
-        mainActivity.binding.root.setBackgroundColor(ContextCompat.getColor(mainActivity, R.color.white_900))
+        //val mainActivity = requireActivity() as MainActivity
+
+        //mainActivity.binding.root.setBackgroundColor(ContextCompat.getColor(mainActivity, R.color.white_900))
     }
 
     override fun onCreateView(
@@ -47,6 +48,7 @@ class MainCategoriesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainCategoriesBinding.inflate(inflater, container, false)
+        (requireActivity() as MainActivity).binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white_900))
         (requireActivity() as MainActivity).binding.navView.menu.getItem(1).isChecked = true
         (requireActivity() as MainActivity).binding.imageBack.isVisible = true
 
