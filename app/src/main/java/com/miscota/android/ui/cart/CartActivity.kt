@@ -34,9 +34,9 @@ import com.miscota.android.events.EventsInfo
 import com.miscota.android.ui.checkoutpayment.*
 import com.miscota.android.ui.pedido.Pedido
 import com.miscota.android.ui.pedido.PedidoNoProcesado
+import com.miscota.android.ui.productdetail.CartProduct
 import com.miscota.android.ui.tramitarpedido.TramitarPedidoFragment
 import com.miscota.android.util.Address
-import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -98,6 +98,16 @@ class CartActivity : AppCompatActivity() {
                             type = cartItem.type?: getString(R.string.type_ecommerce)
                         )
                         totalCartTens = totalCartTens?.plus(1)
+
+                        val product = CartProduct(cartItem.productId,cartItem.productName,
+                            cartItem.image,cartItem.productPrice,cartItem.oldPrice,
+                            cartItem.discount,cartItem.reference,cartItem.price,cartItem.stock,
+                            1,cartItem.type?:getString(R.string.type_ecommerce),
+                            cartItem.stock,cartItem.brand,cartItem.costSd,cartItem.costEco,cartItem.totalCost)
+
+                        //firebase analytics Event removeAddCart
+                        val itemToCart = viewModel.eventsManager.itemToCart(product,cartItem.brand)
+                        viewModel.eventsManager.addToCart(itemToCart, product, 1)
                     },
                     removeItemClickListener = { cartItem ->
                         viewModel.setQuantityRef(
@@ -108,6 +118,9 @@ class CartActivity : AppCompatActivity() {
                             type = cartItem.type?: getString(R.string.type_ecommerce)
                         )
                        totalCartTens = totalCartTens?.minus(1)
+                        //firebase analytics Event removeFromCart
+                        val itemCart = viewModel.eventsManager.itemRemoveToCart(cartItem)
+                        viewModel.eventsManager.removeFromCart(itemCart, cartItem, 1)
 
                     },
                     deleteItemClickListener = { cartItem ->
@@ -119,6 +132,9 @@ class CartActivity : AppCompatActivity() {
                                 //adapter.removeAt(viewHolder.adapterPosition)
                                // showDeleteConfirmationDialogRef(ref = cartItem.reference, userType, cartItem)
                         cartItem.type?.let { viewModel.removeItemRef(ref = cartItem.reference, type = it,this) }
+                        //firebase analytics Event removeFromCart
+                        val itemCart = viewModel.eventsManager.itemRemoveToCart(cartItem)
+                        viewModel.eventsManager.removeFromCart(itemCart, cartItem, cartItem.quantity)
 
                          /**       }
                             }

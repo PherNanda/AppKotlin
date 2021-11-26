@@ -20,7 +20,7 @@ interface EventsManager{
     fun selectItem(itemJogging: Bundle)
     fun itemToCart(productCart: CartProduct, brand: String): Bundle
     fun addToCart(myItemToCart: Bundle, cartProduct: CartProduct, qty: Int)
-    fun itemRemoveToCart(cartItem: CartUiModel.Item): Bundle
+    fun itemRemoveToCart(cartItem: CartUiModel.Item,): Bundle
     fun removeFromCart(myItemToCart: Bundle, cartItem: CartUiModel.Item, qty: Int)
     fun itemCheckout(item: CartUiModel.ItemListCheckout): Bundle
     fun beginCheckout(myItemToCart: Bundle, total: Double)
