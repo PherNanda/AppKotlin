@@ -249,5 +249,4 @@ class ProductDetailViewModel(
         return authStore.getTotalCartItens()
     }
 
-
 }
