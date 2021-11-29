@@ -110,24 +110,6 @@ class CartFragment : Fragment() {
                         showDeleteConfirmationDialogRef(ref = cartItem.reference, cartItem.type?: getString(R.string.type_ecommerce), userType, cartItem)
                         println(" totalCartItens delete $totalCartItens")
                     },
-                    changeAddress = {
-                        if (isConnected()) {
-                            startActivity(Intent(requireContext(), AddressActivity::class.java))
-                        }else{
-                            Toast.makeText(requireContext(),R.string.message_conected, Toast.LENGTH_LONG).show()
-                        }
-                    },
-                    userLogued =  viewModel.authStore.getUser()?.let { it -> it.name},
-                    isLogued = viewModel.authStore.isLoggedIn(),
-                    userZone = {
-                            startActivity(Intent(requireContext(), AuthActivity::class.java))
-                    },
-                    deliveredTypeClickListener = { cartItem ->
-                        cartItem.deliveredTypeOne?.let { it1 -> viewModel.authStore.setDeliveredType(deliveredType = it1) }
-                    },
-                    currentTimeDelivered = { cartItem ->
-                        cartItem.deliveredTypeOne?.let { it1 -> viewModel.authStore.setCurrentTimeDelivered(currentTimeDelivered= it1) }
-                    },
                     type = { cartItem -> cartItem.type },
                     authStore = viewModel.authStore,
                     carriers =  { cartItem ->

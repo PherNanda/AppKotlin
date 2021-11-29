@@ -102,6 +102,7 @@
         android:layout_marginVertical="16dp"
         android:orientation="vertical"
         android:paddingTop="60dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -206,70 +207,6 @@
             android:background="?attr/colorSurface" />
     </RadioGroup>
 
-    <!--<RadioGroup
-        android:id="@+id/radioGroupNextDay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="16dp"
-        android:orientation="vertical"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/viewNext"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup">
-
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/button1nextDay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/time_selector"
-            android:button="@android:color/transparent"
-            android:checked="true"
-            android:enabled="true"
-            android:drawableEnd="@drawable/ic_tick"
-            android:drawableTint="?attr/colorOnPrimary"
-            android:paddingHorizontal="16dp"
-            android:text="@string/receive_it_between_11_00_a_m_and_14_00_p_m_nextDay"
-            android:textAppearance="?attr/textAppearanceBody2"
-            android:textColor="@drawable/text_color_selector" />
-
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/button2nextDay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp"
-            android:background="@drawable/time_selector"
-            android:button="@android:color/transparent"
-            android:drawableEnd="@drawable/ic_tick"
-            android:enabled="true"
-            android:drawableTint="?attr/colorOnPrimary"
-            android:paddingHorizontal="16dp"
-            android:text="@string/receive_it_between_15_00_a_m_and_18_00_p_m_nextDay"
-            android:textAppearance="?attr/textAppearanceBody2"
-            android:textColor="@drawable/text_color_selector" />
-
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/button3nextDay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/time_selector"
-            android:button="@android:color/transparent"
-            android:drawableEnd="@drawable/ic_tick"
-            android:enabled="true"
-            android:drawableTint="?attr/colorOnPrimary"
-            android:paddingHorizontal="16dp"
-            android:text="@string/receive_it_between_20_00_a_m_and_22_00_p_m_nextDay"
-            android:textAppearance="?attr/textAppearanceBody2"
-            android:textColor="@drawable/text_color_selector" />
-
-        <View
-            android:id="@+id/viewNext"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="?attr/colorSurface" />
-    </RadioGroup>-->
-
     <View
         android:id="@+id/view1"
         android:layout_width="match_parent"
@@ -290,15 +227,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view1" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="16dp"
-        android:src="@drawable/ic_perfil_usuario"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buyingGuestLabel" />
 
     <TextView
         android:id="@+id/buyingGuestLabel"
@@ -310,7 +238,7 @@
         android:textAppearance="?attr/textAppearanceBody1"
         android:textStyle="bold"
         app:fontFamily="@font/bree_regular"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view1" />
 
     <TextView
@@ -400,18 +328,6 @@
         app:layout_constraintStart_toStartOf="@+id/shippingLabel"
         app:layout_constraintTop_toBottomOf="@+id/shippingLabel" />
 
-    <TextView
-        android:id="@+id/payLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/pay_with_card"
-        android:textAppearance="?attr/textAppearanceBody1"
-        app:fontFamily="@font/bree_regular"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addressText" />
-
     <!--<TextView
         android:id="@+id/usePaypalText"
         android:layout_width="wrap_content"
@@ -427,118 +343,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/payLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/payLabel" />-->
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/cardNoLayout"
-        style="@style/Widget.AppComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        app:errorEnabled="true"
-        app:counterEnabled="true"
-        app:counterMaxLength="16"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/payLabel">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/cardNoEditText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/bree_bold"
-            android:hint="@string/card_number"
-            android:textColorHint="@color/app_black"
-            android:inputType="number"
-            android:paddingStart="8dp"
-            android:paddingEnd="4dp"
-            android:maxLength="16"
-            app:fontFamily="@font/bree_regular" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ownerNameLayout"
-        style="@style/Widget.AppComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="2dp"
-        app:errorEnabled="true"
-        app:counterEnabled="true"
-        app:counterMaxLength="50"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardNoLayout">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ownerNameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/bree_bold"
-            android:hint="@string/owner_name"
-            android:textColorHint="@color/app_black"
-            android:inputType="textPersonName"
-            android:paddingStart="8dp"
-            android:paddingEnd="4dp"
-            android:maxLength="50"
-            app:fontFamily="@font/bree_regular" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/dateLayout"
-        style="@style/Widget.AppComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="2dp"
-        app:errorEnabled="true"
-        app:counterEnabled="true"
-        app:counterMaxLength="5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ownerNameLayout">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/dateEditText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/bree_bold"
-            android:hint="@string/mm_aa"
-            android:textColorHint="@color/app_black"
-            android:inputType="text"
-            android:paddingStart="8dp"
-            android:paddingEnd="4dp"
-            android:maxLength="5"
-            app:fontFamily="@font/bree_regular" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/securityLayout"
-        style="@style/Widget.AppComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="2dp"
-        app:errorEnabled="true"
-        app:counterEnabled="true"
-        app:counterMaxLength="3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dateLayout">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/securityEditText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/bree_bold"
-            android:hint="@string/security_code"
-            android:textColorHint="@color/app_black"
-            android:inputType="number"
-            android:paddingStart="8dp"
-            android:paddingEnd="4dp"
-            android:maxLength="3"
-            app:fontFamily="@font/bree_regular" />
-
-      </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

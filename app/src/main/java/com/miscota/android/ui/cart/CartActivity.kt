@@ -143,28 +143,6 @@ class CartActivity : AppCompatActivity() {
                         itemTouchHelper.attachToRecyclerView(binding.recyclerView)**/
 
                     },
-                    changeAddress = {
-                            showChangeAddressConfirmationDialog()
-                    },
-                    userLogued = viewModel.authStore.getUser()?.name,
-                    isLogued = viewModel.authStore.isLoggedIn(),
-                    userZone = {
-                            startActivity(Intent(this, AuthActivity::class.java))
-                    },
-                    deliveredTypeClickListener = { cartItem ->
-                        cartItem.deliveredTypeOne?.let { it1 ->
-                            viewModel.authStore.setDeliveredType(
-                                deliveredType = it1
-                            )
-                        }
-                    },
-                    currentTimeDelivered = { cartItem ->
-                        cartItem.deliveredTypeOne?.let { it1 ->
-                            viewModel.authStore.setCurrentTimeDelivered(
-                                currentTimeDelivered = it1
-                            )
-                        }
-                    },
                     type = { cartItem -> cartItem.type },
                     authStore = viewModel.authStore,
                     carriers =  { cartItem ->
