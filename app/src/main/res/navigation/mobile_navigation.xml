@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_navigation_home_to_consultingFragment"
             app:destination="@id/consultingFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_storeWebFragment"
+            app:destination="@id/storeWebFragment" />
     </fragment>
 
     <fragment
@@ -131,6 +134,10 @@
         android:id="@+id/consultingFragment"
         android:name="com.miscota.android.ui.consulting.ConsultingFragment"
         android:label="ConsultingFragment" />
+    <fragment
+        android:id="@+id/storeWebFragment"
+        android:name="com.miscota.android.ui.store.StoreWebViewFragment"
+        android:label="StoreWebViewFragment" />
     <fragment
         android:id="@+id/searchProductsFragment"
         android:name="com.miscota.android.ui.search.SearchProductsFragment"

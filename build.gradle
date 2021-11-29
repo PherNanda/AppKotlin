@@ -76,7 +76,7 @@ ext {
     facebookSdk = "8.1.0"
 
     // google auth
-    googleAuth = "19.2.0"
+    googleAuth = '19.2.0'
 
     // Google Maps
     googleMap = '18.0.0'
@@ -89,7 +89,7 @@ ext {
 
     // Test
     junit = '4.+'
-    androidExtJunit = '1.1.2'
+    androidExtJunit = '1.1.3'
     androidExpresso = '3.4.0'
 
 }

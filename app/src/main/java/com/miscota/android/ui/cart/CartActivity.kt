@@ -37,6 +37,7 @@ import com.miscota.android.ui.pedido.PedidoNoProcesado
 import com.miscota.android.ui.productdetail.CartProduct
 import com.miscota.android.ui.tramitarpedido.TramitarPedidoFragment
 import com.miscota.android.util.Address
+import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -98,14 +99,13 @@ class CartActivity : AppCompatActivity() {
                             type = cartItem.type?: getString(R.string.type_ecommerce)
                         )
                         totalCartTens = totalCartTens?.plus(1)
-
                         val product = CartProduct(cartItem.productId,cartItem.productName,
                             cartItem.image,cartItem.productPrice,cartItem.oldPrice,
                             cartItem.discount,cartItem.reference,cartItem.price,cartItem.stock,
                             1,cartItem.type?:getString(R.string.type_ecommerce),
                             cartItem.stock,cartItem.brand,cartItem.costSd,cartItem.costEco,cartItem.totalCost)
 
-                        //firebase analytics Event removeAddCart
+                        //firebase analytics Event AddCart
                         val itemToCart = viewModel.eventsManager.itemToCart(product,cartItem.brand)
                         viewModel.eventsManager.addToCart(itemToCart, product, 1)
                     },

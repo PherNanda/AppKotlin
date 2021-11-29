@@ -240,7 +240,7 @@
         android:paddingEnd="18dp"
         android:paddingStart="18dp"
         android:layout_marginTop="200dp"
-        android:backgroundTint="@color/grey_light_new"
+        android:backgroundTint="@color/white_900"
         app:layout_constraintRight_toLeftOf="@+id/consultingCard"
         app:layout_constraintLeft_toRightOf="@+id/scheduleOrderCard"
         app:layout_constraintTop_toBottomOf="@+id/informationLayout">

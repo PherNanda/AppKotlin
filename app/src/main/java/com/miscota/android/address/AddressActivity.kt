@@ -96,16 +96,6 @@ class AddressActivity : AppCompatActivity() {
 
         geoCoder = Geocoder(this, Locale.getDefault())
 
-       /** fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        locationPermissionLauncher.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        )
-        geoCoder = Geocoder(this, Locale.getDefault())**/
-
-
         binding.toolbar.imageBack.setOnClickListener {
             finish()
             //startActivity(Intent(this, MainActivity::class.java))
@@ -123,7 +113,6 @@ class AddressActivity : AppCompatActivity() {
                     Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.ACCESS_FINE_LOCATION
                 ))
-
 
             //geoCoder = Geocoder(this, Locale.getDefault())
             if(!viewModel.checkIfLocationOpened()) {
@@ -166,8 +155,8 @@ class AddressActivity : AppCompatActivity() {
 
                     viewModel.setAdressUser(address)
                     viewModel.setAddressTwo(address.address, address)
-
-
+                    //, ${listAddress.get(0).postalCode}, ${listAddress.get(0).locality}, ${listAddress.get(0).countryName}
+                    //}
                 }
             }
         }
@@ -256,8 +245,8 @@ class AddressActivity : AppCompatActivity() {
 
                     listCheckoutItems.map {
                         if (it.type == getString(R.string.type_sameday)) {
-                            viewModelCart.removeItemRef(it.reference, it.type, this)
 
+                            viewModelCart.removeItemRef(it.reference, it.type, this)
                             val itemCart = viewModel.eventsManager.itemRemoveToCart(it)
                             viewModel.eventsManager.removeFromCart(itemCart, it, it.quantity)
 
@@ -289,37 +278,38 @@ class AddressActivity : AppCompatActivity() {
 
     }
 
-
     private fun loadCheckoutItem(): MutableList<CartUiModel.Item>{
-
         val list: MutableList<CartUiModel.Item> = mutableListOf()
+
         viewModel.authStore.getCart().map {
+
             it.toCartItemUiModel()
 
             list.add(
-                CartUiModel.Item(
-                    productId = it.productId,
-                    productName = it.product.title,
-                    productPrice = it.product.combinationPrice.toString(),
-                    oldPrice = it.product.oldPrice,
-                    image = it.product.image,
-                    quantity = it.qty,
-                    discount = it.product.discount,
-                    stock = it.product.stockItens?:0,
-                    type= it.type,
-                    reference= it.combinationReference,
-                    price= it.combinationPrice,
-                    brand = it.product.brand,
-                    costSd = it.product.costSd,
-                    costEco = it.product.costEco,
-                    totalCost = it.product.totalCost,
-                    samedayDelivery = it.currentTimeDelivered
+
+                    CartUiModel.Item(
+                        productId = it.productId,
+                        productName = it.product.title,
+                        productPrice = it.product.combinationPrice.toString(),
+                        oldPrice = it.product.oldPrice,
+                        image = it.product.image,
+                        quantity = it.qty,
+                        discount = it.product.discount,
+                        stock = it.product.stockItens?:0,
+                        type= it.type,
+                        reference= it.combinationReference,
+                        price= it.combinationPrice,
+                        brand = it.product.brand,
+                        costSd = it.product.costSd,
+                        costEco = it.product.costEco,
+                        totalCost = it.product.totalCost,
+                        samedayDelivery = it.currentTimeDelivered
+
+                    )
                 )
-            )
-
         }
-
         return list
+
     }
 
 
@@ -493,7 +483,7 @@ class AddressActivity : AppCompatActivity() {
                     //                                          int[] grantResults)
                     // to handle the case where the user grants the permission. See the documentation
                     // for ActivityCompat#requestPermissions for more details.
-
+                    println("SIN PERMISO ")
                     Toast.makeText(
                         this@AddressActivity,
                         "Debe dar permiso de localización",

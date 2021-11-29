@@ -296,10 +296,11 @@ class HomeFragment : Fragment() {
         binding.autoShipImage.setOnClickListener {
             //findNavController().navigate(R.id.action_navigation_home_to_scheduledOrderFragment)
         }
-
+        binding.consultingCard.isEnabled = true
         binding.storeCard.setOnClickListener {
             //if(viewModel.checkIfLocationOpened()) {
                 //findNavController().navigate(R.id.action_navigation_home_to_storeLocationFragment)
+            findNavController().navigate(R.id.action_navigation_home_to_storeWebFragment)
         }
 
         viewModel.showAutoShip.observe(viewLifecycleOwner) {

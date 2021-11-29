@@ -70,11 +70,11 @@ class AddressCurrentFragment : Fragment() {
         var addressSelected: Address? = null
 
         val bundleAddressCurrent: Bundle? = arguments
-
         val listCheckoutItems = loadCheckoutItem()
         val dialog =
             AlertDialog.Builder(requireContext())
                 .setPositiveButton(getString(R.string.yes_delete)) { dialog, which ->
+
                     val newListItems: MutableList<CartUiModel.Item> = mutableListOf()
                     listCheckoutItems.map {
                         if (it.type == getString(R.string.type_sameday)) {
@@ -83,11 +83,11 @@ class AddressCurrentFragment : Fragment() {
                             val itemCart = viewModelCart.eventsManager.itemRemoveToCart(it)
                             viewModelCart.eventsManager.removeFromCart(itemCart, it, it.quantity)
                         }
+
                         if (it.type == getString(R.string.type_ecommerce)){
                             newListItems.add(it)
                         }
                     }
-
                     if ( addressSelected !=  null && newListItems.size > 0) {
 
                         viewModelAddress.setAdressUser(addressSelected)
@@ -98,9 +98,9 @@ class AddressCurrentFragment : Fragment() {
                     }
                     if ( addressSelected !=  null && newListItems.size == 0) {
 
-                       viewModelAddress.setAdressUser(addressSelected)
-                       startActivity(Intent(requireContext(),CartActivity::class.java))
-                       requireActivity().finish()
+                        viewModelAddress.setAdressUser(addressSelected)
+                        startActivity(Intent(requireContext(), CartActivity::class.java))
+                        requireActivity().finish()
 
                     }
 
@@ -155,6 +155,7 @@ class AddressCurrentFragment : Fragment() {
                     partialBinding.currentLocation.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_checkbox_true, 0, 0, 0)
 
                     val sameDay = listCheckoutItems.findLast { product -> product.type == getString(R.string.type_sameday) }
+
 
                     println("address.postalCode 11 ${address.postalCode} addressUser.postalCode ${addressUser.postalCode} sameDay $sameDay ")
 
@@ -410,36 +411,40 @@ class AddressCurrentFragment : Fragment() {
         }?.commit()
     }
 
+
     private fun loadCheckoutItem(): MutableList<CartUiModel.Item>{
 
         val list: MutableList<CartUiModel.Item> = mutableListOf()
+
         viewModelCart.authStore.getCart().map {
+
             it.toCartItemUiModel()
 
             list.add(
-                CartUiModel.Item(
-                    productId = it.productId,
-                    productName = it.product.title,
-                    productPrice = it.product.combinationPrice.toString(),
-                    oldPrice = it.product.oldPrice,
-                    image = it.product.image,
-                    quantity = it.qty,
-                    discount = it.product.discount,
-                    stock = it.product.stockItens?:0,
-                    type= it.type,
-                    reference= it.combinationReference,
-                    price= it.combinationPrice,
-                    brand = it.product.brand,
-                    costSd = it.product.costSd,
-                    costEco = it.product.costEco,
-                    totalCost = it.product.totalCost,
-                    samedayDelivery = it.currentTimeDelivered
+
+                    CartUiModel.Item(
+                        productId = it.productId,
+                        productName = it.product.title,
+                        productPrice = it.product.combinationPrice.toString(),
+                        oldPrice = it.product.oldPrice,
+                        image = it.product.image,
+                        quantity = it.qty,
+                        discount = it.product.discount,
+                        stock = it.product.stockItens?:0,
+                        type= it.type,
+                        reference= it.combinationReference,
+                        price= it.combinationPrice,
+                        brand = it.product.brand,
+                        costSd = it.product.costSd,
+                        costEco = it.product.costEco,
+                        totalCost = it.product.totalCost,
+                        samedayDelivery = it.currentTimeDelivered
+
+                    )
                 )
-            )
-
         }
-
         return list
+
     }
 
     private fun boldColorMyText(inputText:String,startIndex:Int,endIndex:Int,textColor:Int): Spannable {
