@@ -24,7 +24,7 @@ class AddCardFragment : Fragment() {
 
     companion object {
         fun newInstance() = AddCardFragment()
-        const val maxLengthCard = 16
+        const val MAX_LENGTH_CARD = 16
     }
 
     private lateinit var viewModel: AddCardViewModel
@@ -80,7 +80,7 @@ class AddCardFragment : Fragment() {
         binding.cardNumberInput.doAfterTextChanged { inputCardNumbers ->
             //(requireActivity() as MainActivity).binding.navView.menu.getItem(1).isChecked = true
 
-            if (inputCardNumbers != null && inputCardNumbers.length < maxLengthCard) {
+            if (inputCardNumbers != null && inputCardNumbers.length < MAX_LENGTH_CARD) {
                 var cardNumberError = ""
 
 
@@ -95,10 +95,10 @@ class AddCardFragment : Fragment() {
                 binding.cardNumberLayout.error = cardNumberError
                 binding.cardNumberLayout.isErrorEnabled = true
 
-            } else if (inputCardNumbers != null && inputCardNumbers.length == maxLengthCard) {
+            } else if (inputCardNumbers != null && inputCardNumbers.length == MAX_LENGTH_CARD) {
 
                 var cardNumberMsgOk = ""
-                if (!TextUtils.isEmpty(binding.cardNumberInput.text) && inputCardNumbers.length == maxLengthCard) {
+                if (!TextUtils.isEmpty(binding.cardNumberInput.text) && inputCardNumbers.length == MAX_LENGTH_CARD) {
                     cardNumberMsgOk = getString(R.string.perfect)
 
                     binding.cardNumberLayout.endIconDrawable =
@@ -110,20 +110,11 @@ class AddCardFragment : Fragment() {
                         PaymentMethod(
                             type = "scheme",
                             encryptedCardNumber = inputCard.toString(),
-                            encryptedExpiryMonth = inputDateCard.toString(),
-                            encryptedExpiryYear = inputDateCard.toString(),
+                            encryptedExpiryMonth = if (inputDateCard.isNullOrEmpty()) inputDateCard.toString() else inputDateCard.toString().substring(0,2).plus("/").plus(inputDateCard.toString().substring(2,4)),
+                            encryptedExpiryYear = if (inputDateCard.isNullOrEmpty()) inputDateCard.toString() else inputDateCard.toString().substring(0,2).plus("/").plus(inputDateCard.toString().substring(2,4)),
                             encryptedSecurityCode = inputSecure.toString(),
                             encryptedUserName = inputOwnerN.toString()
                         )
-
-
-
-                    println("\n payment::::1 ${paymentMethodWithout?.encryptedExpiryMonth}")
-                    println("\n payment::::2 ${paymentMethodWithout?.encryptedCardNumber}") //payment::::2 4047 0000 2109 1662
-                    println("\n payment::::3 ${paymentMethodWithout?.encryptedExpiryYear}")
-                    println("\n payment::::4 ${paymentMethodWithout?.encryptedSecurityCode}")
-
-                    println("\n inputCard Card $inputCard") //inputCard Card 4047 0000 2100 1562
 
                 }
                 binding.cardNumberLayout.error = cardNumberMsgOk
@@ -150,43 +141,44 @@ class AddCardFragment : Fragment() {
         //showKeyboard(binding.expirationCardInput)
 
         binding.expirationCardInput.doOnTextChanged { inputExpirationNumber, _, _, _ ->
-
-            if (inputExpirationNumber != null && inputExpirationNumber.length < 5) {
+            
+            if (inputExpirationNumber != null && inputExpirationNumber.length < 4) {
                 var dateNumberError = ""
 
-                if (TextUtils.isEmpty(binding.expirationCardInput.text) || inputExpirationNumber.length < 5) {
+                if (TextUtils.isEmpty(binding.expirationCardInput.text) || inputExpirationNumber.length < 4) {
                     dateNumberError = getString(R.string.expiration_message)
                 }
                 binding.expirationCardInput.error = dateNumberError
                 binding.expirationCardLayout.isErrorEnabled = true
 
-            } else if (inputExpirationNumber != null && inputExpirationNumber.length == 5) {
+            }
+            else if (inputExpirationNumber != null && inputExpirationNumber.length == 4) {
                 binding.expirationCardLayout.endIconDrawable =
                     getDrawable(requireContext(), R.drawable.ic_card_check_on)
                 binding.expirationCardLayout.isErrorEnabled = false
                 binding.expirationCardInput.text
 
                 inputDateCard = binding.expirationCardInput.text
+                val inputDate = inputDateCard.toString()
+
 
                 paymentMethodWithout =
                     PaymentMethod(
                         type = "scheme",
                         encryptedCardNumber = inputCard.toString(),
-                        encryptedExpiryMonth = inputDateCard.toString(),
-                        encryptedExpiryYear = inputDateCard.toString(),
+                        encryptedExpiryMonth = if (inputDateCard.isNullOrEmpty()) inputDateCard.toString() else inputDateCard.toString().substring(0,2).plus("/").plus(inputDateCard.toString().substring(2,4)),
+                        encryptedExpiryYear = if (inputDateCard.isNullOrEmpty()) inputDateCard.toString() else inputDateCard.toString().substring(0,2).plus("/").plus(inputDateCard.toString().substring(2,4)),
                         encryptedSecurityCode = inputSecure.toString(),
                         encryptedUserName = inputOwnerN.toString()
                     )
                 //payment.invoke(uiModel.copy(payment = paymentMethodWithout))
 
-                println("\n payment::::5 ${paymentMethodWithout?.encryptedExpiryMonth}") //03/26
-                println("\n payment::::6 ${paymentMethodWithout?.encryptedCardNumber}") //4047 0000 2100 1562
-                println("\n payment::::7 ${paymentMethodWithout?.encryptedExpiryYear}") //03/26
-                println("\n payment::::8 ${paymentMethodWithout?.encryptedSecurityCode}")
-
-                println("\n inputDateCard $inputDateCard") //inputDateCard 03/26
             }
+            //binding.expirationCardInput.setText(cardTest)
         }
+
+        //binding.expirationCardInput.setText(inputDateCard?.substring(0,2).plus("/").plus(inputDateCard?.substring(2,4)))
+
 
         binding.cardUserInput.doOnTextChanged { inputOwner, _, _, _ ->
 
@@ -213,8 +205,8 @@ class AddCardFragment : Fragment() {
                     PaymentMethod(
                         type = "scheme",
                         encryptedCardNumber = inputCard.toString(),
-                        encryptedExpiryMonth = inputDateCard.toString(),
-                        encryptedExpiryYear = inputDateCard.toString(),
+                        encryptedExpiryMonth = if (inputDateCard.isNullOrEmpty()) inputDateCard.toString() else inputDateCard.toString().substring(0,2).plus("/").plus(inputDateCard.toString().substring(2,4)),
+                        encryptedExpiryYear = if (inputDateCard.isNullOrEmpty()) inputDateCard.toString() else inputDateCard.toString().substring(0,2).plus("/").plus(inputDateCard.toString().substring(2,4)),
                         encryptedSecurityCode = inputSecure.toString(),
                         encryptedUserName = inputOwnerN.toString()
                     )
@@ -247,19 +239,11 @@ class AddCardFragment : Fragment() {
                     PaymentMethod(
                         type = "scheme",
                         encryptedCardNumber = inputCard.toString(),
-                        encryptedExpiryMonth = inputDateCard.toString(),
-                        encryptedExpiryYear = inputDateCard.toString(),
+                        encryptedExpiryMonth = if (inputDateCard.isNullOrEmpty()) inputDateCard.toString() else inputDateCard.toString().substring(0,2).plus("/").plus(inputDateCard.toString().substring(2,4)),
+                        encryptedExpiryYear = if (inputDateCard.isNullOrEmpty()) inputDateCard.toString() else inputDateCard.toString().substring(0,2).plus("/").plus(inputDateCard.toString().substring(2,4)),
                         encryptedSecurityCode = inputSecure.toString(),
                         encryptedUserName = inputOwnerN.toString()
                     )
-
-                println("\n paymentMethodWithout|||| ${paymentMethodWithout!!.encryptedSecurityCode}") //987
-                println("\n payment::::9 ${paymentMethodWithout?.encryptedExpiryMonth}") //03/26
-                println("\n payment::::10 ${paymentMethodWithout?.encryptedCardNumber}") //4047 0000 2100 1562
-                println("\n payment::::11 ${paymentMethodWithout?.encryptedExpiryYear}") //03/26
-                println("\n payment::::12 ${paymentMethodWithout?.encryptedSecurityCode}") //987
-                println("\n payment::::9-1 ${paymentMethodWithout?.encryptedUserName}") //987
-
 
                 println("\n inputSecure $inputSecure") //inputSecure 987
 
@@ -269,7 +253,7 @@ class AddCardFragment : Fragment() {
 
                 if (paymentMethodWithout?.encryptedSecurityCode?.length == 3 &&
                     paymentMethodWithout?.encryptedExpiryMonth?.length == 5 &&
-                    paymentMethodWithout?.encryptedCardNumber?.trim()?.length == maxLengthCard &&
+                    paymentMethodWithout?.encryptedCardNumber?.trim()?.length == MAX_LENGTH_CARD &&
                     paymentMethodWithout?.encryptedExpiryYear?.length == 5 &&
                     paymentMethodWithout?.encryptedUserName?.length!! > 7
 
@@ -314,13 +298,6 @@ class AddCardFragment : Fragment() {
             }
         }
 
-
-
-        println("\n payment::::13 ${paymentMethodWithout?.encryptedExpiryMonth}") //null
-        println("\n payment::::14 ${paymentMethodWithout?.encryptedCardNumber}") //null
-        println("\n payment::::15 ${paymentMethodWithout?.encryptedExpiryYear}") //null
-        println("\n payment::::16 ${paymentMethodWithout?.encryptedSecurityCode}") //null
-
         if (paymentMethodWithout?.encryptedSecurityCode != null) {
             /** paymentMethod = encrypt(
             paymentMethodWithout?.encryptedCardNumber!!,
@@ -356,11 +333,16 @@ class AddCardFragment : Fragment() {
 
         binding.addCardButtonTwo.setOnClickListener {
 
+            println("\n payment::::A1 ${paymentMethodWithout?.encryptedExpiryMonth}")
+            println("\n payment::::A2 ${paymentMethodWithout?.encryptedCardNumber}") //payment::::2 4047 0000 2109 1662
+            println("\n payment::::A3 ${paymentMethodWithout?.encryptedExpiryYear}")
+            println("\n payment::::A4 ${paymentMethodWithout?.encryptedSecurityCode}")
+
             if (paymentMethodWithout != null) {
 
                 if (paymentMethodWithout?.encryptedSecurityCode?.length == 3 &&
                     paymentMethodWithout?.encryptedExpiryMonth?.length == 5 &&
-                    paymentMethodWithout?.encryptedCardNumber?.length == maxLengthCard &&
+                    paymentMethodWithout?.encryptedCardNumber?.length == MAX_LENGTH_CARD &&
                     paymentMethodWithout?.encryptedExpiryYear?.length == 5 &&
                     paymentMethodWithout?.encryptedUserName?.length!! > 6
                 ) {
