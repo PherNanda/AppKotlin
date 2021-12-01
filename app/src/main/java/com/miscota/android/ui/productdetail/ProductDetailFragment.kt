@@ -314,19 +314,22 @@ class ProductDetailFragment : Fragment() {
         binding.spinner.adapter = adapter
 
         binding.spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(parent:AdapterView<*>, view: View, position: Int, id: Long){
-                //binding.textVView.text = "Spinner selected : ${parent.getItemAtPosition(position).toString()}"
-                val qty = parent.getItemAtPosition(position).toString()
-                val qtyProduct = qty.toInt()
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long){
+                if (parent != null) {
 
-                viewModel.incrementCart(qtyProduct)
+                    val qty = parent.getItemAtPosition(position).toString()
+                    val qtyProduct = qty.toInt()
+                    viewModel.incrementCart(qtyProduct)
 
-                println("Spinner selected : ${parent.getItemAtPosition(position).toString()}  - qtyProduct $qtyProduct")
+                    println("Spinner selected : ${parent.getItemAtPosition(position)}  - qtyProduct $qtyProduct")
+                }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>){
+            override fun onNothingSelected(parent: AdapterView<*>?){
                 // Another interface callback
-                println("parent.firstVisiblePosition : ${parent.firstVisiblePosition} ")
+                if (parent != null) {
+                    println("parent.firstVisiblePosition : ${parent.firstVisiblePosition} ")
+                }
             }
         }
 
