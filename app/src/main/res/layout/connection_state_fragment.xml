@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background_connection_off"
+    tools:context=".ui.connection.ConnectionStateFragment">
+
+
+    <ImageView
+        android:id="@+id/logoMiscota"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_miscota_logo_full_white_small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/imageConnectOff"
+        android:src="@drawable/no_internet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        app:layout_constraintTop_toBottomOf="@+id/logoMiscota"/>
+
+    <TextView
+        android:id="@+id/titleConnectOff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textColor="@color/blue_new_app"
+        android:textSize="24sp"
+        app:fontFamily="@font/bree_light"
+        android:text="@string/internet_off_message"
+        android:layout_marginTop="90dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageConnectOff"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

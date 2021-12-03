@@ -227,6 +227,8 @@ class CategoryViewModel(
                 val exception = result.exceptionOrNull()
                 if (exception != null && exception !is CancellationException) {
                     Timber.e(exception.message.toString())
+
+                    println("exception.message.toString() loadtop ${exception.message.toString()}")
                     showLoading.value = true
                     showEmpty.value = true
                     //_messageEvent.value = Event("Algo no ha ido bien, no hay productos para mostrar")
@@ -319,7 +321,7 @@ class CategoryViewModel(
                 val exception = result.exceptionOrNull()
                 if (exception != null && exception !is CancellationException) {
                     Timber.e(exception.message.toString())
-                    println(exception.message.toString())
+                    println("exception.message.toString() ${exception.message.toString()}")
                     showEmpty.value = true
                     _messageEvent.value = Event("Algo no ha ido bien, no hay productos para mostrar")
                 }

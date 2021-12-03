@@ -33,52 +33,47 @@ class ApiProvider {
 
     init {
         val builder = OkHttpClient.Builder()
-            .connectTimeout(CONNECTION_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-            .readTimeout(READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-            .writeTimeout(WRITE_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-            .addNetworkInterceptor { chain ->
-                chain.proceed(
-                    chain.request()
-                        .newBuilder()
-                        .header("User-Agent", "Android:${BuildConfig.MISCOTA_USER_AGENT} Version:${BuildConfig.VERSION_NAME} Package:${BuildConfig.PACKAGE_NAME} Framework:okhttp/4.4.0")
-                        .build()
-                )
+                .connectTimeout(CONNECTION_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+                .readTimeout(READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+                .writeTimeout(WRITE_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+                .addNetworkInterceptor { chain ->
+                    chain.proceed(
+                        chain.request()
+                            .newBuilder()
+                            .header("User-Agent", "Android:${BuildConfig.MISCOTA_USER_AGENT} Version:${BuildConfig.VERSION_NAME} Package:${BuildConfig.PACKAGE_NAME} Framework:okhttp/4.4.0")
+                            .build()
+                    )
+                }
+            if (BuildConfig.DEBUG) {
+                val loggingInterceptor = LoggingInterceptor.Builder()
+                    .log(Platform.INFO)
+                    .setLevel(Level.BASIC)
+                    .logger(object : Logger {
+                        override fun log(level: Int, tag: String?, msg: String?) {
+                            Timber.tag(TAG).d(msg)
+                        }
+                    })
+                    .build()
+                builder.addInterceptor(loggingInterceptor)
+                builder.addNetworkInterceptor { chain ->
+                    chain.proceed(
+                        chain.request()
+                            .newBuilder()
+                            .header("User-Agent", "Android:${BuildConfig.MISCOTA_USER_AGENT} Version:${BuildConfig.VERSION_NAME} Package:${BuildConfig.PACKAGE_NAME} Framework:okhttp/4.4.0")
+                            .build()
+                    )
+                }
             }
-
-        if (BuildConfig.DEBUG) {
-            val loggingInterceptor = LoggingInterceptor.Builder()
-                .log(Platform.INFO)
-                .setLevel(Level.BASIC)
-                .logger(object : Logger {
-                    override fun log(level: Int, tag: String?, msg: String?) {
-                        Timber.tag(TAG).d(msg)
-                    }
-                })
+            httpClient = builder.build()
+            val moshi = Moshi.Builder()
+                .add(KotlinJsonAdapterFactory())
                 .build()
-
-            builder.addInterceptor(loggingInterceptor)
-            builder.addNetworkInterceptor { chain ->
-                chain.proceed(
-                    chain.request()
-                        .newBuilder()
-                        .header("User-Agent", "Android:${BuildConfig.MISCOTA_USER_AGENT} Version:${BuildConfig.VERSION_NAME} Package:${BuildConfig.PACKAGE_NAME} Framework:okhttp/4.4.0")
-                        .build()
-                )
-            }
-        }
-
-        httpClient = builder.build()
-
-        val moshi = Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
-
-        retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.MERCHANT_SERVER_URL_MIS)
-            //.baseUrl(BuildConfig.API_BASE_URL)
-            .client(httpClient)
-            .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
-            .build()
+            retrofit = Retrofit.Builder()
+                .baseUrl(BuildConfig.MERCHANT_SERVER_URL_MIS)
+                //.baseUrl(BuildConfig.API_BASE_URL)
+                .client(httpClient)
+                .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
+                .build()
 
         authApi = retrofit.create(AuthApi::class.java)
         categoryApi = retrofit.create(CategoryApi::class.java)

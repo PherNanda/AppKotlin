@@ -13,13 +13,15 @@ import android.text.style.StyleSpan
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
@@ -29,8 +31,10 @@ import com.google.firebase.perf.*
 import com.google.firebase.perf.ktx.performance
 import com.miscota.android.address.AddressActivity
 import com.miscota.android.auth.AuthActivity
+import com.miscota.android.connection.ConnectionManager
 import com.miscota.android.databinding.ActivityMainBinding
 import com.miscota.android.ui.cart.CartActivity
+import com.miscota.android.ui.connection.ConnectionStateFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -42,6 +46,18 @@ class MainActivity : AppCompatActivity() {
     private val viewModel by viewModel<MainActivityViewModel>()
 
     private lateinit var sheetBehavior: BottomSheetBehavior<LinearLayout>
+
+    private val broadcastReceiver by lazy {
+        ConnectionManager.create({
+            binding.connectionOff.visibility = View.GONE
+            binding.locationLinearLayoutmain.visibility = View.VISIBLE
+            binding.navView.visibility = View.VISIBLE
+            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        }, {
+            viewDisconnected()
+        })
+    }
+
 
     private val listener =
         NavController.OnDestinationChangedListener { controller, destination, arguments ->
@@ -119,6 +135,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
         viewModel.loadAddress()
 
@@ -393,7 +411,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
     private fun goToLogin() {
          startActivity(Intent(this, AuthActivity::class.java))
          viewModel.setShowAuth("1")
@@ -476,12 +493,17 @@ class MainActivity : AppCompatActivity() {
         viewModel.getTotalItens()
         binding.cartItemsText.text = viewModel.getTotalItens().toString()
 
+
+        //registerReceiver(networkStateReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+        ConnectionManager.register(this, broadcastReceiver)
+
     }
 
     override fun onPause() {
         super.onPause()
         println("onPauseMain")
-
+        //unregisterReceiver(networkStateReceiver)
+        ConnectionManager.unregister(this, broadcastReceiver)
     }
 
     override fun onRestart() {
@@ -646,6 +668,20 @@ class MainActivity : AppCompatActivity() {
         //navController.navigateUp()
     }
 
+    private fun viewDisconnected(){
+        binding.connectionOff.visibility = View.VISIBLE
+        binding.locationLinearLayoutmain.visibility = View.GONE
+        binding.navView.visibility = View.GONE
+
+        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
+        val fm: FragmentManager = supportFragmentManager
+        val ft: FragmentTransaction = fm.beginTransaction()
+        ft.add(R.id.connectionOff, ConnectionStateFragment())
+        ft.commit()
+
+    }
 
     companion object {
         private const val TAG = "MainActivity"
