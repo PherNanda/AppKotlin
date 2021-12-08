@@ -232,6 +232,7 @@ class CategoryViewModel(
                     showLoading.value = true
                     showEmpty.value = true
                     //_messageEvent.value = Event("Algo no ha ido bien, no hay productos para mostrar")
+
                 }
             }
 
@@ -276,7 +277,7 @@ class CategoryViewModel(
         }
 
         _products.value = listTwo.value
-        _categories.value = newList
+        _categories.value = newList ?:listOf()
 
     }
 

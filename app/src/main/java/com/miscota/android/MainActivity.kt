@@ -21,15 +21,18 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.firebase.inject.Provider
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.perf.*
 import com.google.firebase.perf.ktx.performance
 import com.miscota.android.address.AddressActivity
+import com.miscota.android.api.ApiProvider
 import com.miscota.android.auth.AuthActivity
 import com.miscota.android.connection.ConnectionManager
 import com.miscota.android.databinding.ActivityMainBinding
@@ -57,7 +60,6 @@ class MainActivity : AppCompatActivity() {
             viewDisconnected()
         })
     }
-
 
     private val listener =
         NavController.OnDestinationChangedListener { controller, destination, arguments ->

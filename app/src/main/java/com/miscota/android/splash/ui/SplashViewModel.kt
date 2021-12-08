@@ -7,8 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.miscota.android.api.auth.AuthApi
 import com.miscota.android.util.AuthStore
 import com.miscota.android.util.Event
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
+import timber.log.Timber
 
 /**
  * Created by adrian on 3/6/21.
@@ -36,8 +38,15 @@ class SplashViewModel(
 
             if (result.isSuccess) {
                 authStore.setBearerToken(result.getOrThrow().token)
+                Timber.e(result.isSuccess.toString())
             }
-
+            if (result.isFailure){
+                Timber.e(result.isFailure.toString())
+            }
+            val exception = result.exceptionOrNull()
+            if (exception != null && exception !is CancellationException) {
+                Timber.e(exception.message.toString())
+            }
             _openMainActivityLiveData.value = Event(true)
         }
     }
