@@ -83,6 +83,10 @@ interface AuthStore {
 
     fun setType(type: String)
 
+    fun getStatus(): Boolean //test connection status
+
+    fun setStatus(status: Boolean) //test connection status
+
     fun getEmail(): String?
 
     fun setEmail(email: String)
@@ -121,7 +125,7 @@ interface AuthStore {
         type: String
     )
 
-    fun setTotalCartItens(totalItens: Int)
+    fun setTotalCartItens(totalItems: Int)
 
     fun getTotalCartItens(): Int
 
@@ -542,8 +546,8 @@ class DefaultAuthStore constructor(context: Context) : AuthStore {
     }
 
     override fun getTotalCartItens(): Int {
-        var totalItens = sharedPreferences.getString(KEY_TOTAL_CART_ITENS, null)
-        return totalItens?.toInt()?:0
+        var totalItems = sharedPreferences.getString(KEY_TOTAL_CART_ITENS, null)
+        return totalItems?.toInt()?:0
     }
 
     override fun getCart(): List<CartItem> {
@@ -653,6 +657,17 @@ class DefaultAuthStore constructor(context: Context) : AuthStore {
 
     override fun getType(): String? {
         return sharedPreferences.getString(KEY_TYPE, null)
+    }
+
+    override fun getStatus(): Boolean {
+        return sharedPreferences.getBoolean(KEY_STATUS, false)
+    }
+
+    override fun setStatus(status: Boolean) {
+        with(sharedPreferences.edit()) {
+            putBoolean(KEY_STATUS, status)
+            apply()
+        }
     }
 
     override fun getCarriers(): String? {
@@ -770,6 +785,7 @@ class DefaultAuthStore constructor(context: Context) : AuthStore {
         private const val KEY_CARD = "card_in"
         private const val KEY_BOOLEAN_AUTH_SHOW_IN = "authShow"
         private const val KEY_AUTH_SHOW_IN = "authShowIn"
+        private const val KEY_STATUS = "statusConnection"
     }
 }
 

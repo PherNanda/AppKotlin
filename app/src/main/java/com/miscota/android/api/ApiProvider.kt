@@ -1,6 +1,5 @@
 package com.miscota.android.api
 
-import android.util.Log
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.Logger
 import com.ihsanbal.logging.LoggingInterceptor
@@ -11,20 +10,19 @@ import com.miscota.android.api.category.CategoryApi
 import com.miscota.android.api.checkout.CheckoutApi
 import com.miscota.android.api.product.ProductApi
 import com.miscota.android.api.store.StoreLocationApi
+import com.miscota.android.util.AuthStore
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.internal.platform.Platform
-import okio.IOException
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class ApiProvider {
-
 
     private val httpClient: OkHttpClient
     private val retrofit: Retrofit
@@ -61,29 +59,36 @@ class ApiProvider {
                     .build()
                 builder.addInterceptor(loggingInterceptor)
                 builder.addInterceptor(object : Interceptor {
-                        override fun intercept(chain: Interceptor.Chain): okhttp3.Response  {
+                        override fun intercept(chain: Interceptor.Chain): Response  {
                             val response = chain.proceed(chain.request())
                             when (response.code) {
                                 200 -> {
                                     Timber.tag(BuildConfig.STATE_200).e(BuildConfig.STATE_200_MSG)
+
                                 }
                                 400 -> {
                                     Timber.tag(BuildConfig.STATE_400).e(BuildConfig.STATE_400_MSG)
+
                                 }
                                 403 -> {
                                     Timber.tag(BuildConfig.STATE_403).e(BuildConfig.STATE_403_MSG)
+
                                 }
                                 404 -> {
                                     Timber.tag(BuildConfig.STATE_404).e(BuildConfig.STATE_404_MSG)
+
                                 }
                                 500 -> {
                                     Timber.tag(BuildConfig.STATE_500).e(BuildConfig.STATE_500_MSG)
+
                                 }
                                 504 -> {
                                     Timber.tag(BuildConfig.STATE_504).e(BuildConfig.STATE_504_MSG)
+
                                 }
                                 521 -> {
                                     Timber.tag(BuildConfig.STATE_521).e(BuildConfig.STATE_521_MSG)
+
                                 }
                             }
                             return response
