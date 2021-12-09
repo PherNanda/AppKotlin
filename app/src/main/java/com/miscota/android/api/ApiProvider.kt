@@ -65,32 +65,25 @@ class ApiProvider {
                             val response = chain.proceed(chain.request())
                             when (response.code) {
                                 200 -> {
-                                    Timber.e("${BuildConfig.STATE_200} ${BuildConfig.STATE_200_MSG}")
-                                    Log.e(BuildConfig.STATE_200, BuildConfig.STATE_200_MSG)
+                                    Timber.tag(BuildConfig.STATE_200).e(BuildConfig.STATE_200_MSG)
                                 }
                                 400 -> {
-                                    Timber.e("${BuildConfig.STATE_400} ${BuildConfig.STATE_400_MSG}")
-                                    Log.e(BuildConfig.STATE_400, BuildConfig.STATE_400_MSG)
+                                    Timber.tag(BuildConfig.STATE_400).e(BuildConfig.STATE_400_MSG)
                                 }
                                 403 -> {
-                                    Timber.e("${BuildConfig.STATE_403} ${BuildConfig.STATE_403_MSG}")
-                                    Log.e(BuildConfig.STATE_403, BuildConfig.STATE_403_MSG)
+                                    Timber.tag(BuildConfig.STATE_403).e(BuildConfig.STATE_403_MSG)
                                 }
                                 404 -> {
-                                    Timber.e("${BuildConfig.STATE_404} ${BuildConfig.STATE_404_MSG}")
-                                    Log.e(BuildConfig.STATE_404, BuildConfig.STATE_404_MSG)
+                                    Timber.tag(BuildConfig.STATE_404).e(BuildConfig.STATE_404_MSG)
                                 }
                                 500 -> {
-                                    Timber.e("${BuildConfig.STATE_500} ${BuildConfig.STATE_500_MSG}")
-                                    Log.e(BuildConfig.STATE_500, BuildConfig.STATE_500_MSG)
+                                    Timber.tag(BuildConfig.STATE_500).e(BuildConfig.STATE_500_MSG)
                                 }
                                 504 -> {
-                                    Timber.e("${BuildConfig.STATE_504} ${BuildConfig.STATE_504_MSG}")
-                                    Log.e(BuildConfig.STATE_504, BuildConfig.STATE_504_MSG)
+                                    Timber.tag(BuildConfig.STATE_504).e(BuildConfig.STATE_504_MSG)
                                 }
                                 521 -> {
-                                    Timber.e("${BuildConfig.STATE_521} ${BuildConfig.STATE_521_MSG}")
-                                    Log.e(BuildConfig.STATE_521, BuildConfig.STATE_521_MSG)
+                                    Timber.tag(BuildConfig.STATE_521).e(BuildConfig.STATE_521_MSG)
                                 }
                             }
                             return response
