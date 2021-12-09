@@ -138,6 +138,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel.statusConnect.observe(this){
+            println("viewModel.statusConnect observe ${viewModel.statusConnect.value}")
+            return@observe
+        }
+
+        viewModel.authStore.getStatus()
+        println("viewModel.authStore.getStatus() ${viewModel.authStore.getStatus()}")
+        println("viewModel.statusConnect ${viewModel.statusConnect.value}")
+
         viewModel.loadAddress()
 
         viewModel.loadSelectedLocation()
@@ -420,6 +429,8 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
 
         println("onStartMain \n")
+        println("viewModel.authStore.getStatus() onStartMain ${viewModel.authStore.getStatus()}")
+        println("viewModel.statusConnect onStartMain ${viewModel.statusConnect.value}")
 
         viewModel.getTotalItens()
         viewModel.costEcommerce
@@ -490,6 +501,8 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
 
         println("onResumeMain")
+        println("viewModel.authStore.getStatus() onResumeMain ${viewModel.authStore.getStatus()}")
+        println("viewModel.statusConnect onResumeMain ${viewModel.statusConnect.value}")
         viewModel.getTotalItens()
         binding.cartItemsText.text = viewModel.getTotalItens().toString()
 

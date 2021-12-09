@@ -1,5 +1,6 @@
 package com.miscota.android.api
 
+import android.content.SharedPreferences
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.Logger
 import com.ihsanbal.logging.LoggingInterceptor
@@ -33,6 +34,20 @@ class ApiProvider {
     val storeLocationApi: StoreLocationApi
     val autoShipApi: AutoShipApi
     val checkoutApi: CheckoutApi
+
+    /**private val prefs: SharedPreferences
+        get() {
+            TODO()
+        }
+    private val editor: SharedPreferences.Editor = TODO()
+    var status: Boolean
+        get() {
+            return prefs.getBoolean(KEY_STATUS, false)
+        }
+        set(status) {
+            editor.putBoolean(KEY_STATUS, status)
+            editor.apply()
+        }**/
 
     init {
         val builder = OkHttpClient.Builder()
@@ -88,8 +103,7 @@ class ApiProvider {
                                 }
                                 521 -> {
                                     Timber.tag(BuildConfig.STATE_521).e(BuildConfig.STATE_521_MSG)
-
-                                }
+                                                                  }
                             }
                             return response
                         }
@@ -108,8 +122,8 @@ class ApiProvider {
                 .add(KotlinJsonAdapterFactory())
                 .build()
             retrofit = Retrofit.Builder()
-                .baseUrl(BuildConfig.MERCHANT_SERVER_URL_MIS)
-                //.baseUrl(BuildConfig.API_BASE_URL)
+                //.baseUrl(BuildConfig.MERCHANT_SERVER_URL_MIS)
+                .baseUrl(BuildConfig.API_BASE_URL)
                 .client(httpClient)
                 .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
                 .build()
@@ -128,5 +142,7 @@ class ApiProvider {
         const val WRITE_TIMEOUT_SECONDS = 120L
 
         private const val TAG = "OkHttp"
+        private const val KEY_STATUS = "statusConnection"
     }
+
 }

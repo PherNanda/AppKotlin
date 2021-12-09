@@ -15,7 +15,9 @@ import com.miscota.android.util.Address
 import com.miscota.android.util.AuthStore
 import com.miscota.android.util.Event
 import com.miscota.android.util.GeocoderState
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -40,6 +42,9 @@ class MainActivityViewModel(
 
     private val _loguedIn: MutableLiveData<Boolean> = MutableLiveData()
     val loguedIn: LiveData<Boolean> = _loguedIn
+
+    private val _statusConnect: MutableLiveData<Boolean> = MutableLiveData(false)
+    val statusConnect: LiveData<Boolean> = _statusConnect
 
     private val _selectedLocation: MutableLiveData<Address> =
         MutableLiveData(authStore.getAddress())
@@ -196,7 +201,7 @@ class MainActivityViewModel(
         viewModelScope.launch {
             val result = runCatching {
                 val response = storeLocationRepository.getSameDayShops(postalCode)
-                if (!response.isEmpty()) {
+                if (response.isNotEmpty()) {
                     isSameDayEnabled.value = true
 
                     val llist: ArrayList<Store> = arrayListOf(
@@ -210,6 +215,9 @@ class MainActivityViewModel(
 
                         _requestID.value = it
                         println(" List Retail MainActivityViewModel  ${it.name} -- ${it.retail_shop_id}")
+                        authStore.setStatus(false)
+                        //_statusConnect.value = false
+                        //_statusConnect.value = false
                     }
                     //isSameDayEnabled.value = true
                     authStore.setRetailID(_requestID.value?.retail_shop_id)
@@ -225,6 +233,22 @@ class MainActivityViewModel(
                     _requestID.value?.retail_shop_id == retailIdDefault
                     authStore.setRetailID(retailIdDefault)
                 }
+
+            }
+
+            if(result.isFailure){
+                //authStore.setStatus(result.isFailure)
+                //_statusConnect.value = authStore.getStatus()
+                //_statusConnect.value = result.isFailure
+                println("result.isFailure ${result.isFailure} ${result.hashCode()}") //result.isFailure true 119129910
+            }
+            if(result.isSuccess){
+                println("result.isSuccess ${result.isSuccess} ${result.hashCode()}")
+            }
+            val exception = result.exceptionOrNull()
+            if (exception != null && exception !is CancellationException) {
+                Timber.e(exception.message.toString())
+                println("exception.message.toString() ${exception.message.toString()}") //exception.message.toString() HTTP 521
             }
         }
 
@@ -233,15 +257,10 @@ class MainActivityViewModel(
 
     fun setShowAuth(authShow: String?){
         authStore.setShowAuth(authShow?:null)
-        println("isAuthShow.value::: MainActivityViewModel:: setShowAuth()  ${isAuthShow.value}")
-        println("_isAuthShow.value::: MainActivityViewModel:: setShowAuth()  ${_isAuthShow.value}")
     }
 
     fun getShowAuth(): Boolean{
         return authStore.getShowAuth()
-        println("isAuthShow authStore.getShowAuth()::: ${authStore.getShowAuth()}")
-        println("isAuthShow.value::: MainActivityViewModel:: getShowAuth()  ${isAuthShow.value}")
-        println("_isAuthShow.value::: MainActivityViewModel:: getShowAuth()  ${_isAuthShow.value}")
     }
 
 
