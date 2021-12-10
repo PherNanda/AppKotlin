@@ -19,7 +19,7 @@ import org.koin.dsl.module
 
 val appModule = module {
     single {
-        ApiProvider()
+        ApiProvider(get())
     }
 
     single {

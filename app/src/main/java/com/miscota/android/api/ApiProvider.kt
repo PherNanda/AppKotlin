@@ -1,5 +1,6 @@
 package com.miscota.android.api
 
+import android.content.Context
 import android.content.SharedPreferences
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.Logger
@@ -11,7 +12,7 @@ import com.miscota.android.api.category.CategoryApi
 import com.miscota.android.api.checkout.CheckoutApi
 import com.miscota.android.api.product.ProductApi
 import com.miscota.android.api.store.StoreLocationApi
-import com.miscota.android.util.AuthStore
+import com.miscota.android.util.DefaultAuthStore
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Interceptor
@@ -23,7 +24,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class ApiProvider {
+class ApiProvider (context: Context){
 
     private val httpClient: OkHttpClient
     private val retrofit: Retrofit
@@ -34,20 +35,9 @@ class ApiProvider {
     val storeLocationApi: StoreLocationApi
     val autoShipApi: AutoShipApi
     val checkoutApi: CheckoutApi
-
-    /**private val prefs: SharedPreferences
-        get() {
-            TODO()
-        }
-    private val editor: SharedPreferences.Editor = TODO()
-    var status: Boolean
-        get() {
-            return prefs.getBoolean(KEY_STATUS, false)
-        }
-        set(status) {
-            editor.putBoolean(KEY_STATUS, status)
-            editor.apply()
-        }**/
+    
+    val authPreference: DefaultAuthStore = DefaultAuthStore(context)
+    var statusConnect = false
 
     init {
         val builder = OkHttpClient.Builder()
@@ -79,7 +69,8 @@ class ApiProvider {
                             when (response.code) {
                                 200 -> {
                                     Timber.tag(BuildConfig.STATE_200).e(BuildConfig.STATE_200_MSG)
-
+                                    statusConnect = false
+                                    authPreference.setStatus(statusConnect)
                                 }
                                 400 -> {
                                     Timber.tag(BuildConfig.STATE_400).e(BuildConfig.STATE_400_MSG)
@@ -103,7 +94,9 @@ class ApiProvider {
                                 }
                                 521 -> {
                                     Timber.tag(BuildConfig.STATE_521).e(BuildConfig.STATE_521_MSG)
-                                                                  }
+                                    statusConnect = true
+                                    authPreference.setStatus(statusConnect)
+                                }
                             }
                             return response
                         }
