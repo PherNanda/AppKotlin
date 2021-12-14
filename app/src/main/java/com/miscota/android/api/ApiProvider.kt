@@ -1,7 +1,6 @@
 package com.miscota.android.api
 
 import android.content.Context
-import android.content.SharedPreferences
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.Logger
 import com.ihsanbal.logging.LoggingInterceptor
@@ -35,9 +34,11 @@ class ApiProvider (context: Context){
     val storeLocationApi: StoreLocationApi
     val autoShipApi: AutoShipApi
     val checkoutApi: CheckoutApi
-    
+
     val authPreference: DefaultAuthStore = DefaultAuthStore(context)
     var statusConnect = false
+    var intentConnection = 0
+    val tryConnection = 1
 
     init {
         val builder = OkHttpClient.Builder()
@@ -71,31 +72,44 @@ class ApiProvider (context: Context){
                                     Timber.tag(BuildConfig.STATE_200).e(BuildConfig.STATE_200_MSG)
                                     statusConnect = false
                                     authPreference.setStatus(statusConnect)
+                                    intentConnection = 0
                                 }
                                 400 -> {
                                     Timber.tag(BuildConfig.STATE_400).e(BuildConfig.STATE_400_MSG)
-
+                                    statusConnect = true
+                                    authPreference.setStatus(statusConnect)
+                                    intentConnection += tryConnection
                                 }
                                 403 -> {
                                     Timber.tag(BuildConfig.STATE_403).e(BuildConfig.STATE_403_MSG)
-
+                                    statusConnect = true
+                                    authPreference.setStatus(statusConnect)
+                                    intentConnection += tryConnection
                                 }
                                 404 -> {
                                     Timber.tag(BuildConfig.STATE_404).e(BuildConfig.STATE_404_MSG)
-
+                                    statusConnect = true
+                                    authPreference.setStatus(statusConnect)
+                                    intentConnection += tryConnection
                                 }
                                 500 -> {
                                     Timber.tag(BuildConfig.STATE_500).e(BuildConfig.STATE_500_MSG)
-
+                                    statusConnect = true
+                                    authPreference.setStatus(statusConnect)
+                                    intentConnection += tryConnection
                                 }
                                 504 -> {
                                     Timber.tag(BuildConfig.STATE_504).e(BuildConfig.STATE_504_MSG)
-
+                                    statusConnect = true
+                                    authPreference.setStatus(statusConnect)
+                                    intentConnection += tryConnection
                                 }
                                 521 -> {
                                     Timber.tag(BuildConfig.STATE_521).e(BuildConfig.STATE_521_MSG)
                                     statusConnect = true
                                     authPreference.setStatus(statusConnect)
+                                    intentConnection += tryConnection
+                                    println("intentConnection 521 after $intentConnection")
                                 }
                             }
                             return response
@@ -135,7 +149,6 @@ class ApiProvider (context: Context){
         const val WRITE_TIMEOUT_SECONDS = 120L
 
         private const val TAG = "OkHttp"
-        private const val KEY_STATUS = "statusConnection"
     }
 
 }

@@ -83,9 +83,9 @@ interface AuthStore {
 
     fun setType(type: String)
 
-    fun getStatus(): Boolean //test connection status
+    fun getStatus(): Boolean
 
-    fun setStatus(status: Boolean) //test connection status
+    fun setStatus(status: Boolean)
 
     fun getEmail(): String?
 
