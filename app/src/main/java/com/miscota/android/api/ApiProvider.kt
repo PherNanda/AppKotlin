@@ -1,5 +1,6 @@
 package com.miscota.android.api
 
+import android.content.Context
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.Logger
 import com.ihsanbal.logging.LoggingInterceptor
@@ -10,16 +11,19 @@ import com.miscota.android.api.category.CategoryApi
 import com.miscota.android.api.checkout.CheckoutApi
 import com.miscota.android.api.product.ProductApi
 import com.miscota.android.api.store.StoreLocationApi
+import com.miscota.android.util.DefaultAuthStore
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.internal.platform.Platform
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class ApiProvider {
+class ApiProvider (context: Context){
 
     private val httpClient: OkHttpClient
     private val retrofit: Retrofit
@@ -31,54 +35,105 @@ class ApiProvider {
     val autoShipApi: AutoShipApi
     val checkoutApi: CheckoutApi
 
+    val authPreference: DefaultAuthStore = DefaultAuthStore(context)
+    var statusConnect = false
+    var intentConnection = 0
+    val tryConnection = 1
+
     init {
         val builder = OkHttpClient.Builder()
-            .connectTimeout(CONNECTION_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-            .readTimeout(READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-            .writeTimeout(WRITE_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-            .addNetworkInterceptor { chain ->
-                chain.proceed(
-                    chain.request()
-                        .newBuilder()
-                        .header("User-Agent", "Android:${BuildConfig.MISCOTA_USER_AGENT} Version:${BuildConfig.VERSION_NAME} Package:${BuildConfig.PACKAGE_NAME} Framework:okhttp/4.4.0")
-                        .build()
-                )
+                .connectTimeout(CONNECTION_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+                .readTimeout(READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+                .writeTimeout(WRITE_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+                .addNetworkInterceptor { chain ->
+                    chain.proceed(
+                        chain.request()
+                            .newBuilder()
+                            .header("User-Agent", "Android:${BuildConfig.MISCOTA_USER_AGENT} Version:${BuildConfig.VERSION_NAME} Package:${BuildConfig.PACKAGE_NAME} Framework:okhttp/4.4.0")
+                            .build()
+                    )
+                }
+            if (BuildConfig.DEBUG) {
+                val loggingInterceptor = LoggingInterceptor.Builder()
+                    .log(Platform.INFO)
+                    .setLevel(Level.BASIC)
+                    .logger(object : Logger {
+                        override fun log(level: Int, tag: String?, msg: String?) {
+                            Timber.tag(TAG).d(msg)
+                        }
+                    })
+                    .build()
+                builder.addInterceptor(loggingInterceptor)
+                builder.addInterceptor(object : Interceptor {
+                        override fun intercept(chain: Interceptor.Chain): Response  {
+                            val response = chain.proceed(chain.request())
+                            when (response.code) {
+                                200 -> {
+                                    Timber.tag(BuildConfig.STATE_200).e(BuildConfig.STATE_200_MSG)
+                                    statusConnect = false
+                                    authPreference.setStatus(statusConnect)
+                                    intentConnection = 0
+                                }
+                                400 -> {
+                                    Timber.tag(BuildConfig.STATE_400).e(BuildConfig.STATE_400_MSG)
+                                    statusConnect = true
+                                    authPreference.setStatus(statusConnect)
+                                    intentConnection += tryConnection
+                                }
+                                403 -> {
+                                    Timber.tag(BuildConfig.STATE_403).e(BuildConfig.STATE_403_MSG)
+                                    statusConnect = true
+                                    authPreference.setStatus(statusConnect)
+                                    intentConnection += tryConnection
+                                }
+                                404 -> {
+                                    Timber.tag(BuildConfig.STATE_404).e(BuildConfig.STATE_404_MSG)
+                                    statusConnect = true
+                                    authPreference.setStatus(statusConnect)
+                                    intentConnection += tryConnection
+                                }
+                                500 -> {
+                                    Timber.tag(BuildConfig.STATE_500).e(BuildConfig.STATE_500_MSG)
+                                    statusConnect = true
+                                    authPreference.setStatus(statusConnect)
+                                    intentConnection += tryConnection
+                                }
+                                504 -> {
+                                    Timber.tag(BuildConfig.STATE_504).e(BuildConfig.STATE_504_MSG)
+                                    statusConnect = true
+                                    authPreference.setStatus(statusConnect)
+                                    intentConnection += tryConnection
+                                }
+                                521 -> {
+                                    Timber.tag(BuildConfig.STATE_521).e(BuildConfig.STATE_521_MSG)
+                                    statusConnect = true
+                                    authPreference.setStatus(statusConnect)
+                                    intentConnection += tryConnection
+                                    println("intentConnection 521 after $intentConnection")
+                                }
+                            }
+                            return response
+                        }
+                    })
+                builder.addNetworkInterceptor { chain ->
+                    chain.proceed(
+                        chain.request()
+                            .newBuilder()
+                            .header("User-Agent", "Android:${BuildConfig.MISCOTA_USER_AGENT} Version:${BuildConfig.VERSION_NAME} Package:${BuildConfig.PACKAGE_NAME} Framework:okhttp/4.4.0")
+                            .build()
+                    )
+                }
             }
-
-        if (BuildConfig.DEBUG) {
-            val loggingInterceptor = LoggingInterceptor.Builder()
-                .log(Platform.INFO)
-                .setLevel(Level.BASIC)
-                .logger(object : Logger {
-                    override fun log(level: Int, tag: String?, msg: String?) {
-                        Timber.tag(TAG).d(msg)
-                    }
-                })
+            httpClient = builder.build()
+            val moshi = Moshi.Builder()
+                .add(KotlinJsonAdapterFactory())
                 .build()
-
-            builder.addInterceptor(loggingInterceptor)
-            builder.addNetworkInterceptor { chain ->
-                chain.proceed(
-                    chain.request()
-                        .newBuilder()
-                        .header("User-Agent", "Android:${BuildConfig.MISCOTA_USER_AGENT} Version:${BuildConfig.VERSION_NAME} Package:${BuildConfig.PACKAGE_NAME} Framework:okhttp/4.4.0")
-                        .build()
-                )
-            }
-        }
-
-        httpClient = builder.build()
-
-        val moshi = Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
-
-        retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.MERCHANT_SERVER_URL_MIS)
-            //.baseUrl(BuildConfig.API_BASE_URL)
-            .client(httpClient)
-            .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
-            .build()
+            retrofit = Retrofit.Builder()
+                //.baseUrl(BuildConfig.MERCHANT_SERVER_URL_MIS)
+                .baseUrl(BuildConfig.API_BASE_URL)
+                .client(httpClient)
+                .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
+                .build()
 
         authApi = retrofit.create(AuthApi::class.java)
         categoryApi = retrofit.create(CategoryApi::class.java)
@@ -95,4 +150,5 @@ class ApiProvider {
 
         private const val TAG = "OkHttp"
     }
+
 }

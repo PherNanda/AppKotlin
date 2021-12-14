@@ -1,15 +1,21 @@
 package com.miscota.android.auth
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import com.miscota.android.R
 import com.miscota.android.auth.intro.IntroFragment
 import com.miscota.android.auth.login.ui.LoginFragment
 import com.miscota.android.auth.signup.SignupFragment
+import com.miscota.android.connection.ConnectionManager
 import com.miscota.android.databinding.ActivityAuthBinding
+import com.miscota.android.ui.connection.ConnectionStateFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AuthActivity : FragmentActivity() {
@@ -17,6 +23,14 @@ class AuthActivity : FragmentActivity() {
     private lateinit var binding: ActivityAuthBinding
 
     private val viewModel by viewModel<AuthViewModel>()
+
+    private val broadcastReceiver by lazy {
+        ConnectionManager.create({
+            binding.connectionOff.visibility = View.GONE
+        }, {
+            viewDisconnected()
+        })
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,6 +97,26 @@ class AuthActivity : FragmentActivity() {
             }
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        ConnectionManager.register(this, broadcastReceiver)
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        ConnectionManager.unregister(this, broadcastReceiver)
+    }
+
+    private fun viewDisconnected(){
+
+        binding.connectionOff.visibility = View.VISIBLE
+        val fm: FragmentManager = supportFragmentManager
+        val ft: FragmentTransaction = fm.beginTransaction()
+        ft.add(R.id.connectionOff, ConnectionStateFragment())
+        ft.commit()
     }
 
 
