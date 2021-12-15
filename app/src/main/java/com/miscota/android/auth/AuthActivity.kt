@@ -27,7 +27,7 @@ class AuthActivity : FragmentActivity() {
     private val broadcastReceiver by lazy {
         ConnectionManager.create({
             binding.connectionOff.visibility = View.GONE
-        }, {
+        },  {
             viewDisconnected()
         })
     }
@@ -80,6 +80,14 @@ class AuthActivity : FragmentActivity() {
         })
 
         TabLayoutMediator(binding.tabLayout, binding.viewpager) { _, _ -> }.attach()
+
+        viewModel.statusConnect.observe(this){
+            println("viewModel.statusConnect observe auth ${viewModel.statusConnect.value}")
+            if (viewModel.statusConnect.value!!){
+                viewErrorApi()
+            }
+            return@observe
+        }
     }
 
     class AuthFragmentAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
@@ -119,5 +127,8 @@ class AuthActivity : FragmentActivity() {
         ft.commit()
     }
 
+    private fun viewErrorApi(){
+        viewDisconnected()
+    }
 
 }

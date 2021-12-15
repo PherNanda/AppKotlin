@@ -81,7 +81,14 @@ class CartActivity : AppCompatActivity() {
 
         binding.toolbar.cartItemsText.visibility = View.INVISIBLE
         binding.toolbar.storeImage.visibility = View.INVISIBLE
-        //binding.toolbar.cartItemsText.text = viewModel.getTotalItens().toString()
+
+        viewModel.statusConnect.observe(this){
+            println("viewModel.statusConnect observe cartactivity ${viewModel.statusConnect.value}")
+            if (viewModel.statusConnect.value!!){
+                viewErrorApi()
+            }
+            return@observe
+        }
 
 
         //val list = loadCheckout()
@@ -899,5 +906,8 @@ class CartActivity : AppCompatActivity() {
         ft.commit()
     }
 
+    private fun viewErrorApi(){
+        viewDisconnected()
+    }
 
 }

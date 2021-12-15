@@ -87,6 +87,10 @@ interface AuthStore {
 
     fun setStatus(status: Boolean)
 
+    fun getInternetOn(): Boolean
+
+    fun setInternetOn(internet: Boolean)
+
     fun getEmail(): String?
 
     fun setEmail(email: String)
@@ -670,6 +674,17 @@ class DefaultAuthStore constructor(context: Context) : AuthStore {
         }
     }
 
+    override fun getInternetOn(): Boolean {
+        return sharedPreferences.getBoolean(KEY_STATUS_INTERNET, false)
+    }
+
+    override fun setInternetOn(internet: Boolean) {
+        with(sharedPreferences.edit()) {
+            putBoolean(KEY_STATUS_INTERNET, internet)
+            apply()
+        }
+    }
+
     override fun getCarriers(): String? {
         return sharedPreferences.getString(KEY_CALL_CARRIERS, null)
     }
@@ -786,6 +801,7 @@ class DefaultAuthStore constructor(context: Context) : AuthStore {
         private const val KEY_BOOLEAN_AUTH_SHOW_IN = "authShow"
         private const val KEY_AUTH_SHOW_IN = "authShowIn"
         private const val KEY_STATUS = "statusConnection"
+        private const val KEY_STATUS_INTERNET = "statusInternet"
     }
 }
 

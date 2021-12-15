@@ -55,9 +55,13 @@ class CartViewModel(
 
     var showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
 
+    private val _statusConnect: MutableLiveData<Boolean> = MutableLiveData(false)
+    val statusConnect: LiveData<Boolean> = _statusConnect
+
 
     init {
         _types.value?.add("")
+        _statusConnect.value = authStore.getStatus()
     }
 
 

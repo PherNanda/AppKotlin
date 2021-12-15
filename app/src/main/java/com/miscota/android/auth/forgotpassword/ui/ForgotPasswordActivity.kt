@@ -142,4 +142,8 @@ class ForgotPasswordActivity : AppCompatActivity() {
         ft.add(R.id.connectionOff, ConnectionStateFragment())
         ft.commit()
     }
+
+    private fun viewErrorApi(){
+        viewDisconnected()
+    }
 }

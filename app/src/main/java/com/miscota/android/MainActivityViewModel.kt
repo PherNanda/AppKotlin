@@ -83,8 +83,9 @@ class MainActivityViewModel(
 
         _loguedIn.value = authStore.isLoggedIn()
 
-        println("viewModel.authStore.getStatus() mainActivityViewModel ${authStore.getStatus()}")
+        println("viewModel.authStore.getStatus() mainActivityViewModel 86 ${authStore.getStatus()}")
         _statusConnect.value = authStore.getStatus()
+
 
     }
 
@@ -241,7 +242,7 @@ class MainActivityViewModel(
             }
             val exception = result.exceptionOrNull()
             if (exception != null && exception !is CancellationException) {
-                _statusConnect.value = true
+                //_statusConnect.value = true
                 Timber.e(exception.message.toString())
                 println("exception.message.toString() ${exception.message.toString()}") //exception.message.toString() HTTP 521
                 println("statusConnect.value error ${_statusConnect.value}")

@@ -81,49 +81,18 @@ class MainActivity : AppCompatActivity() {
             }
 
             if (destination.id == R.id.mainCategoriesFragment) {
-                //val viewSameDayInfoMain = findViewById<View>(R.id.samedayInfoMain)
-                //viewSameDayInfoMain.visibility = View.GONE
-
-                //val viewLocationLinearLayoutmain = findViewById<View>(R.id.locationLinearLayoutmain)
-                //viewLocationLinearLayoutmain.visibility = View.GONE
-
-                //val params: ViewGroup.LayoutParams = binding.headerMain.layoutParams!!
-                //params.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                //binding.headerMain.layoutParams = params
                 println(" destination 1 $destination")
 
             }
             if (destination.id == R.id.navigation_home) {
                 print("destination home $destination")
                 //viewModel.setShowAuth("1")
-
                 //controller.navigate(R.id.navigation_home)
-
-                /**val viewLocationInfoMain = findViewById<View>(R.id. locationLinearLayoutmain)
-                viewLocationInfoMain.visibility = View.VISIBLE
-
-                val params: ViewGroup.LayoutParams = binding.headerMain.layoutParams!!
-                params.height = 260
-                binding.headerMain.layoutParams = params
-
-
-                val viewSameDayInfoMain = findViewById<View>(R.id.samedayInfoMain)
-                viewSameDayInfoMain.visibility = View.VISIBLE**/
-
                 println(" destination 2 $destination")
 
             }
             if (destination.id == R.id.navigation_product) {
-                /**val viewLocationLinearLayoutmain = findViewById<View>(R.id.locationLinearLayoutmain)
-                viewLocationLinearLayoutmain.visibility = View.VISIBLE
 
-                val viewSameDayInfoMain = findViewById<View>(R.id.samedayInfoMain)
-                viewSameDayInfoMain.visibility = View.VISIBLE
-
-
-                val params: ViewGroup.LayoutParams = binding.headerMain.layoutParams!!
-                params.height = 260
-                binding.headerMain.layoutParams = params**/
                 println(" destination 3 $destination")
 
             }
@@ -270,7 +239,7 @@ class MainActivity : AppCompatActivity() {
             if (it != null ) {
                 changeSizeMyText(18F,binding.locationTextMain)
                 binding.locationTextMain.text=
-                    it.postalCode+ ", " + it.city
+                    String.format(it.postalCode+ ", " + it.city)
 
                 it.postalCode.let { postalCode ->
                      println("viewModel.statusConnect.value main line 286 ${viewModel.statusConnect.value}  viewModel.authStore.getStatus() ${viewModel.authStore.getStatus()}")
@@ -457,7 +426,7 @@ class MainActivity : AppCompatActivity() {
 
                 changeSizeMyText(18F,binding.locationTextMain)
                 binding.locationTextMain.text=
-                    it.postalCode+ ", " + it.city
+                    String.format(it.postalCode+ ", " + it.city)
 
 
                 it.postalCode.let { postalCode ->
@@ -517,7 +486,7 @@ class MainActivity : AppCompatActivity() {
             if (it != null ) {
                 changeSizeMyText(16F,binding.locationTextMain)
                 binding.locationTextMain.text=
-                    it.postalCode+ ", " + it.city
+                    String.format(it.postalCode+ ", " + it.city)
 
 
                 viewModel.checkPostalCode(it.postalCode)
@@ -667,17 +636,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun viewErrorApi(){
 
-        binding.connectionOff.visibility = View.VISIBLE
-        binding.locationLinearLayoutmain.visibility = View.GONE
-        binding.navView.visibility = View.GONE
-
-        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-
-        val fm: FragmentManager = supportFragmentManager
-        val ft: FragmentTransaction = fm.beginTransaction()
-        ft.add(R.id.connectionOff, ConnectionStateFragment())
-        ft.commit()
+        viewDisconnected()
+        
     }
 
     companion object {

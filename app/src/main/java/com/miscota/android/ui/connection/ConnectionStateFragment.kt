@@ -34,10 +34,11 @@ class ConnectionStateFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         if (viewModelMain.statusConnect.value != null) {
-            if (viewModelMain.statusConnect.value!!) {
+            if (viewModelMain.statusConnect.value!!  && viewModelMain.authStore.getInternetOn()) {
                 binding.titleConnectOff.text =
                     "Ups parece que tenemos un problema con nuestro servicio"
             }
+            println("viewModelMain.authStore.getInternetOn() ${viewModelMain.authStore.getInternetOn()}")
         }
 
         viewModel = ViewModelProvider(this)[ConnectionStateViewModel::class.java]

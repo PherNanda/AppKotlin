@@ -31,9 +31,12 @@ class SplashActivity : AppCompatActivity() {
         viewModel.openMainActivityLiveData.observe(this, {
 
             println("splash chibato 0")
+            println("it ${it.data}") //api error true
+            println("it $it")
 
             it.consume()?.let {
                 println("splash chibato 1")
+
                 goToMain()
             }
             println("splash chibato 3")
