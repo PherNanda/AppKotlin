@@ -3,10 +3,7 @@ package com.miscota.android
 import android.R.attr.*
 import android.content.Intent
 import android.graphics.Typeface
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -17,7 +14,6 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
@@ -155,11 +151,6 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.loadSelectedLocation()
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val intentConn = sharedPreferences.getBoolean("intentConnection", false)
-
-        println("intentConn::: $intentConn")
-
         binding.fragmentHome.visibility = View.VISIBLE
 
        /** binding.samedayInfoMain.setOnClickListener {
@@ -189,14 +180,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
             //navController.navigate(R.id.navigation_home)
         }
-       /** val navigationProduct = findViewById<BottomNavigationItemView>(R.id.navigation_product)
-        navigationProduct.setPadding(0)
-        val navigationOrders = findViewById<BottomNavigationItemView>(R.id.navigation_orders)
-        navigationOrders.setPadding(0)
-        val navigationProfile = findViewById<BottomNavigationItemView>(R.id.navigation_profile)
-        navigationProfile.setPadding(0)**/
-        //itemTwo.setItemBackground(getDrawable(R.drawable.ic_home_active))
-
 
         val llBottomSheet = findViewById<LinearLayout>(R.id.bottom_sheet)
         sheetBehavior = BottomSheetBehavior.from(llBottomSheet)
@@ -651,11 +634,6 @@ class MainActivity : AppCompatActivity() {
         return outPutBoldColorText
     }
 
-    fun isConnected(): Boolean {
-        val cm = this.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-        return activeNetwork?.isConnectedOrConnecting == true
-    }
 
     override fun onStop() {
         super.onStop()
