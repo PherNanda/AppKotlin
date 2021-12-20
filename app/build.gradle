@@ -16,8 +16,8 @@ android {
         applicationId 'com.miscota.android'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 131
-        versionName "2.2.1"
+        versionCode 138
+        versionName "2.3.0"
         //multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
