@@ -1,10 +1,10 @@
 package com.miscota.android
 
+import android.view.WindowManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.miscota.android.repository.CheckoutRepository
 import com.miscota.android.repository.StoreLocationRepository
 import com.miscota.android.ui.cart.CartUiModel
 import com.miscota.android.ui.cart.toCartItemUiModel
@@ -21,9 +21,9 @@ import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class MainActivityViewModel(
     val authStore: AuthStore,
-    private val checkoutRepository: CheckoutRepository,
     private val storeLocationRepository: StoreLocationRepository
 ) : ViewModel() {
 
@@ -61,11 +61,6 @@ class MainActivityViewModel(
 
     fun loadSelectedLocation() {
         _selectedLocation.value = authStore.getAddress() ?: return
-        println(" authStore.getAddressInfo() MainActivityViewModel ${authStore.getAddressInfo()}")
-        println(" authStore.getAddressesUser()?.first() MainActivityViewModel ${authStore.getAddressesUser()?.first()}")
-        println(" authStore.getAddress() MainActivityViewModel ${authStore.getAddress()}")
-        println(" authStore.getRecentAddresses() MainActivityViewModel ${authStore.getRecentAddresses()}")
-        println(" authStore.getRecentAddressesInfo() MainActivityViewModel ${authStore.getRecentAddressesInfo()}")
     }
 
 
@@ -83,11 +78,10 @@ class MainActivityViewModel(
 
         _loguedIn.value = authStore.isLoggedIn()
 
-        println("viewModel.authStore.getStatus() mainActivityViewModel ${authStore.getStatus()}")
+        println("viewModel.authStore.getStatus() mainActivityViewModel 86 ${authStore.getStatus()}")
         _statusConnect.value = authStore.getStatus()
 
     }
-
 
     fun getTotalItens(): Int{
         return authStore.getTotalCartItens()
@@ -241,7 +235,7 @@ class MainActivityViewModel(
             }
             val exception = result.exceptionOrNull()
             if (exception != null && exception !is CancellationException) {
-                _statusConnect.value = true
+                //_statusConnect.value = true
                 Timber.e(exception.message.toString())
                 println("exception.message.toString() ${exception.message.toString()}") //exception.message.toString() HTTP 521
                 println("statusConnect.value error ${_statusConnect.value}")
@@ -259,5 +253,6 @@ class MainActivityViewModel(
     fun getShowAuth(): Boolean{
         return authStore.getShowAuth()
     }
+
 
 }

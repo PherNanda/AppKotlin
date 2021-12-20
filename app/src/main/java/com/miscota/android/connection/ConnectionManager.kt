@@ -7,24 +7,35 @@ import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Parcelable
-import android.util.Log
+import com.miscota.android.util.DefaultAuthStore
+import timber.log.Timber
 
 object ConnectionManager {
 
     fun create(onNetworkUp: (()->Unit)?, onNetworkDown: (()->Unit)?): BroadcastReceiver {
         return object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
-
                 intent.extras?.getParcelable<Parcelable>("networkInfo")?.let {
                     val info = it as NetworkInfo
                     val state: NetworkInfo.State = info.state
+                    val authPreference: DefaultAuthStore = DefaultAuthStore(context)
 
-                    Log.d("BroadcastReceiver", "$info $state")
-                    if (state === NetworkInfo.State.CONNECTED) {
-                        onNetworkUp?.invoke()
-                    } else {
+                    Timber.tag("BroadcastReceiver").e("$info $state")
+                    if ( state === NetworkInfo.State.CONNECTED && !authPreference.getStatus()) {
+                        authPreference.setInternetOn(true)
+                            onNetworkUp?.invoke()
+                    }
+                    if ( state === NetworkInfo.State.CONNECTED && authPreference.getStatus()) {
+                        authPreference.setInternetOn(true)
                         onNetworkDown?.invoke()
-
+                    }
+                    if (state === NetworkInfo.State.DISCONNECTED && authPreference.getStatus()) {
+                        authPreference.setInternetOn(false)
+                        onNetworkDown?.invoke()
+                    }
+                    if (state === NetworkInfo.State.DISCONNECTED && !authPreference.getStatus()) {
+                        authPreference.setInternetOn(false)
+                        onNetworkDown?.invoke()
                     }
                 }
 

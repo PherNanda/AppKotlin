@@ -3,10 +3,7 @@ package com.miscota.android
 import android.R.attr.*
 import android.content.Intent
 import android.graphics.Typeface
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -17,7 +14,6 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
@@ -54,7 +50,12 @@ class MainActivity : AppCompatActivity() {
             binding.connectionOff.visibility = View.GONE
             binding.locationLinearLayoutmain.visibility = View.VISIBLE
             binding.navView.visibility = View.VISIBLE
-            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
+            if(viewModel.statusConnect.value!!) {
+                enableActivity(false)
+            } else{
+                enableActivity(true)
+            }
         }, {
             viewDisconnected()
         })
@@ -85,49 +86,18 @@ class MainActivity : AppCompatActivity() {
             }
 
             if (destination.id == R.id.mainCategoriesFragment) {
-                //val viewSameDayInfoMain = findViewById<View>(R.id.samedayInfoMain)
-                //viewSameDayInfoMain.visibility = View.GONE
-
-                //val viewLocationLinearLayoutmain = findViewById<View>(R.id.locationLinearLayoutmain)
-                //viewLocationLinearLayoutmain.visibility = View.GONE
-
-                //val params: ViewGroup.LayoutParams = binding.headerMain.layoutParams!!
-                //params.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                //binding.headerMain.layoutParams = params
                 println(" destination 1 $destination")
 
             }
             if (destination.id == R.id.navigation_home) {
                 print("destination home $destination")
                 //viewModel.setShowAuth("1")
-
                 //controller.navigate(R.id.navigation_home)
-
-                /**val viewLocationInfoMain = findViewById<View>(R.id. locationLinearLayoutmain)
-                viewLocationInfoMain.visibility = View.VISIBLE
-
-                val params: ViewGroup.LayoutParams = binding.headerMain.layoutParams!!
-                params.height = 260
-                binding.headerMain.layoutParams = params
-
-
-                val viewSameDayInfoMain = findViewById<View>(R.id.samedayInfoMain)
-                viewSameDayInfoMain.visibility = View.VISIBLE**/
-
                 println(" destination 2 $destination")
 
             }
             if (destination.id == R.id.navigation_product) {
-                /**val viewLocationLinearLayoutmain = findViewById<View>(R.id.locationLinearLayoutmain)
-                viewLocationLinearLayoutmain.visibility = View.VISIBLE
 
-                val viewSameDayInfoMain = findViewById<View>(R.id.samedayInfoMain)
-                viewSameDayInfoMain.visibility = View.VISIBLE
-
-
-                val params: ViewGroup.LayoutParams = binding.headerMain.layoutParams!!
-                params.height = 260
-                binding.headerMain.layoutParams = params**/
                 println(" destination 3 $destination")
 
             }
@@ -139,9 +109,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel.authStore.getStatus()
-        println("viewModel.authStore.getStatus() ${viewModel.authStore.getStatus()}")
-        println("viewModel.statusConnect ${viewModel.statusConnect.value}")
-
 
         viewModel.statusConnect.observe(this){
             println("viewModel.statusConnect observe ${viewModel.statusConnect.value}")
@@ -154,11 +121,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.loadAddress()
 
         viewModel.loadSelectedLocation()
-
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val intentConn = sharedPreferences.getBoolean("intentConnection", false)
-
-        println("intentConn::: $intentConn")
 
         binding.fragmentHome.visibility = View.VISIBLE
 
@@ -189,14 +151,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
             //navController.navigate(R.id.navigation_home)
         }
-       /** val navigationProduct = findViewById<BottomNavigationItemView>(R.id.navigation_product)
-        navigationProduct.setPadding(0)
-        val navigationOrders = findViewById<BottomNavigationItemView>(R.id.navigation_orders)
-        navigationOrders.setPadding(0)
-        val navigationProfile = findViewById<BottomNavigationItemView>(R.id.navigation_profile)
-        navigationProfile.setPadding(0)**/
-        //itemTwo.setItemBackground(getDrawable(R.drawable.ic_home_active))
-
 
         val llBottomSheet = findViewById<LinearLayout>(R.id.bottom_sheet)
         sheetBehavior = BottomSheetBehavior.from(llBottomSheet)
@@ -287,7 +241,7 @@ class MainActivity : AppCompatActivity() {
             if (it != null ) {
                 changeSizeMyText(18F,binding.locationTextMain)
                 binding.locationTextMain.text=
-                    it.postalCode+ ", " + it.city
+                    String.format(it.postalCode+ ", " + it.city)
 
                 it.postalCode.let { postalCode ->
                      println("viewModel.statusConnect.value main line 286 ${viewModel.statusConnect.value}  viewModel.authStore.getStatus() ${viewModel.authStore.getStatus()}")
@@ -474,7 +428,7 @@ class MainActivity : AppCompatActivity() {
 
                 changeSizeMyText(18F,binding.locationTextMain)
                 binding.locationTextMain.text=
-                    it.postalCode+ ", " + it.city
+                    String.format(it.postalCode+ ", " + it.city)
 
 
                 it.postalCode.let { postalCode ->
@@ -494,10 +448,6 @@ class MainActivity : AppCompatActivity() {
 
         //Configuration.getInstance().load(this, androidx.preference.PreferenceManager.getDefaultSharedPreferences(this))
 
-        println("onResumeMain")
-        println("viewModel.authStore.getStatus() onResumeMain ${viewModel.authStore.getStatus()}")
-        println("viewModel.statusConnect onResumeMain ${viewModel.statusConnect.value}")
-
         viewModel.getTotalItens()
         binding.cartItemsText.text = viewModel.getTotalItens().toString()
 
@@ -512,10 +462,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-
-        println("onPauseMain")
-        println("viewModel.authStore.getStatus() onPauseMain ${viewModel.authStore.getStatus()}")
-        println("viewModel.statusConnect onPauseMain ${viewModel.statusConnect.value}")
 
         if(viewModel.statusConnect.value!!){
             viewErrorApi()
@@ -534,7 +480,7 @@ class MainActivity : AppCompatActivity() {
             if (it != null ) {
                 changeSizeMyText(16F,binding.locationTextMain)
                 binding.locationTextMain.text=
-                    it.postalCode+ ", " + it.city
+                    String.format(it.postalCode+ ", " + it.city)
 
 
                 viewModel.checkPostalCode(it.postalCode)
@@ -608,11 +554,6 @@ class MainActivity : AppCompatActivity() {
         println("onRestartMain")
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        println("onDestroyMain")
-    }
-
     private fun colorMyText(inputText:String,startIndex:Int,endIndex:Int,textColor:Int): Spannable {
         val outPutColoredText: Spannable = SpannableString(inputText)
         outPutColoredText.setSpan(
@@ -651,11 +592,6 @@ class MainActivity : AppCompatActivity() {
         return outPutBoldColorText
     }
 
-    fun isConnected(): Boolean {
-        val cm = this.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-        return activeNetwork?.isConnectedOrConnecting == true
-    }
 
     override fun onStop() {
         super.onStop()
@@ -671,14 +607,12 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, MainActivity::class.java))
         //navController.navigateUp()
     }
-
     private fun viewDisconnected(){
         binding.connectionOff.visibility = View.VISIBLE
         binding.locationLinearLayoutmain.visibility = View.GONE
         binding.navView.visibility = View.GONE
 
-        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
 
         val fm: FragmentManager = supportFragmentManager
         val ft: FragmentTransaction = fm.beginTransaction()
@@ -687,19 +621,20 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
     private fun viewErrorApi(){
+        viewDisconnected()
+    }
 
-        binding.connectionOff.visibility = View.VISIBLE
-        binding.locationLinearLayoutmain.visibility = View.GONE
-        binding.navView.visibility = View.GONE
-
-        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-
-        val fm: FragmentManager = supportFragmentManager
-        val ft: FragmentTransaction = fm.beginTransaction()
-        ft.add(R.id.connectionOff, ConnectionStateFragment())
-        ft.commit()
+    private fun enableActivity(isEnabled: Boolean) {
+        if (!isEnabled) {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+            )
+        } else {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        }
     }
 
     companion object {

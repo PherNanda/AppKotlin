@@ -67,12 +67,14 @@ class ApiProvider (context: Context){
                 builder.addInterceptor(object : Interceptor {
                         override fun intercept(chain: Interceptor.Chain): Response  {
                             val response = chain.proceed(chain.request())
+
                             when (response.code) {
                                 200 -> {
                                     Timber.tag(BuildConfig.STATE_200).e(BuildConfig.STATE_200_MSG)
                                     statusConnect = false
                                     authPreference.setStatus(statusConnect)
                                     intentConnection = 0
+
                                 }
                                 400 -> {
                                     Timber.tag(BuildConfig.STATE_400).e(BuildConfig.STATE_400_MSG)
@@ -109,10 +111,9 @@ class ApiProvider (context: Context){
                                     statusConnect = true
                                     authPreference.setStatus(statusConnect)
                                     intentConnection += tryConnection
-                                    println("intentConnection 521 after $intentConnection")
                                 }
                             }
-                            return response
+                          return response
                         }
                     })
                 builder.addNetworkInterceptor { chain ->
@@ -129,8 +130,8 @@ class ApiProvider (context: Context){
                 .add(KotlinJsonAdapterFactory())
                 .build()
             retrofit = Retrofit.Builder()
-                //.baseUrl(BuildConfig.MERCHANT_SERVER_URL_MIS)
-                .baseUrl(BuildConfig.API_BASE_URL)
+                .baseUrl(BuildConfig.MERCHANT_SERVER_URL_MIS)
+                //baseUrl(BuildConfig.API_BASE_URL)
                 .client(httpClient)
                 .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
                 .build()

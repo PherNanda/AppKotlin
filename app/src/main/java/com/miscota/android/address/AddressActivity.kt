@@ -571,6 +571,9 @@ class AddressActivity : AppCompatActivity() {
         ft.commit()
     }
 
+    private fun viewErrorApi(){
+        viewDisconnected()
+    }
 
     companion object {
         private const val DEFAULT_MAP_ZOOM = 11f

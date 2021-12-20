@@ -11,6 +11,7 @@ import com.miscota.android.ui.cart.cartModule
 import com.miscota.android.ui.categories.mainCategoriesModule
 import com.miscota.android.ui.category.categoryModule
 import com.miscota.android.ui.checkoutpayment.paymenttModule
+import com.miscota.android.ui.connection.connectionStateModule
 import com.miscota.android.ui.home.homeModule
 import com.miscota.android.ui.productdetail.productDetailModule
 import com.miscota.android.ui.products.homeProductsModule
@@ -44,4 +45,5 @@ val koinModules = listOf(
     addressModuleold,
     tramitarPedidoModule,
     tipoEnvioModule,
+    connectionStateModule
 )
