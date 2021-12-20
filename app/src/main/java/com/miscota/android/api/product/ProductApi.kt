@@ -42,7 +42,7 @@ interface ProductApi {
         @Header("Authorization") authHeader: String,
         @Header("x-request-domain") requestDomain: String = "www.miscota.es",
         @Header("x-request-retail-id") requestRetailId: String,
-        @Path("type") type: String = "ecommerce",
+        @Path("type") type: String,
         @Path("position") position: Int,
         @Path("limit") limit: Int,
         @Path("query") query: String,
