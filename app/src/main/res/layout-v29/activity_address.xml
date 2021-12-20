@@ -222,5 +222,12 @@
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/placesLocationLayout" />
     </LinearLayout>
+    <FrameLayout
+        android:id="@+id/connectionOff"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

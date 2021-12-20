@@ -52,7 +52,7 @@ class AddCardFragment : Fragment() {
 
         }
 
-        binding.cardNumberInput.requestFocus()
+        //binding.cardNumberInput.requestFocus()
         //showKeyboard(binding.cardNumberInput)
 
 

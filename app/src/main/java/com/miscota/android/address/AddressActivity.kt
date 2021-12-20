@@ -2,13 +2,10 @@ package com.miscota.android.address
 
 import android.Manifest
 import android.app.AlertDialog
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +14,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -25,11 +24,13 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.miscota.android.R
+import com.miscota.android.connection.ConnectionManager
 import com.miscota.android.databinding.ActivityAddressBinding
 import com.miscota.android.databinding.PartialLayoutRecentAddressBinding
 import com.miscota.android.ui.cart.CartUiModel
 import com.miscota.android.ui.cart.CartViewModel
 import com.miscota.android.ui.cart.toCartItemUiModel
+import com.miscota.android.ui.connection.ConnectionStateFragment
 import com.miscota.android.ui.store.StoreLocationFragment
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -58,6 +59,14 @@ class AddressActivity : AppCompatActivity() {
     private var jobSearchLocation: Job? = null
 
     var jobPlace: Job? = null
+
+    private val broadcastReceiver by lazy {
+        ConnectionManager.create({
+            binding.connectionOff.visibility = View.GONE
+        }, {
+            viewDisconnected()
+        })
+    }
 
     private lateinit var listAddress:  MutableList<Address>
 
@@ -407,12 +416,6 @@ class AddressActivity : AppCompatActivity() {
         }
     }
 
-    fun isConnected(): Boolean {
-        val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-        return activeNetwork?.isConnectedOrConnecting == true
-    }
-
     private fun setupAutoCompleteSearch() {
         val adapter = PlacesAutoCompleteAdapter(this)
 
@@ -434,18 +437,11 @@ class AddressActivity : AppCompatActivity() {
                     val listOfAddress =
                         geoCoder.getFromLocationName(it.toString(), 10)
 
-                    viewModel.loadPlacesSuggestions(listOfAddress, it.toString())
+                        viewModel.loadPlacesSuggestions(listOfAddress, it.toString())
 
                     }catch (e: IOException){
 
-                         if (isConnected()) {
-                             println(" Internet Connected with another Error: ${e.message}")
-                         }
-                        else{
-
-                            Toast.makeText(this@AddressActivity, R.string.message_conected, Toast.LENGTH_LONG).show()
-                        }
-
+                        Toast.makeText(this@AddressActivity, R.string.message_conected, Toast.LENGTH_LONG).show()
                     }
                 }
             }
@@ -511,6 +507,17 @@ class AddressActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        ConnectionManager.register(this, broadcastReceiver)
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        ConnectionManager.unregister(this, broadcastReceiver)
+    }
+
 
     private fun setCurrentLocationTwo() {
         try {
@@ -555,7 +562,18 @@ class AddressActivity : AppCompatActivity() {
         }
     }
 
+    private fun viewDisconnected(){
 
+        binding.connectionOff.visibility = View.VISIBLE
+        val fm: FragmentManager = supportFragmentManager
+        val ft: FragmentTransaction = fm.beginTransaction()
+        ft.add(R.id.connectionOff, ConnectionStateFragment())
+        ft.commit()
+    }
+
+    private fun viewErrorApi(){
+        viewDisconnected()
+    }
 
     companion object {
         private const val DEFAULT_MAP_ZOOM = 11f

@@ -1,10 +1,10 @@
 package com.miscota.android
 
+import android.view.WindowManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.miscota.android.repository.CheckoutRepository
 import com.miscota.android.repository.StoreLocationRepository
 import com.miscota.android.ui.cart.CartUiModel
 import com.miscota.android.ui.cart.toCartItemUiModel
@@ -15,13 +15,15 @@ import com.miscota.android.util.Address
 import com.miscota.android.util.AuthStore
 import com.miscota.android.util.Event
 import com.miscota.android.util.GeocoderState
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class MainActivityViewModel(
     val authStore: AuthStore,
-    private val checkoutRepository: CheckoutRepository,
     private val storeLocationRepository: StoreLocationRepository
 ) : ViewModel() {
 
@@ -41,6 +43,9 @@ class MainActivityViewModel(
     private val _loguedIn: MutableLiveData<Boolean> = MutableLiveData()
     val loguedIn: LiveData<Boolean> = _loguedIn
 
+    private val _statusConnect: MutableLiveData<Boolean> = MutableLiveData(false)
+    val statusConnect: LiveData<Boolean> = _statusConnect
+
     private val _selectedLocation: MutableLiveData<Address> =
         MutableLiveData(authStore.getAddress())
     val selectedLocation: LiveData<Address> = _selectedLocation
@@ -56,11 +61,6 @@ class MainActivityViewModel(
 
     fun loadSelectedLocation() {
         _selectedLocation.value = authStore.getAddress() ?: return
-        println(" authStore.getAddressInfo() MainActivityViewModel ${authStore.getAddressInfo()}")
-        println(" authStore.getAddressesUser()?.first() MainActivityViewModel ${authStore.getAddressesUser()?.first()}")
-        println(" authStore.getAddress() MainActivityViewModel ${authStore.getAddress()}")
-        println(" authStore.getRecentAddresses() MainActivityViewModel ${authStore.getRecentAddresses()}")
-        println(" authStore.getRecentAddressesInfo() MainActivityViewModel ${authStore.getRecentAddressesInfo()}")
     }
 
 
@@ -71,7 +71,6 @@ class MainActivityViewModel(
 
 
         comproveLoginExpireDate(currentDate, dateExpire)
-
         if (!authStore.isLoggedIn() && isAuthShow.value == 0) {
             _openLoginActivityEvent.value = Event(true)
             _isAuthShow.value = 1
@@ -79,8 +78,10 @@ class MainActivityViewModel(
 
         _loguedIn.value = authStore.isLoggedIn()
 
-    }
+        println("viewModel.authStore.getStatus() mainActivityViewModel 86 ${authStore.getStatus()}")
+        _statusConnect.value = authStore.getStatus()
 
+    }
 
     fun getTotalItens(): Int{
         return authStore.getTotalCartItens()
@@ -118,14 +119,10 @@ class MainActivityViewModel(
 
     fun getDateLoginExpire(): Date {
         var expireLoginDate: Date? = Date()
-
-        println(" fecha autoLogin ${authStore.getAutoLoginParamExpire()}")
-
         if( !authStore.getAutoLoginParamExpire().isNullOrEmpty() )
         {
             val dateLoginExpire = SimpleDateFormat("yyyy-MM-DD hh:mm:ss").parse(authStore.getAutoLoginParamExpire()!!)
             //val dateLoginExpire = SimpleDateFormat("yyyy-MM-DD hh:mm:ss").parse("2021-11-11 11:15:59")
-
             expireLoginDate = dateLoginExpire
         }
 
@@ -192,13 +189,17 @@ class MainActivityViewModel(
         isSameDayEnabled.value = true
         return
         }**/
-        println(" postalCode MainActivityViewModel: $postalCode")
-        viewModelScope.launch {
+        println("postalCode MainActivityViewModel: $postalCode")
+        println("postalCode viewModel.authStore.getStatus() mainActivityViewModel ${authStore.getStatus()}")
+
+            viewModelScope.launch {
             val result = runCatching {
                 val response = storeLocationRepository.getSameDayShops(postalCode)
-                if (!response.isEmpty()) {
+                if (response.isNotEmpty()) {
                     isSameDayEnabled.value = true
-
+                    _statusConnect.value = false
+                    println("statusConnect.value ${_statusConnect.value}")
+                    println("statusConnect.value::: ${statusConnect.value}")
                     val llist: ArrayList<Store> = arrayListOf(
                         Store(
                             name= response.get(0).name,
@@ -207,11 +208,8 @@ class MainActivityViewModel(
                     )
 
                     llist.map { it
-
                         _requestID.value = it
-                        println(" List Retail MainActivityViewModel  ${it.name} -- ${it.retail_shop_id}")
                     }
-                    //isSameDayEnabled.value = true
                     authStore.setRetailID(_requestID.value?.retail_shop_id)
                     return@launch
                 }
@@ -225,6 +223,23 @@ class MainActivityViewModel(
                     _requestID.value?.retail_shop_id == retailIdDefault
                     authStore.setRetailID(retailIdDefault)
                 }
+
+            }
+
+            if(result.isFailure){
+
+                println("result.isFailure ${result.isFailure} ${result.hashCode()}") //result.isFailure true 119129910
+            }
+            if(result.isSuccess){
+                println("result.isSuccess ${result.isSuccess} ${result.hashCode()}")
+            }
+            val exception = result.exceptionOrNull()
+            if (exception != null && exception !is CancellationException) {
+                //_statusConnect.value = true
+                Timber.e(exception.message.toString())
+                println("exception.message.toString() ${exception.message.toString()}") //exception.message.toString() HTTP 521
+                println("statusConnect.value error ${_statusConnect.value}")
+                println("statusConnect.value::: error ${statusConnect.value}")
             }
         }
 
@@ -233,15 +248,10 @@ class MainActivityViewModel(
 
     fun setShowAuth(authShow: String?){
         authStore.setShowAuth(authShow?:null)
-        println("isAuthShow.value::: MainActivityViewModel:: setShowAuth()  ${isAuthShow.value}")
-        println("_isAuthShow.value::: MainActivityViewModel:: setShowAuth()  ${_isAuthShow.value}")
     }
 
     fun getShowAuth(): Boolean{
         return authStore.getShowAuth()
-        println("isAuthShow authStore.getShowAuth()::: ${authStore.getShowAuth()}")
-        println("isAuthShow.value::: MainActivityViewModel:: getShowAuth()  ${isAuthShow.value}")
-        println("_isAuthShow.value::: MainActivityViewModel:: getShowAuth()  ${_isAuthShow.value}")
     }
 
 

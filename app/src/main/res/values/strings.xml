@@ -50,10 +50,10 @@
     <string name="continue_with_google">Iniciar sesión con Google</string>
     <string name="create_account">Crear cuenta</string>
     <string name="create_account_new_app">¿No tienes cuenta? Crea tu cuenta aquí</string>
-    <string name="loading">Cargando...</string>
-    <string name="loading_sign_up">Creando cuenta...</string>
-    <string name="loading_buy">Procesando tu compra...</string>
-    <string name="signing">Iniciando sesión...</string>
+    <string name="loading">Cargando…</string>
+    <string name="loading_sign_up">Creando cuenta…</string>
+    <string name="loading_buy">Procesando tu compra…</string>
+    <string name="signing">Iniciando sesión…</string>
     <string name="remember_password">Recordar contraseña</string>
     <string name="full_name">Nombre completo</string>
     <string name="newsletter_subscription">Acepto suscribirme a la newsletter</string>
@@ -410,12 +410,22 @@
                     \n para que podamos entregar correctamente tu pedido</string>
     <!--<string name="delivery_type_T2ND">T2ND</string>-->
 
-
     <!--messages-->
     <string name="need_login">Haga login para finalizar su pedido</string>
     <string name="guest">invitado</string>
     <string name="postal_code_message">Si cambias el código postal se borrarán de tu cesta los productos con entrega hoy</string>
     <string name="delete_products">¿Deseas borrar los productos?</string>
+    <string name="internet_off_message">Ups… \nParece que has perdido la \nconexión a internet</string>
+    <string name="api_error_message">Ups… \nParece que tenemos un \nproblema con nuestro servicio</string>
 
+    <!--fields purchase-->
+    <string name="cart_screen_class">CartActivity</string>
+    <string name="affiliation">Miscota App Android</string>
+    <string name="currency_eur">EUR</string>
+    <string name="method_payment">fetchPaymentPro</string>
+
+    <!--try connect api button-->
+    <string name="retry_connect_api">Volver a intentarlo</string>
+    <string name="try_connect_api">Intentando conectar…</string>
 
 </resources>

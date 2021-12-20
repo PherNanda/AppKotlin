@@ -39,7 +39,7 @@ android {
             }
         }
 
-            release {
+        release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
@@ -67,6 +67,23 @@ android {
             buildConfigField "String", "PAYMENT_METHOD_URL_MIS", "\"https://4b3d6e25656fcd70-Miscota-checkout-live.adyenpayments.com/checkout/v67/paymentMethods\""
             buildConfigField "String", "PAYMENT_URL_MIS", "\"https://4b3d6e25656fcd70-Miscota-checkout-live.adyenpayments.com/checkout/v67/payments\""
             buildConfigField "String", "PUBLIC_KEY_MIS", "\"10001|99E9FD67934A8E6FFE7843F5418335A91555ADA61FB5F9D8E70A3EFA9EF675AA2B70AC7CEE4C8AFFB9D22AE39B25142BB709813124CA4BCA90E53CC8C3DD6293C8747D2A458FFB96769FBFB45DA207FA0B0931E676B7BD1DD311E444382400493E8733D60A6322C285EE6F1CBA7A46C73DE84BBFE1F53FC539E2143B1C1F23B6BA1BEC618CF552EE956A92E90B6B2C8DF0983A15CB055D43E1D7AD6A11CCC2DF416149592E46FE20ED737A8A2E3ACEA92588B94108B49BDF94DF902A147DD823DF4A68D4565813FBF238BD3A2AD448B3D5D73D1B47305133EA3DEC5EDCAB2C0D9E5F7F1433F5D754CF880C0B2D009B9E80B5AA1DDF95ECA0815D585BDFACF5C7\""
+
+            //request types
+            buildConfigField "String", "STATE_200", "\"Salved 200\""
+            buildConfigField "String", "STATE_400", "\"Error 400\""
+            buildConfigField "String", "STATE_403", "\"Error 403\""
+            buildConfigField "String", "STATE_404", "\"Error 404\""
+            buildConfigField "String", "STATE_500", "\"Error 500\""
+            buildConfigField "String", "STATE_504", "\"Error 504\""
+            buildConfigField "String", "STATE_521", "\"Error 521\""
+            buildConfigField "String", "STATE_200_MSG", "\"Salved 200 OK: El request es correcto. Esta es la respuesta estándar para respuestas correctas\""
+            buildConfigField "String", "STATE_400_MSG", "\"Error 400 Bad Request: El servidor no puede o no va a procesar el request por un error de sintaxis del cliente\""
+            buildConfigField "String", "STATE_403_MSG", "\"Error 403 Forbidden: El request fue válido pero el servidor se niega a responder\""
+            buildConfigField "String", "STATE_404_MSG", "\"Error 404 Not Found: El recurso del request no se ha podido encontrar\""
+            buildConfigField "String", "STATE_500_MSG", "\"Error 500 Internal Server Error: Error genérico, cuando se ha dado una condición no esperada y no se puede concretar el mensaje\""
+            buildConfigField "String", "STATE_504_MSG", "\"Error 504 Gateway Timeout: El servidor estaba actuando como puerta de entrada o proxy y no recibió una respuesta oportuna por parte del servidor upstream\""
+            buildConfigField "String", "STATE_521_MSG", "\"Error 521 Web Server is Down: El servidor web de origen ha rechazado la conexión de CloudFlare\""
+
 
         }
         debug {
@@ -97,6 +114,21 @@ android {
             buildConfigField "String", "PAYMENT_URL_MIS", "\"https://4b3d6e25656fcd70-Miscota-checkout-live.adyenpayments.com/checkout/v67/payments\""
             buildConfigField "String", "PUBLIC_KEY_MIS", "\"10001|99E9FD67934A8E6FFE7843F5418335A91555ADA61FB5F9D8E70A3EFA9EF675AA2B70AC7CEE4C8AFFB9D22AE39B25142BB709813124CA4BCA90E53CC8C3DD6293C8747D2A458FFB96769FBFB45DA207FA0B0931E676B7BD1DD311E444382400493E8733D60A6322C285EE6F1CBA7A46C73DE84BBFE1F53FC539E2143B1C1F23B6BA1BEC618CF552EE956A92E90B6B2C8DF0983A15CB055D43E1D7AD6A11CCC2DF416149592E46FE20ED737A8A2E3ACEA92588B94108B49BDF94DF902A147DD823DF4A68D4565813FBF238BD3A2AD448B3D5D73D1B47305133EA3DEC5EDCAB2C0D9E5F7F1433F5D754CF880C0B2D009B9E80B5AA1DDF95ECA0815D585BDFACF5C7\""
 
+            //request types
+            buildConfigField "String", "STATE_200", "\"Salved 200\""
+            buildConfigField "String", "STATE_400", "\"Error 400\""
+            buildConfigField "String", "STATE_403", "\"Error 403\""
+            buildConfigField "String", "STATE_404", "\"Error 404\""
+            buildConfigField "String", "STATE_500", "\"Error 500\""
+            buildConfigField "String", "STATE_504", "\"Error 504\""
+            buildConfigField "String", "STATE_521", "\"Error 521\""
+            buildConfigField "String", "STATE_200_MSG", "\"Salved 200 OK: El request es correcto. Esta es la respuesta estándar para respuestas correctas\""
+            buildConfigField "String", "STATE_400_MSG", "\"Error 400 Bad Request: El servidor no puede o no va a procesar el request por un error de sintaxis del cliente\""
+            buildConfigField "String", "STATE_403_MSG", "\"Error 403 Forbidden: El request fue válido pero el servidor se niega a responder\""
+            buildConfigField "String", "STATE_404_MSG", "\"Error 404 Not Found: El recurso del request no se ha podido encontrar\""
+            buildConfigField "String", "STATE_500_MSG", "\"Error 500 Internal Server Error: Error genérico, cuando se ha dado una condición no esperada y no se puede concretar el mensaje\""
+            buildConfigField "String", "STATE_504_MSG", "\"Error 504 Gateway Timeout: El servidor estaba actuando como puerta de entrada o proxy y no recibió una respuesta oportuna por parte del servidor upstream\""
+            buildConfigField "String", "STATE_521_MSG", "\"Error 521 Web Server is Down: El servidor web de origen ha rechazado la conexión de CloudFlare\""
 
         }
 

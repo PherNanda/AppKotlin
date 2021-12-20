@@ -6,16 +6,29 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.core.view.get
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.miscota.android.R
 import com.miscota.android.afterTextChanged
+import com.miscota.android.connection.ConnectionManager
 import com.miscota.android.databinding.ActivityForgotPasswordBinding
+import com.miscota.android.ui.connection.ConnectionStateFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ForgotPasswordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityForgotPasswordBinding
 
     private val viewModel by viewModel<ForgotPasswordViewModel>()
+
+    private val broadcastReceiver by lazy {
+        ConnectionManager.create({
+            binding.connectionOff.visibility = View.GONE
+            binding.doneButton.visibility = View.VISIBLE
+            binding.emailEditText.visibility = View.VISIBLE
+        }, {
+            viewDisconnected()
+        })
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,5 +120,30 @@ class ForgotPasswordActivity : AppCompatActivity() {
         binding.emailEditText.isEnabled = true
         binding.doneButton.text = getString(R.string.restore_password)
         binding.doneButton.isEnabled = true
+    }
+    override fun onResume() {
+        super.onResume()
+        ConnectionManager.register(this, broadcastReceiver)
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        ConnectionManager.unregister(this, broadcastReceiver)
+    }
+
+
+    private fun viewDisconnected(){
+        binding.doneButton.visibility = View.GONE
+        binding.connectionOff.visibility = View.VISIBLE
+        binding.emailEditText.visibility = View.GONE
+        val fm: FragmentManager = supportFragmentManager
+        val ft: FragmentTransaction = fm.beginTransaction()
+        ft.add(R.id.connectionOff, ConnectionStateFragment())
+        ft.commit()
+    }
+
+    private fun viewErrorApi(){
+        viewDisconnected()
     }
 }

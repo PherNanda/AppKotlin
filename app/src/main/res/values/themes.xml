@@ -308,7 +308,6 @@
         <item name="itemTextColor">@color/white_900</item>
     </style>
 
-
     <style name="Theme.Maskokotas.Night" parent="Theme.MaterialComponents.Light">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/app_blue</item>

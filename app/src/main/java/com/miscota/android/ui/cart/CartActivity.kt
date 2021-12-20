@@ -1,9 +1,6 @@
 package com.miscota.android.ui.cart
 
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -28,16 +25,16 @@ import com.miscota.android.BuildConfig
 import com.miscota.android.R
 import com.miscota.android.address.AddressActivity
 import com.miscota.android.addressold.AddressActivityOld
-import com.miscota.android.auth.AuthActivity
+import com.miscota.android.connection.ConnectionManager
 import com.miscota.android.databinding.ActivityCartBinding
 import com.miscota.android.events.EventsInfo
 import com.miscota.android.ui.checkoutpayment.*
+import com.miscota.android.ui.connection.ConnectionStateFragment
 import com.miscota.android.ui.pedido.Pedido
 import com.miscota.android.ui.pedido.PedidoNoProcesado
 import com.miscota.android.ui.productdetail.CartProduct
 import com.miscota.android.ui.tramitarpedido.TramitarPedidoFragment
 import com.miscota.android.util.Address
-import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -61,6 +58,14 @@ class CartActivity : AppCompatActivity() {
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
+    private val broadcastReceiver by lazy {
+        ConnectionManager.create({
+            binding.connectionOff.visibility = View.GONE
+        }, {
+            viewDisconnected()
+        })
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCartBinding.inflate(layoutInflater)
@@ -76,7 +81,14 @@ class CartActivity : AppCompatActivity() {
 
         binding.toolbar.cartItemsText.visibility = View.INVISIBLE
         binding.toolbar.storeImage.visibility = View.INVISIBLE
-        //binding.toolbar.cartItemsText.text = viewModel.getTotalItens().toString()
+
+        viewModel.statusConnect.observe(this){
+            println("viewModel.statusConnect observe cartactivity ${viewModel.statusConnect.value}")
+            if (viewModel.statusConnect.value!!){
+                viewErrorApi()
+            }
+            return@observe
+        }
 
 
         //val list = loadCheckout()
@@ -471,12 +483,12 @@ class CartActivity : AppCompatActivity() {
 
                                     firebaseAnalytics.logEvent(FirebaseAnalytics.Event.PURCHASE) {
                                         param(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
-                                        param(FirebaseAnalytics.Param.SCREEN_CLASS, "CartActivity")
+                                        param(FirebaseAnalytics.Param.SCREEN_CLASS, getString(R.string.cart_screen_class))
                                         param(FirebaseAnalytics.Param.TRANSACTION_ID, viewModel.refOrder.value!!)
-                                        param(FirebaseAnalytics.Param.AFFILIATION, "Miscota App Android")
+                                        param(FirebaseAnalytics.Param.AFFILIATION, getString(R.string.affiliation))
                                         param(FirebaseAnalytics.Param.VALUE,getTotalPriceAnalytics())
-                                        param(FirebaseAnalytics.Param.CURRENCY, "EUR")
-                                        param(FirebaseAnalytics.Param.METHOD, "fetchPaymentPro")
+                                        param(FirebaseAnalytics.Param.CURRENCY, getString(R.string.currency_eur))
+                                        param(FirebaseAnalytics.Param.METHOD, getString(R.string.method_payment))
                                     }
 
                                     //vaciar carrito
@@ -739,11 +751,7 @@ class CartActivity : AppCompatActivity() {
             .setPositiveButton(getString(R.string.yes)) { dialogInterface, _ ->
                 dialogInterface.dismiss()
                 removeItemsSameday()
-                if (isConnected()) {
                     startActivity(Intent(this, AddressActivityOld::class.java))
-                }else{
-                    Toast.makeText(this,R.string.message_conected, Toast.LENGTH_LONG).show()
-                }
             }
             .setNegativeButton(getString(R.string.no)) { dialogInterface, i ->
                 dialogInterface.dismiss()
@@ -872,11 +880,11 @@ class CartActivity : AppCompatActivity() {
         return !(!checkoutAddress || !checkoutItems || !checkoutStock || !checkoutUser )
     }
 
-    fun isConnected(): Boolean {
-        val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-        return activeNetwork?.isConnectedOrConnecting == true
+    override fun onPause() {
+        super.onPause()
+        ConnectionManager.unregister(this, broadcastReceiver)
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -886,8 +894,20 @@ class CartActivity : AppCompatActivity() {
         viewModel.costEcommerce.observe(this){
             return@observe
         }
-
+        ConnectionManager.register(this, broadcastReceiver)
     }
 
+    private fun viewDisconnected(){
+
+        binding.connectionOff.visibility = View.VISIBLE
+        val fm: FragmentManager = supportFragmentManager
+        val ft: FragmentTransaction = fm.beginTransaction()
+        ft.add(R.id.connectionOff, ConnectionStateFragment())
+        ft.commit()
+    }
+
+    private fun viewErrorApi(){
+        viewDisconnected()
+    }
 
 }

@@ -3,8 +3,6 @@ package com.miscota.android
 import android.R.attr.*
 import android.content.Intent
 import android.graphics.Typeface
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -13,13 +11,15 @@ import android.text.style.StyleSpan
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
@@ -29,8 +29,10 @@ import com.google.firebase.perf.*
 import com.google.firebase.perf.ktx.performance
 import com.miscota.android.address.AddressActivity
 import com.miscota.android.auth.AuthActivity
+import com.miscota.android.connection.ConnectionManager
 import com.miscota.android.databinding.ActivityMainBinding
 import com.miscota.android.ui.cart.CartActivity
+import com.miscota.android.ui.connection.ConnectionStateFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -43,10 +45,27 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var sheetBehavior: BottomSheetBehavior<LinearLayout>
 
+    private val broadcastReceiver by lazy {
+        ConnectionManager.create({
+            binding.connectionOff.visibility = View.GONE
+            binding.locationLinearLayoutmain.visibility = View.VISIBLE
+            binding.navView.visibility = View.VISIBLE
+
+            if(viewModel.statusConnect.value!!) {
+                enableActivity(false)
+            } else{
+                enableActivity(true)
+            }
+        }, {
+            viewDisconnected()
+        })
+    }
+
+
     private val listener =
         NavController.OnDestinationChangedListener { controller, destination, arguments ->
             if (destination.id == R.id.navigation_orders) {
-                print("destination orders $destination")
+
 
                 if (!viewModel.loguedIn.value!!) {
 
@@ -57,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             if (destination.id == R.id.navigation_profile) {
-                print("destination profile $destination")
+
                 if (!viewModel.loguedIn.value!!) {
                     viewModel.setShowAuth(null)
                 }
@@ -67,49 +86,18 @@ class MainActivity : AppCompatActivity() {
             }
 
             if (destination.id == R.id.mainCategoriesFragment) {
-                //val viewSameDayInfoMain = findViewById<View>(R.id.samedayInfoMain)
-                //viewSameDayInfoMain.visibility = View.GONE
-
-                //val viewLocationLinearLayoutmain = findViewById<View>(R.id.locationLinearLayoutmain)
-                //viewLocationLinearLayoutmain.visibility = View.GONE
-
-                //val params: ViewGroup.LayoutParams = binding.headerMain.layoutParams!!
-                //params.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                //binding.headerMain.layoutParams = params
                 println(" destination 1 $destination")
 
             }
             if (destination.id == R.id.navigation_home) {
                 print("destination home $destination")
                 //viewModel.setShowAuth("1")
-
                 //controller.navigate(R.id.navigation_home)
-
-                /**val viewLocationInfoMain = findViewById<View>(R.id. locationLinearLayoutmain)
-                viewLocationInfoMain.visibility = View.VISIBLE
-
-                val params: ViewGroup.LayoutParams = binding.headerMain.layoutParams!!
-                params.height = 260
-                binding.headerMain.layoutParams = params
-
-
-                val viewSameDayInfoMain = findViewById<View>(R.id.samedayInfoMain)
-                viewSameDayInfoMain.visibility = View.VISIBLE**/
-
                 println(" destination 2 $destination")
 
             }
             if (destination.id == R.id.navigation_product) {
-                /**val viewLocationLinearLayoutmain = findViewById<View>(R.id.locationLinearLayoutmain)
-                viewLocationLinearLayoutmain.visibility = View.VISIBLE
 
-                val viewSameDayInfoMain = findViewById<View>(R.id.samedayInfoMain)
-                viewSameDayInfoMain.visibility = View.VISIBLE
-
-
-                val params: ViewGroup.LayoutParams = binding.headerMain.layoutParams!!
-                params.height = 260
-                binding.headerMain.layoutParams = params**/
                 println(" destination 3 $destination")
 
             }
@@ -120,10 +108,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel.authStore.getStatus()
+
+        viewModel.statusConnect.observe(this){
+            println("viewModel.statusConnect observe ${viewModel.statusConnect.value}")
+            if (viewModel.statusConnect.value!!){
+                viewErrorApi()
+            }
+            return@observe
+        }
+
         viewModel.loadAddress()
 
         viewModel.loadSelectedLocation()
-
 
         binding.fragmentHome.visibility = View.VISIBLE
 
@@ -154,28 +151,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
             //navController.navigate(R.id.navigation_home)
         }
-       /** val navigationProduct = findViewById<BottomNavigationItemView>(R.id.navigation_product)
-        navigationProduct.setPadding(0)
-        val navigationOrders = findViewById<BottomNavigationItemView>(R.id.navigation_orders)
-        navigationOrders.setPadding(0)
-        val navigationProfile = findViewById<BottomNavigationItemView>(R.id.navigation_profile)
-        navigationProfile.setPadding(0)**/
-        //itemTwo.setItemBackground(getDrawable(R.drawable.ic_home_active))
-
-        //***TEST******//
-        //val navHostFragment2 =
-        //   supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        //val navController2 = navHostFragment2.navController
-
-        /**if (navController2.currentDestination?.id == R.id.navigation_product) {
-        val params: ViewGroup.LayoutParams = binding.headerMain.layoutParams!!
-        params.height = 200
-        //params.height = ViewGroup.LayoutParams.MATCH_PARENT //params.width = 100
-        binding.headerMain.layoutParams = params
-        navController2.navigate(R.id.navigation_home)
-        }**/
-        //*********//
-
 
         val llBottomSheet = findViewById<LinearLayout>(R.id.bottom_sheet)
         sheetBehavior = BottomSheetBehavior.from(llBottomSheet)
@@ -221,7 +196,6 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.requestID.observe(this) {
             if (viewModel.requestID.value != null) {
-                //println("viewModel.requestID.value line 212 onCreate \n ${viewModel.requestID.value}")
 
                 if (viewModel.requestID.value!!.retail_shop_id == idEcommerce) {
 
@@ -267,10 +241,11 @@ class MainActivity : AppCompatActivity() {
             if (it != null ) {
                 changeSizeMyText(18F,binding.locationTextMain)
                 binding.locationTextMain.text=
-                    it.postalCode+ ", " + it.city
+                    String.format(it.postalCode+ ", " + it.city)
 
                 it.postalCode.let { postalCode ->
-                    viewModel.checkPostalCode(postalCode)
+                     println("viewModel.statusConnect.value main line 286 ${viewModel.statusConnect.value}  viewModel.authStore.getStatus() ${viewModel.authStore.getStatus()}")
+                     viewModel.checkPostalCode(postalCode)
                 }
             }
             if (it == null){
@@ -339,12 +314,9 @@ class MainActivity : AppCompatActivity() {
         val navigationProfile = findViewById<BottomNavigationItemView>(R.id.navigation_profile)
         viewModel.openLoginActivityEvent.observe(this) {
             it.consume()?.let {
-
                 if(!viewModel.getShowAuth()) {
-                    println("isAuthShow it main $it")
                     goToLogin()
                 }
-                println("isAuthShow it viewModel.getShowAuth() ${viewModel.getShowAuth()}")
             }
         }
 
@@ -393,16 +365,18 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
     private fun goToLogin() {
          startActivity(Intent(this, AuthActivity::class.java))
          viewModel.setShowAuth("1")
     }
 
+
     override fun onStart() {
         super.onStart()
 
         println("onStartMain \n")
+        println("viewModel.authStore.getStatus() onStartMain ${viewModel.authStore.getStatus()}")
+        println("viewModel.statusConnect onStartMain ${viewModel.statusConnect.value}")
 
         viewModel.getTotalItens()
         viewModel.costEcommerce
@@ -454,7 +428,7 @@ class MainActivity : AppCompatActivity() {
 
                 changeSizeMyText(18F,binding.locationTextMain)
                 binding.locationTextMain.text=
-                    it.postalCode+ ", " + it.city
+                    String.format(it.postalCode+ ", " + it.city)
 
 
                 it.postalCode.let { postalCode ->
@@ -465,23 +439,35 @@ class MainActivity : AppCompatActivity() {
 
             }
 
-
         }
 
 
     override fun onResume() {
         super.onResume()
 
-        println("onResumeMain")
+
+        //Configuration.getInstance().load(this, androidx.preference.PreferenceManager.getDefaultSharedPreferences(this))
+
         viewModel.getTotalItens()
         binding.cartItemsText.text = viewModel.getTotalItens().toString()
+
+        if(viewModel.statusConnect.value!!){
+            viewErrorApi()
+        }
+
+        ConnectionManager.register(this, broadcastReceiver)
+
 
     }
 
     override fun onPause() {
         super.onPause()
-        println("onPauseMain")
 
+        if(viewModel.statusConnect.value!!){
+            viewErrorApi()
+        }
+
+        ConnectionManager.unregister(this, broadcastReceiver)
     }
 
     override fun onRestart() {
@@ -490,18 +476,16 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.loadSelectedLocation()
 
-
         viewModel.selectedLocation.observe(this) {
             if (it != null ) {
                 changeSizeMyText(16F,binding.locationTextMain)
                 binding.locationTextMain.text=
-                    it.postalCode+ ", " + it.city
+                    String.format(it.postalCode+ ", " + it.city)
 
 
                 viewModel.checkPostalCode(it.postalCode)
 
                 if (viewModel.authStore.getRetailID() != null) {
-
 
                 if (viewModel.authStore.getRetailID() == idEcommerce ){
 
@@ -524,7 +508,6 @@ class MainActivity : AppCompatActivity() {
 
             }
             if (it == null){
-                println("onRestartMain == null line 600")
                 binding.samedayInfoMain.setBackgroundColor(ContextCompat.getColor(this,R.color.transparent))
                 binding.textSamedayMain.text = getString(R.string.text_default_main)
                 binding.imageSamedayCheck.visibility = View.GONE
@@ -557,8 +540,6 @@ class MainActivity : AppCompatActivity() {
                 binding.imageSamedayCheck.visibility = View.GONE
                 binding.textSamedayMain.text = colorMyText(getString(R.string.same_day_off),11,37, ContextCompat.getColor(this, R.color.app_pink))
 
-
-                println("onRestartMain viewModel.authStore.getRetailID() MainActivity line 544 \n ${viewModel.authStore.getRetailID()} ")
             }
             if (viewModel.authStore.getRetailID() != idEcommerce ){
 
@@ -567,21 +548,10 @@ class MainActivity : AppCompatActivity() {
                 binding.textSamedayMain.text = colorMyText(getString(R.string.title_sameday),0,11, ContextCompat.getColor(this, R.color.app_pink))
                 binding.imageSamedayCheck.visibility = View.VISIBLE
 
-                println("onRestartMain viewModel.authStore.getRetailID() MainActivity line 553 \n ${viewModel.authStore.getRetailID()} ")
-
             }
 
         }
-
-
-
-
         println("onRestartMain")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        println("onDestroyMain")
     }
 
     private fun colorMyText(inputText:String,startIndex:Int,endIndex:Int,textColor:Int): Spannable {
@@ -622,22 +592,14 @@ class MainActivity : AppCompatActivity() {
         return outPutBoldColorText
     }
 
-    fun isConnected(): Boolean {
-        val cm = this.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-        return activeNetwork?.isConnectedOrConnecting == true
-    }
 
     override fun onStop() {
         super.onStop()
 
-        println("onStopMain")
         viewModel.loadSelectedLocation()
         viewModel.selectedLocation.observe(this) {
-
             return@observe
         }
-
     }
 
     override fun onBackPressed() {
@@ -645,7 +607,35 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, MainActivity::class.java))
         //navController.navigateUp()
     }
+    private fun viewDisconnected(){
+        binding.connectionOff.visibility = View.VISIBLE
+        binding.locationLinearLayoutmain.visibility = View.GONE
+        binding.navView.visibility = View.GONE
 
+
+
+        val fm: FragmentManager = supportFragmentManager
+        val ft: FragmentTransaction = fm.beginTransaction()
+        ft.add(R.id.connectionOff, ConnectionStateFragment())
+        ft.commit()
+
+    }
+
+
+    private fun viewErrorApi(){
+        viewDisconnected()
+    }
+
+    private fun enableActivity(isEnabled: Boolean) {
+        if (!isEnabled) {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+            )
+        } else {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        }
+    }
 
     companion object {
         private const val TAG = "MainActivity"
