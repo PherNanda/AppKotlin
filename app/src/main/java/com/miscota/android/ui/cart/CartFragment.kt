@@ -111,19 +111,6 @@ class CartFragment : Fragment() {
                         println(" totalCartItens delete $totalCartItens")
                     },
                     type = { cartItem -> cartItem.type },
-                    authStore = viewModel.authStore,
-                    carriers =  { cartItem ->
-                        cartItem.costEco.let {
-                            viewModel.setCostEcoValue(viewModel.costEcommerce.value?:0.0)
-                            println(" carriersSd CartFragment Adapter line 146 ${viewModel.costSd.value}")
-                        }
-                    },
-                    carriersSd = { cartItem -> cartItem.costSd?.let { it1 ->
-                        viewModel.setCarriersSd(
-                            viewModel.carriersCheckoutCostSd(userType).toString()
-                        )
-                    }
-                    },
                     types = arrayListOf("1"),
                     payment = { cartItem ->
                         cartItem.payment?.let {
