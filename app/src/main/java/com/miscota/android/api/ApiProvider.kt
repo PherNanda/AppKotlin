@@ -68,29 +68,13 @@ class ApiProvider (context: Context){
                         override fun intercept(chain: Interceptor.Chain): Response  {
                             val response = chain.proceed(chain.request())
 
-                            var responseTest = 200
-                            if (intentConnection == 0 && !statusConnect){
-                                responseTest = 521
-                                when (responseTest) {
-                                    521 -> {
-                                        Timber.tag(BuildConfig.STATE_521).e(BuildConfig.STATE_521_MSG)
-                                        statusConnect = true
-                                        authPreference.setStatus(statusConnect)
-                                        intentConnection += tryConnection
-                                        println("intentConnection 521 after up $intentConnection")
-                                        println("status up $statusConnect")
-                                    }
-                                }
-                            }
-                            if(responseTest == 200 && intentConnection == 1){
-                            when (responseTest) {
+                            when (response.code) {
                                 200 -> {
                                     Timber.tag(BuildConfig.STATE_200).e(BuildConfig.STATE_200_MSG)
                                     statusConnect = false
                                     authPreference.setStatus(statusConnect)
-                                    //intentConnection = 0
-                                    println("intentConnection 200 after down $intentConnection")
-                                    println("status down 200 $statusConnect")
+                                    intentConnection = 0
+
                                 }
                                 400 -> {
                                     Timber.tag(BuildConfig.STATE_400).e(BuildConfig.STATE_400_MSG)
@@ -127,11 +111,8 @@ class ApiProvider (context: Context){
                                     statusConnect = true
                                     authPreference.setStatus(statusConnect)
                                     intentConnection += tryConnection
-                                    println("intentConnection 521 after down $intentConnection")
-                                    println("status down 521 $statusConnect")
                                 }
                             }
-                          }
                           return response
                         }
                     })
@@ -150,7 +131,7 @@ class ApiProvider (context: Context){
                 .build()
             retrofit = Retrofit.Builder()
                 .baseUrl(BuildConfig.MERCHANT_SERVER_URL_MIS)
-                //.baseUrl(BuildConfig.API_BASE_URL)
+                //baseUrl(BuildConfig.API_BASE_URL)
                 .client(httpClient)
                 .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
                 .build()
