@@ -7,7 +7,6 @@ val mainActivityModule = module {
     viewModel {
         MainActivityViewModel(
             authStore = get(),
-            checkoutRepository = get(),
             storeLocationRepository = get()
         )
     }

@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -21,7 +20,6 @@ import com.miscota.android.databinding.FragmentMainCategoriesBinding
 import com.miscota.android.databinding.ItemLoaderBinding
 import com.miscota.android.util.RecyclerViewLoadMoreListener
 import com.miscota.android.util.autoClean
-import okhttp3.internal.notify
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainCategoriesFragment : Fragment() {
@@ -230,23 +228,6 @@ class MainCategoriesFragment : Fragment() {
 
         //println("listAdapter.currentList.size onStart ${listAdapter.currentList.size}")
 
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        //println("listAdapter.currentList.size onDetach  ${listAdapter.currentList.size}")
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        //println("listAdapter.currentList.size onResume  ${listAdapter.currentList.size}")
-        //println("listAdapter.currentList.size onResume it  ${listAdapter.currentList.map { it }}")
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        //println("listAdapter.currentList.size onAttach  no inicializada")
     }
 
     companion object {

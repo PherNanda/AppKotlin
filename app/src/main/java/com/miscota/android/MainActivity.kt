@@ -50,7 +50,12 @@ class MainActivity : AppCompatActivity() {
             binding.connectionOff.visibility = View.GONE
             binding.locationLinearLayoutmain.visibility = View.VISIBLE
             binding.navView.visibility = View.VISIBLE
-            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
+            if(viewModel.statusConnect.value!!) {
+                enableActivity(false)
+            } else{
+                enableActivity(true)
+            }
         }, {
             viewDisconnected()
         })
@@ -104,9 +109,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel.authStore.getStatus()
-        println("viewModel.authStore.getStatus() ${viewModel.authStore.getStatus()}")
-        println("viewModel.statusConnect ${viewModel.statusConnect.value}")
-
 
         viewModel.statusConnect.observe(this){
             println("viewModel.statusConnect observe ${viewModel.statusConnect.value}")
@@ -446,10 +448,6 @@ class MainActivity : AppCompatActivity() {
 
         //Configuration.getInstance().load(this, androidx.preference.PreferenceManager.getDefaultSharedPreferences(this))
 
-        println("onResumeMain")
-        println("viewModel.authStore.getStatus() onResumeMain ${viewModel.authStore.getStatus()}")
-        println("viewModel.statusConnect onResumeMain ${viewModel.statusConnect.value}")
-
         viewModel.getTotalItens()
         binding.cartItemsText.text = viewModel.getTotalItens().toString()
 
@@ -464,10 +462,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-
-        println("onPauseMain")
-        println("viewModel.authStore.getStatus() onPauseMain ${viewModel.authStore.getStatus()}")
-        println("viewModel.statusConnect onPauseMain ${viewModel.statusConnect.value}")
 
         if(viewModel.statusConnect.value!!){
             viewErrorApi()
@@ -560,11 +554,6 @@ class MainActivity : AppCompatActivity() {
         println("onRestartMain")
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        println("onDestroyMain")
-    }
-
     private fun colorMyText(inputText:String,startIndex:Int,endIndex:Int,textColor:Int): Spannable {
         val outPutColoredText: Spannable = SpannableString(inputText)
         outPutColoredText.setSpan(
@@ -618,14 +607,12 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, MainActivity::class.java))
         //navController.navigateUp()
     }
-
     private fun viewDisconnected(){
         binding.connectionOff.visibility = View.VISIBLE
         binding.locationLinearLayoutmain.visibility = View.GONE
         binding.navView.visibility = View.GONE
 
-        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
 
         val fm: FragmentManager = supportFragmentManager
         val ft: FragmentTransaction = fm.beginTransaction()
@@ -634,10 +621,20 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun viewErrorApi(){
 
+    private fun viewErrorApi(){
         viewDisconnected()
-        
+    }
+
+    private fun enableActivity(isEnabled: Boolean) {
+        if (!isEnabled) {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+            )
+        } else {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        }
     }
 
     companion object {

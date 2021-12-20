@@ -67,12 +67,30 @@ class ApiProvider (context: Context){
                 builder.addInterceptor(object : Interceptor {
                         override fun intercept(chain: Interceptor.Chain): Response  {
                             val response = chain.proceed(chain.request())
-                            when (response.code) {
+
+                            var responseTest = 200
+                            if (intentConnection == 0 && !statusConnect){
+                                responseTest = 521
+                                when (responseTest) {
+                                    521 -> {
+                                        Timber.tag(BuildConfig.STATE_521).e(BuildConfig.STATE_521_MSG)
+                                        statusConnect = true
+                                        authPreference.setStatus(statusConnect)
+                                        intentConnection += tryConnection
+                                        println("intentConnection 521 after up $intentConnection")
+                                        println("status up $statusConnect")
+                                    }
+                                }
+                            }
+                            if(responseTest == 200 && intentConnection == 1){
+                            when (responseTest) {
                                 200 -> {
                                     Timber.tag(BuildConfig.STATE_200).e(BuildConfig.STATE_200_MSG)
                                     statusConnect = false
                                     authPreference.setStatus(statusConnect)
-                                    intentConnection = 0
+                                    //intentConnection = 0
+                                    println("intentConnection 200 after down $intentConnection")
+                                    println("status down 200 $statusConnect")
                                 }
                                 400 -> {
                                     Timber.tag(BuildConfig.STATE_400).e(BuildConfig.STATE_400_MSG)
@@ -109,10 +127,12 @@ class ApiProvider (context: Context){
                                     statusConnect = true
                                     authPreference.setStatus(statusConnect)
                                     intentConnection += tryConnection
-                                    println("intentConnection 521 after $intentConnection")
+                                    println("intentConnection 521 after down $intentConnection")
+                                    println("status down 521 $statusConnect")
                                 }
                             }
-                            return response
+                          }
+                          return response
                         }
                     })
                 builder.addNetworkInterceptor { chain ->
