@@ -20,9 +20,6 @@ class CartItemAdapter(
     private val addItemClickListener: (CartUiModel.Item) -> Unit,
     private val removeItemClickListener: (CartUiModel.Item) -> Unit,
     private val type: (CartUiModel.Item) -> Unit,
-    private val authStore: AuthStore,
-    private val carriers: (CartUiModel.SummaryItem) -> Unit,
-    private val carriersSd: (CartUiModel.SummaryItem) -> Unit,
     private val carriersItem: () -> Unit,
     private val carriersSdItem: (CartUiModel.Item) -> Unit,
     private var types: ArrayList<String>?,
@@ -53,10 +50,8 @@ class CartItemAdapter(
                     addItemClickListener = addItemClickListener,
                     removeItemClickListener = removeItemClickListener,
                     carriersItem = carriersItem,
-                    carriersSdItem = carriersSdItem,
                     type = type,
                     types = types,
-                    authStore = authStore,
                 )
             }
             ItemType.Spacer -> {
@@ -144,10 +139,8 @@ class CartItemAdapter(
             private val removeItemClickListener: (CartUiModel.Item) -> Unit,
             private val deleteItemClickListener: (CartUiModel.Item) -> Unit,
             private val carriersItem: () -> Unit,
-            private val carriersSdItem: (CartUiModel.Item) -> Unit,
             private val type: (CartUiModel.Item) -> Unit,
-            private var types: ArrayList<String>?,
-            private val authStore: AuthStore
+            private var types: ArrayList<String>?
         ) : ListViewHolder(binding.root) {
 
             override fun bind(item: CartUiModel) {

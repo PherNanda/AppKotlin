@@ -89,7 +89,8 @@
             android:layout_marginTop="12dp"
             android:layout_marginStart="20dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_location_iconspace" />
+            android:src="@drawable/ic_location_iconspace"
+            android:contentDescription="@string/current_location" />
 
         <TextView
             android:id="@+id/locationTextMain"

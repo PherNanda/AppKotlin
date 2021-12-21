@@ -156,17 +156,6 @@ class CartActivity : AppCompatActivity() {
 
                     },
                     type = { cartItem -> cartItem.type },
-                    authStore = viewModel.authStore,
-                    carriers =  { cartItem ->
-                        cartItem.costEco.let {
-                            viewModel.setCostEcoValue(viewModel.costEcommerce.value?:0.0)
-                        }
-                    },
-                    carriersSd = { cartItem ->
-                        cartItem.costSd.let {
-                            viewModel.setCostSDValue(viewModel.costSd.value?:0.0)
-                        }
-                    },
                     types = arrayListOf(""),
                     payment = { cartItem ->
                         cartItem.payment?.let {
