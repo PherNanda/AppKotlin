@@ -359,7 +359,7 @@ class TipoEnvioViewModel(
                     _checkoutResult.value =
                         CheckoutResult(success = "chekout Ok" ?: " -- ")
 
-                    _refOrder.value = result.getOrThrow().ref_order
+                    _refOrder.value = result.getOrThrow().ref_order!!
                     CartUiModel.RefOrderCheckout(refOrder = result.getOrThrow().ref_order)
                         .toString()
 

@@ -6,19 +6,22 @@ plugins {
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
     id 'com.google.firebase.firebase-perf'
-
 }
 
 android {
-    compileSdkVersion rootProject.compileSdkVersion
+    compileSdkVersion targetSdkVersion
 
     defaultConfig {
         applicationId 'com.miscota.android'
         minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion rootProject.targetSdkVersion
+        targetSdkVersion targetSdkVersion
         versionCode 139
         versionName "2.3.1"
-        //multiDexEnabled true
+        multiDexEnabled true
+
+        configurations.all {
+            resolutionStrategy { force 'org.jetbrains.kotlin:kotlin-parcelize-runtime:1.6.10' }
+        }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -154,8 +157,10 @@ repositories {
     maven {
         url "https://jitpack.io"
     }
+    maven {
+        url = uri("https://plugins.gradle.org/m2/")
+    }
 
-    jcenter()
 }
 
 dependencies {
@@ -223,7 +228,7 @@ dependencies {
     implementation "com.google.android.libraries.places:places:$googlePlaces"
 
     // adyen
-    implementation "com.adyen.checkout:drop-in:$adyen"
+    //implementation "com.adyen.checkout:drop-in:$adyen"
     implementation "com.adyen.checkout:card-ui:$adyen"
     implementation "com.adyen.checkout:redirect:$adyen"
 
@@ -242,7 +247,7 @@ dependencies {
     //firebase
     implementation platform('com.google.firebase:firebase-bom:28.0.1')
     implementation 'com.google.firebase:firebase-analytics-ktx'
-    implementation 'com.google.firebase:firebase-core:20.0.0'
+    implementation 'com.google.firebase:firebase-core:20.0.2'
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:perf-plugin:1.4.0'
     implementation 'com.google.firebase:firebase-perf-ktx'
@@ -256,7 +261,9 @@ dependencies {
     //io card camera
     implementation 'io.card:android-sdk:5.5.0'
 
-
     //compile 'com.android.support:recyclerview-v7:28.0.0'
+
+    //stripe
+    implementation 'com.stripe:stripe-android:18.2.0'
 
 }
